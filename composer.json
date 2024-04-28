@@ -13,6 +13,7 @@
   "require": {
     "php": "^8.1",
     "jackalope/jackalope-doctrine-dbal": "^1.7",
+    "jackalope/jackalope-jackrabbit": "^1.4",
     "symfony/console": "^6.0 | ^7.0",
     "symfony/dependency-injection": "^6.0 | ^7.0",
     "symfony/config": "^6.0 | ^7.0",
@@ -25,5 +26,9 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.14"
+  },
+  "scripts": {
+    "php-cs-fix": "@php vendor/bin/php-cs-fixer fix",
+    "lint-php-cs": "@php vendor/bin/php-cs-fixer fix --verbose --diff --dry-run"
   }
 }

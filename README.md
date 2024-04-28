@@ -13,7 +13,7 @@ We are committed to a fully transparent development process and **highly appreci
 
 In case you have questions, we are happy to welcome you in our official [Slack channel](https://sulu.io/services-and-support).
 If you found a bug or miss a specific feature, feel free to **file a new issue** with a respective title and description
-on the the [sulu/SuluHeadlessBundle](https://github.com/sulu/SuluHeadlessBundle) repository.
+on the [sulu/SuluPHPCRMigrationBundle](https://github.com/sulu/SuluPHPCRMigrationBundle) repository.
 
 
 ## 📘&nbsp; License
