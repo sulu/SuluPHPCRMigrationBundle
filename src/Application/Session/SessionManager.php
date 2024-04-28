@@ -19,7 +19,6 @@ use PHPCR\SimpleCredentials;
 
 class SessionManager
 {
-    private const WORKSPACE_POSTFIX = '_live';
     private string $workspace;
     private string $workspaceLive;
 

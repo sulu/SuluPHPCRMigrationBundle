@@ -44,6 +44,7 @@ jackrabbit/*
 /public/bundles/
 /var/
 /vendor/
+/Tests/Application/var
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

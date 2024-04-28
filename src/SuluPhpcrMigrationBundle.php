@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,6 +21,9 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class SuluPhpcrMigrationBundle extends AbstractBundle
 {
+    /**
+     * @param mixed[] $config
+     */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -29,7 +33,9 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
 
     public function configure(DefinitionConfigurator $definition): void
     {
-        $definition->rootNode()
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode = $definition->rootNode();
+        $rootNode
             ->children()
                 ->scalarNode('DSN')->isRequired()->end()
             ->end();
@@ -37,17 +43,17 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+        /** @var array{'DSN': string}[] $config */
         $config = $builder->getExtensionConfig('sulu_phpcr_migration');
 
-        /** @var string $dsn */
         $dsn = $config[0]['DSN'];
         $builder->setParameter('sulu_phpcr_migration.dsn', $dsn);
 
         $configuration = $this->getConnectionConfiguration($dsn);
         $builder->setParameter('sulu_phpcr_migration.configuration', $configuration);
 
-        if ('dbal' === $configuration['connection']['type']) {
-            $builder->setAlias('sulu_phpcr_migration.connection', \sprintf('doctrine.dbal.%s_connection', $configuration['connection']['name']));
+        if ('dbal' === $configuration['connection']['type'] && $name = ($configuration['connection']['name'] ?? null)) {
+            $builder->setAlias('sulu_phpcr_migration.connection', \sprintf('doctrine.dbal.%s_connection', $name));
 
             return;
         }
@@ -56,11 +62,11 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
     /**
      * @return array{
      *     connection: array{
-     *         type: 'dbal' | 'jackrabbit',
+     *         type: string,
      *         name?: string,
      *         url?: string,
-     *         user?: string,
-     *         password?: string
+     *         user?: string|null,
+     *         password?: string|null
      *     },
      *     workspace: array{
      *         default: string,
@@ -70,10 +76,21 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
      */
     private function getConnectionConfiguration(string $dsn): array
     {
+        /** @var array{
+         *     scheme: string,
+         *     host?: string,
+         *     port?: string,
+         *     path?: string,
+         *     query: string,
+         *     user?: string,
+         *     pass?: string
+         * } $parts
+         */
         $parts = \parse_url($dsn);
         \parse_str($parts['query'], $query);
 
-        $workspace = $query['workspace'];
+        /** @var string|null $workspace */
+        $workspace = $query['workspace'] ?? '';
         unset($query['workspace']);
 
         if (!$workspace) {
@@ -90,21 +107,21 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
             ],
         ];
 
-        if ('dbal' === $parts['scheme']) {
-            $result['connection']['name'] = $parts['host'];
+        if ('dbal' === $parts['scheme'] && ($host = $parts['host'] ?? null)) {
+            $result['connection']['name'] = $host;
 
             return $result;
         }
 
-        $result['url'] = \sprintf(
-            '%s:%s/%s%s',
-            $parts['host'],
-            $parts['port'],
-            $parts['path'],
+        $result['connection']['url'] = \sprintf(
+            '%s:%s%s%s',
+            $parts['host'] ?? '',
+            $parts['port'] ?? '',
+            $parts['path'] ?? '',
             $query ? '?' . \http_build_query($query) : '',
         );
-        $result['user'] = $parts['user'] ?? null;
-        $result['password'] = $parts['pass'] ?? null;
+        $result['connection']['user'] = $parts['user'] ?? null;
+        $result['connection']['password'] = $parts['pass'] ?? null;
 
         return $result;
     }
