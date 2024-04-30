@@ -1,5 +1,5 @@
 parameters:
     paths:
         - src
-        - tests
+        - Tests
     level: max

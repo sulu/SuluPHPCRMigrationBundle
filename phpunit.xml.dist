@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="Tests/test-bootstrap.php"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <!-- See: https://symfony.com/doc/current/components/phpunit_bridge.html#modified-phpunit-script -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Sulu Phpcr Migration Bundle Unit">
+            <directory>./Tests/Unit</directory>
+        </testsuite>
+
+        <testsuite name="Sulu Phpcr Migration Bundle Functional">
+            <directory>./Tests/Functional</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
