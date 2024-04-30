@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'sulu:phpcr-migration:migrate', description: 'Migrate the PHPCR content repository to the SuluContentBundle.')]
 class MigratePhpcrCommand extends Command
 {
-    public function __construct(private SessionManager $sessionManager)
+    public function __construct(private readonly SessionManager $sessionManager)
     {
         parent::__construct();
     }

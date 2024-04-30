@@ -19,8 +19,8 @@ use PHPCR\SimpleCredentials;
 
 class SessionManager
 {
-    private string $workspace;
-    private string $workspaceLive;
+    private readonly string $workspace;
+    private readonly string $workspaceLive;
 
     /**
      * @param array{
@@ -39,7 +39,7 @@ class SessionManager
      */
     public function __construct(
         private array $configuration,
-        private ?Connection $connection = null,
+        private readonly ?Connection $connection = null,
     ) {
         $this->workspace = $configuration['workspace']['default'];
         $this->workspaceLive = $configuration['workspace']['live'];
@@ -57,7 +57,7 @@ class SessionManager
 
     private function getSession(string $workspace): SessionInterface
     {
-        $factory = $this->connection ? new RepositoryFactoryDoctrineDBAL() : new RepositoryFactoryJackrabbit();
+        $factory = $this->connection instanceof Connection ? new RepositoryFactoryDoctrineDBAL() : new RepositoryFactoryJackrabbit();
         $repository = $factory->getRepository(\array_filter([
             'jackalope.doctrine_dbal_connection' => $this->connection,
             'jackalope.jackrabbit_uri' => $this->configuration['connection']['url'] ?? null,
