@@ -1,5 +1,5 @@
 {
-    "name": "sulu/sulu-phpcr-migration-bundle",
+    "name": "sulu/phpcr-migration-bundle",
     "license": "MIT",
     "description": "The bundle provides command to migrate the Sulu database from phpCr to the SuluContentBundle.",
     "keywords": [
