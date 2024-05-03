@@ -5,7 +5,7 @@
     <services>
         <!-- Command -->
         <service id="sulu_phpcr_migration.migrate_command"
-                 class="Sulu\Bundle\PhpcrMigrationBundle\UserInterface\Command\MigratePhpcrCommand">
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand">
             <argument type="service" id="sulu_phpcr_migration.session_manager"/>
 
             <tag name="console.command"/>

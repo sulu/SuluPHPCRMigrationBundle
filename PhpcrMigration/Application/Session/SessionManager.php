@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Sulu\Bundle\PhpcrMigrationBundle\Application\Session;
+namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session;
 
 use Doctrine\DBAL\Connection;
 use Jackalope\RepositoryFactoryDoctrineDBAL;

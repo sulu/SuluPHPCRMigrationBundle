@@ -26,7 +26,7 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/Resources/config'));
         $loader->load('session.xml');
         $loader->load('command.xml');
     }

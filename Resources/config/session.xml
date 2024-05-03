@@ -5,7 +5,7 @@
     <services>
         <!-- Command -->
         <service id="sulu_phpcr_migration.session_manager"
-                 class="Sulu\Bundle\PhpcrMigrationBundle\Application\Session\SessionManager">
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager">
             <argument>%sulu_phpcr_migration.configuration%</argument>
             <argument type="service" id="sulu_phpcr_migration.connection" on-invalid="null"/>
 
