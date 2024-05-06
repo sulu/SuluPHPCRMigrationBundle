@@ -16,7 +16,7 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
 return static function(RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([__DIR__ . '/src', __DIR__ . '/Tests']);
+    $rectorConfig->paths([__DIR__ . '/PhpcrMigration', __DIR__ . '/Tests']);
 
     $rectorConfig->phpstanConfigs([
         __DIR__ . '/phpstan.neon',
