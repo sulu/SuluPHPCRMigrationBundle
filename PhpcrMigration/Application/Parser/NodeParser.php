@@ -35,7 +35,7 @@ class NodeParser
     private function parseProperty(PropertyInterface $property, array $document): array
     {
         $name = $property->getName();
-        $value = $property->getValue();
+        $value = $this->resolvePropertyValue($property);
         $propertyPath = $this->getLocalizedPath($name);
         $propertyPath = $this->getPropertyPath($propertyPath, $name);
         $this->propertyAccessor->setValue(
@@ -45,6 +45,16 @@ class NodeParser
         );
 
         return $document;
+    }
+
+    private function resolvePropertyValue(PropertyInterface $property): mixed
+    {
+        $value = $property->getValueForStorage();
+        if (\is_string($value) && json_validate($value) && ('' !== $value && '0' !== $value)) {
+            return \json_decode($value, true);
+        }
+
+        return $value;
     }
 
     private function getLocalizedPath(string &$name): string

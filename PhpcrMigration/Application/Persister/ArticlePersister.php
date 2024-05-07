@@ -91,11 +91,11 @@ readonly class ArticlePersister implements PersisterInterface
             $data['workflowPlace'] = 2 === $data['workflowPlace'] ? 'published' : 'draft';
 
             if ($data['excerptImageId'] ?? null) {
-                $data['excerptImageId'] = \json_decode((string) $data['excerptImageId'], true)['ids'][0] ?? null;
+                $data['excerptImageId'] = $data['excerptImageId']['ids'][0] ?? null;
             }
 
             if ($data['excerptIconId'] ?? null) {
-                $data['excerptIconId'] = \json_decode((string) $data['excerptIconId'], true)['ids'][0] ?? null;
+                $data['excerptIconId'] = $data['excerptIconId']['ids'][0] ?? null;
             }
 
             // remove known keys that do not belong to the templateData
@@ -214,7 +214,7 @@ readonly class ArticlePersister implements PersisterInterface
             '[ghostLocale]' => '[localizations][' . $locale . '][ghostLocale]',
             '[availableLocales]' => '[localizations][' . $locale . '][availableLocales]',
             '[templateKey]' => '[localizations][' . $locale . '][template]',
-            '[workflowPlace]' => '[localizations][' . $locale . '][state]', // TODO
+            '[workflowPlace]' => '[localizations][' . $locale . '][state]',
             '[workflowPublished]' => '[localizations][' . $locale . '][published]',
             '[articleUuid]' => '[jcr][uuid]',
             '[seoTitle]' => '[localizations][' . $locale . '][seo][title]',
@@ -227,8 +227,8 @@ readonly class ArticlePersister implements PersisterInterface
             '[excerptTitle]' => '[localizations][' . $locale . '][excerpt][title]',
             '[excerptMore]' => '[localizations][' . $locale . '][excerpt][more]',
             '[excerptDescription]' => '[localizations][' . $locale . '][excerpt][description]',
-            '[excerptImageId]' => '[localizations][' . $locale . '][excerpt][images]', // TODO
-            '[excerptIconId]' => '[localizations][' . $locale . '][excerpt][icon]', // TODO
+            '[excerptImageId]' => '[localizations][' . $locale . '][excerpt][images]',
+            '[excerptIconId]' => '[localizations][' . $locale . '][excerpt][icon]',
         ];
     }
 }
