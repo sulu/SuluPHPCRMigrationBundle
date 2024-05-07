@@ -7,6 +7,13 @@
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\ArticlePersister">
             <argument type="service" id="sulu_phpcr_migration.target_connection"/>
             <argument type="service" id="property_accessor"/>
+
+            <tag name="sulu_phpcr_migration.persister" type="article"/>
+        </service>
+
+        <service id="sulu_phpcr_migration.persister.pool"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool">
+            <argument type="tagged_iterator" tag="sulu_phpcr_migration.persister" index-by="type"/>
         </service>
     </services>
 </container>

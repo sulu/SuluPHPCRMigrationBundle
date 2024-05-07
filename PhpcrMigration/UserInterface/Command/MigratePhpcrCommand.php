@@ -11,9 +11,10 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command;
 
+use PHPCR\NodeInterface;
 use PHPCR\SessionInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\NodeParser;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -27,7 +28,7 @@ class MigratePhpcrCommand extends Command
     public function __construct(
         private readonly SessionManager $sessionManager,
         private readonly NodeParser $nodeParser,
-        private readonly PersisterInterface $articlePersister
+        private readonly PersisterPool $persisterPool
     ) {
         parent::__construct();
     }
@@ -42,16 +43,19 @@ class MigratePhpcrCommand extends Command
         $session = $this->sessionManager->getDefaultSession();
         $liveSession = $this->sessionManager->getLiveSession();
 
-        $documentTypes = \explode(',', $input->getArgument('documentTypes') ?? 'article');
+        /** @var string $documentTypes */
+        $documentTypes = $input->getArgument('documentTypes');
+        $documentTypes = \explode(',', $documentTypes);
 
-        /** @var SessionInterface $session */
-        foreach ([$session, $liveSession] as $session) {
-            foreach ($documentTypes as $documentType) {
+        foreach ($documentTypes as $documentType) {
+            $persister = $this->persisterPool->getPersister($documentType);
+
+            /** @var SessionInterface $session */
+            foreach ([$session, $liveSession] as $session) {
                 $nodes = $this->fetchPhpcrNodes($session, $documentType);
                 foreach ($nodes as $node) {
                     $document = $this->nodeParser->parse($node);
-                    // TODO persisterPool
-                    $this->articlePersister->persist($document, \str_ends_with($session->getWorkspace()->getName(), '_live'));
+                    $persister->persist($document, \str_ends_with($session->getWorkspace()->getName(), '_live'));
                 }
             }
         }
@@ -59,6 +63,9 @@ class MigratePhpcrCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @return \Traversable<NodeInterface>
+     */
     private function fetchPhpcrNodes(SessionInterface $session, string $documentType): \Traversable
     {
         $queryManager = $session->getWorkspace()->getQueryManager();

@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser;
 
+use Jackalope\Property;
 use PHPCR\NodeInterface;
 use PHPCR\PropertyInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -22,6 +23,9 @@ class NodeParser
     ) {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function parse(NodeInterface $node): array
     {
         $document = [];
@@ -32,6 +36,11 @@ class NodeParser
         return $document;
     }
 
+    /**
+     * @param mixed[] $document
+     *
+     * @return mixed[]
+     */
     private function parseProperty(PropertyInterface $property, array $document): array
     {
         $name = $property->getName();
@@ -49,7 +58,7 @@ class NodeParser
 
     private function resolvePropertyValue(PropertyInterface $property): mixed
     {
-        $value = $property->getValueForStorage();
+        $value = $property instanceof Property ? $property->getValueForStorage() : $property->getValue();
         if (\is_string($value) && json_validate($value) && ('' !== $value && '0' !== $value)) {
             return \json_decode($value, true);
         }
@@ -71,21 +80,21 @@ class NodeParser
         return $propertyPath;
     }
 
-    private function getPropertyPath(string $propertyPath, $name): string
+    private function getPropertyPath(string $propertyPath, string $name): string
     {
-        if (\str_starts_with((string) $name, 'jcr:')) {
-            $name = \substr((string) $name, 4);
+        if (\str_starts_with($name, 'jcr:')) {
+            $name = \substr($name, 4);
             $propertyPath .= '[jcr][' . $name . ']';
-        } elseif (\str_starts_with((string) $name, 'sulu:')) {
-            $name = \substr((string) $name, 5);
+        } elseif (\str_starts_with($name, 'sulu:')) {
+            $name = \substr($name, 5);
             $propertyPath .= '[sulu][' . $name . ']';
-        } elseif (\str_starts_with((string) $name, 'seo-')) {
-            $name = \substr((string) $name, 4);
+        } elseif (\str_starts_with($name, 'seo-')) {
+            $name = \substr($name, 4);
             $propertyPath .= '[seo][' . $name . ']';
-        } elseif (\str_starts_with((string) $name, 'excerpt-')) {
-            $name = \substr((string) $name, 8);
+        } elseif (\str_starts_with($name, 'excerpt-')) {
+            $name = \substr($name, 8);
             $propertyPath .= '[excerpt][' . $name . ']';
-        } elseif (\preg_match('/^(.+)#(\d+)$/', (string) $name, $matches)) {
+        } elseif (\preg_match('/^(.+)#(\d+)$/', $name, $matches)) {
             $name = $matches[1];
             $index = (int) $matches[2];
             [$blocksKey, $type] = \explode('-', $name);

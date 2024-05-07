@@ -14,128 +14,59 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-readonly class ArticlePersister implements PersisterInterface
+class ArticlePersister extends AbstractPersister
 {
     public function __construct(
-        private Connection $connection,
-        private PropertyAccessorInterface $propertyAccessor
+        Connection $connection,
+        PropertyAccessorInterface $propertyAccessor
     ) {
+        parent::__construct($connection, $propertyAccessor);
     }
 
-    public function persist(array $document, bool $isLive): void
+    protected function removeNonTemplateData(array $data): array
     {
-        if (false === $this->supports($document)) {
-            throw new \Exception('Document type not supported');
-        }
+        $data['seo'] = null;
+        $data['excerpt'] = null;
+        $data['routePath'] = null;
+        $data['stage'] = null;
 
-        if (!isset($document['jcr']['uuid'])) {
-            throw new \Exception('UUID not found');
-        }
-
-        $this->connection->beginTransaction();
-        $this->insertArticle($document);
-        $this->insertArticleDimensionContent($document, $isLive);
-        $this->connection->commit();
+        return \array_filter($data);
     }
 
-    private function mapData(array &$data, array $mapping, bool $setUsedValueNull = false): array
+    protected function mapData(array $document, string $locale, array $data, bool $isLive): array
     {
-        $mappedData = [];
-        foreach ($mapping as $target => $source) {
-            $this->propertyAccessor->setValue(
-                $mappedData,
-                $target,
-                $this->propertyAccessor->getValue($data, $source)
-            );
-            // set data to null, so that it can be filtered out later
-            if ($setUsedValueNull) {
-                $this->propertyAccessor->setValue($data, $source, null);
-            }
-        }
+        $data['articleUuid'] = $document['jcr']['uuid'];
+        $data['locale'] = $locale;
+        $data['stage'] = $isLive ? 'live' : 'draft';
+        $data['title'] = \str_split((string) $data['title'], 64)[0];
+        $data['workflowPlace'] = 2 === $data['workflowPlace'] ? 'published' : 'draft';
 
-        return $mappedData;
+        return $data;
     }
 
-    private function insertArticle(array $document): void
+    protected function insertOrUpdate(array $data, string $tableName, array $types, array $where): void
     {
-        $mapping = $this->getEntityPathMapping();
-        $data = $this->mapData($document, $mapping);
-
         $exists = $this->connection->fetchAssociative(
-            'SELECT * FROM ar_articles WHERE uuid = :uuid',
-            ['uuid' => $data['uuid']]
+            'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', \array_map(fn ($key) => $key . ' = :' . $key, \array_keys($where))),
+            $where
         );
 
-        if (!$exists) {
-            $this->connection->insert(self::getEntityTableName(), $data, self::getEntityTableTypes());
+        if ($exists) {
+            $this->connection->update(
+                $tableName,
+                $data,
+                $where,
+                $types
+            );
 
             return;
         }
 
-        $this->connection->update(
-            self::getEntityTableName(),
+        $this->connection->insert(
+            $tableName,
             $data,
-            ['uuid' => $data['uuid']],
-            self::getEntityTableTypes()
+            $types
         );
-    }
-
-    private function insertArticleDimensionContent(array $document, bool $isLive): void
-    {
-        foreach ($document['localizations'] as $locale => $localizedData) {
-            $data = $this->mapData($document, $this->getArticleDimensionContentMapping($locale));
-            $data['locale'] = $locale;
-            $data['stage'] = $isLive ? 'live' : 'draft';
-            $data['title'] = \str_split((string) $data['title'], 64)[0];
-
-            $data['workflowPlace'] = 2 === $data['workflowPlace'] ? 'published' : 'draft';
-
-            if ($data['excerptImageId'] ?? null) {
-                $data['excerptImageId'] = $data['excerptImageId']['ids'][0] ?? null;
-            }
-
-            if ($data['excerptIconId'] ?? null) {
-                $data['excerptIconId'] = $data['excerptIconId']['ids'][0] ?? null;
-            }
-
-            // remove known keys that do not belong to the templateData
-            $document['localizations'][$locale] = \array_filter($document['localizations'][$locale]);
-            unset($document['localizations'][$locale]['seo']);
-            unset($document['localizations'][$locale]['excerpt']);
-            unset($document['localizations'][$locale]['routePath']);
-            unset($document['localizations'][$locale]['stage']);
-            $data['templateData'] = $document['localizations'][$locale];
-
-            $exists = $this->connection->fetchAssociative(
-                'SELECT * FROM ar_article_dimension_contents WHERE articleUuid = :articleUuid AND locale = :locale AND stage = :stage',
-                [
-                    'articleUuid' => $document['jcr']['uuid'],
-                    'locale' => $locale,
-                    'stage' => $data['stage'],
-                ]
-            );
-
-            if ($exists) {
-                $this->connection->update(
-                    self::getDimensionContentTableName(),
-                    $data,
-                    [
-                        'articleUuid' => $document['jcr']['uuid'],
-                        'locale' => $locale,
-                        'stage' => $data['stage'],
-                    ],
-                    self::getDimensionContentTableTypes()
-                );
-
-                continue;
-            }
-
-            $this->connection->insert(
-                self::getDimensionContentTableName(),
-                $data,
-                self::getDimensionContentTableTypes()
-            );
-        }
     }
 
     public function supports(array $document): bool
@@ -148,12 +79,12 @@ readonly class ArticlePersister implements PersisterInterface
         return 'article';
     }
 
-    public static function getEntityTableName(): string
+    protected function getEntityTableName(): string
     {
         return 'ar_articles';
     }
 
-    public static function getEntityTableTypes(): array
+    protected function getEntityTableTypes(): array
     {
         return [
             'uuid' => 'string',
@@ -162,12 +93,21 @@ readonly class ArticlePersister implements PersisterInterface
         ];
     }
 
-    public static function getDimensionContentTableName(): string
+    protected function getEntityMapping(): array
+    {
+        return [
+            '[uuid]' => '[jcr][uuid]',
+            '[created]' => '[sulu][created]',
+            '[changed]' => '[sulu][changed]',
+        ];
+    }
+
+    protected function getDimensionContentTableName(): string
     {
         return 'ar_article_dimension_contents';
     }
 
-    public static function getDimensionContentTableTypes(): array
+    protected function getDimensionContentTableTypes(): array
     {
         return [
             'author_id' => 'integer',
@@ -196,39 +136,29 @@ readonly class ArticlePersister implements PersisterInterface
         ];
     }
 
-    public function getEntityPathMapping(): array
+    protected function getDimensionContentMapping(): array
     {
         return [
-            '[uuid]' => '[jcr][uuid]',
-            '[created]' => '[sulu][created]',
-            '[changed]' => '[sulu][changed]',
-        ];
-    }
-
-    public function getArticleDimensionContentMapping(string $locale): array
-    {
-        return [
-            '[author_id]' => '[localizations][' . $locale . '][author]',
-            '[authored]' => '[localizations][' . $locale . '][authored]',
-            '[title]' => '[localizations][' . $locale . '][title]',
-            '[ghostLocale]' => '[localizations][' . $locale . '][ghostLocale]',
-            '[availableLocales]' => '[localizations][' . $locale . '][availableLocales]',
-            '[templateKey]' => '[localizations][' . $locale . '][template]',
-            '[workflowPlace]' => '[localizations][' . $locale . '][state]',
-            '[workflowPublished]' => '[localizations][' . $locale . '][published]',
-            '[articleUuid]' => '[jcr][uuid]',
-            '[seoTitle]' => '[localizations][' . $locale . '][seo][title]',
-            '[seoDescription]' => '[localizations][' . $locale . '][seo][description]',
-            '[seoKeywords]' => '[localizations][' . $locale . '][seo][keywords]',
-            '[seoCanonicalUrl]' => '[localizations][' . $locale . '][seo][canonicalUrl]',
-            '[seoNoIndex]' => '[localizations][' . $locale . '][seo][noIndex]',
-            '[seoNoFollow]' => '[localizations][' . $locale . '][seo][noFollow]',
-            '[seoHideInSitemap]' => '[localizations][' . $locale . '][seo][hideInSitemap]',
-            '[excerptTitle]' => '[localizations][' . $locale . '][excerpt][title]',
-            '[excerptMore]' => '[localizations][' . $locale . '][excerpt][more]',
-            '[excerptDescription]' => '[localizations][' . $locale . '][excerpt][description]',
-            '[excerptImageId]' => '[localizations][' . $locale . '][excerpt][images]',
-            '[excerptIconId]' => '[localizations][' . $locale . '][excerpt][icon]',
+            '[author_id]' => '[author]',
+            '[authored]' => '[authored]',
+            '[title]' => '[title]',
+            '[ghostLocale]' => '[ghostLocale]',
+            '[availableLocales]' => '[availableLocales]',
+            '[templateKey]' => '[template]',
+            '[workflowPlace]' => '[state]',
+            '[workflowPublished]' => '[published]',
+            '[seoTitle]' => '[seo][title]',
+            '[seoDescription]' => '[seo][description]',
+            '[seoKeywords]' => '[seo][keywords]',
+            '[seoCanonicalUrl]' => '[seo][canonicalUrl]',
+            '[seoNoIndex]' => '[seo][noIndex]',
+            '[seoNoFollow]' => '[seo][noFollow]',
+            '[seoHideInSitemap]' => '[seo][hideInSitemap]',
+            '[excerptTitle]' => '[excerpt][title]',
+            '[excerptMore]' => '[excerpt][more]',
+            '[excerptDescription]' => '[excerpt][description]',
+            '[excerptImageId]' => '[excerpt][images]',
+            '[excerptIconId]' => '[excerpt][icon]',
         ];
     }
 }

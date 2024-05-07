@@ -8,7 +8,7 @@
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand">
             <argument type="service" id="sulu_phpcr_migration.session_manager"/>
             <argument type="service" id="sulu_phpcr_migration.parser.node"/>
-            <argument type="service" id="sulu_phpcr_migration.persister.article"/>
+            <argument type="service" id="sulu_phpcr_migration.persister.pool"/>
 
             <tag name="console.command"/>
         </service>
