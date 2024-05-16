@@ -30,7 +30,7 @@ class ArticlePersister extends AbstractPersister
         $data['routePath'] = null;
         $data['stage'] = null;
 
-        return \array_filter($data);
+        return \array_filter($data); // TODO callback function mit null
     }
 
     protected function mapData(array $document, string $locale, array $data, bool $isLive): array
