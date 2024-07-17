@@ -18,9 +18,11 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\Persis
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'sulu:phpcr-migration:migrate', description: 'Migrate the PHPCR content repository to the SuluContentBundle.')]
 class MigratePhpcrCommand extends Command
@@ -47,18 +49,28 @@ class MigratePhpcrCommand extends Command
         $documentTypes = $input->getArgument('documentTypes');
         $documentTypes = \explode(',', $documentTypes);
 
+        $io = new SymfonyStyle($input, $output);
         foreach ($documentTypes as $documentType) {
+            $io->title('Migrating ' . $documentType . ' documents');
             $persister = $this->persisterPool->getPersister($documentType);
 
             /** @var SessionInterface $session */
             foreach ([$session, $liveSession] as $session) {
+                $io->section('Migrating ' . $documentType . ' documents in ' . $session->getWorkspace()->getName());
                 $nodes = $this->fetchPhpcrNodes($session, $documentType);
+                $progressBar = $io->createProgressBar(\iterator_count($nodes));
+                $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                 foreach ($nodes as $node) {
                     $document = $this->nodeParser->parse($node);
                     $persister->persist($document, \str_ends_with($session->getWorkspace()->getName(), '_live'));
+                    $progressBar->advance();
                 }
+                $progressBar->finish();
+                $io->newLine(2);
             }
         }
+
+        $io->success('Migration completed');
 
         return Command::SUCCESS;
     }

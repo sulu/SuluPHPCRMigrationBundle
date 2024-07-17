@@ -5,8 +5,8 @@
     <services>
         <service id="sulu_phpcr_migration.persister.article"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\ArticlePersister">
-            <argument type="service" id="sulu_phpcr_migration.target_connection"/>
             <argument type="service" id="property_accessor"/>
+            <argument type="service" id="sulu_phpcr_migration.repository.entity"/>
 
             <tag name="sulu_phpcr_migration.persister" type="article"/>
         </service>

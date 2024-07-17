@@ -11,34 +11,52 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Doctrine\DBAL\Connection;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
+/**
+ * @phpstan-type Document array{
+ *     jcr: array{uuid: string, mixinTypes: string[]},
+ *     localizations: array<string, array{
+ *         routePath?: string,
+ *         routePathName?: string,
+ *         template: string,
+ *         state: int,
+ *         excerpt?: array{
+ *             categories?: int[],
+ *             tags?: int[],
+ *         }
+ *     }>
+ * }
+ * @phpstan-type DimensionContent array{
+ *     id: int
+ * }
+ */
 abstract class AbstractPersister implements PersisterInterface
 {
+    public const ROUTE_TABLE = 'ro_routes';
+
     public function __construct(
-        protected Connection $connection,
-        protected PropertyAccessorInterface $propertyAccessor
+        protected PropertyAccessorInterface $propertyAccessor,
+        protected EntityRepository $entityRepository,
     ) {
     }
 
     /**
-     * @param mixed[] $document
+     * @param Document $document
      */
     public function persist(array $document, bool $isLive): void
     {
         if (false === $this->supports($document)) {
-            throw new \Exception('Document type not supported');
+            throw new UnsupportedDocumentTypeException($document['jcr']['mixinTypes']);
         }
 
-        if (!isset($document['jcr']['uuid'])) {
-            throw new \Exception('UUID not found');
-        }
-
-        $this->connection->beginTransaction();
-        $this->insertEntity($document);
-        $this->insertDimensionContent($document, $isLive);
-        $this->connection->commit();
+        $this->entityRepository->beginTransaction();
+        $this->createOrUpdateEntity($document);
+        $this->createOrUpdateDimensionContent($document, $isLive);
+        $this->createOrUpdateRoute($document);
+        $this->entityRepository->commit();
     }
 
     /**
@@ -47,39 +65,31 @@ abstract class AbstractPersister implements PersisterInterface
      *
      * @return mixed[]
      */
-    protected function mapDataViaMapping(array &$data, array $mapping, bool $setUsedValueNull = false): array
+    protected function mapDataViaMapping(array &$data, array $mapping): array
     {
         $mappedData = [];
         foreach ($mapping as $target => $source) {
+            if (null === $this->propertyAccessor->getValue($data, $source)) {
+                continue;
+            }
             $this->propertyAccessor->setValue(
                 $mappedData,
                 $target,
                 $this->propertyAccessor->getValue($data, $source)
             );
-            // set data to null, so that it can be filtered out later
-            if ($setUsedValueNull) {
-                $this->propertyAccessor->setValue($data, $source, null);
-            }
         }
 
         return $mappedData;
     }
 
     /**
-     * @param mixed[] $document
+     * @param Document $document
+     * @param DimensionContent $dimensionContent
      */
-    protected function insertEntity(array $document): void
+    protected function insertDataRelationsToDimensionContent(array $document, ?string $locale, array $dimensionContent): void
     {
-        $data = $this->mapDataViaMapping($document, $this->getEntityMapping());
-
-        $this->insertOrUpdate(
-            $data,
-            $this->getEntityTableName(),
-            $this->getEntityTableTypes(),
-            [
-                'uuid' => $data['uuid'],
-            ]
-        );
+        $this->insertOrUpdateExcerptCategories($document, $locale, $dimensionContent);
+        $this->insertOrUpdateExcerptTags($document, $locale, $dimensionContent);
     }
 
     /**
@@ -111,69 +121,215 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * @param mixed[] $document
+     * @param Document $document
+     * @param DimensionContent $dimensionContent
      */
-    protected function insertDimensionContent(array $document, bool $isLive): void
+    protected function insertOrUpdateExcerptCategories(array $document, ?string $locale, array $dimensionContent): void
     {
-        //TODO unlocalized data
-        /** @var mixed[] $localizations */
-        $localizations = $document['localizations'] ?? [];
-        foreach ($localizations as $locale => $localizedData) {
-            $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping(), true);
-            $data = $this->mapData($document, $locale, $data, $isLive);
-            $data = $this->mapExcerptImages($data);
-            $data = $this->mapExcerptIcons($data);
+        if ($categoryIds = ($document['localizations'][$locale]['excerpt']['categories'] ?? null)) {
+            // remove all existing categories
+            $this->entityRepository->removeBy(
+                $this->getDimensionContentExcerptCategoriesTableName(),
+                [
+                    $this->getDimensionContentExcerptCategoriesIdName() => $dimensionContent['id'],
+                ]
+            );
 
-            // remove known keys that do not belong to the templateData
-            $localizedData = $this->removeNonTemplateData($localizedData);
-            $data['templateData'] = $localizedData;
-
-            $this->insertOrUpdate(
-                $data,
-                $this->getDimensionContentTableName(),
-                $this->getDimensionContentTableTypes(), [
-                    'articleUuid' => $data['articleUuid'], //TODO make dynamic
-                    'locale' => $locale,
-                    'stage' => $data['stage'],
-                ]);
+            foreach ($categoryIds as $categoryId) {
+                $this->entityRepository->insertOrUpdate(
+                    [
+                        $this->getDimensionContentExcerptCategoriesIdName() => $dimensionContent['id'],
+                        'category_id' => $categoryId,
+                    ],
+                    $this->getDimensionContentExcerptCategoriesTableName(),
+                    [
+                        $this->getDimensionContentExcerptCategoriesIdName() => 'integer',
+                        'category_id' => 'integer',
+                    ]
+                );
+            }
         }
     }
 
     /**
-     * @param mixed[] $data
-     * @param array<string, string> $types
-     * @param array<string, mixed> $where
+     * @param Document $document
+     * @param DimensionContent $dimensionContent
      */
-    protected function insertOrUpdate(array $data, string $tableName, array $types, array $where): void
+    protected function insertOrUpdateExcerptTags(array $document, ?string $locale, array $dimensionContent): void
     {
-        $exists = $this->connection->fetchAssociative(
-            'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', \array_map(fn ($key) => $key . ' = :' . $key, \array_keys($where))),
-            $where
-        );
+        if ($tagIds = ($document['localizations'][$locale]['excerpt']['tags'] ?? null)) {
+            // remove all existing tags
+            $this->entityRepository->removeBy(
+                $this->getDimensionContentExcerptTagsTableName(),
+                [
+                    $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
+                ]
+            );
 
-        match (null !== $exists) {
-            true => $this->connection->update(
-                $tableName,
-                $data,
-                $where,
-                $types
-            ),
-            default => $this->connection->insert(
-                $tableName,
-                $data,
-                $types
-            ),
-        };
+            foreach ($tagIds as $tagId) {
+                $this->entityRepository->insertOrUpdate(
+                    [
+                        $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
+                        'tag_id' => $tagId,
+                    ],
+                    $this->getDimensionContentExcerptTagsTableName(),
+                    [
+                        $this->getDimensionContentExcerptTagsIdName() => 'integer',
+                        'tag_id' => 'integer',
+                    ]
+                );
+            }
+        }
     }
 
     /**
-     * @param mixed[] $document
+     * @param Document $document
+     */
+    protected function createOrUpdateEntity(array $document): void
+    {
+        $data = $this->mapDataViaMapping($document, $this->getEntityMapping());
+
+        $this->entityRepository->insertOrUpdate(
+            $data,
+            $this->getEntityTableName(),
+            $this->getEntityTableTypes(),
+            [
+                'uuid' => $data['uuid'],
+            ]
+        );
+    }
+
+    /**
+     * @param Document $document
+     */
+    protected function createOrUpdateDimensionContent(array $document, bool $isLive): void
+    {
+        /** @var mixed[] $localizations */
+        $localizations = $document['localizations'];
+        $availableLocales = \array_values(\array_filter(\array_keys($localizations), static fn ($locale) => 'null' !== $locale));
+        /**
+         * @var array{
+         *     availableLocales?: string[],
+         *     templateData?: mixed[],
+         * } $localizedData
+         * @var string $locale
+         */
+        foreach ($localizations as $locale => $localizedData) {
+            $locale = 'null' === $locale ? null : $locale;
+            $localizedData['availableLocales'] = $availableLocales;
+            $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
+            $data = \array_merge($this->getDefaultData(), $data);
+            $data = $this->mapExcerptImages($data);
+            $data = $this->mapExcerptIcons($data);
+            $data = $this->mapData($document, $locale, $data, $isLive);
+
+            // remove known keys that do not belong to the templateData
+            $localizedData = $this->removeNonTemplateData($localizedData);
+
+            /** @var mixed[] $templateData */
+            $templateData = $data['templateData'] ?? [];
+            $data['templateData'] = \array_merge($localizedData, $templateData);
+
+            $this->entityRepository->insertOrUpdate(
+                $data,
+                $this->getDimensionContentTableName(),
+                $this->getDimensionContentTableTypes(),
+                [
+                    $this->getDimensionContentEntityIdMappingName() => $data[$this->getDimensionContentEntityIdMappingName()],
+                    'locale' => $locale,
+                    'stage' => $data['stage'],
+                ]
+            );
+
+            /**
+             * @var DimensionContent $dimensionContent
+             */
+            $dimensionContent = $this->entityRepository->findBy($this->getDimensionContentTableName(), [
+                $this->getDimensionContentEntityIdMappingName() => $data[$this->getDimensionContentEntityIdMappingName()],
+                'locale' => $locale,
+                'stage' => $data['stage'],
+            ]);
+
+            $this->insertDataRelationsToDimensionContent($document, $locale, $dimensionContent);
+        }
+    }
+
+    /**
+     * @param Document $document
+     */
+    protected function createOrUpdateRoute(array $document): void
+    {
+        $localizations = $document['localizations'];
+        foreach ($localizations as $locale => $localizedData) {
+            // skip unlocalized data
+            if ('null' === $locale) {
+                continue;
+            }
+            // skip non-published entries
+            if (1 === $localizedData['state']) {
+                continue;
+            }
+
+            $defaultData = [
+                'history' => false,
+                'created' => new \DateTime(),
+                'changed' => new \DateTime(),
+            ];
+
+            $existingRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
+                'entity_id' => $document['jcr']['uuid'],
+                'locale' => $locale,
+            ]) ?? [];
+
+            $data = \array_merge(
+                $defaultData,
+                [
+                    'entity_class' => $this->getEntityClassName(),
+                    'entity_id' => $document['jcr']['uuid'],
+                    'locale' => $locale,
+                    'path' => $existingRoute['path'] ?? $this->getPath($document, $locale),
+                    'history' => $existingRoute['history'] ?? 0,
+                    'created' => new \DateTime($existingRoute['created'] ?? 'now'),
+                    'changed' => new \DateTime(),
+                ]
+            );
+
+            try {
+                $this->entityRepository->insertOrUpdate(
+                    $data,
+                    self::ROUTE_TABLE,
+                    [
+                        'entity_class' => 'string',
+                        'path' => 'string',
+                        'locale' => 'string',
+                        'history' => 'boolean',
+                        'created' => 'datetime',
+                        'changed' => 'datetime',
+                    ],
+                    [
+                        'entity_id' => $document['jcr']['uuid'],
+                        'path' => $data['path'],
+                        'locale' => $locale,
+                    ]
+                );
+            } catch (\Exception $e) {
+                echo \PHP_EOL;
+                echo \PHP_EOL;
+                echo $e->getMessage();
+            }
+        }
+    }
+
+    /**
+     * @param Document $document
      * @param mixed[] $data
      *
      * @return mixed[]
      */
-    protected function mapData(array $document, string $locale, array $data, bool $isLive): array
+    protected function mapData(array $document, ?string $locale, array $data, bool $isLive): array
     {
+        $data['templateData'] = [];
+
         return $data;
     }
 
@@ -184,15 +340,28 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function removeNonTemplateData(array $data): array
     {
+        foreach ($data as $key => $value) {
+            // remove block-length property
+            if (\is_array($value) && \is_int($data[$key . '-length'] ?? null)) {
+                $data[$key . '-length'] = null;
+            }
+        }
+
         return $data;
     }
 
+    /**
+     * @param Document $document
+     */
     abstract public function supports(array $document): bool;
 
     abstract public static function getType(): string;
 
     abstract protected function getEntityTableName(): string;
 
+    /**
+     * @return array<string, string>
+     */
     abstract protected function getEntityTableTypes(): array;
 
     /**
@@ -211,4 +380,29 @@ abstract class AbstractPersister implements PersisterInterface
      * @return array<string, string>
      */
     abstract protected function getDimensionContentMapping(): array;
+
+    abstract protected function getDimensionContentEntityIdMappingName(): string;
+
+    abstract protected function getEntityClassName(): string;
+
+    abstract protected function getDimensionContentExcerptCategoriesTableName(): string;
+
+    abstract protected function getDimensionContentExcerptCategoriesIdName(): string;
+
+    abstract protected function getDimensionContentExcerptTagsTableName(): string;
+
+    abstract protected function getDimensionContentExcerptTagsIdName(): string;
+
+    /**
+     * @param Document $document
+     */
+    abstract protected function getPath(array $document, string $locale): string;
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getDefaultData(): array
+    {
+        return [];
+    }
 }

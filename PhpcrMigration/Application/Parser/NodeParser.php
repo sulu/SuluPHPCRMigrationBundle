@@ -28,7 +28,11 @@ class NodeParser
      */
     public function parse(NodeInterface $node): array
     {
-        $document = [];
+        $document = [
+            'localizations' => [
+                'null' => [], // required to always create the unlocalized dimension
+            ],
+        ];
         foreach ($node->getProperties() as $property) {
             $document = $this->parseProperty($property, $document);
         }
@@ -56,6 +60,11 @@ class NodeParser
         return $document;
     }
 
+    private function isUnLocalizedProperty(string $name): bool
+    {
+        return !\str_contains($name, ':');
+    }
+
     private function resolvePropertyValue(PropertyInterface $property): mixed
     {
         $value = $property instanceof Property ? $property->getValueForStorage() : $property->getValue();
@@ -75,6 +84,8 @@ class NodeParser
             $locale = \substr($name, 5, $firstDashPosition - $localizationOffset);
             $propertyPath .= '[localizations][' . $locale . ']';
             $name = \substr($name, $firstDashPosition + 1);
+        } elseif ($this->isUnLocalizedProperty($name)) {
+            $propertyPath .= '[localizations][null]';
         }
 
         return $propertyPath;

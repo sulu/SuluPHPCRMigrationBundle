@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <!-- Command -->
-        <service id="sulu_phpcr_migration.migrate_command"
+        <service id="sulu_phpcr_migration.command.migrate"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand">
-            <argument type="service" id="sulu_phpcr_migration.session_manager"/>
+            <argument type="service" id="sulu_phpcr_migration.session.manager"/>
             <argument type="service" id="sulu_phpcr_migration.parser.node"/>
             <argument type="service" id="sulu_phpcr_migration.persister.pool"/>
 

@@ -4,11 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <!-- Command -->
-        <service id="sulu_phpcr_migration.session.manager"
-                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager">
-            <argument>%sulu_phpcr_migration.configuration%</argument>
-            <argument type="service" id="sulu_phpcr_migration.connection" on-invalid="null"/>
-
+        <service id="sulu_phpcr_migration.repository.entity"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository">
+            <argument type="service" id="sulu_phpcr_migration.target_connection"/>
         </service>
     </services>
 </container>

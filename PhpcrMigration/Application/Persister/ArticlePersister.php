@@ -11,62 +11,61 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Doctrine\DBAL\Connection;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class ArticlePersister extends AbstractPersister
 {
     public function __construct(
-        Connection $connection,
-        PropertyAccessorInterface $propertyAccessor
+        PropertyAccessorInterface $propertyAccessor,
+        EntityRepository $entityRepository
     ) {
-        parent::__construct($connection, $propertyAccessor);
+        parent::__construct($propertyAccessor, $entityRepository);
     }
 
     protected function removeNonTemplateData(array $data): array
     {
+        $data = parent::removeNonTemplateData($data);
+
         $data['seo'] = null;
         $data['excerpt'] = null;
-        $data['routePath'] = null;
         $data['stage'] = null;
+        $data['suluPages'] = null;
+        $data['author'] = null;
+        $data['authored'] = null;
+        $data['template'] = null;
+        $data['state'] = null;
+        $data['availableLocales'] = null;
+        $data['routePath'] = null;
+        $data['routePathName'] = null;
 
-        return \array_filter($data); // TODO callback function mit null
+        return \array_filter($data, static fn ($entry) => null !== $entry);
     }
 
-    protected function mapData(array $document, string $locale, array $data, bool $isLive): array
+    protected function mapData(array $document, ?string $locale, array $data, bool $isLive): array
     {
-        $data['articleUuid'] = $document['jcr']['uuid'];
+        $data = parent::mapData($document, $locale, $data, $isLive);
+
+        $data[$this->getDimensionContentEntityIdMappingName()] = $document['jcr']['uuid'];
         $data['locale'] = $locale;
         $data['stage'] = $isLive ? 'live' : 'draft';
-        $data['title'] = \str_split((string) $data['title'], 64)[0];
-        $data['workflowPlace'] = 2 === $data['workflowPlace'] ? 'published' : 'draft';
+        $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
 
-        return $data;
-    }
-
-    protected function insertOrUpdate(array $data, string $tableName, array $types, array $where): void
-    {
-        $exists = $this->connection->fetchAssociative(
-            'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', \array_map(fn ($key) => $key . ' = :' . $key, \array_keys($where))),
-            $where
-        );
-
-        if ($exists) {
-            $this->connection->update(
-                $tableName,
-                $data,
-                $where,
-                $types
-            );
-
-            return;
+        if (isset($data['title'])) {
+            $data['title'] = \str_split((string) $data['title'], 64)[0];
+            $data['templateData']['title'] = $data['title'];
         }
 
-        $this->connection->insert(
-            $tableName,
-            $data,
-            $types
-        );
+        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
+            $routePathName = $document['localizations'][$locale]['routePathName'];
+            $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
+            $routePath = $document['localizations'][$locale]['routePath'];
+
+            $data['templateData'][$routePathName] = $routePath;
+        }
+
+        return $data;
     }
 
     public function supports(array $document): bool
@@ -159,6 +158,56 @@ class ArticlePersister extends AbstractPersister
             '[excerptDescription]' => '[excerpt][description]',
             '[excerptImageId]' => '[excerpt][images]',
             '[excerptIconId]' => '[excerpt][icon]',
+        ];
+    }
+
+    protected function getDimensionContentEntityIdMappingName(): string
+    {
+        return 'articleUuid';
+    }
+
+    protected function getEntityClassName(): string
+    {
+        return 'Sulu\Article\Domain\Model\ArticleInterface';
+    }
+
+    protected function getDimensionContentExcerptCategoriesTableName(): string
+    {
+        return 'ar_article_dimension_content_excerpt_categories';
+    }
+
+    protected function getDimensionContentExcerptCategoriesIdName(): string
+    {
+        return 'article_dimension_content_id';
+    }
+
+    protected function getDimensionContentExcerptTagsTableName(): string
+    {
+        return 'ar_article_dimension_content_excerpt_tags';
+    }
+
+    protected function getDimensionContentExcerptTagsIdName(): string
+    {
+        return 'article_dimension_content_id';
+    }
+
+    protected function getPath(array $document, string $locale): string
+    {
+        $localizedData = $document['localizations'][$locale];
+
+        if (!isset($localizedData['routePath'])) {
+            throw new InvalidPathException('routePath');
+        }
+
+        return $localizedData['routePath'];
+    }
+
+    protected function getDefaultData(): array
+    {
+        return [
+            'seoNoIndex' => false,
+            'seoNoFollow' => false,
+            'seoHideInSitemap' => false,
         ];
     }
 }

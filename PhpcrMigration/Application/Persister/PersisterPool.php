@@ -11,6 +11,8 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\PersisterNotFoundException;
+
 class PersisterPool
 {
     /**
@@ -28,6 +30,6 @@ class PersisterPool
             }
         }
 
-        throw new \Exception('Persister for type "' . $type . '" not found.');
+        throw new PersisterNotFoundException($type);
     }
 }
