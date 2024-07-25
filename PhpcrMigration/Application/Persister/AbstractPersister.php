@@ -312,7 +312,7 @@ abstract class AbstractPersister implements PersisterInterface
                         'locale' => $locale,
                     ]
                 );
-            } catch (\Exception $e) {
+            } catch (\Exception $e) { // @phpstan-ignore-line
                 echo \PHP_EOL;
                 echo \PHP_EOL;
                 echo $e->getMessage();

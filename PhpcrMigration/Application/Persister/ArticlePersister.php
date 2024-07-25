@@ -60,9 +60,11 @@ class ArticlePersister extends AbstractPersister
         if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
             $routePathName = $document['localizations'][$locale]['routePathName'];
             $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
-            $routePath = $document['localizations'][$locale]['routePath'];
+            // check routePathName property and fallback to routePath
+            $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
 
-            $data['templateData'][$routePathName] = $routePath;
+            // content bundle is only compatible with "url"
+            $data['templateData']['url'] = $routePath;
         }
 
         return $data;
