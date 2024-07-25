@@ -128,13 +128,14 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
             return $result;
         }
 
-        $result['connection']['url'] = \sprintf(
-            '%s:%s%s%s',
+        $result['connection']['url'] = \implode('', \array_filter([
             $parts['host'] ?? '',
-            $parts['port'] ?? '',
-            $parts['path'] ?? '',
+            isset($parts['port']) ? ':' . $parts['port'] : null,
+            $parts['path'] ?? null,
             $query ? '?' . \http_build_query($query) : '',
-        );
+        ], function($value) {
+            return null !== $value && '' !== $value;
+        }));
         $result['connection']['user'] = $parts['user'] ?? null;
         $result['connection']['password'] = $parts['pass'] ?? null;
 
