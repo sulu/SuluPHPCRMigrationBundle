@@ -37,7 +37,6 @@ class ArticlePersister extends AbstractPersister
         $data['template'] = null;
         $data['state'] = null;
         $data['availableLocales'] = null;
-        $data['routePath'] = null;
         $data['routePathName'] = null;
 
         return \array_filter($data, static fn ($entry) => null !== $entry);
@@ -64,7 +63,8 @@ class ArticlePersister extends AbstractPersister
             $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
 
             // content bundle is only compatible with "url"
-            $data['templateData']['url'] = $routePath;
+            $data['templateData']['url'] = $routePath; // is used in the content bundle
+            $data['templateData'][$routePath] = $routePath; // can still be used in the template TODO
         }
 
         return $data;
