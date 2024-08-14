@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RoutePathNameNotFoundException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -50,6 +51,16 @@ abstract class AbstractPersister implements PersisterInterface
     {
         if (false === $this->supports($document)) {
             throw new UnsupportedDocumentTypeException($document['jcr']['mixinTypes']);
+        }
+
+        foreach ($document['localizations'] as $locale => $localizedData) {
+            if (
+                [] !== $localizedData
+                && isset($localizedData['routePath'])
+                && !isset($localizedData['routePathName'])
+            ) {
+                throw new RoutePathNameNotFoundException($document['jcr']['uuid'], $locale);
+            }
         }
 
         $this->entityRepository->beginTransaction();
