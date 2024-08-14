@@ -68,7 +68,7 @@ class NodeParser
     private function resolvePropertyValue(PropertyInterface $property): mixed
     {
         $value = $property instanceof Property ? $property->getValueForStorage() : $property->getValue();
-        if (\is_string($value) && json_validate($value) && ('' !== $value && '0' !== $value)) {
+        if (\is_string($value) && \json_validate($value) && ('' !== $value && '0' !== $value)) {
             return \json_decode($value, true);
         }
 

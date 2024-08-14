@@ -37,7 +37,7 @@ class EntityRepository
      */
     public function insertOrUpdate(array $data, string $tableName, array $types, array $where = []): void
     {
-        $exists = !([] === $where) && $this->exists($tableName, $where);
+        $exists = [] !== $where && $this->exists($tableName, $where);
 
         match ($exists) {
             true => $this->connection->update(
