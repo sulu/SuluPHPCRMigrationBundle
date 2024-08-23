@@ -12,8 +12,9 @@
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository;
 
 use Doctrine\DBAL\Connection;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 
-class EntityRepository
+class EntityRepository implements EntityRepositoryInterface
 {
     public function __construct(
         protected Connection $connection,
@@ -30,11 +31,6 @@ class EntityRepository
         $this->connection->commit();
     }
 
-    /**
-     * @param mixed[] $data
-     * @param array<string, string> $types
-     * @param array<string, mixed> $where
-     */
     public function insertOrUpdate(array $data, string $tableName, array $types, array $where = []): void
     {
         $exists = [] !== $where && $this->exists($tableName, $where);
@@ -54,11 +50,6 @@ class EntityRepository
         };
     }
 
-    /**
-     * @param mixed[] $where
-     *
-     * @return mixed[]|null
-     */
     public function findBy(string $tableName, array $where): ?array
     {
         [$conditions, $params] = $this->parseWhereParts($where);
@@ -69,9 +60,6 @@ class EntityRepository
         return $result ?: null;
     }
 
-    /**
-     * @param mixed[] $where
-     */
     public function exists(string $tableName, array $where): bool
     {
         [$conditions, $params] = $this->parseWhereParts($where);
@@ -82,9 +70,6 @@ class EntityRepository
         return false !== $result;
     }
 
-    /**
-     * @param mixed[] $where
-     */
     public function removeBy(string $tableName, array $where): int|string
     {
         [$conditions, $params] = $this->parseWhereParts($where);

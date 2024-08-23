@@ -13,7 +13,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RoutePathNameNotFoundException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -40,7 +40,7 @@ abstract class AbstractPersister implements PersisterInterface
 
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
-        protected EntityRepository $entityRepository,
+        protected EntityRepositoryInterface $entityRepository,
     ) {
     }
 

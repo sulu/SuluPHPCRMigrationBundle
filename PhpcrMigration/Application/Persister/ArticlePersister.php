@@ -12,14 +12,14 @@
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class ArticlePersister extends AbstractPersister
 {
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
-        EntityRepository $entityRepository
+        EntityRepositoryInterface $entityRepository
     ) {
         parent::__construct($propertyAccessor, $entityRepository);
     }
