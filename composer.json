@@ -17,12 +17,13 @@
     ],
     "require": {
         "php": "^8.1",
-        "jackalope/jackalope-doctrine-dbal": "^1.7",
-        "jackalope/jackalope-jackrabbit": "^1.4",
+        "jackalope/jackalope-doctrine-dbal": "^1.3.4 || ^2.0",
+        "jackalope/jackalope-jackrabbit": "^1.3 || ^2.0",
         "symfony/config": "^6.0 | ^7.0",
         "symfony/console": "^6.0 | ^7.0",
         "symfony/dependency-injection": "^6.0 | ^7.0",
-        "symfony/framework-bundle": "^6.0 | ^7.0"
+        "symfony/framework-bundle": "^6.0 | ^7.0",
+        "symfony/property-access": "^6.0 | ^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -33,8 +34,8 @@
         ]
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.41",
         "jangregor/phpstan-prophecy": "^1.0",
+        "php-cs-fixer/shim": "^3.62",
         "phpspec/prophecy-phpunit": "^2.1",
         "phpstan/extension-installer": "^1.3",
         "phpstan/phpstan": "^1.10",

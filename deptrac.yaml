@@ -1,6 +1,6 @@
 parameters:
     paths:
-        - ./src
+        - ./PhpcrMigration
 
     layers:
         - name: UserInterface

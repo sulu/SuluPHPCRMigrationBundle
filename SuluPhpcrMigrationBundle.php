@@ -26,9 +26,12 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/Resources/config'));
+        $loader->load('repository.xml');
         $loader->load('session.xml');
         $loader->load('command.xml');
+        $loader->load('parser.xml');
+        $loader->load('persister.xml');
     }
 
     public function configure(DefinitionConfigurator $definition): void
@@ -38,6 +41,15 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
         $rootNode
             ->children()
                 ->scalarNode('DSN')->isRequired()->end()
+                ->arrayNode('target')
+                    ->children()
+                        ->arrayNode('dbal')
+                            ->children()
+                                ->scalarNode('connection')->isRequired()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
     }
 
@@ -48,6 +60,9 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
 
         $dsn = $config[0]['DSN'];
         $builder->setParameter('sulu_phpcr_migration.dsn', $dsn);
+
+        $targetConnectionName = $config[0]['target']['dbal']['connection'];
+        $builder->setAlias('sulu_phpcr_migration.target_connection', \sprintf('doctrine.dbal.%s_connection', $targetConnectionName));
 
         $configuration = $this->getConnectionConfiguration($dsn);
         $builder->setParameter('sulu_phpcr_migration.configuration', $configuration);
@@ -113,13 +128,14 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
             return $result;
         }
 
-        $result['connection']['url'] = \sprintf(
-            '%s:%s%s%s',
+        $result['connection']['url'] = \implode('', \array_filter([
             $parts['host'] ?? '',
-            $parts['port'] ?? '',
-            $parts['path'] ?? '',
+            isset($parts['port']) ? ':' . $parts['port'] : null,
+            $parts['path'] ?? null,
             $query ? '?' . \http_build_query($query) : '',
-        );
+        ], function($value) {
+            return null !== $value && '' !== $value;
+        }));
         $result['connection']['user'] = $parts['user'] ?? null;
         $result['connection']['password'] = $parts['pass'] ?? null;
 
