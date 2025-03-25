@@ -116,7 +116,9 @@ class EntityRepository implements EntityRepositoryInterface
             );
         } else {
             // Find the max right value to place our new root after existing roots
-            $maxRgt = (int) $this->connection->fetchOne("SELECT MAX(rgt) FROM $tableName") ?: 0;
+            /** @var false|int|null $maxRgtValue */
+            $maxRgtValue = $this->connection->fetchOne("SELECT MAX(rgt) FROM $tableName");
+            $maxRgt = false !== $maxRgtValue && null !== $maxRgtValue ? (int) $maxRgtValue : 0;
 
             // Set tree values for new root
             $data['lft'] = $maxRgt + 1;
@@ -145,6 +147,12 @@ class EntityRepository implements EntityRepositoryInterface
             return;
         }
 
+        /** @var false|null|array{
+         *     lft: int,
+         *     rgt: int,
+         *     depth: int
+         * } $parent
+         */
         $parent = $this->connection->fetchAssociative(
             "SELECT lft, rgt, depth FROM $tableName WHERE uuid = ?",
             [$parentId]

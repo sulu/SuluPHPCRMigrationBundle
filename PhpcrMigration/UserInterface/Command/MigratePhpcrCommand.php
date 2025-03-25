@@ -79,7 +79,7 @@ class MigratePhpcrCommand extends Command
     }
 
     /**
-     * @return \Traversable<NodeInterface>
+     * @return array<NodeInterface>
      */
     private function fetchPhpcrNodes(SessionInterface $session, string $documentType): array
     {

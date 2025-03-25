@@ -41,7 +41,17 @@ interface EntityRepositoryInterface
      */
     public function removeBy(string $tableName, array $where): int|string;
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $types
+     * @param array<string, mixed> $where
+     */
     public function createOrUpdateRootNode(array $data, string $tableName, array $types, array $where = []): void;
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, string> $types
+     * @param array<string, mixed> $where
+     */
     public function addOrUpdateChildNode(array $data, string $tableName, array $types, string $parentId, array $where = []): void;
 }

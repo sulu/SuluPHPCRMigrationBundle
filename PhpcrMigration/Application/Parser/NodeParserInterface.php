@@ -15,5 +15,8 @@ use PHPCR\NodeInterface;
 
 interface NodeParserInterface
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function parse(NodeInterface $node): array;
 }

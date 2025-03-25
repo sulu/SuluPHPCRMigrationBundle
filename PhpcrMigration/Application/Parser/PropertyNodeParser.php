@@ -25,8 +25,9 @@ class PropertyNodeParser implements NodeParserInterface
 
     /**
      * @return array{
-     *     localizations: array<string|null, <string, mixed>>,
-     *     jcr?: array<string, mixed>,
+     *     localizations: array<string, array<string, mixed>>,
+     *     jcr: array<string, array<string,mixed>>,
+     *     sulu: array<string, array<string,mixed>>,
      * }
      */
     public function parse(NodeInterface $node): array
@@ -42,18 +43,37 @@ class PropertyNodeParser implements NodeParserInterface
             $document = $this->parseProperty($property, $document);
         }
 
-        if (!\array_key_exists('created', $document['sulu'])) {
-            // first localization is always null
-            $lastLocalization = $document['localizations'][\array_key_last($document['localizations'])];
-            $document['sulu']['created'] = $lastLocalization['created'];
+        /** @var array<string, array<string, mixed>> $localizations */
+        $localizations = $document['localizations'];
+        $lastKey = \array_key_last($localizations);
+
+        if (null !== $lastKey) {
+            /** @var array<string, mixed> $lastLocalization */
+            $lastLocalization = $localizations[$lastKey];
+
+            /** @var array<string, mixed> $suluDocument */
+            $suluDocument = $document['sulu'];
+
+            if (!\array_key_exists('created', $suluDocument) && isset($lastLocalization['created'])) {
+                $suluDocument['created'] = $lastLocalization['created'];
+            }
+
+            if (!\array_key_exists('changed', $suluDocument) && isset($lastLocalization['changed'])) {
+                $suluDocument['changed'] = $lastLocalization['changed'];
+            }
+
+            $document['sulu'] = $suluDocument;
         }
 
-        if (!\array_key_exists('changed', $document['sulu'])) {
-            $lastLocalization = $document['localizations'][\array_key_last($document['localizations'])];
-            $document['sulu']['changed'] = $lastLocalization['changed'];
-        }
+        /** @var array{
+         *     localizations: array<string, array<string, mixed>>,
+         *     jcr: array<string, array<string,mixed>>,
+         *     sulu: array<string, array<string,mixed>>,
+         * } $typedDocument
+         */
+        $typedDocument = $document;
 
-        return $document;
+        return $typedDocument;
     }
 
     /**

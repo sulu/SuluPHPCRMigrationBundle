@@ -24,6 +24,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         routePathName?: string,
  *         template: string,
  *         state: int,
+ *         url?: string,
  *         excerpt?: array{
  *             categories?: int[],
  *             tags?: int[],
