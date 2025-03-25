@@ -11,11 +11,10 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class ArticlePersister extends AbstractPersister
+class SnippetPersister extends AbstractPersister
 {
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
@@ -28,7 +27,6 @@ class ArticlePersister extends AbstractPersister
     {
         $data = parent::removeNonTemplateData($data);
 
-        $data['seo'] = null;
         $data['excerpt'] = null;
         $data['stage'] = null;
         $data['suluPages'] = null;
@@ -37,7 +35,6 @@ class ArticlePersister extends AbstractPersister
         $data['template'] = null;
         $data['state'] = null;
         $data['availableLocales'] = null;
-        $data['routePathName'] = null;
 
         return \array_filter($data, static fn ($entry) => null !== $entry);
     }
@@ -49,22 +46,13 @@ class ArticlePersister extends AbstractPersister
         $data[$this->getDimensionContentEntityIdMappingName()] = $document['jcr']['uuid'];
         $data['locale'] = $locale;
         $data['stage'] = $isLive ? 'live' : 'draft';
-        $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
+        // snippets are always published, because in Sulu 2.6 there is no draft stage for snippets
+        $data['workflowPlace'] = 'published';
 
         if (isset($data['title'])) {
+            // TODO error collector with titles that were too long
             $data['title'] = \str_split((string) $data['title'], 64)[0];
             $data['templateData']['title'] = $data['title'];
-        }
-
-        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
-            $routePathName = $document['localizations'][$locale]['routePathName'];
-            $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
-            // check routePathName property and fallback to routePath
-            $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
-
-            // content bundle is only compatible with "url"
-            $data['templateData']['url'] = $routePath; // is used in the content bundle
-            $data['templateData'][$routePath] = $routePath; // can still be used in the template TODO
         }
 
         return $data;
@@ -72,17 +60,17 @@ class ArticlePersister extends AbstractPersister
 
     public function supports(array $document): bool
     {
-        return \in_array('sulu:article', $document['jcr']['mixinTypes']);
+        return \in_array('sulu:snippet', $document['jcr']['mixinTypes']);
     }
 
     public static function getType(): string
     {
-        return 'article';
+        return 'snippet';
     }
 
     protected function getEntityTableName(): string
     {
-        return 'ar_articles';
+        return 'sn_snippets';
     }
 
     protected function getEntityTableTypes(): array
@@ -91,6 +79,8 @@ class ArticlePersister extends AbstractPersister
             'uuid' => 'string',
             'created' => 'datetime',
             'changed' => 'datetime',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 
@@ -105,40 +95,35 @@ class ArticlePersister extends AbstractPersister
 
     protected function getDimensionContentTableName(): string
     {
-        return 'ar_article_dimension_contents';
+        return 'sn_snippet_dimension_contents';
     }
 
     protected function getDimensionContentTableTypes(): array
     {
+        // TODO shadow?
         return [
             'author_id' => 'integer',
-            'authored' => 'datetime',
             'title' => 'string',
+            'stage' => 'string',
             'locale' => 'string',
             'ghostLocale' => 'string',
             'availableLocales' => 'json',
             'templateKey' => 'string',
-            'stage' => 'string',
-            'workflowPlace' => 'string',
-            'workflowPublished' => 'datetime',
-            'seoTitle' => 'string',
-            'seoDescription' => 'string',
-            'seoKeywords' => 'string',
-            'seoCanonicalUrl' => 'string',
-            'seoNoIndex' => 'boolean',
-            'seoNoFollow' => 'boolean',
-            'seoHideInSitemap' => 'boolean',
+            'templateData' => 'json',
             'excerptTitle' => 'string',
             'excerptMore' => 'string',
             'excerptDescription' => 'string',
             'excerptImageId' => 'integer',
             'excerptIconId' => 'integer',
-            'templateData' => 'json',
+            'authored' => 'datetime',
+            'workflowPlace' => 'string',
+            'workflowPublished' => 'datetime',
         ];
     }
 
     protected function getDimensionContentMapping(): array
     {
+        //TODO
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
@@ -148,13 +133,6 @@ class ArticlePersister extends AbstractPersister
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
-            '[seoTitle]' => '[seo][title]',
-            '[seoDescription]' => '[seo][description]',
-            '[seoKeywords]' => '[seo][keywords]',
-            '[seoCanonicalUrl]' => '[seo][canonicalUrl]',
-            '[seoNoIndex]' => '[seo][noIndex]',
-            '[seoNoFollow]' => '[seo][noFollow]',
-            '[seoHideInSitemap]' => '[seo][hideInSitemap]',
             '[excerptTitle]' => '[excerpt][title]',
             '[excerptMore]' => '[excerpt][more]',
             '[excerptDescription]' => '[excerpt][description]',
@@ -165,56 +143,41 @@ class ArticlePersister extends AbstractPersister
 
     protected function getDimensionContentEntityIdMappingName(): string
     {
-        return 'articleUuid';
+        return 'snippetUuid';
     }
 
     protected function getEntityClassName(): string
     {
-        return 'Sulu\Article\Domain\Model\ArticleInterface';
+        return 'Sulu\Snippet\Domain\Model\SnippetInterface';
     }
 
     protected function getDimensionContentExcerptCategoriesTableName(): string
     {
-        return 'ar_article_dimension_content_excerpt_categories';
+        return 'sn_snippet_dimension_content_excerpt_categories';
     }
 
     protected function getDimensionContentExcerptCategoriesIdName(): string
     {
-        return 'article_dimension_content_id';
+        return 'snippet_dimension_content_id';
     }
 
     protected function getDimensionContentExcerptTagsTableName(): string
     {
-        return 'ar_article_dimension_content_excerpt_tags';
+        return 'sn_snippet_dimension_content_excerpt_tags';
     }
 
     protected function getDimensionContentExcerptTagsIdName(): string
     {
-        return 'article_dimension_content_id';
+        return 'snippet_dimension_content_id';
     }
 
-    protected function getPath(array $document, string $locale): string
+    protected function getPath(array $document, string $locale): ?string
     {
-        $localizedData = $document['localizations'][$locale];
-
-        if (!isset($localizedData['routePath'])) {
-            throw new InvalidPathException('routePath');
-        }
-
-        return $localizedData['routePath'];
-    }
-
-    protected function getDefaultData(): array
-    {
-        return [
-            'seoNoIndex' => false,
-            'seoNoFollow' => false,
-            'seoHideInSitemap' => false,
-        ];
+        return null;
     }
 
     protected function isRoutable(): bool
     {
-        return true;
+        return false;
     }
 }

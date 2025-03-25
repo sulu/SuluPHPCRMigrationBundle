@@ -16,7 +16,7 @@ use PHPCR\NodeInterface;
 use PHPCR\PropertyInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class NodeParser
+class PropertyNodeParser implements NodeParserInterface
 {
     public function __construct(
         private readonly PropertyAccessorInterface $propertyAccessor,
@@ -24,7 +24,10 @@ class NodeParser
     }
 
     /**
-     * @return mixed[]
+     * @return array{
+     *     localizations: array<string|null, <string, mixed>>,
+     *     jcr?: array<string, mixed>,
+     * }
      */
     public function parse(NodeInterface $node): array
     {
@@ -32,9 +35,22 @@ class NodeParser
             'localizations' => [
                 'null' => [], // required to always create the unlocalized dimension
             ],
+            'sulu' => [],
+            'jcr' => [],
         ];
         foreach ($node->getProperties() as $property) {
             $document = $this->parseProperty($property, $document);
+        }
+
+        if (!\array_key_exists('created', $document['sulu'])) {
+            // first localization is always null
+            $lastLocalization = $document['localizations'][\array_key_last($document['localizations'])];
+            $document['sulu']['created'] = $lastLocalization['created'];
+        }
+
+        if (!\array_key_exists('changed', $document['sulu'])) {
+            $lastLocalization = $document['localizations'][\array_key_last($document['localizations'])];
+            $document['sulu']['changed'] = $lastLocalization['changed'];
         }
 
         return $document;
@@ -99,6 +115,9 @@ class NodeParser
         } elseif (\str_starts_with($name, 'sulu:')) {
             $name = \substr($name, 5);
             $propertyPath .= '[sulu][' . $name . ']';
+        } elseif (\str_starts_with($name, 'sec:')) {
+            $name = \substr($name, 4);
+            $propertyPath .= '[sec][' . $name . ']';
         } elseif (\str_starts_with($name, 'seo-')) {
             $name = \substr($name, 4);
             $propertyPath .= '[seo][' . $name . ']';

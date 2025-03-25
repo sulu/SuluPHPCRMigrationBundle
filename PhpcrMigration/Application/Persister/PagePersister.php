@@ -15,7 +15,7 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\Invali
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class ArticlePersister extends AbstractPersister
+class PagePersister extends AbstractPersister
 {
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
@@ -52,6 +52,7 @@ class ArticlePersister extends AbstractPersister
         $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
 
         if (isset($data['title'])) {
+            // TODO error collector with titles that were too long
             $data['title'] = \str_split((string) $data['title'], 64)[0];
             $data['templateData']['title'] = $data['title'];
         }
@@ -72,25 +73,33 @@ class ArticlePersister extends AbstractPersister
 
     public function supports(array $document): bool
     {
-        return \in_array('sulu:article', $document['jcr']['mixinTypes']);
+        return \in_array('sulu:page', $document['jcr']['mixinTypes'])
+            || \in_array('sulu:home', $document['jcr']['mixinTypes']);
     }
 
     public static function getType(): string
     {
-        return 'article';
+        return 'page';
     }
 
     protected function getEntityTableName(): string
     {
-        return 'ar_articles';
+        return 'pa_pages';
     }
 
     protected function getEntityTableTypes(): array
     {
         return [
             'uuid' => 'string',
+            'parent_id' => 'string',
+            'webspaceKey' => 'string',
+            'lft' => 'integer',
+            'rgt' => 'integer',
+            'depth' => 'integer',
             'created' => 'datetime',
             'changed' => 'datetime',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 
@@ -98,6 +107,8 @@ class ArticlePersister extends AbstractPersister
     {
         return [
             '[uuid]' => '[jcr][uuid]',
+            '[parent_id]' => '[sulu][parentId]',
+            '[webspaceKey]' => '[sulu][webspaceKey]',
             '[created]' => '[sulu][created]',
             '[changed]' => '[sulu][changed]',
         ];
@@ -105,22 +116,21 @@ class ArticlePersister extends AbstractPersister
 
     protected function getDimensionContentTableName(): string
     {
-        return 'ar_article_dimension_contents';
+        return 'pa_page_dimension_contents';
     }
 
     protected function getDimensionContentTableTypes(): array
     {
+        // TODO shadow?
         return [
             'author_id' => 'integer',
-            'authored' => 'datetime',
             'title' => 'string',
+            'stage' => 'string',
             'locale' => 'string',
             'ghostLocale' => 'string',
             'availableLocales' => 'json',
             'templateKey' => 'string',
-            'stage' => 'string',
-            'workflowPlace' => 'string',
-            'workflowPublished' => 'datetime',
+            'templateData' => 'json',
             'seoTitle' => 'string',
             'seoDescription' => 'string',
             'seoKeywords' => 'string',
@@ -133,15 +143,20 @@ class ArticlePersister extends AbstractPersister
             'excerptDescription' => 'string',
             'excerptImageId' => 'integer',
             'excerptIconId' => 'integer',
-            'templateData' => 'json',
+            'authored' => 'datetime',
+            'lastModified' => 'datetime',
+            'workflowPlace' => 'string',
+            'workflowPublished' => 'datetime',
         ];
     }
 
     protected function getDimensionContentMapping(): array
     {
+        //TODO
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
+            '[lastModified]' => '[changed]',
             '[title]' => '[title]',
             '[ghostLocale]' => '[ghostLocale]',
             '[availableLocales]' => '[availableLocales]',
@@ -165,43 +180,43 @@ class ArticlePersister extends AbstractPersister
 
     protected function getDimensionContentEntityIdMappingName(): string
     {
-        return 'articleUuid';
+        return 'pageUuid';
     }
 
     protected function getEntityClassName(): string
     {
-        return 'Sulu\Article\Domain\Model\ArticleInterface';
+        return 'Sulu\Page\Domain\Model\PageInterface';
     }
 
     protected function getDimensionContentExcerptCategoriesTableName(): string
     {
-        return 'ar_article_dimension_content_excerpt_categories';
+        return 'pa_page_dimension_content_excerpt_categories';
     }
 
     protected function getDimensionContentExcerptCategoriesIdName(): string
     {
-        return 'article_dimension_content_id';
+        return 'page_dimension_content_id';
     }
 
     protected function getDimensionContentExcerptTagsTableName(): string
     {
-        return 'ar_article_dimension_content_excerpt_tags';
+        return 'pa_page_dimension_content_excerpt_tags';
     }
 
     protected function getDimensionContentExcerptTagsIdName(): string
     {
-        return 'article_dimension_content_id';
+        return 'page_dimension_content_id';
     }
 
     protected function getPath(array $document, string $locale): string
     {
         $localizedData = $document['localizations'][$locale];
 
-        if (!isset($localizedData['routePath'])) {
-            throw new InvalidPathException('routePath');
+        if (!isset($localizedData['url'])) {
+            throw new InvalidPathException('url');
         }
 
-        return $localizedData['routePath'];
+        return $localizedData['url'];
     }
 
     protected function getDefaultData(): array

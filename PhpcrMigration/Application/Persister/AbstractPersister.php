@@ -66,7 +66,11 @@ abstract class AbstractPersister implements PersisterInterface
         $this->entityRepository->beginTransaction();
         $this->createOrUpdateEntity($document);
         $this->createOrUpdateDimensionContent($document, $isLive);
-        $this->createOrUpdateRoute($document);
+
+        if ($this->isRoutable()) {
+            $this->createOrUpdateRoute($document);
+        }
+
         $this->entityRepository->commit();
     }
 
@@ -199,6 +203,33 @@ abstract class AbstractPersister implements PersisterInterface
     protected function createOrUpdateEntity(array $document): void
     {
         $data = $this->mapDataViaMapping($document, $this->getEntityMapping());
+        $data = $this->mapEntityData($document, $data);
+
+        // if parentId key exists, we assume that this is a nested document
+        if (\array_key_exists('parentId', $document['sulu'])) {
+            if (null === $document['sulu']['parentId']) {
+                $this->entityRepository->createOrUpdateRootNode(
+                    $data,
+                    $this->getEntityTableName(),
+                    $this->getEntityTableTypes(),
+                    [
+                        'uuid' => $data['uuid'],
+                    ]
+                );
+            } else {
+                $this->entityRepository->addOrUpdateChildNode(
+                    $data,
+                    $this->getEntityTableName(),
+                    $this->getEntityTableTypes(),
+                    $document['sulu']['parentId'],
+                    [
+                        'uuid' => $data['uuid'],
+                    ]
+                );
+            }
+
+            return;
+        }
 
         $this->entityRepository->insertOrUpdate(
             $data,
@@ -232,7 +263,7 @@ abstract class AbstractPersister implements PersisterInterface
             $data = \array_merge($this->getDefaultData(), $data);
             $data = $this->mapExcerptImages($data);
             $data = $this->mapExcerptIcons($data);
-            $data = $this->mapData($document, $locale, $data, $isLive);
+            $data = $this->mapDimensionContentData($document, $locale, $data, $isLive);
 
             // remove known keys that do not belong to the templateData
             $localizedData = $this->removeNonTemplateData($localizedData);
@@ -305,29 +336,23 @@ abstract class AbstractPersister implements PersisterInterface
                 ]
             );
 
-            try {
-                $this->entityRepository->insertOrUpdate(
-                    $data,
-                    self::ROUTE_TABLE,
-                    [
-                        'entity_class' => 'string',
-                        'path' => 'string',
-                        'locale' => 'string',
-                        'history' => 'boolean',
-                        'created' => 'datetime',
-                        'changed' => 'datetime',
-                    ],
-                    [
-                        'entity_id' => $document['jcr']['uuid'],
-                        'path' => $data['path'],
-                        'locale' => $locale,
-                    ]
-                );
-            } catch (\Exception $e) { // @phpstan-ignore-line
-                echo \PHP_EOL;
-                echo \PHP_EOL;
-                echo $e->getMessage();
-            }
+            $this->entityRepository->insertOrUpdate(
+                $data,
+                self::ROUTE_TABLE,
+                [
+                    'entity_class' => 'string',
+                    'path' => 'string',
+                    'locale' => 'string',
+                    'history' => 'boolean',
+                    'created' => 'datetime',
+                    'changed' => 'datetime',
+                ],
+                [
+                    'entity_id' => $document['jcr']['uuid'],
+                    'path' => $data['path'],
+                    'locale' => $locale,
+                ]
+            );
         }
     }
 
@@ -337,10 +362,21 @@ abstract class AbstractPersister implements PersisterInterface
      *
      * @return mixed[]
      */
-    protected function mapData(array $document, ?string $locale, array $data, bool $isLive): array
+    protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
     {
         $data['templateData'] = [];
 
+        return $data;
+    }
+
+    /**
+     * @param Document $document
+     * @param mixed[] $data
+     *
+     * @return mixed[]
+     */
+    protected function mapEntityData(array $document, array $data): array
+    {
         return $data;
     }
 
@@ -359,6 +395,14 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getDefaultData(): array
+    {
+        return [];
     }
 
     /**
@@ -407,13 +451,7 @@ abstract class AbstractPersister implements PersisterInterface
     /**
      * @param Document $document
      */
-    abstract protected function getPath(array $document, string $locale): string;
+    abstract protected function getPath(array $document, string $locale): ?string;
 
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getDefaultData(): array
-    {
-        return [];
-    }
+    abstract protected function isRoutable(): bool;
 }

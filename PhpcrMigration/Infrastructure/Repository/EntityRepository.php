@@ -99,4 +99,80 @@ class EntityRepository implements EntityRepositoryInterface
 
         return [$conditions, $params];
     }
+
+    /**
+     * Creates a new root node.
+     */
+    public function createOrUpdateRootNode(array $data, string $tableName, array $types, array $where = []): void
+    {
+        $exists = [] !== $where && $this->exists($tableName, $where);
+
+        if ($exists) {
+            $this->connection->update(
+                $tableName,
+                $data,
+                $where,
+                $types
+            );
+        } else {
+            // Find the max right value to place our new root after existing roots
+            $maxRgt = (int) $this->connection->fetchOne("SELECT MAX(rgt) FROM $tableName") ?: 0;
+
+            // Set tree values for new root
+            $data['lft'] = $maxRgt + 1;
+            $data['rgt'] = $maxRgt + 2;
+            $data['depth'] = 0;
+
+            $this->connection->insert($tableName, $data, $types);
+        }
+    }
+
+    /**
+     * Adds a child node to a parent or updates it if it already exists.
+     */
+    public function addOrUpdateChildNode(array $data, string $tableName, array $types, string $parentId, array $where = []): void
+    {
+        $exists = [] !== $where && $this->exists($tableName, $where);
+
+        if ($exists) {
+            $this->connection->update(
+                $tableName,
+                $data,
+                $where,
+                $types
+            );
+
+            return;
+        }
+
+        $parent = $this->connection->fetchAssociative(
+            "SELECT lft, rgt, depth FROM $tableName WHERE uuid = ?",
+            [$parentId]
+        );
+
+        if (!$parent) {
+            throw new \RuntimeException("Parent node $parentId not found");
+        }
+
+        $parentRgt = (int) $parent['rgt'];
+        $parentDepth = (int) $parent['depth'];
+
+        // Make space for new node
+        $this->connection->executeStatement(
+            "UPDATE $tableName SET rgt = rgt + 2 WHERE rgt >= ?",
+            [$parentRgt]
+        );
+
+        $this->connection->executeStatement(
+            "UPDATE $tableName SET lft = lft + 2 WHERE lft > ?",
+            [$parentRgt]
+        );
+
+        // Insert new node
+        $data['lft'] = $parentRgt;
+        $data['rgt'] = $parentRgt + 1;
+        $data['depth'] = $parentDepth + 1;
+
+        $this->connection->insert($tableName, $data, $types);
+    }
 }

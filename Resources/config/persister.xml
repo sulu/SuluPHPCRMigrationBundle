@@ -3,15 +3,31 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="sulu_phpcr_migration.persister.article"
+        <service id="sulu_phpcr_migration.page_persister"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PagePersister">
+            <argument type="service" id="property_accessor"/>
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
+
+            <tag name="sulu_phpcr_migration.persister" type="page"/>
+        </service>
+
+        <service id="sulu_phpcr_migration.snippet_persister"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\SnippetPersister">
+            <argument type="service" id="property_accessor"/>
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
+
+            <tag name="sulu_phpcr_migration.persister" type="snippet"/>
+        </service>
+
+        <service id="sulu_phpcr_migration.article_persister"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\ArticlePersister">
             <argument type="service" id="property_accessor"/>
-            <argument type="service" id="sulu_phpcr_migration.repository.entity"/>
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
 
             <tag name="sulu_phpcr_migration.persister" type="article"/>
         </service>
 
-        <service id="sulu_phpcr_migration.persister.pool"
+        <service id="sulu_phpcr_migration.persister_pool"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool">
             <argument type="tagged_iterator" tag="sulu_phpcr_migration.persister" index-by="type"/>
         </service>
