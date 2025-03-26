@@ -37,7 +37,7 @@ class MigratePhpcrCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('documentTypes', InputArgument::OPTIONAL, 'The document type to migrate. (e.g. snippet, page, article)', 'article');
+        $this->addArgument('documentTypes', InputArgument::OPTIONAL, 'The document type to migrate. (e.g. snippet, page, article)', 'page,article,snippet');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
