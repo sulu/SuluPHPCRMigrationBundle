@@ -20,7 +20,8 @@ class PagePersister extends AbstractPersister
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
-    ) {
+    )
+    {
         parent::__construct($propertyAccessor, $entityRepository);
     }
 
@@ -39,7 +40,7 @@ class PagePersister extends AbstractPersister
         $data['availableLocales'] = null;
         $data['routePathName'] = null;
 
-        return \array_filter($data, static fn ($entry) => null !== $entry);
+        return \array_filter($data, static fn($entry) => null !== $entry);
     }
 
     protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
@@ -53,7 +54,7 @@ class PagePersister extends AbstractPersister
 
         if (isset($data['title'])) {
             // TODO error collector with titles that were too long
-            $data['title'] = \str_split((string) $data['title'], 64)[0];
+            $data['title'] = \str_split((string)$data['title'], 64)[0];
             $data['templateData']['title'] = $data['title'];
         }
 
@@ -69,6 +70,44 @@ class PagePersister extends AbstractPersister
         }
 
         return $data;
+    }
+
+    protected function insertDataRelationsToDimensionContent(array $document, ?string $locale, array $dimensionContent): void
+    {
+        parent::insertDataRelationsToDimensionContent($document, $locale, $dimensionContent);
+        $this->insertOrUpdateNavigationContexts($document, $locale, $dimensionContent);
+    }
+
+    private function insertOrUpdateNavigationContexts(array $document, ?string $locale, array $dimensionContent): void
+    {
+        $navigationContexts = $document['localizations'][$locale]['navContexts'] ?? null;
+
+        if ($navigationContexts === null) {
+            return;
+        }
+
+        $navigationContextTableName = 'pa_page_dimension_content_navigation_contexts';
+        // Remove all existing entries
+        $this->entityRepository->removeBy(
+            $navigationContextTableName,
+            [
+                'page_dimension_content_id' => $dimensionContent['id'],
+            ]
+        );
+
+        foreach ($navigationContexts as $navigationContext) {
+            $this->entityRepository->insertOrUpdate(
+                [
+                    'page_dimension_content_id' => $dimensionContent['id'],
+                    'name' => $navigationContext,
+                ],
+                $navigationContextTableName,
+                [
+                    'page_dimension_content_id' => 'integer',
+                    'name' => 'string',
+                ]
+            );
+        }
     }
 
     public function supports(array $document): bool
