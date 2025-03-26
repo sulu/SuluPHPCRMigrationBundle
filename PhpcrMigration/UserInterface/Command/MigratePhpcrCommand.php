@@ -54,17 +54,17 @@ class MigratePhpcrCommand extends Command
             $io->title('Migrating ' . $documentType . ' documents');
             $persister = $this->persisterPool->getPersister($documentType);
 
-            /** @var SessionInterface $session */
-            foreach ([$session, $liveSession] as $session) {
-                $io->section('Migrating ' . $documentType . ' documents in ' . $session->getWorkspace()->getName());
-                $nodes = $this->fetchPhpcrNodes($session, $documentType);
+            /** @var SessionInterface $currentSession */
+            foreach ([$session, $liveSession] as $currentSession) {
+                $io->section('Migrating ' . $documentType . ' documents in ' . $currentSession->getWorkspace()->getName());
+                $nodes = $this->fetchPhpcrNodes($currentSession, $documentType);
                 $progressBar = $io->createProgressBar(\iterator_count($nodes));
                 $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                 foreach ($nodes as $node) {
                     $document = $this->nodeParser->parse($node);
                     $persister->persist(
                         document: $document,
-                        isLive: \str_ends_with($session->getWorkspace()->getName(), '_live'),
+                        isLive: \str_ends_with($currentSession->getWorkspace()->getName(), '_live'),
                     );
                     $progressBar->advance();
                 }

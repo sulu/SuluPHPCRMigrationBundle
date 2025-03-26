@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Sulu.
  *
@@ -15,13 +17,16 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\Invali
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
+/**
+ * @phpstan-import-type Document from AbstractPersister
+ * @phpstan-import-type DimensionContent from AbstractPersister
+ */
 class PagePersister extends AbstractPersister
 {
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
-    )
-    {
+    ) {
         parent::__construct($propertyAccessor, $entityRepository);
     }
 
@@ -39,8 +44,9 @@ class PagePersister extends AbstractPersister
         $data['state'] = null;
         $data['availableLocales'] = null;
         $data['routePathName'] = null;
+        $data['navContexts'] = null;
 
-        return \array_filter($data, static fn($entry) => null !== $entry);
+        return \array_filter($data, static fn ($entry) => null !== $entry);
     }
 
     protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
@@ -54,7 +60,7 @@ class PagePersister extends AbstractPersister
 
         if (isset($data['title'])) {
             // TODO error collector with titles that were too long
-            $data['title'] = \str_split((string)$data['title'], 64)[0];
+            $data['title'] = \str_split((string) $data['title'], 64)[0];
             $data['templateData']['title'] = $data['title'];
         }
 
@@ -78,11 +84,15 @@ class PagePersister extends AbstractPersister
         $this->insertOrUpdateNavigationContexts($document, $locale, $dimensionContent);
     }
 
+    /**
+     * @param Document $document
+     * @param DimensionContent $dimensionContent
+     */
     private function insertOrUpdateNavigationContexts(array $document, ?string $locale, array $dimensionContent): void
     {
         $navigationContexts = $document['localizations'][$locale]['navContexts'] ?? null;
 
-        if ($navigationContexts === null) {
+        if (null === $navigationContexts) {
             return;
         }
 
@@ -92,7 +102,7 @@ class PagePersister extends AbstractPersister
             $navigationContextTableName,
             [
                 'page_dimension_content_id' => $dimensionContent['id'],
-            ]
+            ],
         );
 
         foreach ($navigationContexts as $navigationContext) {
@@ -105,15 +115,15 @@ class PagePersister extends AbstractPersister
                 [
                     'page_dimension_content_id' => 'integer',
                     'name' => 'string',
-                ]
+                ],
             );
         }
     }
 
     public function supports(array $document): bool
     {
-        return \in_array('sulu:page', $document['jcr']['mixinTypes'])
-            || \in_array('sulu:home', $document['jcr']['mixinTypes']);
+        return \in_array('sulu:page', $document['jcr']['mixinTypes'], true)
+            || \in_array('sulu:home', $document['jcr']['mixinTypes'], true);
     }
 
     public static function getType(): string
@@ -191,7 +201,7 @@ class PagePersister extends AbstractPersister
 
     protected function getDimensionContentMapping(): array
     {
-        //TODO
+        // TODO
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',

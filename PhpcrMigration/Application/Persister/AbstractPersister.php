@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Sulu.
  *
@@ -25,6 +27,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         template: string,
  *         state: int,
  *         url?: string,
+ *         navContexts?: string[],
  *         excerpt?: array{
  *             categories?: int[],
  *             tags?: int[],
@@ -91,7 +94,7 @@ abstract class AbstractPersister implements PersisterInterface
             $this->propertyAccessor->setValue(
                 $mappedData,
                 $target,
-                $this->propertyAccessor->getValue($data, $source)
+                $this->propertyAccessor->getValue($data, $source),
             );
         }
 
@@ -148,7 +151,7 @@ abstract class AbstractPersister implements PersisterInterface
                 $this->getDimensionContentExcerptCategoriesTableName(),
                 [
                     $this->getDimensionContentExcerptCategoriesIdName() => $dimensionContent['id'],
-                ]
+                ],
             );
 
             foreach ($categoryIds as $categoryId) {
@@ -161,7 +164,7 @@ abstract class AbstractPersister implements PersisterInterface
                     [
                         $this->getDimensionContentExcerptCategoriesIdName() => 'integer',
                         'category_id' => 'integer',
-                    ]
+                    ],
                 );
             }
         }
@@ -179,7 +182,7 @@ abstract class AbstractPersister implements PersisterInterface
                 $this->getDimensionContentExcerptTagsTableName(),
                 [
                     $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
-                ]
+                ],
             );
 
             foreach ($tagIds as $tagId) {
@@ -192,7 +195,7 @@ abstract class AbstractPersister implements PersisterInterface
                     [
                         $this->getDimensionContentExcerptTagsIdName() => 'integer',
                         'tag_id' => 'integer',
-                    ]
+                    ],
                 );
             }
         }
@@ -215,7 +218,7 @@ abstract class AbstractPersister implements PersisterInterface
                     $this->getEntityTableTypes(),
                     [
                         'uuid' => $data['uuid'],
-                    ]
+                    ],
                 );
             } else {
                 $this->entityRepository->addOrUpdateChildNode(
@@ -225,7 +228,7 @@ abstract class AbstractPersister implements PersisterInterface
                     $document['sulu']['parentId'],
                     [
                         'uuid' => $data['uuid'],
-                    ]
+                    ],
                 );
             }
 
@@ -238,7 +241,7 @@ abstract class AbstractPersister implements PersisterInterface
             $this->getEntityTableTypes(),
             [
                 'uuid' => $data['uuid'],
-            ]
+            ],
         );
     }
 
@@ -247,9 +250,16 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function createOrUpdateDimensionContent(array $document, bool $isLive): void
     {
-        /** @var mixed[] $localizations */
+        /** @var array<string, mixed[]> $localizations */
         $localizations = $document['localizations'];
-        $availableLocales = \array_values(\array_filter(\array_keys($localizations), static fn ($locale) => 'null' !== $locale));
+
+        $availableLocales = [];
+        foreach ($localizations as $locale => $localization) {
+            // add only published locales to availableLocales
+            if (\array_key_exists('state', $localization) && 2 === $localization['state']) {
+                $availableLocales[] = $locale;
+            }
+        }
         /**
          * @var array{
          *     availableLocales?: string[],
@@ -259,7 +269,12 @@ abstract class AbstractPersister implements PersisterInterface
          */
         foreach ($localizations as $locale => $localizedData) {
             $locale = 'null' === $locale ? null : $locale;
-            $localizedData['availableLocales'] = $availableLocales;
+
+            $localizedData['availableLocales'] = null;
+            if (null === $locale) {
+                $localizedData['availableLocales'] = $availableLocales;
+            }
+
             $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
             $data = \array_merge($this->getDefaultData(), $data);
             $data = $this->mapExcerptImages($data);
@@ -281,7 +296,7 @@ abstract class AbstractPersister implements PersisterInterface
                     $this->getDimensionContentEntityIdMappingName() => $data[$this->getDimensionContentEntityIdMappingName()],
                     'locale' => $locale,
                     'stage' => $data['stage'],
-                ]
+                ],
             );
 
             /**
@@ -334,7 +349,7 @@ abstract class AbstractPersister implements PersisterInterface
                     'history' => $existingRoute['history'] ?? 0,
                     'created' => new \DateTime($existingRoute['created'] ?? 'now'),
                     'changed' => new \DateTime(),
-                ]
+                ],
             );
 
             $this->entityRepository->insertOrUpdate(
@@ -352,7 +367,7 @@ abstract class AbstractPersister implements PersisterInterface
                     'entity_id' => $document['jcr']['uuid'],
                     'path' => $data['path'],
                     'locale' => $locale,
-                ]
+                ],
             );
         }
     }
