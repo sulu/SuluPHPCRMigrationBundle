@@ -69,8 +69,16 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
 
         if ('dbal' === $configuration['connection']['type'] && $name = ($configuration['connection']['name'] ?? null)) {
             $builder->setAlias('sulu_phpcr_migration.connection', \sprintf('doctrine.dbal.%s_connection', $name));
+        }
 
-            return;
+        // Prepend doctrine configuration to ignore phpcr_ tables
+        if ($builder->hasExtension('doctrine')) {
+            $doctrineConfig = [];
+            $doctrineConfig['dbal'] = [
+                'schema_filter' => '~^(?!phpcr_)~', // Ignore all tables prefixed by `phpcr_`
+            ];
+
+            $builder->prependExtensionConfig('doctrine', $doctrineConfig);
         }
     }
 
