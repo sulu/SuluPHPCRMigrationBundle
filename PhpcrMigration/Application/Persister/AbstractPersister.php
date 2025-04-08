@@ -40,7 +40,10 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 abstract class AbstractPersister implements PersisterInterface
 {
-    public const ROUTE_TABLE = 'ro_routes';
+    // TODO revert this constant to `ro_routes` after the legacy SuluRoutingBundle is removed
+    public const ROUTE_TABLE = 'ro_next_routes';
+
+    public const LEGACY_ROUTE_TABLE = 'ro_routes';
 
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
@@ -67,14 +70,18 @@ abstract class AbstractPersister implements PersisterInterface
             }
         }
 
+        if ($this->isRoutable()) {
+            $routes = $this->createOrUpdateRoutes($document);
+            foreach ($routes as $locale => $route) {
+                $document['localizations'][$locale]['_route'] = $route;
+            }
+
+            $historyRoutes = $this->createOrUpdateHistoryRoutes($document);
+        }
+
         $this->entityRepository->beginTransaction();
         $this->createOrUpdateEntity($document);
         $this->createOrUpdateDimensionContent($document, $isLive);
-
-        if ($this->isRoutable()) {
-            $this->createOrUpdateRoute($document);
-        }
-
         $this->entityRepository->commit();
     }
 
@@ -315,8 +322,9 @@ abstract class AbstractPersister implements PersisterInterface
     /**
      * @param Document $document
      */
-    protected function createOrUpdateRoute(array $document): void
+    protected function createOrUpdateRoutes(array $document): array
     {
+        $routes = [];
         $localizations = $document['localizations'];
         foreach ($localizations as $locale => $localizedData) {
             // skip unlocalized data
@@ -328,48 +336,66 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            $defaultData = [
-                'history' => false,
-                'created' => new \DateTime(),
-                'changed' => new \DateTime(),
-            ];
+            // TODO history (read from legacy route table and write to new route table the history entries)
+            //            $existingRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
+            //                'resource_key' => $this->getEntityResourceKey(),
+            //                'resource_id' => $document['jcr']['uuid'],
+            //                'locale' => $locale,
+            //            ]) ?? [];
+            //                'history' => $existingRoute['history'] ?? 0,
 
-            $existingRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
-                'entity_id' => $document['jcr']['uuid'],
+            $parentId = $this->getParentId($document, $locale);
+            $data = [
+                'resource_key' => $this->getEntityResourceKey(),
+                'resource_id' => $document['jcr']['uuid'],
                 'locale' => $locale,
-            ]) ?? [];
-
-            $data = \array_merge(
-                $defaultData,
-                [
-                    'entity_class' => $this->getEntityClassName(),
-                    'entity_id' => $document['jcr']['uuid'],
-                    'locale' => $locale,
-                    'path' => $existingRoute['path'] ?? $this->getPath($document, $locale),
-                    'history' => $existingRoute['history'] ?? 0,
-                    'created' => new \DateTime($existingRoute['created'] ?? 'now'),
-                    'changed' => new \DateTime(),
-                ],
-            );
+                'slug' => $this->getSlug($document, $locale),
+                'site' => $this->getSite($document, $locale),
+                'parent_id' => $this->getParentRouteId($parentId, $locale),
+            ];
 
             $this->entityRepository->insertOrUpdate(
                 $data,
                 self::ROUTE_TABLE,
                 [
-                    'entity_class' => 'string',
-                    'path' => 'string',
+                    'resource_id' => 'string',
+                    'resource_key' => 'string',
+                    'slug' => 'string',
                     'locale' => 'string',
-                    'history' => 'boolean',
-                    'created' => 'datetime',
-                    'changed' => 'datetime',
+                    'parent_id' => 'integer',
                 ],
                 [
-                    'entity_id' => $document['jcr']['uuid'],
-                    'path' => $data['path'],
+                    'resource_id' => $document['jcr']['uuid'],
+                    'resource_key' => $this->getEntityResourceKey(),
                     'locale' => $locale,
                 ],
             );
+
+            $route = $this->entityRepository->findBy(self::ROUTE_TABLE, [
+                'resource_id' => $document['jcr']['uuid'],
+                'resource_key' => $this->getEntityResourceKey(),
+                'locale' => $locale,
+            ]);
+
+            $routes[$locale] = $route;
         }
+
+        return $routes;
+    }
+
+    protected function getParentRouteId(?string $parentId, ?string $locale): ?int
+    {
+        if (null === $parentId) {
+            return null;
+        }
+
+        $parentRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
+            'resource_key' => $this->getEntityResourceKey(),
+            'resource_id' => $parentId,
+            'locale' => $locale,
+        ]);
+
+        return $parentRoute['id'] ?? null;
     }
 
     /**
@@ -454,7 +480,7 @@ abstract class AbstractPersister implements PersisterInterface
 
     abstract protected function getDimensionContentEntityIdMappingName(): string;
 
-    abstract protected function getEntityClassName(): string;
+    abstract protected function getEntityResourceKey(): string;
 
     abstract protected function getDimensionContentExcerptCategoriesTableName(): string;
 
@@ -467,7 +493,31 @@ abstract class AbstractPersister implements PersisterInterface
     /**
      * @param Document $document
      */
-    abstract protected function getPath(array $document, string $locale): ?string;
+    protected function getSlug(array $document, string $locale): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @param Document $document
+     */
+    protected function getSite(array $document, string $locale): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @param Document $document
+     */
+    protected function getParentId(array $document, string $locale): ?string
+    {
+        return null;
+    }
 
     abstract protected function isRoutable(): bool;
+
+    protected function createOrUpdateHistoryRoutes(array $document): void
+    {
+        return;
+    }
 }

@@ -146,9 +146,9 @@ class SnippetPersister extends AbstractPersister
         return 'snippetUuid';
     }
 
-    protected function getEntityClassName(): string
+    protected function getEntityResourceKey(): string
     {
-        return 'Sulu\Snippet\Domain\Model\SnippetInterface';
+        return 'snippets';
     }
 
     protected function getDimensionContentExcerptCategoriesTableName(): string
@@ -169,11 +169,6 @@ class SnippetPersister extends AbstractPersister
     protected function getDimensionContentExcerptTagsIdName(): string
     {
         return 'snippet_dimension_content_id';
-    }
-
-    protected function getPath(array $document, string $locale): ?string
-    {
-        return null;
     }
 
     protected function isRoutable(): bool

@@ -113,6 +113,7 @@ class ArticlePersister extends AbstractPersister
         return [
             'author_id' => 'integer',
             'authored' => 'datetime',
+            'route_id' => 'integer',
             'title' => 'string',
             'locale' => 'string',
             'ghostLocale' => 'string',
@@ -142,6 +143,7 @@ class ArticlePersister extends AbstractPersister
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
+            '[route_id]' => '[_route][id]',
             '[title]' => '[title]',
             '[ghostLocale]' => '[ghostLocale]',
             '[availableLocales]' => '[availableLocales]',
@@ -168,9 +170,9 @@ class ArticlePersister extends AbstractPersister
         return 'articleUuid';
     }
 
-    protected function getEntityClassName(): string
+    protected function getEntityResourceKey(): string
     {
-        return 'Sulu\Article\Domain\Model\ArticleInterface';
+        return 'articles';
     }
 
     protected function getDimensionContentExcerptCategoriesTableName(): string
@@ -193,7 +195,7 @@ class ArticlePersister extends AbstractPersister
         return 'article_dimension_content_id';
     }
 
-    protected function getPath(array $document, string $locale): string
+    protected function getSlug(array $document, string $locale): string
     {
         $localizedData = $document['localizations'][$locale];
 
@@ -202,6 +204,12 @@ class ArticlePersister extends AbstractPersister
         }
 
         return $localizedData['routePath'];
+    }
+
+    protected function getParentId(array $document, string $locale): ?string
+    {
+        // TODO page tree route support
+        return null;
     }
 
     protected function getDefaultData(): array

@@ -173,6 +173,7 @@ class PagePersister extends AbstractPersister
         // TODO shadow?
         return [
             'author_id' => 'integer',
+            'route_id' => 'integer',
             'title' => 'string',
             'stage' => 'string',
             'locale' => 'string',
@@ -201,10 +202,10 @@ class PagePersister extends AbstractPersister
 
     protected function getDimensionContentMapping(): array
     {
-        // TODO
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
+            '[route_id]' => '[_route][id]',
             '[lastModified]' => '[changed]',
             '[title]' => '[title]',
             '[ghostLocale]' => '[ghostLocale]',
@@ -232,9 +233,9 @@ class PagePersister extends AbstractPersister
         return 'pageUuid';
     }
 
-    protected function getEntityClassName(): string
+    protected function getEntityResourceKey(): string
     {
-        return 'Sulu\Page\Domain\Model\PageInterface';
+        return 'pages';
     }
 
     protected function getDimensionContentExcerptCategoriesTableName(): string
@@ -257,7 +258,7 @@ class PagePersister extends AbstractPersister
         return 'page_dimension_content_id';
     }
 
-    protected function getPath(array $document, string $locale): string
+    protected function getSlug(array $document, string $locale): string
     {
         $localizedData = $document['localizations'][$locale];
 
@@ -266,6 +267,28 @@ class PagePersister extends AbstractPersister
         }
 
         return $localizedData['url'];
+    }
+
+    protected function getSite(array $document, string $locale): ?string
+    {
+        $data = $document['sulu'];
+
+        if (!isset($data['webspaceKey'])) {
+            throw new InvalidPathException('webspaceKey');
+        }
+
+        return $data['webspaceKey'];
+    }
+
+    protected function getParentId(array $document, string $locale): ?string
+    {
+        $data = $document['sulu'];
+
+        if (!\array_key_exists('parentId', $data)) {
+            throw new InvalidPathException('parentId');
+        }
+
+        return $data['parentId'];
     }
 
     protected function getDefaultData(): array
