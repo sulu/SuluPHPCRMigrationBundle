@@ -45,6 +45,11 @@ abstract class AbstractPersister implements PersisterInterface
 
     public const LEGACY_ROUTE_TABLE = 'ro_routes';
 
+    public const URL = '_url';
+    public const HISTORY_URLS = '_history_urls';
+
+    public const ROUTE_RESOURCE_KEY = 'history_route';
+
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
         protected EntityRepositoryInterface $entityRepository,
@@ -73,10 +78,11 @@ abstract class AbstractPersister implements PersisterInterface
         if ($this->isRoutable()) {
             $routes = $this->createOrUpdateRoutes($document);
             foreach ($routes as $locale => $route) {
+                // We have to add the routes to the document, because the
+                // `createOrUpdateDimensionContent` method needs them to
+                // set the relation between the DimensionContent and the Route.
                 $document['localizations'][$locale]['_route'] = $route;
             }
-
-            $historyRoutes = $this->createOrUpdateHistoryRoutes($document);
         }
 
         $this->entityRepository->beginTransaction();
@@ -309,7 +315,7 @@ abstract class AbstractPersister implements PersisterInterface
             /**
              * @var DimensionContent $dimensionContent
              */
-            $dimensionContent = $this->entityRepository->findBy($this->getDimensionContentTableName(), [
+            $dimensionContent = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), [
                 $this->getDimensionContentEntityIdMappingName() => $data[$this->getDimensionContentEntityIdMappingName()],
                 'locale' => $locale,
                 'stage' => $data['stage'],
@@ -336,22 +342,20 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            // TODO history (read from legacy route table and write to new route table the history entries)
-            //            $existingRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
-            //                'resource_key' => $this->getEntityResourceKey(),
-            //                'resource_id' => $document['jcr']['uuid'],
-            //                'locale' => $locale,
-            //            ]) ?? [];
-            //                'history' => $existingRoute['history'] ?? 0,
-
             $parentId = $this->getParentId($document, $locale);
+            $parentRouteId = $this->getParentRouteId($parentId, $locale);
+            $site = $this->getSite($document, $locale);
+            $resourceId = $document['jcr']['uuid'];
+            $resourceKey = $this->getEntityResourceKey();
+
+            // main route
             $data = [
-                'resource_key' => $this->getEntityResourceKey(),
-                'resource_id' => $document['jcr']['uuid'],
+                'resource_key' => $resourceKey,
+                'resource_id' => $resourceId,
                 'locale' => $locale,
                 'slug' => $this->getSlug($document, $locale),
-                'site' => $this->getSite($document, $locale),
-                'parent_id' => $this->getParentRouteId($parentId, $locale),
+                'site' => $site,
+                'parent_id' => $parentRouteId,
             ];
 
             $this->entityRepository->insertOrUpdate(
@@ -365,19 +369,55 @@ abstract class AbstractPersister implements PersisterInterface
                     'parent_id' => 'integer',
                 ],
                 [
-                    'resource_id' => $document['jcr']['uuid'],
-                    'resource_key' => $this->getEntityResourceKey(),
+                    'resource_id' => $resourceId,
+                    'resource_key' => $resourceKey,
                     'locale' => $locale,
                 ],
             );
 
-            $route = $this->entityRepository->findBy(self::ROUTE_TABLE, [
-                'resource_id' => $document['jcr']['uuid'],
-                'resource_key' => $this->getEntityResourceKey(),
+            $route = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+                'resource_id' => $resourceId,
+                'resource_key' => $resourceKey,
                 'locale' => $locale,
             ]);
 
             $routes[$locale] = $route;
+
+            // history routes
+            $historyUrls = $localizedData[AbstractPersister::HISTORY_URLS] ?? null;
+            if (null === $historyUrls) {
+                continue;
+            }
+
+            $historyResourceId = $resourceKey . '::' . $resourceId;
+            foreach ($historyUrls as $url) {
+                $data = [
+                    'resource_key' => AbstractPersister::ROUTE_RESOURCE_KEY,
+                    'resource_id' => $historyResourceId,
+                    'locale' => $locale,
+                    'slug' => $url,
+                    'site' => $site,
+                    'parent_id' => $parentRouteId,
+                ];
+
+                $this->entityRepository->insertOrUpdate(
+                    $data,
+                    self::ROUTE_TABLE,
+                    [
+                        'resource_id' => 'string',
+                        'resource_key' => 'string',
+                        'slug' => 'string',
+                        'locale' => 'string',
+                        'parent_id' => 'integer',
+                    ],
+                    [
+                        'resource_id' => $historyResourceId,
+                        'resource_key' => AbstractPersister::ROUTE_RESOURCE_KEY,
+                        'slug' => $url,
+                        'locale' => $locale,
+                    ],
+                );
+            }
         }
 
         return $routes;
@@ -389,7 +429,7 @@ abstract class AbstractPersister implements PersisterInterface
             return null;
         }
 
-        $parentRoute = $this->entityRepository->findBy(self::ROUTE_TABLE, [
+        $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
             'resource_key' => $this->getEntityResourceKey(),
             'resource_id' => $parentId,
             'locale' => $locale,
@@ -515,9 +555,4 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     abstract protected function isRoutable(): bool;
-
-    protected function createOrUpdateHistoryRoutes(array $document): void
-    {
-        return;
-    }
 }

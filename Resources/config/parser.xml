@@ -16,6 +16,13 @@
             <tag name="sulu_phpcr_migration.node_parser"/>
         </service>
 
+        <service id="sulu_phpcr_migration.article_parser"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\ArticleNodeParser">
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
+
+            <tag name="sulu_phpcr_migration.node_parser"/>
+        </service>
+
         <service id="sulu_phpcr_migration.chain_node_parser"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\ChainNodeParser">
 

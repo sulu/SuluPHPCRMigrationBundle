@@ -262,11 +262,11 @@ class PagePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
-        if (!isset($localizedData['url'])) {
-            throw new InvalidPathException('url');
+        if (!isset($localizedData[AbstractPersister::URL])) {
+            throw new InvalidPathException(AbstractPersister::URL);
         }
 
-        return $localizedData['url'];
+        return $localizedData[AbstractPersister::URL];
     }
 
     protected function getSite(array $document, string $locale): ?string

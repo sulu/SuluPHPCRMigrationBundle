@@ -29,7 +29,14 @@ interface EntityRepositoryInterface
      *
      * @return mixed[]|null
      */
-    public function findBy(string $tableName, array $where): ?array;
+    public function findOneBy(string $tableName, array $where): ?array;
+
+    /**
+     * @param mixed[] $where
+     *
+     * @return array<array<mixed>>
+     */
+    public function findBy(string $tableName, array $where): array;
 
     /**
      * @param mixed[] $where

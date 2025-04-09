@@ -12,6 +12,7 @@
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command;
 
 use PHPCR\NodeInterface;
+use PHPCR\Query\QueryManagerInterface;
 use PHPCR\SessionInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\NodeParserInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
@@ -56,15 +57,19 @@ class MigratePhpcrCommand extends Command
 
             /** @var SessionInterface $currentSession */
             foreach ([$session, $liveSession] as $currentSession) {
-                $io->section('Migrating ' . $documentType . ' documents in ' . $currentSession->getWorkspace()->getName());
-                $nodes = $this->fetchPhpcrNodes($currentSession, $documentType);
+                $sessionName = $currentSession->getWorkspace()->getName();
+                $io->section('Migrating ' . $documentType . ' documents in ' . $sessionName);
+
+                $queryManager = $session->getWorkspace()->getQueryManager();
+                $nodes = $this->fetchPhpcrNodes($queryManager, $documentType);
+
                 $progressBar = $io->createProgressBar(\iterator_count($nodes));
                 $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                 foreach ($nodes as $node) {
-                    $document = $this->nodeParser->parse($node);
+                    $document = $this->nodeParser->parse($node, $queryManager);
                     $persister->persist(
                         document: $document,
-                        isLive: \str_ends_with($currentSession->getWorkspace()->getName(), '_live'),
+                        isLive: \str_ends_with($sessionName, '_live'),
                     );
                     $progressBar->advance();
                 }
@@ -81,10 +86,8 @@ class MigratePhpcrCommand extends Command
     /**
      * @return array<NodeInterface>
      */
-    private function fetchPhpcrNodes(SessionInterface $session, string $documentType): array
+    private function fetchPhpcrNodes(QueryManagerInterface $queryManager, string $documentType): array
     {
-        $queryManager = $session->getWorkspace()->getQueryManager();
-
         $wheres = [
             \sprintf('[jcr:mixinTypes] = "sulu:%s"', $documentType),
         ];

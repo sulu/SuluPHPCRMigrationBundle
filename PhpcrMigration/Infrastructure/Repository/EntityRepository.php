@@ -50,7 +50,7 @@ class EntityRepository implements EntityRepositoryInterface
         };
     }
 
-    public function findBy(string $tableName, array $where): ?array
+    public function findOneBy(string $tableName, array $where): ?array
     {
         [$conditions, $params] = $this->parseWhereParts($where);
 
@@ -58,6 +58,16 @@ class EntityRepository implements EntityRepositoryInterface
         $result = $this->connection->fetchAssociative($query, $params);
 
         return $result ?: null;
+    }
+
+    public function findBy(string $tableName, array $where): array
+    {
+        [$conditions, $params] = $this->parseWhereParts($where);
+
+        $query = 'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
+        $result = $this->connection->fetchAllAssociative($query, $params);
+
+        return $result;
     }
 
     public function exists(string $tableName, array $where): bool
