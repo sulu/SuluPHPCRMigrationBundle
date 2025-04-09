@@ -44,10 +44,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 abstract class AbstractPersister implements PersisterInterface
 {
-    // TODO revert this constant to `ro_routes` after the legacy SuluRoutingBundle is removed
+    // TODO this needs to be ro_routes after the legacy RouteBundle is removed
     public const ROUTE_TABLE = 'ro_next_routes';
-
-    public const LEGACY_ROUTE_TABLE = 'ro_routes';
 
     public const URL = '_url';
 

@@ -17,6 +17,8 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\Entit
 
 class ArticleNodeParser implements NodeParserInterface
 {
+    public const LEGACY_ROUTE_TABLE = 'ro_routes';
+
     public function __construct(private readonly EntityRepositoryInterface $repository)
     {
     }
@@ -54,9 +56,8 @@ class ArticleNodeParser implements NodeParserInterface
     private function parseLocalizedRoutes(NodeInterface $node, array $localizations): array
     {
         $routes = $this->repository->findBy(
-            AbstractPersister::LEGACY_ROUTE_TABLE,
+            self::LEGACY_ROUTE_TABLE,
             [
-                'entity_class' => 'Sulu\Bundle\ArticleBundle\Document\ArticleDocument',
                 'entity_id' => $node->getIdentifier(),
             ]
         );
