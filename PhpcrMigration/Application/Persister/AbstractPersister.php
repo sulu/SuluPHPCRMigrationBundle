@@ -50,6 +50,7 @@ abstract class AbstractPersister implements PersisterInterface
     public const LEGACY_ROUTE_TABLE = 'ro_routes';
 
     public const URL = '_url';
+
     public const HISTORY_URLS = '_history_urls';
 
     public const ROUTE_RESOURCE_KEY = 'route_history';
@@ -478,6 +479,7 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function removeNonTemplateData(array $data): array
     {
+        unset($data['_url'], $data['_history_urls'], $data['_route']);
         foreach ($data as $key => $value) {
             // remove block-length property
             if (\is_array($value) && \is_int($data[$key . '-length'] ?? null)) {

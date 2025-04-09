@@ -56,7 +56,7 @@ class PagePersister extends AbstractPersister
         $data[$this->getDimensionContentEntityIdMappingName()] = $document['jcr']['uuid'];
         $data['locale'] = $locale;
         $data['stage'] = $isLive ? 'live' : 'draft';
-        $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
+        $data['workflowPlace'] = null === $locale ? null : (2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft');
 
         if (isset($data['title'])) {
             // TODO error collector with titles that were too long
