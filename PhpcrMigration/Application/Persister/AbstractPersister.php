@@ -477,7 +477,7 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function removeNonTemplateData(array $data): array
     {
-        unset($data['_url'], $data['_history_urls'], $data['_route']);
+        unset($data['_url'], $data['_history_urls'], $data['_route'], $data['nodeType']);
         foreach ($data as $key => $value) {
             // remove block-length property
             if (\is_array($value) && \is_int($data[$key . '-length'] ?? null)) {
