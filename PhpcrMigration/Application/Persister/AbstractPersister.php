@@ -21,6 +21,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 /**
  * @phpstan-type Document array{
  *     jcr: array{uuid: string, mixinTypes: string[]},
+ *     sulu: array<string, mixed>,
  *     localizations: array<string, array{
  *         routePath?: string,
  *         routePathName?: string,
@@ -31,7 +32,10 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         excerpt?: array{
  *             categories?: int[],
  *             tags?: int[],
- *         }
+ *         },
+ *         _route?: array<string, mixed>,
+ *         _history_urls?: string[],
+ *         _url?: ?string,
  *     }>
  * }
  * @phpstan-type DimensionContent array{
@@ -48,7 +52,7 @@ abstract class AbstractPersister implements PersisterInterface
     public const URL = '_url';
     public const HISTORY_URLS = '_history_urls';
 
-    public const ROUTE_RESOURCE_KEY = 'history_route';
+    public const ROUTE_RESOURCE_KEY = 'route_history';
 
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
@@ -327,6 +331,8 @@ abstract class AbstractPersister implements PersisterInterface
 
     /**
      * @param Document $document
+     *
+     * @return array<string, array<string, mixed>>
      */
     protected function createOrUpdateRoutes(array $document): array
     {
@@ -381,7 +387,9 @@ abstract class AbstractPersister implements PersisterInterface
                 'locale' => $locale,
             ]);
 
-            $routes[$locale] = $route;
+            if (null !== $route) {
+                $routes[$locale] = $route;
+            }
 
             // history routes
             $historyUrls = $localizedData[AbstractPersister::HISTORY_URLS] ?? null;
@@ -397,7 +405,7 @@ abstract class AbstractPersister implements PersisterInterface
                     'locale' => $locale,
                     'slug' => $url,
                     'site' => $site,
-                    'parent_id' => $parentRouteId,
+                    'parent_id' => null, // history urls are disconnected from the parent to prevent unexpected changes
                 ];
 
                 $this->entityRepository->insertOrUpdate(
@@ -429,6 +437,7 @@ abstract class AbstractPersister implements PersisterInterface
             return null;
         }
 
+        /** @var array{id?: int} $parentRoute */
         $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
             'resource_key' => $this->getEntityResourceKey(),
             'resource_id' => $parentId,

@@ -60,14 +60,21 @@ class ArticleNodeParser implements NodeParserInterface
                 'entity_id' => $node->getIdentifier(),
             ]
         );
-        foreach ($routes as $route) {
-            $locale = $route['locale'];
-            $url = $route['path'];
 
-            match ((bool) $route['history']) {
-                true => $localizations[$locale][AbstractPersister::HISTORY_URLS][] = $url,
-                false => $localizations[$locale][AbstractPersister::URL] = $url,
-            };
+        foreach ($routes as $route) {
+            if (!\is_array($route)) {
+                continue;
+            }
+
+            $locale = $route['locale'] ?? null;
+            $url = $route['path'] ?? null;
+
+            if ($locale && $url) {
+                match ((bool) ($route['history'] ?? false)) {
+                    true => $localizations[$locale][AbstractPersister::HISTORY_URLS][] = $url,
+                    false => $localizations[$locale][AbstractPersister::URL] = $url,
+                };
+            }
         }
 
         return $localizations;

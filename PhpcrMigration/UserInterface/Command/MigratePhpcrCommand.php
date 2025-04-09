@@ -66,7 +66,7 @@ class MigratePhpcrCommand extends Command
                 $progressBar = $io->createProgressBar(\iterator_count($nodes));
                 $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                 foreach ($nodes as $node) {
-                    $document = $this->nodeParser->parse($node, $queryManager);
+                    $document = $this->nodeParser->parse($node);
                     $persister->persist(
                         document: $document,
                         isLive: \str_ends_with($sessionName, '_live'),

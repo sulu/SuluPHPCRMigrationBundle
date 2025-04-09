@@ -271,6 +271,7 @@ class PagePersister extends AbstractPersister
 
     protected function getSite(array $document, string $locale): ?string
     {
+        /** @var array{webspaceKey?: string} $data */
         $data = $document['sulu'];
 
         if (!isset($data['webspaceKey'])) {
@@ -282,6 +283,7 @@ class PagePersister extends AbstractPersister
 
     protected function getParentId(array $document, string $locale): ?string
     {
+        /** @var array{parentId?: string} $data */
         $data = $document['sulu'];
 
         if (!\array_key_exists('parentId', $data)) {
