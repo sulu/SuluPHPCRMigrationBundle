@@ -50,7 +50,7 @@ class EntityRepository implements EntityRepositoryInterface
                 $types
             );
         } else {
-            // If this is database using sequences like PostgreSQL and we're doing an insert, we need to handle the ID
+            // If this database is using sequences like PostgreSQL and we're doing an insert, we need to handle the ID
             if (!\array_key_exists('id', $data)) {
                 $nextIdValue = $this->getNextIdValue($tableName);
                 if (null !== $nextIdValue) {
