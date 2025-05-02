@@ -20,9 +20,9 @@ use Symfony\Contracts\Service\ResetInterface;
 class EntityRepository implements EntityRepositoryInterface, ResetInterface
 {
     /**
-     * @var Sequence[]
+     * @var Sequence[]|null
      */
-    private array $sequences;
+    private ?array $sequences = null;
 
     public function __construct(
         protected Connection $connection,
@@ -241,7 +241,7 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     private function getSequences(): array
     {
-        if (isset($this->sequences)) {
+        if (null !== $this->sequences) {
             return $this->sequences;
         }
 
@@ -257,6 +257,6 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function reset(): void
     {
-        unset($this->sequences);
+        $this->sequences = null;
     }
 }
