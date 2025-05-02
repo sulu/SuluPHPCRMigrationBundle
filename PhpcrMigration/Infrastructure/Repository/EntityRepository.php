@@ -214,12 +214,15 @@ class EntityRepository implements EntityRepositoryInterface
     {
         $result = null;
 
+        $platform = $this->connection->getDatabasePlatform();
         $sequences = $this->getSequences();
         foreach ($sequences as $sequence) {
             $sequenceName = $sequence->getName();
             if (\str_contains($sequenceName, $tableName)) {
                 /** @var int|null|false $result */
-                $result = $this->connection->fetchOne("SELECT nextval('$sequenceName')");
+                $result = $this->connection->fetchOne(
+                    $platform->getSequenceNextValSQL($sequenceName)
+                );
 
                 if (false === $result || null === $result) {
                     throw new \RuntimeException('Failed to get next ID value from sequence' . $sequenceName);
