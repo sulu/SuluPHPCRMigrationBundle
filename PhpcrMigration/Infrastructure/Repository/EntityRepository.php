@@ -12,10 +12,17 @@
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Schema\Sequence;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 
 class EntityRepository implements EntityRepositoryInterface
 {
+    /**
+     * @var Sequence[]
+     */
+    private array $sequences;
+
     public function __construct(
         protected Connection $connection,
     ) {
@@ -44,8 +51,11 @@ class EntityRepository implements EntityRepositoryInterface
             );
         } else {
             // If this is PostgreSQL and we're doing an insert, we need to handle the ID
-            if ($this->isPostgreSql() && !(isset($data['id']) && isset($data['uuid']))) {
-                $data['id'] = $this->getNextIdValue($tableName);
+            if (!\array_key_exists('id', $data)) {
+                $nextIdValue = $this->getNextIdValue($tableName);
+                if (null !== $nextIdValue) {
+                    $data['id'] = $nextIdValue;
+                }
             }
 
             $this->connection->insert(
@@ -200,28 +210,44 @@ class EntityRepository implements EntityRepositoryInterface
         $this->connection->insert($tableName, $data, $types);
     }
 
-    public function isPostgreSql(): bool
+    private function getNextIdValue(string $tableName): ?int
     {
-        return \str_contains($this->connection->getDatabasePlatform()::class, 'PostgreSQL');
+        $result = null;
+
+        $sequences = $this->getSequences();
+        foreach ($sequences as $sequence) {
+            $sequenceName = $sequence->getName();
+            if (\str_contains($sequenceName, $tableName)) {
+                /** @var int|null|false $result */
+                $result = $this->connection->fetchOne("SELECT nextval('$sequenceName')");
+
+                if (false === $result || null === $result) {
+                    throw new \RuntimeException('Failed to get next ID value from sequence' . $sequenceName);
+                }
+
+                break;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Get the next ID value for the given table.
-     * For PostgreSQL, this uses nextval on the sequence.
+     * @return Sequence[]
      */
-    public function getNextIdValue(string $tableName): ?int
+    private function getSequences(): array
     {
-        if ($this->isPostgreSql()) {
-            // In PostgreSQL, sequences are typically named tablename_id_seq
-            $sequenceName = $tableName . '_id_seq';
-
-            /** @var int|null $result */
-            $result = $this->connection->fetchOne("SELECT nextval('$sequenceName')");
-
-            return $result;
+        if (isset($this->sequences)) {
+            return $this->sequences;
         }
 
-        // For MySQL or other databases, return null and let auto-increment handle it
-        return null;
+        $sequences = [];
+        try {
+            $sequences = $this->connection->createSchemaManager()->listSequences();
+        } catch (Exception) {
+            // @ignoreException
+        }
+
+        return $this->sequences = $sequences;
     }
 }
