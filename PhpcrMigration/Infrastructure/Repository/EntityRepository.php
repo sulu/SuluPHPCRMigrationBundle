@@ -15,8 +15,9 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Sequence;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-class EntityRepository implements EntityRepositoryInterface
+class EntityRepository implements EntityRepositoryInterface, ResetInterface
 {
     /**
      * @var Sequence[]
@@ -252,5 +253,10 @@ class EntityRepository implements EntityRepositoryInterface
         }
 
         return $this->sequences = $sequences;
+    }
+
+    public function reset(): void
+    {
+        unset($this->sequences);
     }
 }
