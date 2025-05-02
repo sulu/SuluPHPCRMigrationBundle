@@ -7,6 +7,8 @@
         <service id="sulu_phpcr_migration.entity_repository"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository">
             <argument type="service" id="sulu_phpcr_migration.target_connection"/>
+
+            <tag name="kernel.reset" method="reset" />
         </service>
     </services>
 </container>
