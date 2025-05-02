@@ -35,19 +35,25 @@ class EntityRepository implements EntityRepositoryInterface
     {
         $exists = [] !== $where && $this->exists($tableName, $where);
 
-        match ($exists) {
-            true => $this->connection->update(
+        if ($exists) {
+            $this->connection->update(
                 $tableName,
                 $data,
                 $where,
                 $types
-            ),
-            default => $this->connection->insert(
+            );
+        } else {
+            // If this is PostgreSQL and we're doing an insert, we need to handle the ID
+            if ($this->isPostgreSql() && !(isset($data['id']) && isset($data['uuid']))) {
+                $data['id'] = $this->getNextIdValue($tableName);
+            }
+
+            $this->connection->insert(
                 $tableName,
                 $data,
                 $types
-            ),
-        };
+            );
+        }
     }
 
     public function findOneBy(string $tableName, array $where): ?array
@@ -192,5 +198,30 @@ class EntityRepository implements EntityRepositoryInterface
         $data['depth'] = $parentDepth + 1;
 
         $this->connection->insert($tableName, $data, $types);
+    }
+
+    public function isPostgreSql(): bool
+    {
+        return \str_contains($this->connection->getDatabasePlatform()::class, 'PostgreSQL');
+    }
+
+    /**
+     * Get the next ID value for the given table.
+     * For PostgreSQL, this uses nextval on the sequence.
+     */
+    public function getNextIdValue(string $tableName): ?int
+    {
+        if ($this->isPostgreSql()) {
+            // In PostgreSQL, sequences are typically named tablename_id_seq
+            $sequenceName = $tableName . '_id_seq';
+
+            /** @var int|null $result */
+            $result = $this->connection->fetchOne("SELECT nextval('$sequenceName')");
+
+            return $result;
+        }
+
+        // For MySQL or other databases, return null and let auto-increment handle it
+        return null;
     }
 }
