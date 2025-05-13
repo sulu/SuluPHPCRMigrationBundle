@@ -45,6 +45,11 @@ class PropertyNodeParser implements NodeParserInterface
 
         /** @var array<string, array<string, mixed>> $localizations */
         $localizations = $document['localizations'];
+        $document['localizations'] = $this->trimBlocksToLengths($localizations);
+
+        /** @var array<string, array<string, mixed>> $localizations */
+        $localizations = $document['localizations'];
+
         $lastKey = \array_key_last($localizations);
 
         if (null !== $lastKey) {
@@ -87,6 +92,7 @@ class PropertyNodeParser implements NodeParserInterface
         $value = $this->resolvePropertyValue($property);
         $propertyPath = $this->getLocalizedPath($name);
         $propertyPath = $this->getPropertyPath($propertyPath, $name);
+
         $this->propertyAccessor->setValue(
             $document,
             $propertyPath,
@@ -144,15 +150,88 @@ class PropertyNodeParser implements NodeParserInterface
         } elseif (\str_starts_with($name, 'excerpt-')) {
             $name = \substr($name, 8);
             $propertyPath .= '[excerpt][' . $name . ']';
-        } elseif (\preg_match('/^(.+)#(\d+)$/', $name, $matches)) {
-            $name = $matches[1];
-            $index = (int) $matches[2];
-            [$blocksKey, $type] = \explode('-', $name);
-            $propertyPath .= '[' . $blocksKey . '][' . $index . '][' . $type . ']';
+        } elseif (\str_contains($name, '#') || \str_ends_with($name, '-length')) {
+            $propertyPath .= $this->parseBlockPropertyPath($name);
         } else {
             $propertyPath .= '[' . $name . ']';
         }
 
         return $propertyPath;
+    }
+
+    private function parseBlockPropertyPath(string $path): string
+    {
+        $segments = \explode('-', $path);
+        $result = '';
+
+        // First segment is always a block name
+        $result .= '[' . $segments[0] . ']';
+        $counter = \count($segments);
+
+        for ($i = 1; $i < $counter; ++$i) {
+            $segment = $segments[$i];
+
+            if (\preg_match('/^(.+)#(\d+)$/', $segment, $matches)) {
+                // For segments with index (like 'block#0')
+                $name = $matches[1];
+                $index = (int) $matches[2];
+
+                $result .= '[' . $index . '][' . $name . ']';
+            } else {
+                // Regular segments without index (like type / length)
+                $result .= '[' . $segment . ']';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param mixed[] $blocks
+     *
+     * @return mixed[]
+     */
+    private function trimBlocksToLengths(array $blocks): array
+    {
+        $maxLength = null;
+        $isImageMap = false;
+        foreach ($blocks as $index => $item) {
+            if ('length' === $index) {
+                /** @var int $maxLength */
+                $maxLength = $item;
+            }
+
+            if ('imageId' === $index) {
+                $isImageMap = true;
+            }
+
+            if (\is_array($item)) {
+                $blocks[$index] = $this->trimBlocksToLengths($item);
+            }
+        }
+
+        if (null !== $maxLength) {
+            // remove length property
+            unset($blocks['length']);
+
+            if ($isImageMap) {
+                $hotspots = [];
+                foreach ($blocks as $index => $item) {
+                    if (\is_array($item)) {
+                        $hotspots[$index] = $item;
+                        unset($blocks[$index]);
+                    }
+                }
+
+                // trim hotspots to maxLength
+                $hotspots = \array_slice($hotspots, 0, $maxLength);
+                $blocks['hotspots'] = $hotspots;
+            } else {
+                // trim blocks to maxLength
+                $blocks = \array_slice($blocks, 0, $maxLength);
+            }
+        }
+
+        return $blocks;
     }
 }
