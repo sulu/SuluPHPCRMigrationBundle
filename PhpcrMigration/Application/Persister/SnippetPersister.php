@@ -55,13 +55,6 @@ class SnippetPersister extends AbstractPersister
             $data['templateData']['title'] = $data['title'];
         }
 
-        // Transform segments map to single segment value
-        // For snippets, take the first segment value from the map
-        if (isset($data['excerptSegment']) && \is_array($data['excerptSegment'])) {
-            $segments = $data['excerptSegment'];
-            $data['excerptSegment'] = [] === $segments ? null : \reset($segments);
-        }
-
         return $data;
     }
 
@@ -117,8 +110,6 @@ class SnippetPersister extends AbstractPersister
             'availableLocales' => 'json',
             'templateKey' => 'string',
             'templateData' => 'json',
-            'excerptData' => 'json',
-            'excerptSegment' => 'string',
             'authored' => 'datetime',
             'workflowPlace' => 'string',
             'workflowPublished' => 'datetime',
@@ -136,9 +127,6 @@ class SnippetPersister extends AbstractPersister
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
-            // Sulu 3.0: Excerpt data consolidated into JSON column
-            '[excerptData]' => '[_excerptData]',
-            '[excerptSegment]' => '[excerpt][segments]',
         ];
     }
 
