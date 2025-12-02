@@ -55,6 +55,13 @@ class SnippetPersister extends AbstractPersister
             $data['templateData']['title'] = $data['title'];
         }
 
+        // Snippets store template as unlocalized property (same template for all locales)
+        if (null === $locale) {
+            $data['templateKey'] = null;
+        } elseif (!isset($data['templateKey']) && isset($document['localizations']['null']['template'])) {
+            $data['templateKey'] = $document['localizations']['null']['template'];
+        }
+
         return $data;
     }
 
