@@ -16,6 +16,10 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RouteP
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
+/**
+ * @phpstan-import-type Document from AbstractPersister
+ * @phpstan-import-type DimensionContent from AbstractPersister
+ */
 class ArticlePersister extends AbstractPersister
 {
     public function __construct(
@@ -39,6 +43,8 @@ class ArticlePersister extends AbstractPersister
         $data['state'] = null;
         $data['availableLocales'] = null;
         $data['routePathName'] = null;
+        $data['mainWebspace'] = null;
+        $data['additionalWebspaces'] = null;
 
         return \array_filter($data, static fn ($entry) => null !== $entry);
     }
@@ -74,6 +80,9 @@ class ArticlePersister extends AbstractPersister
             $segments = $data['excerptSegment'];
             $data['excerptSegment'] = [] === $segments ? null : \reset($segments);
         }
+
+        // customizeWebspaceSettings is true if mainWebspace is set
+        $data['customizeWebspaceSettings'] = isset($document['localizations'][$locale]['mainWebspace']);
 
         return $data;
     }
@@ -137,6 +146,8 @@ class ArticlePersister extends AbstractPersister
             'excerptData' => 'json',
             'excerptSegment' => 'string',
             'templateData' => 'json',
+            'mainWebspace' => 'string',
+            'customizeWebspaceSettings' => 'boolean',
         ];
     }
 
@@ -160,6 +171,8 @@ class ArticlePersister extends AbstractPersister
             // Sulu 3.0: Excerpt data consolidated into JSON column
             '[excerptData]' => '[_excerptData]',
             '[excerptSegment]' => '[excerpt][segments]',
+            // Sulu 3.0: Webspace settings
+            '[mainWebspace]' => '[mainWebspace]',
         ];
     }
 
@@ -246,7 +259,55 @@ class ArticlePersister extends AbstractPersister
             'seoNoIndex' => false,
             'seoNoFollow' => false,
             'seoHideInSitemap' => false,
+            'customizeWebspaceSettings' => false,
         ];
+    }
+
+    protected function insertDataRelationsToDimensionContent(array $document, ?string $locale, array $dimensionContent): void
+    {
+        parent::insertDataRelationsToDimensionContent($document, $locale, $dimensionContent);
+        $this->insertOrUpdateAdditionalWebspaces($document, $locale, $dimensionContent);
+    }
+
+    /**
+     * @param Document $document
+     * @param DimensionContent $dimensionContent
+     */
+    private function insertOrUpdateAdditionalWebspaces(array $document, ?string $locale, array $dimensionContent): void
+    {
+        if (null === $locale) {
+            return;
+        }
+
+        if (!isset($document['localizations'][$locale])) {
+            return;
+        }
+
+        $additionalWebspaces = $document['localizations'][$locale]['additionalWebspaces'] ?? null;
+
+        if (null === $additionalWebspaces) {
+            return;
+        }
+
+        $tableName = 'ar_article_dimension_content_additional_webspaces';
+
+        $this->entityRepository->removeBy($tableName, [
+            'article_dimension_content_id' => $dimensionContent['id'],
+        ]);
+
+        foreach ($additionalWebspaces as $webspace) {
+            $this->entityRepository->insertOrUpdate(
+                [
+                    'article_dimension_content_id' => $dimensionContent['id'],
+                    'name' => $webspace,
+                ],
+                $tableName,
+                [
+                    'article_dimension_content_id' => 'integer',
+                    'name' => 'string',
+                ],
+            );
+        }
     }
 
     protected function isRoutable(): bool

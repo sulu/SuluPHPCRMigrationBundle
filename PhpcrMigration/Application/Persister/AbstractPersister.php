@@ -37,6 +37,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         _route?: array<string, mixed>,
  *         _history_urls?: string[],
  *         _url?: ?string,
+ *         mainWebspace?: string,
+ *         additionalWebspaces?: string[],
  *     }>
  * }
  * @phpstan-type DimensionContent array{
