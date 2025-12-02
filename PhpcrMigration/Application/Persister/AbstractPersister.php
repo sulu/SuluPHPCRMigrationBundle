@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RoutePathNameNotFoundException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -69,23 +68,6 @@ abstract class AbstractPersister implements PersisterInterface
             throw new UnsupportedDocumentTypeException($document['jcr']['mixinTypes']);
         }
 
-        foreach ($document['localizations'] as $locale => $localizedData) {
-            if (
-                [] !== $localizedData
-                && isset($localizedData['routePath'])
-                && !isset($localizedData['routePathName'])
-            ) {
-                // fallback to 'routePath' when 'routePathName' is missing
-                $document['localizations'][$locale]['routePathName'] = 'routePath';
-            } elseif (
-                [] !== $localizedData
-                && !isset($localizedData['routePath'])
-                && !isset($localizedData['routePathName'])
-            ) {
-                throw new RoutePathNameNotFoundException($document['jcr']['uuid'], $locale);
-            }
-        }
-
         if ($this->isRoutable()) {
             $routes = $this->createOrUpdateRoutes($document);
             foreach ($routes as $locale => $route) {
@@ -137,49 +119,85 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * @param mixed[] $data
+     * Build the seoData JSON structure from localized data.
      *
-     * @return mixed[]
+     * @param array<string, mixed> $localizedData
+     *
+     * @return array<string, mixed>
      */
-    protected function mapExcerptImages(array $data): array
+    protected function buildSeoData(array $localizedData): array
     {
-        $value = $data['excerptImageId'] ?? null;
-        if (null === $value) {
-            return $data;
+        $seo = $localizedData['seo'] ?? [];
+        if (!\is_array($seo) || [] === $seo) {
+            return [];
         }
 
-        if (!\is_array($value)) {
-            unset($data['excerptImageId']);
-
-            return $data;
-        }
-
-        $data['excerptImageId'] = $data['excerptImageId']['ids'][0] ?? null;
-
-        return $data;
+        return \array_filter([
+            'title' => $seo['title'] ?? null,
+            'description' => $seo['description'] ?? null,
+            'keywords' => $seo['keywords'] ?? null,
+            'canonicalUrl' => $seo['canonicalUrl'] ?? null,
+        ], static fn ($value) => null !== $value);
     }
 
     /**
-     * @param mixed[] $data
+     * Build the excerptData JSON structure from localized data.
      *
-     * @return mixed[]
+     * @param array<string, mixed> $localizedData
+     *
+     * @return array<string, mixed>
      */
-    protected function mapExcerptIcons(array $data): array
+    protected function buildExcerptData(array $localizedData): array
     {
-        $value = $data['excerptIconId'] ?? null;
+        $excerpt = $localizedData['excerpt'] ?? [];
+        if (!\is_array($excerpt) || [] === $excerpt) {
+            return [];
+        }
+
+        $imageId = $this->extractMediaId($excerpt['images'] ?? null);
+        $iconId = $this->extractMediaId($excerpt['icon'] ?? null);
+
+        // Validate media IDs exist
+        if (null !== $imageId && !$this->entityRepository->exists('me_media', ['id' => $imageId])) {
+            $imageId = null;
+        }
+        if (null !== $iconId && !$this->entityRepository->exists('me_media', ['id' => $iconId])) {
+            $iconId = null;
+        }
+
+        $more = $excerpt['more'] ?? null;
+        // Validate excerptMore length (max 63 chars)
+        if (\is_string($more) && \strlen($more) >= 63) {
+            $more = null;
+        }
+
+        return \array_filter([
+            'title' => $excerpt['title'] ?? null,
+            'description' => $excerpt['description'] ?? null,
+            'more' => $more,
+            'image' => null !== $imageId ? ['id' => $imageId] : null,
+            'icon' => null !== $iconId ? ['id' => $iconId] : null,
+        ], static fn ($value) => null !== $value);
+    }
+
+    /**
+     * Extract media ID from various formats.
+     */
+    private function extractMediaId(mixed $value): ?int
+    {
         if (null === $value) {
-            return $data;
+            return null;
         }
 
-        if (!\is_array($value)) {
-            unset($data['excerptIconId']);
-
-            return $data;
+        if (\is_int($value)) {
+            return $value;
         }
 
-        $data['excerptIconId'] = $data['excerptIconId']['ids'][0] ?? null;
+        if (\is_array($value) && isset($value['ids'][0])) {
+            return (int) $value['ids'][0];
+        }
 
-        return $data;
+        return null;
     }
 
     /**
@@ -353,6 +371,10 @@ abstract class AbstractPersister implements PersisterInterface
                 $localizedData['availableLocales'] = $availableLocales;
             }
 
+            // Build JSON structures for seoData and excerptData (Sulu 3.0 format)
+            $localizedData['_seoData'] = $this->buildSeoData($localizedData);
+            $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
+
             $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
             $created = $document['sulu']['created'] ?? null;
             $data['created'] = $created instanceof \DateTimeInterface ? $created->format('Y-m-d H:i:s') : null;
@@ -360,8 +382,6 @@ abstract class AbstractPersister implements PersisterInterface
             $data['changed'] = $changed instanceof \DateTimeInterface ? $changed->format('Y-m-d H:i:s') : null;
 
             $data = \array_merge($this->getDefaultData(), $data);
-            $data = $this->mapExcerptImages($data);
-            $data = $this->mapExcerptIcons($data);
             $data = $this->mapDimensionContentData($document, $locale, $data, $isLive);
 
             $data = $this->validateData($data);
@@ -433,7 +453,7 @@ abstract class AbstractPersister implements PersisterInterface
 
             $parentId = $this->getParentId($document, $locale);
             $parentRouteId = $this->getParentRouteId($parentId, $locale);
-            $site = $this->getSite($document, $locale);
+            $webspace = $this->getWebspace($document, $locale);
             $resourceId = $document['jcr']['uuid'];
             $resourceKey = $this->getEntityResourceKey();
 
@@ -448,7 +468,7 @@ abstract class AbstractPersister implements PersisterInterface
                 'resource_id' => $resourceId,
                 'locale' => $locale,
                 'slug' => $this->getSlug($document, $locale),
-                'site' => $site,
+                'webspace' => $webspace,
                 'parent_id' => $parentRouteId,
             ];
 
@@ -492,7 +512,7 @@ abstract class AbstractPersister implements PersisterInterface
                     'resource_id' => $historyResourceId,
                     'locale' => $locale,
                     'slug' => $url,
-                    'site' => $site,
+                    'webspace' => $webspace,
                     'parent_id' => null, // history urls are disconnected from the parent to prevent unexpected changes
                 ];
 
@@ -713,7 +733,7 @@ abstract class AbstractPersister implements PersisterInterface
     /**
      * @param Document $document
      */
-    protected function getSite(array $document, string $locale): ?string
+    protected function getWebspace(array $document, string $locale): ?string
     {
         return null;
     }
@@ -737,9 +757,6 @@ abstract class AbstractPersister implements PersisterInterface
     {
         $validators = [
             'author_id' => fn (mixed $value): bool => $this->entityRepository->exists('co_contacts', ['id' => $value]),
-            'excerptImageId' => fn (mixed $value): bool => $this->entityRepository->exists('me_media', ['id' => $value]),
-            'excerptIconId' => fn (mixed $value): bool => $this->entityRepository->exists('me_media', ['id' => $value]),
-            'excerptMore' => fn (mixed $value): bool => (\is_string($value) && \strlen($value) < 63) || null === $value,
         ];
 
         foreach ($validators as $key => $isValid) {

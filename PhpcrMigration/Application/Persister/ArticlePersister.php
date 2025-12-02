@@ -12,6 +12,7 @@
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RoutePathNameNotFoundException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -129,19 +130,12 @@ class ArticlePersister extends AbstractPersister
             'stage' => 'string',
             'workflowPlace' => 'string',
             'workflowPublished' => 'datetime',
-            'seoTitle' => 'string',
-            'seoDescription' => 'string',
-            'seoKeywords' => 'string',
-            'seoCanonicalUrl' => 'string',
+            'seoData' => 'json',
             'seoNoIndex' => 'boolean',
             'seoNoFollow' => 'boolean',
             'seoHideInSitemap' => 'boolean',
-            'excerptTitle' => 'string',
-            'excerptMore' => 'string',
-            'excerptDescription' => 'string',
+            'excerptData' => 'json',
             'excerptSegment' => 'string',
-            'excerptImageId' => 'integer',
-            'excerptIconId' => 'integer',
             'templateData' => 'json',
         ];
     }
@@ -158,19 +152,14 @@ class ArticlePersister extends AbstractPersister
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
-            '[seoTitle]' => '[seo][title]',
-            '[seoDescription]' => '[seo][description]',
-            '[seoKeywords]' => '[seo][keywords]',
-            '[seoCanonicalUrl]' => '[seo][canonicalUrl]',
+            // Sulu 3.0: SEO data consolidated into JSON column
+            '[seoData]' => '[_seoData]',
             '[seoNoIndex]' => '[seo][noIndex]',
             '[seoNoFollow]' => '[seo][noFollow]',
             '[seoHideInSitemap]' => '[seo][hideInSitemap]',
-            '[excerptTitle]' => '[excerpt][title]',
-            '[excerptMore]' => '[excerpt][more]',
-            '[excerptDescription]' => '[excerpt][description]',
+            // Sulu 3.0: Excerpt data consolidated into JSON column
+            '[excerptData]' => '[_excerptData]',
             '[excerptSegment]' => '[excerpt][segments]',
-            '[excerptImageId]' => '[excerpt][images]',
-            '[excerptIconId]' => '[excerpt][icon]',
         ];
     }
 
@@ -218,9 +207,29 @@ class ArticlePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
-        if (!isset($localizedData['routePath'])) {
-            throw new InvalidPathException('routePath');
+        // Check if both routePath and routePathName are missing
+        if (!isset($localizedData['routePath']) && !isset($localizedData['routePathName'])) {
+            throw new RoutePathNameNotFoundException($document['jcr']['uuid'], $locale);
         }
+
+        // If routePathName is set, use it to find the route property
+        if (isset($localizedData['routePathName'])) {
+            $routePathName = $localizedData['routePathName'];
+            // Handle i18n prefix (e.g., 'i18n:en-routePath' -> 'routePath')
+            $routePathName = \str_starts_with($routePathName, 'i18n:')
+                ? \explode('-', $routePathName, 2)[1]
+                : $routePathName;
+
+            $routePath = $localizedData[$routePathName] ?? null;
+            if (!\is_string($routePath)) {
+                throw new InvalidPathException($routePathName);
+            }
+
+            return $routePath;
+        }
+
+        // At this point routePath must exist (we checked above)
+        \assert(isset($localizedData['routePath']));
 
         return $localizedData['routePath'];
     }

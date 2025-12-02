@@ -117,12 +117,8 @@ class SnippetPersister extends AbstractPersister
             'availableLocales' => 'json',
             'templateKey' => 'string',
             'templateData' => 'json',
-            'excerptTitle' => 'string',
-            'excerptMore' => 'string',
-            'excerptDescription' => 'string',
+            'excerptData' => 'json',
             'excerptSegment' => 'string',
-            'excerptImageId' => 'integer',
-            'excerptIconId' => 'integer',
             'authored' => 'datetime',
             'workflowPlace' => 'string',
             'workflowPublished' => 'datetime',
@@ -131,7 +127,6 @@ class SnippetPersister extends AbstractPersister
 
     protected function getDimensionContentMapping(): array
     {
-        //TODO
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
@@ -141,12 +136,9 @@ class SnippetPersister extends AbstractPersister
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
-            '[excerptTitle]' => '[excerpt][title]',
-            '[excerptMore]' => '[excerpt][more]',
-            '[excerptDescription]' => '[excerpt][description]',
+            // Sulu 3.0: Excerpt data consolidated into JSON column
+            '[excerptData]' => '[_excerptData]',
             '[excerptSegment]' => '[excerpt][segments]',
-            '[excerptImageId]' => '[excerpt][images]',
-            '[excerptIconId]' => '[excerpt][icon]',
         ];
     }
 

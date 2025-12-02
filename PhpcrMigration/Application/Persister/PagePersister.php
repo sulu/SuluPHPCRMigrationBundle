@@ -192,19 +192,12 @@ class PagePersister extends AbstractPersister
             'availableLocales' => 'json',
             'templateKey' => 'string',
             'templateData' => 'json',
-            'seoTitle' => 'string',
-            'seoDescription' => 'string',
-            'seoKeywords' => 'string',
-            'seoCanonicalUrl' => 'string',
+            'seoData' => 'json',
             'seoNoIndex' => 'boolean',
             'seoNoFollow' => 'boolean',
             'seoHideInSitemap' => 'boolean',
-            'excerptTitle' => 'string',
-            'excerptMore' => 'string',
-            'excerptDescription' => 'string',
+            'excerptData' => 'json',
             'excerptSegment' => 'string',
-            'excerptImageId' => 'integer',
-            'excerptIconId' => 'integer',
             'authored' => 'datetime',
             'lastModified' => 'datetime',
             'workflowPlace' => 'string',
@@ -225,19 +218,14 @@ class PagePersister extends AbstractPersister
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
-            '[seoTitle]' => '[seo][title]',
-            '[seoDescription]' => '[seo][description]',
-            '[seoKeywords]' => '[seo][keywords]',
-            '[seoCanonicalUrl]' => '[seo][canonicalUrl]',
+            // Sulu 3.0: SEO data consolidated into JSON column
+            '[seoData]' => '[_seoData]',
             '[seoNoIndex]' => '[seo][noIndex]',
             '[seoNoFollow]' => '[seo][noFollow]',
             '[seoHideInSitemap]' => '[seo][hideInSitemap]',
-            '[excerptTitle]' => '[excerpt][title]',
-            '[excerptMore]' => '[excerpt][more]',
-            '[excerptDescription]' => '[excerpt][description]',
+            // Sulu 3.0: Excerpt data consolidated into JSON column
+            '[excerptData]' => '[_excerptData]',
             '[excerptSegment]' => '[excerpt][segments]',
-            '[excerptImageId]' => '[excerpt][images]',
-            '[excerptIconId]' => '[excerpt][icon]',
         ];
     }
 
@@ -295,7 +283,7 @@ class PagePersister extends AbstractPersister
         return $localizedData[AbstractPersister::URL];
     }
 
-    protected function getSite(array $document, string $locale): ?string
+    protected function getWebspace(array $document, string $locale): ?string
     {
         /** @var array{webspaceKey?: string} $data */
         $data = $document['sulu'];

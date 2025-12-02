@@ -114,9 +114,18 @@ PhpcrMigration/
 - Block detection: numerically indexed arrays where elements have `'type'` key
 - Handles nested blocks (blocks within blocks) automatically
 
-**Excerpt Tab Migration**:
-- **Categories & Tags**: Migrated as many-to-many relations via junction tables
-- **Audience Targeting Groups**: Migrated as many-to-many relations (similar to categories/tags)
+**SEO Data Migration** (Sulu 3.0):
+- **JSON Column**: `seoData` stores title, description, keywords, canonicalUrl
+- **Separate Columns**: `seoNoIndex`, `seoNoFollow`, `seoHideInSitemap` (booleans)
+- **Format**: `{"title": "...", "description": "...", "keywords": "...", "canonicalUrl": "..."}`
+- **Note**: Snippets do not have SEO data
+
+**Excerpt Tab Migration** (Sulu 3.0):
+- **JSON Column**: `excerptData` stores title, description, more, image, icon
+- **Format**: `{"title": "...", "description": "...", "more": "...", "image": {"id": 123}, "icon": {"id": 456}}`
+- **Separate Column**: `excerptSegment` (VARCHAR)
+- **Categories & Tags**: Migrated as many-to-many relations via junction tables (unchanged)
+- **Audience Targeting Groups**: Migrated as many-to-many relations (unchanged)
 - **Segments**:
   - PHPCR storage: Separate properties per webspace (`excerpt-segments-{webspace}`)
   - Parser reconstruction: `["webspace_key" => "segment_value"]` map
@@ -124,7 +133,6 @@ PhpcrMigration/
   - Transformation logic:
     - Pages: Extract segment value for the page's webspace
     - Articles/Snippets: Use first segment value from the map
-- **Images & Icons**: Media selection fields migrated as foreign keys
 
 **CustomUrl Migration**:
 - **PHPCR Structure**: CustomUrl documents with embedded routes as child nodes
