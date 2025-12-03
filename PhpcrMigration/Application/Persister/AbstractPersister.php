@@ -363,6 +363,7 @@ abstract class AbstractPersister implements PersisterInterface
                 $availableLocales[] = $locale;
             }
         }
+
         /**
          * @var array{
          *     availableLocales?: string[],
@@ -374,9 +375,10 @@ abstract class AbstractPersister implements PersisterInterface
             $locale = 'null' === $locale ? null : $locale;
 
             $localizedData['availableLocales'] = null;
-            $localizedData['ghostLocale'] = $ghostLocale;
+            $localizedData['ghostLocale'] = null;
             if (null === $locale) {
                 $localizedData['availableLocales'] = $availableLocales;
+                $localizedData['ghostLocale'] = $ghostLocale;
             }
 
             // Build JSON structures for seoData and excerptData (Sulu 3.0 format)

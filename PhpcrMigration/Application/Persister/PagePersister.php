@@ -34,6 +34,8 @@ class PagePersister extends AbstractPersister
     {
         $data = parent::removeNonTemplateData($data);
 
+        $data['shadow-on'] = null;
+        $data['shadow-base'] = null;
         $data['seo'] = null;
         $data['excerpt'] = null;
         $data['stage'] = null;
@@ -85,6 +87,45 @@ class PagePersister extends AbstractPersister
                 ? $data['excerptSegment'][$webspaceKey]
                 : null;
         }
+
+        $data = $this->mapShadowLocaleData($document, $locale, $data);
+
+        return $data;
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    private function mapShadowLocaleData(array $document, ?string $locale, array $data): array
+    {
+        /** @var array<string, array<string, mixed>> $localizations */
+        $localizations = $document['localizations'];
+
+        if (null !== $locale) {
+            $localeKey = $locale;
+            $shadowOn = $localizations[$localeKey]['shadow-on'] ?? false;
+            $shadowBase = $localizations[$localeKey]['shadow-base'] ?? null;
+            $data['shadowLocale'] = ($shadowOn && \is_string($shadowBase)) ? $shadowBase : null;
+            $data['shadowLocales'] = null;
+
+            return $data;
+        }
+
+        $shadowLocales = [];
+        foreach ($localizations as $localeKey => $localization) {
+            if ('null' !== $localeKey) {
+                $shadowOn = $localization['shadow-on'] ?? false;
+                $shadowBase = $localization['shadow-base'] ?? null;
+                if ($shadowOn && \is_string($shadowBase)) {
+                    $shadowLocales[$localeKey] = $shadowBase;
+                }
+            }
+        }
+        $data['shadowLocale'] = null;
+        $data['shadowLocales'] = [] !== $shadowLocales ? $shadowLocales : null;
 
         return $data;
     }
@@ -181,7 +222,6 @@ class PagePersister extends AbstractPersister
 
     protected function getDimensionContentTableTypes(): array
     {
-        // TODO shadow?
         return [
             'author_id' => 'integer',
             'route_id' => 'integer',
@@ -190,6 +230,8 @@ class PagePersister extends AbstractPersister
             'locale' => 'string',
             'ghostLocale' => 'string',
             'availableLocales' => 'json',
+            'shadowLocale' => 'string',
+            'shadowLocales' => 'json',
             'templateKey' => 'string',
             'templateData' => 'json',
             'seoData' => 'json',
@@ -215,6 +257,8 @@ class PagePersister extends AbstractPersister
             '[title]' => '[title]',
             '[ghostLocale]' => '[ghostLocale]',
             '[availableLocales]' => '[availableLocales]',
+            '[shadowLocale]' => '[shadowLocale]',
+            '[shadowLocales]' => '[shadowLocales]',
             '[templateKey]' => '[template]',
             '[workflowPlace]' => '[state]',
             '[workflowPublished]' => '[published]',
