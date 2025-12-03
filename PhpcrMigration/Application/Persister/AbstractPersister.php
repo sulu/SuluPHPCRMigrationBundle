@@ -352,7 +352,12 @@ abstract class AbstractPersister implements PersisterInterface
         $localizations = $document['localizations'];
 
         $availableLocales = [];
+        $ghostLocale = null;
         foreach ($localizations as $locale => $localization) {
+            if ('null' !== $locale && null === $ghostLocale) {
+                $ghostLocale = $locale;
+            }
+
             // add only published locales to availableLocales
             if (\array_key_exists('state', $localization) && 2 === $localization['state']) {
                 $availableLocales[] = $locale;
@@ -369,6 +374,7 @@ abstract class AbstractPersister implements PersisterInterface
             $locale = 'null' === $locale ? null : $locale;
 
             $localizedData['availableLocales'] = null;
+            $localizedData['ghostLocale'] = $ghostLocale;
             if (null === $locale) {
                 $localizedData['availableLocales'] = $availableLocales;
             }
