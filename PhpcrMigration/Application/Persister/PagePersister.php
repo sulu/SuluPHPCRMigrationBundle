@@ -47,6 +47,8 @@ class PagePersister extends AbstractPersister
         $data['availableLocales'] = null;
         $data['routePathName'] = null;
         $data['navContexts'] = null;
+        $data['internal_link'] = null;
+        $data['external'] = null;
 
         return \array_filter($data, static fn ($entry) => null !== $entry);
     }
@@ -89,6 +91,7 @@ class PagePersister extends AbstractPersister
         }
 
         $data = $this->mapShadowLocaleData($document, $locale, $data);
+        $data = $this->mapLinkData($document, $locale, $data);
 
         return $data;
     }
@@ -126,6 +129,46 @@ class PagePersister extends AbstractPersister
         }
         $data['shadowLocale'] = null;
         $data['shadowLocales'] = [] !== $shadowLocales ? $shadowLocales : null;
+
+        return $data;
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    private function mapLinkData(array $document, ?string $locale, array $data): array
+    {
+        $data['linkProvider'] = null;
+        $data['linkData'] = null;
+
+        if (null === $locale) {
+            return $data;
+        }
+
+        /** @var array<string, mixed> $localization */
+        $localization = $document['localizations'][$locale] ?? [];
+        $nodeType = $localization['nodeType'] ?? 1;
+
+        if (2 === $nodeType) {
+            // Internal link
+            $targetUuid = $localization['internal_link'] ?? null;
+            $data['linkProvider'] = 'page'; // Sulu 2.6 did only support 'page' as internal link provider
+            $data['linkData'] = null !== $targetUuid ? [
+                'href' => $targetUuid,
+                'locale' => $locale,
+            ] : null;
+        } elseif (4 === $nodeType) {
+            // External link
+            $externalUrl = $localization['external'] ?? null;
+            $data['linkProvider'] = 'external';
+            $data['linkData'] = null !== $externalUrl ? [
+                'href' => $externalUrl,
+                'locale' => $locale,
+            ] : null;
+        }
 
         return $data;
     }
@@ -244,6 +287,8 @@ class PagePersister extends AbstractPersister
             'lastModified' => 'datetime',
             'workflowPlace' => 'string',
             'workflowPublished' => 'datetime',
+            'linkProvider' => 'string',
+            'linkData' => 'json',
         ];
     }
 
@@ -270,6 +315,9 @@ class PagePersister extends AbstractPersister
             // Sulu 3.0: Excerpt data consolidated into JSON column
             '[excerptData]' => '[_excerptData]',
             '[excerptSegment]' => '[excerpt][segments]',
+            // Sulu 3.0: Link data for internal/external link pages
+            '[linkProvider]' => '[linkProvider]',
+            '[linkData]' => '[linkData]',
         ];
     }
 
