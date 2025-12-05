@@ -17,10 +17,6 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\Entit
 
 /**
  * Persists CustomUrl data to Sulu 3.0 database structure.
- *
- * Handles migration of:
- * - CustomUrl main entity (cu_custom_url table)
- * - CustomUrlRoute entities (cu_custom_url_route table)
  */
 class CustomUrlPersister implements PersisterInterface
 {
@@ -53,29 +49,32 @@ class CustomUrlPersister implements PersisterInterface
      *     redirect: bool,
      *     noFollow: bool,
      *     noIndex: bool,
-     *     routes: array<int, array{uuid: string, path: string, history: bool}>,
+     *     routes: array<int, array{uuid: string, path: string, history: bool, created: \DateTimeInterface, changed: \DateTimeInterface}>,
      *     created: \DateTimeInterface,
      *     changed: \DateTimeInterface,
      *     creator: int|null,
-     *     changer: int,
+     *     changer: int|null,
      * } $document
      */
     public function persist(array $document, bool $isLive): void
     {
-        // Insert or update CustomUrl entity
         $customUrlData = [
             'uuid' => $document['uuid'],
             'title' => $document['title'],
             'published' => $document['published'],
-            'baseDomain' => $document['baseDomain'],
+            'base_domain' => $document['baseDomain'],
             'webspace' => $document['webspace'],
-            'domainParts' => $document['domainParts'],
-            'targetDocument' => $document['targetDocument'],
-            'targetLocale' => $document['targetLocale'],
+            'domain_parts' => $document['domainParts'],
+            'target_document' => $document['targetDocument'],
+            'target_locale' => $document['targetLocale'],
             'canonical' => $document['canonical'],
             'redirect' => $document['redirect'],
-            'noFollow' => $document['noFollow'],
-            'noIndex' => $document['noIndex'],
+            'no_follow' => $document['noFollow'],
+            'no_index' => $document['noIndex'],
+            'created' => $document['created'],
+            'changed' => $document['changed'],
+            'idUsersCreator' => $document['creator'],
+            'idUsersChanger' => $document['changer'],
         ];
 
         $this->entityRepository->insertOrUpdate(
@@ -85,32 +84,37 @@ class CustomUrlPersister implements PersisterInterface
                 'uuid' => 'string',
                 'title' => 'string',
                 'published' => 'boolean',
-                'baseDomain' => 'string',
+                'base_domain' => 'string',
                 'webspace' => 'string',
-                'domainParts' => 'json',
-                'targetDocument' => 'string',
-                'targetLocale' => 'string',
+                'domain_parts' => 'json',
+                'target_document' => 'string',
+                'target_locale' => 'string',
                 'canonical' => 'boolean',
                 'redirect' => 'boolean',
-                'noFollow' => 'boolean',
-                'noIndex' => 'boolean',
+                'no_follow' => 'boolean',
+                'no_index' => 'boolean',
+                'created' => 'datetime',
+                'changed' => 'datetime',
+                'idUsersCreator' => 'integer',
+                'idUsersChanger' => 'integer',
             ],
+            ['uuid' => $document['uuid']],
         );
 
-        // Remove existing routes for this custom URL
         $this->entityRepository->removeBy(
             'cu_custom_url_route',
             ['customUrl' => $document['uuid']],
         );
 
-        // Insert routes
         foreach ($document['routes'] as $route) {
             $routeData = [
                 'uuid' => $route['uuid'],
                 'customUrl' => $document['uuid'],
                 'path' => $route['path'],
                 'history' => $route['history'],
-                'target_route_uuid' => null, // Will be handled by Sulu 3.0 routing logic
+                'created' => $route['created'],
+                'changed' => $route['changed'],
+                'target_route_uuid' => null,
             ];
 
             $this->entityRepository->insertOrUpdate(
@@ -121,8 +125,11 @@ class CustomUrlPersister implements PersisterInterface
                     'customUrl' => 'string',
                     'path' => 'string',
                     'history' => 'boolean',
+                    'created' => 'datetime',
+                    'changed' => 'datetime',
                     'target_route_uuid' => 'string',
                 ],
+                ['uuid' => $route['uuid']],
             );
         }
     }
