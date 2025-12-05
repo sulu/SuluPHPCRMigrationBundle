@@ -45,7 +45,16 @@ class MigratePhpcrCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('documentTypes', InputArgument::OPTIONAL, 'The document type to migrate. (e.g. snippet, page, article, snippet_area)', 'page,article,snippet,snippet_area');
+        $types = [];
+        foreach ($this->persisterPool->getPersisters() as $persister) {
+            $types[] = $persister::getType();
+        }
+
+        $this->addArgument(
+            'documentTypes',
+            InputArgument::OPTIONAL,
+            \sprintf('The document type(s) to migrate. Available: %s', \implode(', ', $types)),
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -53,14 +62,16 @@ class MigratePhpcrCommand extends Command
         $session = $this->sessionManager->getDefaultSession();
         $liveSession = $this->sessionManager->getLiveSession();
 
-        /** @var string $documentTypes */
-        $documentTypes = $input->getArgument('documentTypes');
-        $documentTypes = \explode(',', $documentTypes);
+        /** @var string|null $documentTypesArg */
+        $documentTypesArg = $input->getArgument('documentTypes');
+        $persisters = $documentTypesArg
+            ? \array_map(fn (string $type) => $this->persisterPool->getPersister($type), \explode(',', $documentTypesArg))
+            : $this->persisterPool->getPersisters();
 
         $io = new SymfonyStyle($input, $output);
-        foreach ($documentTypes as $documentType) {
+        foreach ($persisters as $persister) {
+            $documentType = $persister::getType();
             $io->title('Migrating ' . $documentType . ' documents');
-            $persister = $this->persisterPool->getPersister($documentType);
 
             // Snippet areas only exist in default session (not in live session)
             $sessions = 'snippet_area' === $documentType ? [$session] : [$session, $liveSession];

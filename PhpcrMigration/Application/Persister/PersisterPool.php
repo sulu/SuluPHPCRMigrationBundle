@@ -32,4 +32,12 @@ class PersisterPool
 
         throw new PersisterNotFoundException($type);
     }
+
+    /**
+     * @return iterable<PersisterInterface>
+     */
+    public function getPersisters(): iterable
+    {
+        return $this->persisters;
+    }
 }
