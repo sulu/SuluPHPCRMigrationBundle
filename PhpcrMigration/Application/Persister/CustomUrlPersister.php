@@ -49,7 +49,7 @@ class CustomUrlPersister implements PersisterInterface
      *     redirect: bool,
      *     noFollow: bool,
      *     noIndex: bool,
-     *     routes: array<int, array{uuid: string, path: string, history: bool, created: \DateTimeInterface, changed: \DateTimeInterface}>,
+     *     routes: array<int, array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}>,
      *     created: \DateTimeInterface,
      *     changed: \DateTimeInterface,
      *     creator: int|null,
@@ -114,7 +114,7 @@ class CustomUrlPersister implements PersisterInterface
                 'history' => $route['history'],
                 'created' => $route['created'],
                 'changed' => $route['changed'],
-                'target_route_uuid' => null,
+                'target_route_uuid' => $route['targetRouteUuid'],
             ];
 
             $this->entityRepository->insertOrUpdate(

@@ -54,7 +54,7 @@ class CustomUrlNodeParser implements NodeParserInterface
      *     redirect: bool,
      *     noFollow: bool,
      *     noIndex: bool,
-     *     routes: array<int, array{uuid: string, path: string, history: bool, created: \DateTimeInterface, changed: \DateTimeInterface}>,
+     *     routes: array<int, array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}>,
      *     created: \DateTimeInterface,
      *     changed: \DateTimeInterface,
      *     creator: int|null,
@@ -108,53 +108,103 @@ class CustomUrlNodeParser implements NodeParserInterface
     }
 
     /**
-     * @return array<int, array{uuid: string, path: string, history: bool, created: \DateTimeInterface, changed: \DateTimeInterface}>
+     * @return array<int, array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}>
      */
-    private function parseRoutes(NodeInterface $node): array
+    private function parseRoutes(NodeInterface $customUrlNode): array
     {
+        /** @var array<string, array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}> $routes */
         $routes = [];
 
-        foreach ($node->getReferences('sulu:content') as $reference) {
+        foreach ($customUrlNode->getReferences('sulu:content') as $reference) {
             $routeNode = $reference->getParent();
 
-            $isCustomUrlRoute = false;
-            foreach ($routeNode->getMixinNodeTypes() as $mixinNodeType) {
-                if ('sulu:custom_url_route' === $mixinNodeType->getName()) {
-                    $isCustomUrlRoute = true;
-                    break;
-                }
-            }
-
-            if (!$isCustomUrlRoute) {
+            if (!$this->isCustomUrlRoute($routeNode)) {
                 continue;
             }
 
-            $routePath = $routeNode->getPath();
-            $routePathParts = \explode('/', $routePath);
-            $pathSegments = \array_slice($routePathParts, 5);
-            $extractedPath = \implode('/', $pathSegments);
+            $routeUuid = $this->getNodeUuid($routeNode);
+            $routes[$routeUuid] = $this->buildRouteData($routeNode, null);
 
-            $uuidValue = $routeNode->getProperty('jcr:uuid')->getString();
-            $historyValue = $routeNode->hasProperty('sulu:history')
-                ? $routeNode->getProperty('sulu:history')->getBoolean()
-                : false;
-
-            $createdValue = $routeNode->hasProperty('sulu:created')
-                ? $routeNode->getProperty('sulu:created')->getDate()
-                : new \DateTime();
-            $changedValue = $routeNode->hasProperty('sulu:changed')
-                ? $routeNode->getProperty('sulu:changed')->getDate()
-                : new \DateTime();
-
-            $routes[] = [
-                'uuid' => \is_array($uuidValue) ? $uuidValue[0] : $uuidValue,
-                'path' => $extractedPath,
-                'history' => \is_array($historyValue) ? (bool) $historyValue[0] : $historyValue,
-                'created' => $createdValue instanceof \DateTimeInterface ? $createdValue : new \DateTime(),
-                'changed' => $changedValue instanceof \DateTimeInterface ? $changedValue : new \DateTime(),
-            ];
+            $this->collectHistoryRoutes($routeNode, $routeUuid, $routes);
         }
 
-        return $routes;
+        return \array_values($routes);
+    }
+
+    /**
+     * Recursively collect history routes that reference the given target route.
+     *
+     * @param array<string, array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}> $routes
+     */
+    private function collectHistoryRoutes(
+        NodeInterface $targetRouteNode,
+        string $targetRouteUuid,
+        array &$routes,
+    ): void {
+        foreach ($targetRouteNode->getReferences('sulu:content') as $reference) {
+            $historyRouteNode = $reference->getParent();
+
+            if (!$this->isCustomUrlRoute($historyRouteNode)) {
+                continue;
+            }
+
+            $historyRouteUuid = $this->getNodeUuid($historyRouteNode);
+
+            if (isset($routes[$historyRouteUuid])) {
+                continue;
+            }
+
+            $routes[$historyRouteUuid] = $this->buildRouteData($historyRouteNode, $targetRouteUuid);
+
+            $this->collectHistoryRoutes($historyRouteNode, $historyRouteUuid, $routes);
+        }
+    }
+
+    /**
+     * @return array{uuid: string, path: string, history: bool, targetRouteUuid: string|null, created: \DateTimeInterface, changed: \DateTimeInterface}
+     */
+    private function buildRouteData(NodeInterface $routeNode, ?string $targetRouteUuid): array
+    {
+        $routePath = $routeNode->getPath();
+        $routePathParts = \explode('/', $routePath);
+        $pathSegments = \array_slice($routePathParts, 5);
+
+        $uuidValue = $routeNode->getProperty('jcr:uuid')->getString();
+        $historyValue = $routeNode->hasProperty('sulu:history')
+            ? $routeNode->getProperty('sulu:history')->getBoolean()
+            : false;
+        $createdValue = $routeNode->hasProperty('sulu:created')
+            ? $routeNode->getProperty('sulu:created')->getDate()
+            : new \DateTime();
+        $changedValue = $routeNode->hasProperty('sulu:changed')
+            ? $routeNode->getProperty('sulu:changed')->getDate()
+            : new \DateTime();
+
+        return [
+            'uuid' => \is_array($uuidValue) ? $uuidValue[0] : $uuidValue,
+            'path' => \implode('/', $pathSegments),
+            'history' => \is_array($historyValue) ? (bool) $historyValue[0] : $historyValue,
+            'targetRouteUuid' => $targetRouteUuid,
+            'created' => $createdValue instanceof \DateTimeInterface ? $createdValue : new \DateTime(),
+            'changed' => $changedValue instanceof \DateTimeInterface ? $changedValue : new \DateTime(),
+        ];
+    }
+
+    private function isCustomUrlRoute(NodeInterface $node): bool
+    {
+        foreach ($node->getMixinNodeTypes() as $mixinNodeType) {
+            if ('sulu:custom_url_route' === $mixinNodeType->getName()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getNodeUuid(NodeInterface $node): string
+    {
+        $uuidValue = $node->getProperty('jcr:uuid')->getString();
+
+        return \is_array($uuidValue) ? $uuidValue[0] : $uuidValue;
     }
 }
