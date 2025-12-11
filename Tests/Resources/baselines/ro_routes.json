@@ -91,6 +91,15 @@
     },
     {
         "id": 11,
+        "parent_id": 1,
+        "webspace": "website",
+        "locale": "de",
+        "slug": "/numeric-block-test",
+        "resource_key": "pages",
+        "resource_id": "af78e52e-1e75-4bb2-a58e-c9592dd059d8"
+    },
+    {
+        "id": 12,
         "parent_id": 4,
         "webspace": "website",
         "locale": "de",
@@ -99,7 +108,7 @@
         "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39"
     },
     {
-        "id": 12,
+        "id": 13,
         "parent_id": 4,
         "webspace": "website",
         "locale": "de",
@@ -108,7 +117,7 @@
         "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc"
     },
     {
-        "id": 13,
+        "id": 14,
         "parent_id": "",
         "webspace": "",
         "locale": "de",

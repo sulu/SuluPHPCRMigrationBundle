@@ -121,7 +121,7 @@ class PropertyNodeParser implements NodeParserInterface
 
     private function isBlockTypeProperty(string $name): bool
     {
-        return \str_ends_with($name, '-type');
+        return \str_contains($name, '-type#');
     }
 
     private function resolvePropertyValue(PropertyInterface $property): mixed

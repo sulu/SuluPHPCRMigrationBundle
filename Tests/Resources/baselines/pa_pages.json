@@ -7,7 +7,7 @@
         "rgt": 7,
         "depth": 1,
         "created": "2025-12-09 10:44:07",
-        "changed": "2025-12-11 10:49:09",
+        "changed": "2025-12-11 22:50:06",
         "idUsersCreator": "",
         "idUsersChanger": ""
     },
@@ -60,6 +60,18 @@
         "idUsersChanger": ""
     },
     {
+        "uuid": "af78e52e-1e75-4bb2-a58e-c9592dd059d8",
+        "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+        "webspaceKey": "website",
+        "lft": 16,
+        "rgt": 17,
+        "depth": 1,
+        "created": "2025-12-11 22:03:04",
+        "changed": "2025-12-11 22:49:55",
+        "idUsersCreator": "",
+        "idUsersChanger": ""
+    },
+    {
         "uuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "webspaceKey": "website",
@@ -88,7 +100,7 @@
         "parent_id": "",
         "webspaceKey": "website",
         "lft": 1,
-        "rgt": 16,
+        "rgt": 18,
         "depth": 0,
         "created": "2025-12-09 09:37:45",
         "changed": "2025-12-09 09:37:45",

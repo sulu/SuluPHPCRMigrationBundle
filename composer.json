@@ -81,7 +81,9 @@
         "test-baseline-regenerate": [
             "rm -f Tests/Resources/baselines/*.json",
             "@phpunit"
-        ]
+        ],
+        "export-fixture": "sh -c 'cd Tests/Application/sulu26 && mysqldump -h 127.0.0.1 -u root -p migration_sulu_26 > ../../Resources/fixtures/sulu26_dump.sql'",
+        "import-fixture": "sh -c 'cd Tests/Application/sulu26 && mysql -h 127.0.0.1 -u root -p migration_sulu_26 < ../../Resources/fixtures/sulu26_dump.sql'"
     },
     "config": {
         "sort-packages": true,
