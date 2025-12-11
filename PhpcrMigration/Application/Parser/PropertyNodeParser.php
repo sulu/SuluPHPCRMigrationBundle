@@ -101,6 +101,10 @@ class PropertyNodeParser implements NodeParserInterface
         $propertyPath = $this->getLocalizedPath($name, $knownLocales);
         $propertyPath = $this->getPropertyPath($propertyPath, $name);
 
+        if ($this->isBlockTypeProperty($name) && (\is_scalar($value) || (\is_object($value) && \method_exists($value, '__toString')))) {
+            $value = (string) $value;
+        }
+
         $this->propertyAccessor->setValue(
             $document,
             $propertyPath,
@@ -113,6 +117,11 @@ class PropertyNodeParser implements NodeParserInterface
     private function isUnLocalizedProperty(string $name): bool
     {
         return !\str_contains($name, ':');
+    }
+
+    private function isBlockTypeProperty(string $name): bool
+    {
+        return \str_ends_with($name, '-type');
     }
 
     private function resolvePropertyValue(PropertyInterface $property): mixed

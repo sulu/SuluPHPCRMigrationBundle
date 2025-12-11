@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>page_block_settings</key>
+
+    <properties>
+        <property name="visibility" type="select" colspan="6">
+            <meta>
+                <title lang="en">Visible On</title>
+            </meta>
+            <params>
+                <param name="default_values" type="collection">
+                    <param name="xs"/>
+                    <param name="sm"/>
+                    <param name="md"/>
+                    <param name="lg"/>
+                    <param name="xl"/>
+                </param>
+                <param name="values" type="collection">
+                    <param name="xs">
+                        <meta>
+                            <title lang="en">Small Phone (Smaller than 640px)</title>
+                        </meta>
+                    </param>
+                    <param name="sm">
+                        <meta>
+                            <title lang="en">Large Phone (640px to 768px)</title>
+                        </meta>
+                    </param>
+                    <param name="md">
+                        <meta>
+                            <title lang="en">Tablet (768px to 1024px)</title>
+                        </meta>
+                    </param>
+                    <param name="lg">
+                        <meta>
+                            <title lang="en">Small Desktop (1024px to 1280px)</title>
+                        </meta>
+                    </param>
+                    <param name="xl">
+                        <meta>
+                            <title lang="en">Large Desktop (Larger than 1280px)</title>
+                        </meta>
+                    </param>
+                </param>
+            </params>
+        </property>
+    </properties>
+</form>
