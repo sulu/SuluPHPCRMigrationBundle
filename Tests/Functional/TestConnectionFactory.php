@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Functional;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Sulu\Bundle\PhpcrMigrationBundle\Tests\Functional\Fixture\TestFixtureBuilder;
 
 final class TestConnectionFactory
@@ -25,6 +26,14 @@ final class TestConnectionFactory
     public static function loadFixture(Connection $connection): void
     {
         if (self::$fixtureLoaded) {
+            return;
+        }
+
+        $platform = $connection->getDatabasePlatform();
+        if ($platform instanceof PostgreSQLPlatform) {
+            // For PostgreSQL, pgloader has already set up the database
+            self::$fixtureLoaded = true;
+
             return;
         }
 

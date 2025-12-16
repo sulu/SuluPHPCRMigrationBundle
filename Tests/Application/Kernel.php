@@ -47,17 +47,20 @@ class Kernel extends BaseKernel
         ]);
 
         // Manually configure DBAL connection (without DoctrineBundle)
+        $driver = $_SERVER['DATABASE_DRIVER'] ?? $_ENV['DATABASE_DRIVER'] ?? 'pdo_mysql';
+        $charset = 'pdo_pgsql' === $driver ? 'UTF8' : 'utf8mb4';
+
         $container->services()
             ->set('doctrine.dbal.default_connection', Connection::class)
             ->factory([DriverManager::class, 'getConnection'])
             ->args([[
-                'driver' => 'pdo_mysql',
+                'driver' => $driver,
                 'host' => '%env(DATABASE_HOST)%',
                 'port' => '%env(int:DATABASE_PORT)%',
                 'user' => '%env(DATABASE_USER)%',
                 'password' => '%env(DATABASE_PASSWORD)%',
                 'dbname' => '%env(DATABASE_NAME)%',
-                'charset' => 'utf8mb4',
+                'charset' => $charset,
             ]])
             ->public();
 

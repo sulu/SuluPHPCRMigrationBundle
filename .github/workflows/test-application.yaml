@@ -93,6 +93,92 @@ jobs:
             - name: Execute test cases
               run: composer test
 
+    # PostgreSQL test job: Validates that migration produces identical results on PostgreSQL.
+    # Uses pgloader to migrate MySQL fixture data to PostgreSQL, then runs tests against PostgreSQL.
+    php-postgres:
+        name: "PHP 8.3 PostgreSQL"
+        runs-on: ubuntu-22.04
+        timeout-minutes: 15
+
+        services:
+            postgres:
+                image: postgres:16
+                env:
+                    POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: sulu_migration_test
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+        env:
+            DATABASE_DRIVER: pdo_pgsql
+            DATABASE_CHARSET: UTF8
+            DATABASE_HOST: 127.0.0.1
+            DATABASE_PORT: 5432
+            DATABASE_USER: postgres
+            DATABASE_PASSWORD: postgres
+            DATABASE_NAME: sulu_migration_test
+
+        steps:
+            - name: Checkout project
+              uses: actions/checkout@v4
+
+            # MySQL is started manually via docker run instead of as a GitHub Actions service because:
+            # 1. pgloader requires mysql_native_password authentication (not caching_sha2_password)
+            # 2. GitHub Actions services don't support passing command arguments to containers
+            # 3. The --default-authentication-plugin flag must be passed to mysqld at startup
+            - name: Start MySQL with native password authentication
+              run: |
+                  docker run -d --name mysql \
+                    -e MYSQL_ROOT_PASSWORD=root \
+                    -e MYSQL_DATABASE=sulu_migration_test \
+                    -p 3306:3306 \
+                    mysql:8.0 \
+                    --default-authentication-plugin=mysql_native_password
+                  for i in {1..30}; do
+                    if docker exec mysql mysqladmin ping -h localhost --silent 2>/dev/null; then
+                      echo "MySQL is ready"
+                      break
+                    fi
+                    echo "Waiting for MySQL... ($i/30)"
+                    sleep 2
+                  done
+
+            # pgloader Docker image is used instead of apt package because Ubuntu 22.04's
+            # pgloader (v3.6.3) has compatibility issues with MySQL 8 data types
+            - name: Install pgloader
+              run: |
+                  docker pull ghcr.io/dimitri/pgloader:latest
+                  echo '#!/bin/bash' | sudo tee /usr/local/bin/pgloader
+                  echo 'docker run --rm --network host -v "$(pwd):/work" -w /work ghcr.io/dimitri/pgloader:latest pgloader "$@"' | sudo tee -a /usr/local/bin/pgloader
+                  sudo chmod +x /usr/local/bin/pgloader
+
+            - name: Install and configure PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  extensions: ctype, iconv, pdo_mysql, pdo_pgsql
+                  tools: composer:v2
+                  coverage: none
+
+            - name: Install composer dependencies
+              uses: ramsey/composer-install@v3
+              with:
+                  dependency-versions: highest
+
+            - name: Load MySQL fixture
+              run: mysql -h 127.0.0.1 -u root -proot sulu_migration_test < Tests/Resources/fixtures/test_fixture.sql
+
+            - name: Migrate to PostgreSQL with pgloader
+              run: pgloader Tests/Resources/pgloader.load
+
+            - name: Execute test cases
+              run: vendor/bin/phpunit
+
     php-lint:
         name: "PHP Lint"
         runs-on: ubuntu-22.04

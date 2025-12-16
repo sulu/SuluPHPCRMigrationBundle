@@ -52,13 +52,13 @@ class JsonBaselineExporter
 
     private function exportTable(string $table): int
     {
-        $primaryKeyResult = $this->connection->fetchAllAssociative(
-            "SHOW KEYS FROM `{$table}` WHERE Key_name = 'PRIMARY'"
-        );
-        $primaryKeyColumns = \array_column($primaryKeyResult, 'Column_name');
+        $schemaManager = $this->connection->createSchemaManager();
+        $indexes = $schemaManager->listTableIndexes($table);
+        $primaryKeyColumns = isset($indexes['primary']) ? $indexes['primary']->getColumns() : [];
         $orderBy = [] === $primaryKeyColumns ? '' : ' ORDER BY ' . \implode(', ', $primaryKeyColumns);
 
-        $rows = $this->connection->fetchAllAssociative("SELECT * FROM `{$table}`{$orderBy}");
+        $quotedTable = $this->connection->quoteIdentifier($table);
+        $rows = $this->connection->fetchAllAssociative("SELECT * FROM {$quotedTable}{$orderBy}");
 
         $normalizedRows = \array_map(
             fn (array $row): array => $this->sortKeys(
@@ -89,18 +89,12 @@ class JsonBaselineExporter
      */
     private function getExportTables(): array
     {
-        $rows = $this->connection->fetchAllAssociative(
-            'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? ORDER BY TABLE_NAME',
-            [$this->connection->getDatabase()]
-        );
+        $schemaManager = $this->connection->createSchemaManager();
+        $allTables = $schemaManager->listTableNames();
+        \sort($allTables);
 
         $tables = [];
-        foreach ($rows as $row) {
-            $tableName = $row['TABLE_NAME'];
-            if (!\is_string($tableName)) {
-                continue;
-            }
-
+        foreach ($allTables as $tableName) {
             if ($this->shouldExcludeTable($tableName)) {
                 continue;
             }

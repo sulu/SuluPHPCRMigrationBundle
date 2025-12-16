@@ -1,0 +1,12 @@
+LOAD DATABASE
+  FROM mysql://root:root@127.0.0.1:3306/sulu_migration_test
+  INTO postgresql://postgres:postgres@127.0.0.1:5432/sulu_migration_test
+
+WITH include drop, create tables, create indexes, reset sequences
+
+SET maintenance_work_mem to '512MB', work_mem to '48MB'
+
+CAST type datetime to timestamptz using zero-dates-to-null,
+     type date to date using zero-dates-to-null
+
+ALTER SCHEMA 'sulu_migration_test' RENAME TO 'public';

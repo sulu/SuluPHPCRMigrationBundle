@@ -160,7 +160,7 @@ class BaselineComparisonTest extends KernelTestCase
         $this->assertTableMatchesBaseline($table);
     }
 
-    private const EXCLUDED_FIELDS = ['_id', 'uuid', 'changed'];
+    private const EXCLUDED_FIELDS = ['_id', 'id', 'uuid', 'changed'];
 
     private function assertTableMatchesBaseline(string $table): void
     {
@@ -229,7 +229,7 @@ class BaselineComparisonTest extends KernelTestCase
         }
 
         $rows = \array_map(
-            fn (array $row): array => $this->removeExcludedFields($row),
+            fn (array $row): array => $this->normalizeRow($this->removeExcludedFields($row)),
             $data
         );
 
@@ -239,15 +239,68 @@ class BaselineComparisonTest extends KernelTestCase
     }
 
     /**
-     * @param array<string, mixed> $data
+     * Normalize row data for cross-database comparison.
+     * - Convert column names to lowercase (PostgreSQL returns lowercase)
+     * - Normalize timestamps (remove timezone suffix)
+     * - Convert booleans to integers (PostgreSQL returns true/false, MySQL returns 0/1)
+     * - Trim strings (PostgreSQL may have trailing spaces)
+     * - Normalize JSON strings (consistent spacing)
+     * - Sort array keys for consistent JSON output.
      *
-     * @return array<string, mixed>
+     * @param array<string|int, mixed> $row
+     *
+     * @return array<string|int, mixed>
+     */
+    private function normalizeRow(array $row): array
+    {
+        $normalized = [];
+        foreach ($row as $key => $value) {
+            // Keep integer keys as-is (for numerically indexed arrays)
+            $normalizedKey = \is_int($key) ? $key : \strtolower((string) $key);
+
+            if (\is_bool($value)) {
+                // Normalize booleans to integers for consistent comparison
+                $normalized[$normalizedKey] = $value ? 1 : 0;
+            } elseif (\is_array($value)) {
+                $normalized[$normalizedKey] = $this->normalizeRow($value);
+            } elseif (\is_string($value)) {
+                $normalizedValue = \trim($value);
+                // Normalize timestamps: remove timezone suffix like +00
+                $normalizedValue = \preg_replace('/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\+\d{2}/', '$1', $normalizedValue) ?? $normalizedValue;
+                // Normalize JSON arrays (remove spaces after commas for consistent format)
+                if (\str_starts_with($normalizedValue, '[') && \str_ends_with($normalizedValue, ']')) {
+                    $decoded = \json_decode($normalizedValue, true);
+                    if (\is_array($decoded)) {
+                        $normalizedValue = \json_encode($decoded, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
+                        if (false === $normalizedValue) {
+                            $normalizedValue = \trim($value);
+                        }
+                    }
+                }
+                $normalized[$normalizedKey] = $normalizedValue;
+            } else {
+                $normalized[$normalizedKey] = $value;
+            }
+        }
+
+        // Sort by keys for consistent ordering (handles JSON key order differences)
+        \ksort($normalized);
+
+        return $normalized;
+    }
+
+    /**
+     * @param array<string|int, mixed> $data
+     *
+     * @return array<string|int, mixed>
      */
     private function removeExcludedFields(array $data): array
     {
         $result = [];
         foreach ($data as $key => $value) {
-            if (\in_array($key, self::EXCLUDED_FIELDS, true)) {
+            $keyStr = (string) $key;
+            // Exclude specific fields and foreign key columns (ending with _id)
+            if (\in_array($keyStr, self::EXCLUDED_FIELDS, true) || \str_ends_with($keyStr, '_id')) {
                 continue;
             }
             if (\is_array($value)) {

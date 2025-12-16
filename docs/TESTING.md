@@ -29,6 +29,53 @@ Tests/
         └── *.json               # Expected migration output
 ```
 
+### Data Flow
+
+```
+┌─────────────────────┐     ┌─────────────────────┐
+│  sulu26_dump.sql    │     │  sulu30_schema.sql  │
+│  (Sulu 2.6 data)    │     │  (Sulu 3.0 schema)  │
+│  - PHPCR tables     │     │  - pa_* tables      │
+│  - permissions etc  │     │  - sn_*, ar_*, cu_* │
+└─────────┬───────────┘     └──────────┬──────────┘
+          │                            │
+          └──────────┬─────────────────┘
+                     ▼
+          ┌─────────────────────┐
+          │  TestFixtureBuilder │
+          │  (merges at runtime)│
+          └──────────┬──────────┘
+                     ▼
+          ┌─────────────────────┐
+          │  test_fixture.sql   │
+          │  - All 2.6 data     │
+          │  - Empty 3.0 tables │
+          └──────────┬──────────┘
+                     ▼
+     ┌───────────────┴───────────────┐
+     │                               │
+     ▼                               ▼
+┌─────────┐                   ┌─────────────┐
+│  MySQL  │                   │  pgloader   │
+└────┬────┘                   │ MySQL → PG  │
+     │                        └──────┬──────┘
+     │                               ▼
+     │                        ┌────────────┐
+     │                        │ PostgreSQL │
+     │                        └─────┬──────┘
+     │                              │
+     └──────────────┬───────────────┘
+                    ▼
+          ┌─────────────────────┐
+          │  Run Migration      │
+          │  PHPCR → 3.0 tables │
+          └──────────┬──────────┘
+                     ▼
+          ┌─────────────────────┐
+          │  Compare baselines  │
+          └─────────────────────┘
+```
+
 ### How It Works
 
 1. **Fixture Building** (`TestFixtureBuilder`)
@@ -44,7 +91,8 @@ Tests/
 3. **Baseline Comparison**
    - First run: Generates baseline files if missing
    - Subsequent runs: Compares migrated data against baselines
-   - Automatically excludes random fields (`_id`, `uuid`)
+   - Automatically excludes non-deterministic fields (`_id`, `id`, `uuid`, `changed`)
+   - Normalizes data for cross-database comparison (column casing, booleans, timestamps)
    - Sorts rows for deterministic comparison
 
 ## Running Tests
@@ -72,6 +120,31 @@ export DATABASE_USER=root
 export DATABASE_PASSWORD=ChangeMe
 export DATABASE_NAME=sulu_migration_test
 ```
+
+### Running PostgreSQL Tests Locally
+
+PostgreSQL tests ensure migration produces identical results on both databases. Use docker-compose:
+
+```bash
+cd Tests/Application
+docker compose up -d mysql postgres
+
+# Load fixture into MySQL
+mysql -h 127.0.0.1 -u root -proot sulu_migration_test < ../Resources/fixtures/test_fixture.sql
+
+# Migrate to PostgreSQL using pgloader
+pgloader ../Resources/pgloader.load
+
+# Run tests against PostgreSQL
+cd ../..
+DATABASE_DRIVER=pdo_pgsql DATABASE_PORT=5432 DATABASE_USER=postgres DATABASE_PASSWORD=postgres vendor/bin/phpunit
+```
+
+**Why both MySQL and PostgreSQL?**
+- MySQL is the source of the fixture data (Sulu 2.6 dump)
+- pgloader converts MySQL to PostgreSQL (schema + data)
+- Tests run against PostgreSQL to verify cross-database compatibility
+- Same JSON baselines validate both databases produce identical results
 
 ## Updating Test Data
 
@@ -163,10 +236,23 @@ composer test
 
 These fields are automatically excluded from comparison:
 
-- `_id`: Block IDs generated during migration (random)
-- `uuid`: Entity UUIDs for new entities (random)
+- `_id`: Internal identifiers
+- `id`: Auto-increment IDs (differ between databases due to sequence handling)
+- `uuid`: Entity UUIDs
+- `changed`: Timestamps that depend on test execution time
+- `*_id`: Foreign key columns (automatically excluded by suffix)
 
 Add more fields to `BaselineComparisonTest::EXCLUDED_FIELDS` if needed.
+
+### Cross-Database Normalization
+
+The test suite normalizes data for consistent comparison across MySQL and PostgreSQL:
+
+- **Column names**: Lowercased (PostgreSQL returns lowercase)
+- **Booleans**: Converted to integers (PostgreSQL returns true/false, MySQL returns 0/1)
+- **Timestamps**: Timezone suffixes removed
+- **JSON arrays**: Re-encoded with consistent spacing
+- **Strings**: Trimmed (PostgreSQL may have trailing spaces)
 
 ### Test Organization
 

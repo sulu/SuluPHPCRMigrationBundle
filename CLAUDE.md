@@ -50,3 +50,19 @@ rm Tests/Resources/baselines/*.json && composer test   # First run generates, se
 ```
 
 `Tests/Application/sulu26/` and `sulu30/` are optional skeletons for creating test content or updating schema.
+
+**CI Environment**:
+- Tests run on PHP 8.2, 8.3, 8.4
+- Matrix includes lowest and highest dependency versions
+- MySQL 8.0 required for functional tests
+
+### Functional Test Fixtures
+
+Functional tests run against MySQL and PostgreSQL with JSON baselines for regression detection.
+
+See **[docs/TESTING.md](docs/TESTING.md)** for comprehensive documentation on:
+- Test data flow and architecture
+- Running tests locally (MySQL and PostgreSQL)
+- Adding new test content
+- Updating Sulu 3.0 schema
+- Baseline comparison details
