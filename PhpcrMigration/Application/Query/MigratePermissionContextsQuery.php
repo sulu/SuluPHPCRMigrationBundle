@@ -69,8 +69,9 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
 
     private function migrateSnippetPermissions(Connection $connection): void
     {
+        // Use lowercase alias to ensure consistent array key regardless of PDO/MySQL case handling
         $existingPermissions = $connection->fetchAllAssociative(
-            'SELECT permissions, idRoles FROM se_permissions WHERE context = :oldContext',
+            'SELECT permissions, idRoles AS role_id FROM se_permissions WHERE context = :oldContext',
             ['oldContext' => self::SNIPPET_OLD_CONTEXT]
         );
 
@@ -83,11 +84,13 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
         );
 
         foreach ($existingPermissions as $permission) {
+            $roleId = $permission['role_id'];
+
             $exists = $connection->fetchOne(
                 'SELECT COUNT(*) FROM se_permissions WHERE context = :areaContext AND idRoles = :idRoles',
                 [
                     'areaContext' => self::SNIPPET_AREA_CONTEXT,
-                    'idRoles' => $permission['idRoles'],
+                    'idRoles' => $roleId,
                 ]
             );
 
@@ -95,7 +98,7 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
                 $connection->insert('se_permissions', [
                     'context' => self::SNIPPET_AREA_CONTEXT,
                     'permissions' => self::ARCHIVE_PERMISSION,
-                    'idRoles' => $permission['idRoles'],
+                    'idRoles' => $roleId,
                 ]);
             }
         }
