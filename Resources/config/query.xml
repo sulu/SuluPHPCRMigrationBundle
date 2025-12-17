@@ -10,6 +10,7 @@
 
         <service id="sulu_phpcr_migration.migrate_permission_contexts_query"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query\MigratePermissionContextsQuery">
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
             <tag name="sulu_phpcr_migration.post_migration_query"/>
         </service>
     </services>

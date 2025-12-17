@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query;
 
 use Doctrine\DBAL\Connection;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 
 /**
  * Migrates permission contexts from Sulu 2.6 to Sulu 3.0 structure.
@@ -32,6 +33,11 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
     private const SNIPPET_OLD_CONTEXT = 'sulu.global.snippets';
     private const SNIPPET_NEW_CONTEXT = 'sulu.snippet.snippets';
     private const SNIPPET_AREA_CONTEXT = 'sulu.snippet.snippet_areas';
+
+    public function __construct(
+        private readonly EntityRepositoryInterface $entityRepository,
+    ) {
+    }
 
     public function execute(Connection $connection): void
     {
@@ -86,20 +92,25 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
         foreach ($existingPermissions as $permission) {
             $roleId = $permission['role_id'];
 
-            $exists = $connection->fetchOne(
-                'SELECT COUNT(*) FROM se_permissions WHERE context = :areaContext AND idRoles = :idRoles',
-                [
-                    'areaContext' => self::SNIPPET_AREA_CONTEXT,
-                    'idRoles' => $roleId,
-                ]
-            );
+            $exists = $this->entityRepository->exists('se_permissions', [
+                'context' => self::SNIPPET_AREA_CONTEXT,
+                'idRoles' => $roleId,
+            ]);
 
             if (!$exists) {
-                $connection->insert('se_permissions', [
-                    'context' => self::SNIPPET_AREA_CONTEXT,
-                    'permissions' => self::ARCHIVE_PERMISSION,
-                    'idRoles' => $roleId,
-                ]);
+                $this->entityRepository->insertOrUpdate(
+                    data: [
+                        'context' => self::SNIPPET_AREA_CONTEXT,
+                        'permissions' => self::ARCHIVE_PERMISSION,
+                        'idRoles' => $roleId,
+                    ],
+                    tableName: 'se_permissions',
+                    types: [
+                        'context' => 'string',
+                        'permissions' => 'integer',
+                        'idRoles' => 'integer',
+                    ]
+                );
             }
         }
     }
