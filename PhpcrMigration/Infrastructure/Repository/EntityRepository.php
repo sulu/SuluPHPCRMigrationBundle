@@ -67,6 +67,12 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
         }
     }
 
+    public function insert(array $data, string $tableName, array $types): void
+    {
+        // Delegate to insertOrUpdate with no $where clause to skip existence check
+        $this->insertOrUpdate($data, $tableName, $types);
+    }
+
     public function findOneBy(string $tableName, array $where): ?array
     {
         [$conditions, $params] = $this->parseWhereParts($where);

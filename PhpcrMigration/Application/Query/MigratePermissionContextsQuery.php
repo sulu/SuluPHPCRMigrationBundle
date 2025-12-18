@@ -98,7 +98,7 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
             ]);
 
             if (!$exists) {
-                $this->entityRepository->insertOrUpdate(
+                $this->entityRepository->insert(
                     data: [
                         'context' => self::SNIPPET_AREA_CONTEXT,
                         'permissions' => self::ARCHIVE_PERMISSION,

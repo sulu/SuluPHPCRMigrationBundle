@@ -25,6 +25,12 @@ interface EntityRepositoryInterface
     public function insertOrUpdate(array $data, string $tableName, array $types, array $where = []): void;
 
     /**
+     * @param mixed[] $data
+     * @param array<string, string> $types
+     */
+    public function insert(array $data, string $tableName, array $types): void;
+
+    /**
      * @param mixed[] $where
      *
      * @return mixed[]|null
