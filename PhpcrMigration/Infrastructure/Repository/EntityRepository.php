@@ -13,6 +13,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Reposit
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Schema\Exception\TableDoesNotExist;
 use Doctrine\DBAL\Schema\Sequence;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Contracts\Service\ResetInterface;
@@ -23,6 +24,21 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      * @var Sequence[]|null
      */
     private ?array $sequences = null;
+
+    /**
+     * @var array<string, bool>
+     */
+    private array $tableExistsCache = [];
+
+    /**
+     * @var string[]
+     */
+    private const CACHEABLE_EXISTS_TABLES = ['me_media', 'co_contacts', 'ca_categories'];
+
+    /**
+     * @var array<string, bool>
+     */
+    private array $existsCache = [];
 
     public function __construct(
         protected Connection $connection,
@@ -95,6 +111,19 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function exists(string $tableName, array $where): bool
     {
+        if (\in_array($tableName, self::CACHEABLE_EXISTS_TABLES, true)) {
+            $cacheKey = $tableName . ':' . \http_build_query($where);
+            if (\array_key_exists($cacheKey, $this->existsCache)) {
+                return $this->existsCache[$cacheKey];
+            }
+
+            [$conditions, $params] = $this->parseWhereParts($where);
+            $query = 'SELECT 1 FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
+            $result = $this->connection->fetchOne($query, $params);
+
+            return $this->existsCache[$cacheKey] = (false !== $result);
+        }
+
         [$conditions, $params] = $this->parseWhereParts($where);
 
         $query = 'SELECT 1 FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
@@ -114,8 +143,20 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function tableExists(string $tableName): bool
     {
-        // Bypass Doctrine's schema_filter which excludes ro_routes_old
-        return $this->connection->createSchemaManager()->tablesExist([$tableName]);
+        if (\array_key_exists($tableName, $this->tableExistsCache)) {
+            return $this->tableExistsCache[$tableName];
+        }
+
+        // Use introspectTable() instead of tablesExist() to bypass Doctrine's schema_filter.
+        // introspectTable() queries the table directly and is not affected by schema_filter,
+        // making it compatible with both MySQL and PostgreSQL.
+        try {
+            $this->connection->createSchemaManager()->introspectTable($tableName);
+
+            return $this->tableExistsCache[$tableName] = true;
+        } catch (TableDoesNotExist) {
+            return $this->tableExistsCache[$tableName] = false;
+        }
     }
 
     /**
@@ -270,5 +311,7 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
     public function reset(): void
     {
         $this->sequences = null;
+        $this->tableExistsCache = [];
+        $this->existsCache = [];
     }
 }

@@ -388,10 +388,11 @@ abstract class AbstractPersister implements PersisterInterface
 
             try {
                 $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
+                $now = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
                 $created = $document['sulu']['created'] ?? null;
-                $data['created'] = $created instanceof \DateTimeInterface ? $created->format('Y-m-d H:i:s') : null;
+                $data['created'] = $created instanceof \DateTimeInterface ? $created->format('Y-m-d H:i:s') : $now;
                 $changed = $document['sulu']['changed'] ?? null;
-                $data['changed'] = $changed instanceof \DateTimeInterface ? $changed->format('Y-m-d H:i:s') : null;
+                $data['changed'] = $changed instanceof \DateTimeInterface ? $changed->format('Y-m-d H:i:s') : $now;
 
                 $data = \array_merge($this->getDefaultData(), $data);
                 $data = $this->mapDimensionContentData($document, $locale, $data, $isLive);
@@ -593,6 +594,16 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function mapEntityData(array $document, array $data): array
     {
+        // Provide a fallback for created/changed when the PHPCR node has no timestamps.
+        $entityTypes = $this->getEntityTableTypes();
+        $now = new \DateTimeImmutable();
+        if (isset($entityTypes['created']) && 'datetime' === $entityTypes['created']) {
+            $data['created'] ??= $now;
+        }
+        if (isset($entityTypes['changed']) && 'datetime' === $entityTypes['changed']) {
+            $data['changed'] ??= $now;
+        }
+
         return $data;
     }
 

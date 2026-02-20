@@ -16,6 +16,7 @@ use PHPCR\NodeInterface;
 use PHPCR\Query\QueryManagerInterface;
 use PHPCR\SessionInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\NodeParserInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query\PostMigrationQueryInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager;
@@ -30,6 +31,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'sulu:phpcr-migration:migrate', description: 'Migrate the PHPCR content repository to the SuluContentBundle.')]
 class MigratePhpcrCommand extends Command
 {
+    private const BATCH_SIZE = 1000;
+
+    /**
+     * Document types that must be loaded in full upfront for ordering reasons.
+     * Pages require parent-before-child processing for nested set inserts.
+     * Snippet areas use a completely different query strategy.
+     *
+     * @var string[]
+     */
+    private const FULL_LOAD_TYPES = ['page', 'snippet_area'];
+
     /**
      * @param iterable<PostMigrationQueryInterface> $postMigrationQueries
      */
@@ -82,30 +94,63 @@ class MigratePhpcrCommand extends Command
                 $io->section('Migrating ' . $documentType . ' documents in ' . $sessionName);
 
                 $queryManager = $session->getWorkspace()->getQueryManager();
-                $nodes = $this->fetchPhpcrNodes($queryManager, $documentType);
 
-                $progressBar = $io->createProgressBar(\iterator_count($nodes));
-                $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
-                foreach ($nodes as $node) {
-                    $documents = $this->nodeParser->parse($node, $documentType);
+                if (\in_array($documentType, self::FULL_LOAD_TYPES, true)) {
+                    // Pages require parent-before-child ordering for nested set inserts, so all
+                    // nodes must be loaded and sorted upfront. Snippet areas use a custom query.
+                    $t = \microtime(true);
+                    $nodes = $this->fetchPhpcrNodes($queryManager, $documentType);
+                    $io->writeln(\sprintf(
+                        '  <info>Loaded %d nodes in %.2fs</info>',
+                        \count($nodes),
+                        \microtime(true) - $t,
+                    ));
 
-                    // Handle parsers which return multiple documents per node
-                    if ($this->isListOfDocuments($documents)) {
-                        /** @var array<string, mixed> $document */
-                        foreach ($documents as $document) {
-                            $persister->persist(
-                                document: $document,
-                                isLive: \str_ends_with($sessionName, '_live'),
-                            );
-                        }
-                    } else {
-                        $persister->persist(
-                            document: $documents,
-                            isLive: \str_ends_with($sessionName, '_live'),
-                        );
+                    $progressBar = $io->createProgressBar(\count($nodes));
+                    $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
+                    foreach ($nodes as $node) {
+                        $this->persistNode($node, $persister, $sessionName);
+                        $progressBar->advance();
                     }
-                    $progressBar->advance();
+                } else {
+                    // Flat document types (articles, snippets, custom_urls) use batched fetching.
+                    $isLive = \str_ends_with($sessionName, '_live');
+                    $progressBar = $io->createProgressBar();
+                    $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
+                    $lastPath = null;
+                    $batchCount = 0;
+                    do {
+                        $batchSession = $isLive
+                            ? $this->sessionManager->getLiveSession()
+                            : $this->sessionManager->getDefaultSession();
+                        $batch = $this->fetchPhpcrNodesBatch(
+                            $batchSession->getWorkspace()->getQueryManager(),
+                            $documentType,
+                            $lastPath,
+                            self::BATCH_SIZE,
+                        );
+                        $batchCount = \count($batch);
+
+                        // Capture the cursor BEFORE unsetting the batch.
+                        if ($batchCount > 0) {
+                            $lastPath = $batch[\array_key_last($batch)]->getPath();
+                        }
+
+                        foreach ($batch as $node) {
+                            $this->persistNode($node, $persister, $sessionName);
+                            $progressBar->advance();
+                        }
+
+                        // After the foreach, $node still holds a ref to the last Node.
+                        unset($node);
+
+                        // logout() removes the session from Jackalope's static Session::$sessionRegistry,
+                        // preventing unbounded memory growth across batches.
+                        $batchSession->logout();
+                        unset($batchSession, $batch);
+                    } while (self::BATCH_SIZE === $batchCount);
                 }
+
                 $progressBar->finish();
                 $io->newLine(2);
             }
@@ -120,7 +165,31 @@ class MigratePhpcrCommand extends Command
         return Command::SUCCESS;
     }
 
+    private function persistNode(NodeInterface $node, PersisterInterface $persister, string $sessionName): void
+    {
+        $documents = $this->nodeParser->parse($node, $persister::getType());
+
+        // Handle parsers which return multiple documents per node
+        if ($this->isListOfDocuments($documents)) {
+            /** @var array<string, mixed> $document */
+            foreach ($documents as $document) {
+                $persister->persist(
+                    document: $document,
+                    isLive: \str_ends_with($sessionName, '_live'),
+                );
+            }
+        } else {
+            $persister->persist(
+                document: $documents,
+                isLive: \str_ends_with($sessionName, '_live'),
+            );
+        }
+    }
+
     /**
+     * Fetch PHPCR nodes for document types that require full upfront loading (pages, snippet_areas).
+     * Pages are sorted by depth then sulu:order to guarantee parent-before-child order.
+     *
      * @return array<NodeInterface>
      */
     private function fetchPhpcrNodes(QueryManagerInterface $queryManager, string $documentType): array
@@ -145,12 +214,10 @@ class MigratePhpcrCommand extends Command
         $query = $queryManager->createQuery($sql, 'JCR-SQL2');
         $result = $query->execute();
 
-        $nodes = $result->getNodes();
+        $nodesArray = \iterator_to_array($result->getNodes());
 
-        // Convert to array for sorting
-        $nodesArray = \iterator_to_array($nodes);
-
-        // Sort by depth (number of path segments) then by sulu:order
+        // Sort by depth (number of path segments) then by sulu:order to ensure
+        // parent nodes are inserted into the nested set before their children.
         \usort($nodesArray, function(NodeInterface $a, NodeInterface $b) {
             $aDepth = \count(\explode('/', $a->getPath()));
             $bDepth = \count(\explode('/', $b->getPath()));
@@ -166,6 +233,36 @@ class MigratePhpcrCommand extends Command
         });
 
         return $nodesArray;
+    }
+
+    /**
+     * Fetch a single batch of PHPCR nodes using keyset (cursor) pagination.
+     *
+     * @return array<NodeInterface>
+     */
+    private function fetchPhpcrNodesBatch(
+        QueryManagerInterface $queryManager,
+        string $documentType,
+        ?string $lastPath,
+        int $limit,
+    ): array {
+        if (null === $lastPath) {
+            $sql = \sprintf(
+                'SELECT * FROM [nt:unstructured] WHERE [jcr:mixinTypes] = "sulu:%s" ORDER BY [jcr:path]',
+                $documentType,
+            );
+        } else {
+            $sql = \sprintf(
+                'SELECT * FROM [nt:unstructured] WHERE [jcr:mixinTypes] = "sulu:%s" AND [jcr:path] > "%s" ORDER BY [jcr:path]',
+                $documentType,
+                \addslashes($lastPath),
+            );
+        }
+
+        $query = $queryManager->createQuery($sql, 'JCR-SQL2');
+        $query->setLimit($limit);
+
+        return \iterator_to_array($query->execute()->getNodes());
     }
 
     /**
