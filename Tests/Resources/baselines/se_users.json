@@ -7,7 +7,7 @@
         "salt": "gHpHuTaATubZoglSLPkz/NpsXB+0fGdrHZo6jVV7W1w=",
         "locked": 0,
         "enabled": 1,
-        "lastLogin": "2025-12-09 13:17:38",
+        "lastLogin": "2026-03-05 14:49:56",
         "confirmationKey": "",
         "passwordResetToken": "",
         "passwordResetTokenExpiresAt": "",
@@ -16,7 +16,7 @@
         "apiKey": "9cef63ce0eca59e51fb6b00e901be267",
         "email": "admin@example.com",
         "created": "2025-12-09 09:37:46",
-        "changed": "2025-12-09 13:17:38",
+        "changed": "2026-03-05 14:49:56",
         "idContacts": 1,
         "idUsersCreator": "",
         "idUsersChanger": 1

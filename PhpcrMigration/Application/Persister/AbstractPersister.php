@@ -596,7 +596,7 @@ abstract class AbstractPersister implements PersisterInterface
     {
         // Provide a fallback for created/changed when the PHPCR node has no timestamps.
         $entityTypes = $this->getEntityTableTypes();
-        $now = new \DateTimeImmutable();
+        $now = new \DateTime();
         if (isset($entityTypes['created']) && 'datetime' === $entityTypes['created']) {
             $data['created'] ??= $now;
         }

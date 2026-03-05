@@ -109,6 +109,15 @@
     },
     {
         "id": 13,
+        "parent_id": 11,
+        "webspace": "website",
+        "locale": "de",
+        "slug": "/numeric-block-test/timestamp-fallback-page",
+        "resource_key": "pages",
+        "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff"
+    },
+    {
+        "id": 14,
         "parent_id": 4,
         "webspace": "website",
         "locale": "de",
@@ -117,12 +126,21 @@
         "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc"
     },
     {
-        "id": 14,
+        "id": 15,
         "parent_id": "",
         "webspace": "",
         "locale": "de",
         "slug": "/blog/example-article",
         "resource_key": "articles",
         "resource_id": "52634b61-09b3-4224-a428-4a885dceb98f"
+    },
+    {
+        "id": 16,
+        "parent_id": "",
+        "webspace": "",
+        "locale": "de",
+        "slug": "/blog/timestamp-fallback-article",
+        "resource_key": "articles",
+        "resource_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f"
     }
 ]

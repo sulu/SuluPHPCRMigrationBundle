@@ -11,5 +11,18 @@
         "changed": "2025-12-09 15:12:10",
         "idUsersCreator": 1,
         "idUsersChanger": 1
+    },
+    {
+        "id": 2,
+        "target_id": "",
+        "path": "/blog/timestamp-fallback-article",
+        "locale": "de",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
+        "history": 0,
+        "created": "2026-03-05 14:51:33",
+        "changed": "2026-03-05 14:51:33",
+        "idUsersCreator": 1,
+        "idUsersChanger": 1
     }
 ]

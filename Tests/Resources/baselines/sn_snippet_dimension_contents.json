@@ -50,6 +50,44 @@
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
+        "created": "2026-03-05 13:51:18",
+        "changed": "2026-03-05 13:51:18",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "idUsersCreator": "",
+        "idUsersChanger": ""
+    },
+    {
+        "id": 4,
+        "title": "Timestamp Fallback Snippet",
+        "stage": "draft",
+        "locale": "de",
+        "ghostLocale": "",
+        "availableLocales": "",
+        "version": 0,
+        "templateKey": "default",
+        "templateData": "{\"title\": \"Timestamp Fallback Snippet\", \"changed\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "excerptSegment": "",
+        "workflowPlace": "published",
+        "workflowPublished": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "changed": "2026-03-05 13:51:18",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "idUsersCreator": "",
+        "idUsersChanger": ""
+    },
+    {
+        "id": 5,
+        "title": "",
+        "stage": "draft",
+        "locale": "",
+        "ghostLocale": "de",
+        "availableLocales": "[\"de\"]",
+        "version": 0,
+        "templateKey": "",
+        "templateData": "[]",
+        "excerptSegment": "",
+        "workflowPlace": "published",
+        "workflowPublished": "",
         "created": "2025-12-09 10:35:37",
         "changed": "2025-12-09 10:38:22",
         "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
@@ -57,7 +95,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 4,
+        "id": 6,
         "title": "Footer Snippet",
         "stage": "draft",
         "locale": "de",
@@ -76,7 +114,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 5,
+        "id": 7,
         "title": "",
         "stage": "draft",
         "locale": "",
@@ -95,7 +133,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 6,
+        "id": 8,
         "title": "Example Sidebar",
         "stage": "draft",
         "locale": "de",
@@ -114,7 +152,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 7,
+        "id": 9,
         "title": "",
         "stage": "live",
         "locale": "",
@@ -133,7 +171,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 8,
+        "id": 10,
         "title": "Test Default Snippet",
         "stage": "live",
         "locale": "de",
@@ -152,7 +190,45 @@
         "idUsersChanger": ""
     },
     {
-        "id": 9,
+        "id": 11,
+        "title": "",
+        "stage": "live",
+        "locale": "",
+        "ghostLocale": "de",
+        "availableLocales": "[\"de\"]",
+        "version": 0,
+        "templateKey": "",
+        "templateData": "[]",
+        "excerptSegment": "",
+        "workflowPlace": "published",
+        "workflowPublished": "",
+        "created": "2026-03-05 13:51:18",
+        "changed": "2026-03-05 13:51:18",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "idUsersCreator": "",
+        "idUsersChanger": ""
+    },
+    {
+        "id": 12,
+        "title": "Timestamp Fallback Snippet",
+        "stage": "live",
+        "locale": "de",
+        "ghostLocale": "",
+        "availableLocales": "",
+        "version": 0,
+        "templateKey": "default",
+        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Timestamp Fallback Snippet\", \"changed\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "excerptSegment": "",
+        "workflowPlace": "published",
+        "workflowPublished": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "changed": "2026-03-05 13:51:18",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "idUsersCreator": "",
+        "idUsersChanger": ""
+    },
+    {
+        "id": 13,
         "title": "",
         "stage": "live",
         "locale": "",
@@ -171,7 +247,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 10,
+        "id": 14,
         "title": "Footer Snippet",
         "stage": "live",
         "locale": "de",
@@ -190,7 +266,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 11,
+        "id": 15,
         "title": "",
         "stage": "live",
         "locale": "",
@@ -209,7 +285,7 @@
         "idUsersChanger": ""
     },
     {
-        "id": 12,
+        "id": 16,
         "title": "Example Sidebar",
         "stage": "live",
         "locale": "de",
