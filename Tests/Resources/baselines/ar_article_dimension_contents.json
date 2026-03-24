@@ -91,7 +91,8 @@
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "title": "Example article"
+            "title": "Example article",
+            "url": "/blog/example-article"
         },
         "templateKey": "default",
         "title": "Example article",
@@ -182,7 +183,8 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "title": "Timestamp Fallback Article"
+            "title": "Timestamp Fallback Article",
+            "url": "/blog/timestamp-fallback-article"
         },
         "templateKey": "blog",
         "title": "Timestamp Fallback Article",
@@ -282,7 +284,8 @@
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "title": "Example article"
+            "title": "Example article",
+            "url": "/blog/example-article"
         },
         "templateKey": "default",
         "title": "Example article",
@@ -373,7 +376,8 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "title": "Timestamp Fallback Article"
+            "title": "Timestamp Fallback Article",
+            "url": "/blog/timestamp-fallback-article"
         },
         "templateKey": "blog",
         "title": "Timestamp Fallback Article",

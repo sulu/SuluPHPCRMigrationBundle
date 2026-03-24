@@ -11,8 +11,6 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\RoutePathNameNotFoundException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -63,14 +61,13 @@ class ArticlePersister extends AbstractPersister
             $data['templateData']['title'] = $data['title'];
         }
 
-        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
-            $routePathName = $document['localizations'][$locale]['routePathName'];
-            $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
-            // check routePathName property and fallback to routePath
-            $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
+        if (null !== $locale && isset($document['localizations'][$locale])) {
+            $url = $this->resolveRoutePath($document['localizations'][$locale]);
 
-            // content bundle is only compatible with "url"
-            $data['templateData']['url'] = $routePath; // is used in the content bundle
+            if (null !== $url) {
+                // content bundle is only compatible with "url"
+                $data['templateData']['url'] = $url;
+            }
         }
 
         // Transform segments map to single segment value
@@ -215,35 +212,42 @@ class ArticlePersister extends AbstractPersister
         return 'article_dimension_content_id';
     }
 
-    protected function getSlug(array $document, string $locale): string
+    /**
+     * Resolves the route path from localized PHPCR data.
+     * Uses routePathName to find the actual property, falls back to routePath.
+     *
+     * @param array<string, mixed> $localeData
+     */
+    private function resolveRoutePath(array $localeData): ?string
     {
-        $localizedData = $document['localizations'][$locale];
-
-        // Check if both routePath and routePathName are missing
-        if (!isset($localizedData['routePath']) && !isset($localizedData['routePathName'])) {
-            throw new RoutePathNameNotFoundException($document['jcr']['uuid'], $locale);
-        }
-
-        // If routePathName is set, use it to find the route property
-        if (isset($localizedData['routePathName'])) {
-            $routePathName = $localizedData['routePathName'];
+        if (isset($localeData['routePathName']) && \is_string($localeData['routePathName'])) {
+            $routePathName = $localeData['routePathName'];
             // Handle i18n prefix (e.g., 'i18n:en-routePath' -> 'routePath')
             $routePathName = \str_starts_with($routePathName, 'i18n:')
                 ? \explode('-', $routePathName, 2)[1]
                 : $routePathName;
 
-            $routePath = $localizedData[$routePathName] ?? null;
-            if (!\is_string($routePath)) {
-                throw new InvalidPathException($routePathName);
+            $resolved = $localeData[$routePathName] ?? null;
+
+            if (\is_string($resolved)) {
+                return $resolved;
             }
 
-            return $routePath;
+            // Fall through to routePath if routePathName didn't resolve
         }
 
-        // At this point routePath must exist (we checked above)
-        \assert(isset($localizedData['routePath']));
+        $routePath = $localeData['routePath'] ?? null;
 
-        return $localizedData['routePath'];
+        return \is_string($routePath) ? $routePath : null;
+    }
+
+    protected function getSlug(array $document, string $locale): ?string
+    {
+        if (!isset($document['localizations'][$locale])) {
+            return null;
+        }
+
+        return $this->resolveRoutePath($document['localizations'][$locale]);
     }
 
     protected function getParentId(array $document, string $locale): ?string
