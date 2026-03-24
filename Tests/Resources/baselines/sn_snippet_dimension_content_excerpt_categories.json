@@ -1,26 +1,26 @@
 [
     {
-        "snippet_dimension_content_id": 2,
-        "category_id": 3
+        "category_id": 3,
+        "snippet_dimension_content_id": 2
     },
     {
-        "snippet_dimension_content_id": 6,
-        "category_id": 2
+        "category_id": 2,
+        "snippet_dimension_content_id": 6
     },
     {
-        "snippet_dimension_content_id": 8,
-        "category_id": 1
+        "category_id": 1,
+        "snippet_dimension_content_id": 8
     },
     {
-        "snippet_dimension_content_id": 10,
-        "category_id": 3
+        "category_id": 3,
+        "snippet_dimension_content_id": 10
     },
     {
-        "snippet_dimension_content_id": 14,
-        "category_id": 2
+        "category_id": 2,
+        "snippet_dimension_content_id": 14
     },
     {
-        "snippet_dimension_content_id": 16,
-        "category_id": 1
+        "category_id": 1,
+        "snippet_dimension_content_id": 16
     }
 ]

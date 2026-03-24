@@ -1,28 +1,28 @@
 [
     {
-        "id": 1,
-        "target_id": "",
-        "path": "/blog/example-article",
-        "locale": "de",
+        "changed": "2025-12-09 15:12:10",
+        "created": "2025-12-09 15:12:10",
         "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
         "entity_id": "52634b61-09b3-4224-a428-4a885dceb98f",
         "history": 0,
-        "created": "2025-12-09 15:12:10",
-        "changed": "2025-12-09 15:12:10",
+        "id": 1,
+        "idUsersChanger": 1,
         "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "locale": "de",
+        "path": "/blog/example-article",
+        "target_id": ""
     },
     {
-        "id": 2,
-        "target_id": "",
-        "path": "/blog/timestamp-fallback-article",
-        "locale": "de",
+        "changed": "2026-03-05 14:51:33",
+        "created": "2026-03-05 14:51:33",
         "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
         "entity_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
         "history": 0,
-        "created": "2026-03-05 14:51:33",
-        "changed": "2026-03-05 14:51:33",
+        "id": 2,
+        "idUsersChanger": 1,
         "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "locale": "de",
+        "path": "/blog/timestamp-fallback-article",
+        "target_id": ""
     }
 ]

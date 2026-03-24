@@ -61,9 +61,11 @@ class JsonBaselineExporter
         $rows = $this->connection->fetchAllAssociative("SELECT * FROM `{$table}`{$orderBy}");
 
         $normalizedRows = \array_map(
-            fn (array $row): array => \array_map(
-                fn (mixed $value): mixed => $this->normalizeValue($value),
-                $row
+            fn (array $row): array => $this->sortKeys(
+                \array_map(
+                    fn (mixed $value): mixed => $this->normalizeValue($value),
+                    $row
+                )
             ),
             $rows
         );
@@ -127,6 +129,32 @@ class JsonBaselineExporter
         }
 
         return $value;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    private function sortKeys(array $data): array
+    {
+        \ksort($data);
+
+        foreach ($data as $key => $value) {
+            if (\is_array($value) && !$this->isNumericArray($value)) {
+                $data[$key] = $this->sortKeys($value);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array<mixed> $array
+     */
+    private function isNumericArray(array $array): bool
+    {
+        return [] === $array || \array_keys($array) === \range(0, \count($array) - 1);
     }
 
     private function shouldExcludeTable(string $tableName): bool

@@ -1,24 +1,24 @@
 [
     {
-        "uuid": "8985a284-c40c-47a5-a966-028753c572dd",
-        "title": "Example custom url",
-        "published": 1,
         "base_domain": "*.*/*",
-        "webspace": "website",
+        "canonical": 0,
+        "changed": "2025-12-09 13:19:37",
+        "created": "2025-12-09 13:18:38",
         "domain_parts": [
             "127.0.0",
             "1",
             "example-custom-url-3"
         ],
-        "target_document": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
-        "target_locale": "de",
-        "canonical": 0,
-        "redirect": 1,
+        "idUsersChanger": 1,
+        "idUsersCreator": 1,
         "no_follow": 0,
         "no_index": 0,
-        "created": "2025-12-09 13:18:38",
-        "changed": "2025-12-09 13:19:37",
-        "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "published": 1,
+        "redirect": 1,
+        "target_document": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "target_locale": "de",
+        "title": "Example custom url",
+        "uuid": "8985a284-c40c-47a5-a966-028753c572dd",
+        "webspace": "website"
     }
 ]

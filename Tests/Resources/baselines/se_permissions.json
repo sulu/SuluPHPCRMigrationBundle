@@ -1,156 +1,156 @@
 [
     {
-        "id": 1,
         "context": "sulu.contact.people",
+        "id": 1,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 2,
         "context": "sulu.contact.organizations",
+        "id": 2,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
+        "context": "sulu.media.collections",
         "id": 3,
-        "context": "sulu.media.collections",
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 4,
         "context": "sulu.media.system_collections",
+        "id": 4,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 5,
         "context": "sulu.settings.categories",
+        "id": 5,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 6,
         "context": "sulu.settings.tags",
+        "id": 6,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 7,
         "context": "sulu.snippet.snippets",
+        "id": 7,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 8,
         "context": "sulu.article.articles",
+        "id": 8,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 9,
         "context": "sulu.webspaces.website.default-snippets",
+        "id": 9,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
+        "context": "sulu.webspaces.website",
         "id": 10,
-        "context": "sulu.webspaces.website",
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 11,
         "context": "sulu.webspaces.website.analytics",
+        "id": 11,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 12,
         "context": "sulu.webspaces.website.custom-urls",
+        "id": 12,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 13,
         "context": "sulu.activities.activities",
+        "id": 13,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 14,
         "context": "sulu.trash.trash",
+        "id": 14,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 15,
         "context": "sulu.references.references",
+        "id": 15,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 16,
         "context": "sulu.article.articles_blog",
+        "id": 16,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 17,
         "context": "sulu.article.articles_article",
+        "id": 17,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 18,
         "context": "sulu.security.roles",
+        "id": 18,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 19,
         "context": "sulu.security.users",
+        "id": 19,
+        "idRoles": 1,
         "module": "",
-        "permissions": 127,
-        "idRoles": 1
+        "permissions": 127
     },
     {
-        "id": 20,
         "context": "sulu.media.collections",
+        "id": 20,
+        "idRoles": 2,
         "module": "",
-        "permissions": 127,
-        "idRoles": 2
+        "permissions": 127
     },
     {
-        "id": 21,
         "context": "sulu.webspaces.website",
+        "id": 21,
+        "idRoles": 2,
         "module": "",
-        "permissions": 127,
-        "idRoles": 2
+        "permissions": 127
     },
     {
-        "id": 22,
         "context": "sulu.snippet.snippet_areas",
+        "id": 22,
+        "idRoles": 1,
         "module": "",
-        "permissions": 16,
-        "idRoles": 1
+        "permissions": 16
     }
 ]

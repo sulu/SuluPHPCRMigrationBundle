@@ -1,8 +1,12 @@
 [
     {
+        "defaultLocale": "en",
         "id": 1,
-        "resourceKey": "pages",
         "resourceId": "786eedc0-e161-4fa4-871d-8a5765442dfd",
+        "resourceKey": "pages",
+        "resourceSecurityContext": "sulu.webspaces.website",
+        "resourceSecurityObjectId": "786eedc0-e161-4fa4-871d-8a5765442dfd",
+        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "restoreData": {
             "locales": [
                 {
@@ -139,21 +143,21 @@
             ],
             "parentUuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
         },
-        "restoreType": "translation",
         "restoreOptions": {
             "locale": "en"
         },
-        "resourceSecurityContext": "sulu.webspaces.website",
-        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
-        "resourceSecurityObjectId": "786eedc0-e161-4fa4-871d-8a5765442dfd",
+        "restoreType": "translation",
         "storeTimestamp": "2025-12-09 10:42:44",
-        "defaultLocale": "en",
         "userId": 1
     },
     {
+        "defaultLocale": "de",
         "id": 2,
-        "resourceKey": "pages",
         "resourceId": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "resourceKey": "pages",
+        "resourceSecurityContext": "sulu.webspaces.website",
+        "resourceSecurityObjectId": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "restoreData": {
             "locales": [
                 {
@@ -290,21 +294,21 @@
             ],
             "parentUuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
         },
-        "restoreType": "translation",
         "restoreOptions": {
             "locale": "de"
         },
-        "resourceSecurityContext": "sulu.webspaces.website",
-        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
-        "resourceSecurityObjectId": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "restoreType": "translation",
         "storeTimestamp": "2025-12-09 10:44:02",
-        "defaultLocale": "de",
         "userId": 1
     },
     {
+        "defaultLocale": "de",
         "id": 3,
-        "resourceKey": "pages",
         "resourceId": "3b18b1d6-d13a-4d51-8cea-45e2132ad5a5",
+        "resourceKey": "pages",
+        "resourceSecurityContext": "sulu.webspaces.website",
+        "resourceSecurityObjectId": "3b18b1d6-d13a-4d51-8cea-45e2132ad5a5",
+        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "restoreData": {
             "locales": [
                 {
@@ -366,19 +370,19 @@
             ],
             "parentUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91"
         },
-        "restoreType": "",
         "restoreOptions": [],
-        "resourceSecurityContext": "sulu.webspaces.website",
-        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
-        "resourceSecurityObjectId": "3b18b1d6-d13a-4d51-8cea-45e2132ad5a5",
+        "restoreType": "",
         "storeTimestamp": "2025-12-09 10:55:25",
-        "defaultLocale": "de",
         "userId": 1
     },
     {
+        "defaultLocale": "de",
         "id": 4,
-        "resourceKey": "pages",
         "resourceId": "1b328681-4fc7-42fe-8c0c-3c14c48a0aeb",
+        "resourceKey": "pages",
+        "resourceSecurityContext": "sulu.webspaces.website",
+        "resourceSecurityObjectId": "1b328681-4fc7-42fe-8c0c-3c14c48a0aeb",
+        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "restoreData": {
             "locales": [
                 {
@@ -440,13 +444,9 @@
             ],
             "parentUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91"
         },
-        "restoreType": "",
         "restoreOptions": [],
-        "resourceSecurityContext": "sulu.webspaces.website",
-        "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
-        "resourceSecurityObjectId": "1b328681-4fc7-42fe-8c0c-3c14c48a0aeb",
+        "restoreType": "",
         "storeTimestamp": "2025-12-09 10:55:28",
-        "defaultLocale": "de",
         "userId": 1
     }
 ]

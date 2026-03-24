@@ -1,92 +1,92 @@
 [
     {
-        "settingsValue": "true",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.application.navigation_pinned",
-        "idUsers": 1
+        "settingsValue": "true"
     },
     {
-        "settingsValue": "\"de\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.content_locale",
-        "idUsers": 1
+        "settingsValue": "\"de\""
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.activities.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.analytics.list.active",
-        "idUsers": 1
+        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\""
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.analytics.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.articles.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": "4",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.categories.list.active",
-        "idUsers": 1
+        "settingsValue": "4"
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.categories.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": "1",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.categories.selection.active",
-        "idUsers": 1
+        "settingsValue": "1"
     },
     {
-        "settingsValue": "\"title\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.collections.media_overview.sort_column",
-        "idUsers": 1
+        "settingsValue": "\"title\""
     },
     {
-        "settingsValue": "\"asc\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.collections.media_overview.sort_order",
-        "idUsers": 1
+        "settingsValue": "\"asc\""
     },
     {
-        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.custom_urls.list.active",
-        "idUsers": 1
+        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\""
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.custom_urls.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.media.media_overview.filter",
-        "idUsers": 1
+        "settingsValue": []
     },
     {
-        "settingsValue": "\"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.pages.multi_list_overlay.active",
-        "idUsers": 1
+        "settingsValue": "\"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\""
     },
     {
-        "settingsValue": "\"af78e52e-1e75-4bb2-a58e-c9592dd059d8\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.pages.page_list_website.active",
-        "idUsers": 1
+        "settingsValue": "\"af78e52e-1e75-4bb2-a58e-c9592dd059d8\""
     },
     {
-        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\"",
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.pages.single_list_overlay.active",
-        "idUsers": 1
+        "settingsValue": "\"16060395-4bbf-4e1d-9c8e-fe5265890c99\""
     },
     {
-        "settingsValue": [],
+        "idUsers": 1,
         "settingsKey": "sulu_admin.list_store.snippets.list.filter",
-        "idUsers": 1
+        "settingsValue": []
     }
 ]

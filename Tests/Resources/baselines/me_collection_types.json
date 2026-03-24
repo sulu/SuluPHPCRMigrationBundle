@@ -1,14 +1,14 @@
 [
     {
-        "id": 1,
-        "name": "Default",
         "collection_type_key": "collection.default",
-        "description": ""
+        "description": "",
+        "id": 1,
+        "name": "Default"
     },
     {
-        "id": 2,
-        "name": "System Collections",
         "collection_type_key": "collection.system",
-        "description": ""
+        "description": "",
+        "id": 2,
+        "name": "System Collections"
     }
 ]

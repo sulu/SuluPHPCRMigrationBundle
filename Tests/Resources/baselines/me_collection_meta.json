@@ -1,86 +1,86 @@
 [
     {
+        "description": "",
         "id": 1,
-        "title": "System",
-        "description": "",
+        "idCollections": 1,
         "locale": "en",
-        "idCollections": 1
+        "title": "System"
     },
     {
+        "description": "",
         "id": 2,
-        "title": "Sulu media",
-        "description": "",
+        "idCollections": 2,
         "locale": "en",
-        "idCollections": 2
+        "title": "Sulu media"
     },
     {
+        "description": "",
         "id": 3,
-        "title": "Sulu Medien",
-        "description": "",
+        "idCollections": 2,
         "locale": "de",
-        "idCollections": 2
+        "title": "Sulu Medien"
     },
     {
+        "description": "",
         "id": 4,
-        "title": "Preview images",
-        "description": "",
+        "idCollections": 3,
         "locale": "en",
-        "idCollections": 3
+        "title": "Preview images"
     },
     {
+        "description": "",
         "id": 5,
-        "title": "Vorschaubilder",
-        "description": "",
+        "idCollections": 3,
         "locale": "de",
-        "idCollections": 3
+        "title": "Vorschaubilder"
     },
     {
+        "description": "",
         "id": 6,
-        "title": "Sulu contacts",
-        "description": "",
+        "idCollections": 4,
         "locale": "en",
-        "idCollections": 4
+        "title": "Sulu contacts"
     },
     {
+        "description": "",
         "id": 7,
-        "title": "Sulu Kontakte",
-        "description": "",
+        "idCollections": 4,
         "locale": "de",
-        "idCollections": 4
+        "title": "Sulu Kontakte"
     },
     {
+        "description": "",
         "id": 8,
-        "title": "People",
-        "description": "",
+        "idCollections": 5,
         "locale": "en",
-        "idCollections": 5
+        "title": "People"
     },
     {
+        "description": "",
         "id": 9,
-        "title": "Personen",
-        "description": "",
+        "idCollections": 5,
         "locale": "de",
-        "idCollections": 5
+        "title": "Personen"
     },
     {
+        "description": "",
         "id": 10,
-        "title": "Organizations",
-        "description": "",
+        "idCollections": 6,
         "locale": "en",
-        "idCollections": 6
+        "title": "Organizations"
     },
     {
+        "description": "",
         "id": 11,
-        "title": "Organisationen",
-        "description": "",
+        "idCollections": 6,
         "locale": "de",
-        "idCollections": 6
+        "title": "Organisationen"
     },
     {
-        "id": 12,
-        "title": "Example Collection",
         "description": "",
+        "id": 12,
+        "idCollections": 7,
         "locale": "de",
-        "idCollections": 7
+        "title": "Example Collection"
     }
 ]

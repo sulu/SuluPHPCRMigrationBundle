@@ -1,54 +1,54 @@
 [
     {
-        "id": 1,
         "category_key": "root",
-        "default_locale": "de",
-        "lft": 1,
-        "rgt": 8,
-        "depth": 0,
-        "created": "2025-12-09 10:36:47",
         "changed": "2025-12-09 10:36:47",
+        "created": "2025-12-09 10:36:47",
+        "default_locale": "de",
+        "depth": 0,
+        "id": 1,
         "idCategoriesParent": "",
+        "idUsersChanger": 1,
         "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "lft": 1,
+        "rgt": 8
     },
     {
-        "id": 2,
         "category_key": "child-1",
-        "default_locale": "de",
-        "lft": 2,
-        "rgt": 5,
-        "depth": 1,
-        "created": "2025-12-09 10:36:56",
         "changed": "2025-12-09 10:36:56",
-        "idCategoriesParent": 1,
-        "idUsersCreator": 1,
-        "idUsersChanger": 1
-    },
-    {
-        "id": 3,
-        "category_key": "child-2",
+        "created": "2025-12-09 10:36:56",
         "default_locale": "de",
-        "lft": 6,
-        "rgt": 7,
         "depth": 1,
-        "created": "2025-12-09 10:37:03",
-        "changed": "2025-12-09 10:37:03",
+        "id": 2,
         "idCategoriesParent": 1,
+        "idUsersChanger": 1,
         "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "lft": 2,
+        "rgt": 5
     },
     {
-        "id": 4,
-        "category_key": "child-of-child-1",
+        "category_key": "child-2",
+        "changed": "2025-12-09 10:37:03",
+        "created": "2025-12-09 10:37:03",
         "default_locale": "de",
-        "lft": 3,
-        "rgt": 4,
-        "depth": 2,
-        "created": "2025-12-09 10:37:17",
-        "changed": "2025-12-09 10:37:44",
-        "idCategoriesParent": 2,
+        "depth": 1,
+        "id": 3,
+        "idCategoriesParent": 1,
+        "idUsersChanger": 1,
         "idUsersCreator": 1,
-        "idUsersChanger": 1
+        "lft": 6,
+        "rgt": 7
+    },
+    {
+        "category_key": "child-of-child-1",
+        "changed": "2025-12-09 10:37:44",
+        "created": "2025-12-09 10:37:17",
+        "default_locale": "de",
+        "depth": 2,
+        "id": 4,
+        "idCategoriesParent": 2,
+        "idUsersChanger": 1,
+        "idUsersCreator": 1,
+        "lft": 3,
+        "rgt": 4
     }
 ]

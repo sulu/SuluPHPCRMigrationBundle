@@ -1,45 +1,38 @@
 [
     {
+        "availableLocales": [
+            "de"
+        ],
+        "changed": "2025-12-09 10:38:14",
+        "created": "2025-12-09 10:35:14",
+        "excerptSegment": "",
+        "ghostLocale": "de",
         "id": 1,
-        "title": "",
-        "stage": "draft",
-        "locale": "",
-        "ghostLocale": "de",
-        "availableLocales": [
-            "de"
-        ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:14",
-        "changed": "2025-12-09 10:38:14",
-        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
+        "availableLocales": "",
+        "changed": "2025-12-09 10:38:14",
+        "created": "2025-12-09 10:35:14",
+        "excerptSegment": "",
+        "ghostLocale": "",
         "id": 2,
-        "title": "Test Default Snippet",
-        "stage": "draft",
+        "idUsersChanger": "",
+        "idUsersCreator": "",
         "locale": "de",
-        "ghostLocale": "",
-        "availableLocales": "",
-        "version": 0,
-        "templateKey": "default",
+        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "stage": "draft",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "title": "Test Default Snippet",
             "changed": {
                 "date": "2025-12-09 10:38:14.123000",
                 "timezone": "+00:00",
@@ -50,49 +43,58 @@
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>"
+            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>",
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Test Default Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "default",
+        "title": "Test Default Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:14",
-        "created": "2025-12-09 10:35:14",
-        "changed": "2025-12-09 10:38:14",
-        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:14"
     },
     {
+        "availableLocales": [
+            "de"
+        ],
+        "changed": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "excerptSegment": "",
+        "ghostLocale": "de",
         "id": 3,
-        "title": "",
-        "stage": "draft",
-        "locale": "",
-        "ghostLocale": "de",
-        "availableLocales": [
-            "de"
-        ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2026-03-05 13:51:18",
-        "changed": "2026-03-05 13:51:18",
-        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 4,
-        "title": "Timestamp Fallback Snippet",
-        "stage": "draft",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "default",
+        "changed": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 4,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "stage": "draft",
         "templateData": {
-            "title": "Timestamp Fallback Snippet",
             "changed": {
                 "date": "2026-03-05 13:51:18.748000",
                 "timezone": "+00:00",
@@ -102,124 +104,112 @@
                 "date": "2026-03-05 13:51:18.748000",
                 "timezone": "+00:00",
                 "timezone_type": 1
-            }
+            },
+            "title": "Timestamp Fallback Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "default",
+        "title": "Timestamp Fallback Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-03-05 13:51:18",
-        "created": "2026-03-05 13:51:18",
-        "changed": "2026-03-05 13:51:18",
-        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2026-03-05 13:51:18"
     },
     {
-        "id": 5,
-        "title": "",
-        "stage": "draft",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:37",
         "changed": "2025-12-09 10:38:22",
-        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "created": "2025-12-09 10:35:37",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 5,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 6,
-        "title": "Footer Snippet",
-        "stage": "draft",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "footer",
+        "changed": "2025-12-09 10:38:22",
+        "created": "2025-12-09 10:35:37",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 6,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "stage": "draft",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "title": "Footer Snippet",
             "changed": {
                 "date": "2025-12-09 10:38:22.526000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
+            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.",
             "created": {
                 "date": "2025-12-09 10:35:37.080000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "description": "<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>",
-            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum."
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Footer Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "footer",
+        "title": "Footer Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:37",
-        "created": "2025-12-09 10:35:37",
-        "changed": "2025-12-09 10:38:22",
-        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:37"
     },
     {
-        "id": 7,
-        "title": "",
-        "stage": "draft",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:47",
         "changed": "2025-12-09 10:38:37",
-        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "created": "2025-12-09 10:35:47",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 7,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 8,
-        "title": "Example Sidebar",
-        "stage": "draft",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "sidebar",
+        "changed": "2025-12-09 10:38:37",
+        "created": "2025-12-09 10:35:47",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 8,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "stage": "draft",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "image": {
-                "id": 5
-            },
-            "title": "Example Sidebar",
             "changed": {
                 "date": "2025-12-09 10:38:37.442000",
                 "timezone": "+00:00",
@@ -230,58 +220,61 @@
                 "date": "2025-12-09 10:35:47.173000",
                 "timezone": "+00:00",
                 "timezone_type": 1
-            }
+            },
+            "image": {
+                "id": 5
+            },
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Example Sidebar"
         },
-        "excerptSegment": "",
+        "templateKey": "sidebar",
+        "title": "Example Sidebar",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:47",
-        "created": "2025-12-09 10:35:47",
-        "changed": "2025-12-09 10:38:37",
-        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:47"
     },
     {
-        "id": 9,
-        "title": "",
-        "stage": "live",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:14",
         "changed": "2025-12-09 10:38:14",
-        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "created": "2025-12-09 10:35:14",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 9,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 10,
-        "title": "Test Default Snippet",
-        "stage": "live",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "default",
+        "changed": "2025-12-09 10:38:14",
+        "created": "2025-12-09 10:35:14",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 10,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "stage": "live",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "title": "Test Default Snippet",
             "changed": {
                 "date": "2025-12-09 10:38:14.123000",
                 "timezone": "+00:00",
@@ -292,58 +285,58 @@
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>"
+            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>",
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Test Default Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "default",
+        "title": "Test Default Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:14",
-        "created": "2025-12-09 10:35:14",
-        "changed": "2025-12-09 10:38:14",
-        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:14"
     },
     {
-        "id": 11,
-        "title": "",
-        "stage": "live",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2026-03-05 13:51:18",
         "changed": "2026-03-05 13:51:18",
-        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "created": "2026-03-05 13:51:18",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 11,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 12,
-        "title": "Timestamp Fallback Snippet",
-        "stage": "live",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "default",
+        "changed": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 12,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "stage": "live",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "title": "Timestamp Fallback Snippet",
             "changed": {
                 "date": "2026-03-05 13:51:18.748000",
                 "timezone": "+00:00",
@@ -353,124 +346,121 @@
                 "date": "2026-03-05 13:51:18.748000",
                 "timezone": "+00:00",
                 "timezone_type": 1
-            }
+            },
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Timestamp Fallback Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "default",
+        "title": "Timestamp Fallback Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-03-05 13:51:18",
-        "created": "2026-03-05 13:51:18",
-        "changed": "2026-03-05 13:51:18",
-        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2026-03-05 13:51:18"
     },
     {
-        "id": 13,
-        "title": "",
-        "stage": "live",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:37",
         "changed": "2025-12-09 10:38:22",
-        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "created": "2025-12-09 10:35:37",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 13,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 14,
-        "title": "Footer Snippet",
-        "stage": "live",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "footer",
+        "changed": "2025-12-09 10:38:22",
+        "created": "2025-12-09 10:35:37",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 14,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "stage": "live",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "title": "Footer Snippet",
             "changed": {
                 "date": "2025-12-09 10:38:22.526000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
+            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.",
             "created": {
                 "date": "2025-12-09 10:35:37.080000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "description": "<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>",
-            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum."
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Footer Snippet"
         },
-        "excerptSegment": "",
+        "templateKey": "footer",
+        "title": "Footer Snippet",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:37",
-        "created": "2025-12-09 10:35:37",
-        "changed": "2025-12-09 10:38:22",
-        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:37"
     },
     {
-        "id": 15,
-        "title": "",
-        "stage": "live",
-        "locale": "",
-        "ghostLocale": "de",
         "availableLocales": [
             "de"
         ],
-        "version": 0,
-        "templateKey": "",
-        "templateData": [],
-        "excerptSegment": "",
-        "workflowPlace": "published",
-        "workflowPublished": "",
-        "created": "2025-12-09 10:35:47",
         "changed": "2025-12-09 10:38:37",
-        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "created": "2025-12-09 10:35:47",
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 15,
+        "idUsersChanger": "",
         "idUsersCreator": "",
-        "idUsersChanger": ""
+        "locale": "",
+        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": ""
     },
     {
-        "id": 16,
-        "title": "Example Sidebar",
-        "stage": "live",
-        "locale": "de",
-        "ghostLocale": "",
         "availableLocales": "",
-        "version": 0,
-        "templateKey": "sidebar",
+        "changed": "2025-12-09 10:38:37",
+        "created": "2025-12-09 10:35:47",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 16,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "stage": "live",
         "templateData": {
-            "seo": {
-                "title": "",
-                "noIndex": false,
-                "keywords": "",
-                "noFollow": false,
-                "description": "",
-                "canonicalUrl": "",
-                "hideInSitemap": false
-            },
-            "image": {
-                "id": 5
-            },
-            "title": "Example Sidebar",
             "changed": {
                 "date": "2025-12-09 10:38:37.442000",
                 "timezone": "+00:00",
@@ -481,15 +471,25 @@
                 "date": "2025-12-09 10:35:47.173000",
                 "timezone": "+00:00",
                 "timezone_type": 1
-            }
+            },
+            "image": {
+                "id": 5
+            },
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Example Sidebar"
         },
-        "excerptSegment": "",
+        "templateKey": "sidebar",
+        "title": "Example Sidebar",
+        "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:35:47",
-        "created": "2025-12-09 10:35:47",
-        "changed": "2025-12-09 10:38:37",
-        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
-        "idUsersCreator": "",
-        "idUsersChanger": ""
+        "workflowPublished": "2025-12-09 10:35:47"
     }
 ]

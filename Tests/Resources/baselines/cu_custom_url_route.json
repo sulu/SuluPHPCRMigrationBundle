@@ -1,29 +1,29 @@
 [
     {
-        "uuid": "027caf7d-7a6d-48cb-9de7-2958d4aad63b",
-        "target_route_uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea",
-        "path": "127.0.0.1/example-custom-url-1",
-        "history": 1,
+        "changed": "2025-12-09 13:19:37",
         "created": "2025-12-09 13:18:56",
-        "changed": "2025-12-09 13:19:37",
-        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd"
-    },
-    {
-        "uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea",
-        "target_route_uuid": "",
-        "path": "127.0.0.1/example-custom-url-3",
-        "history": 0,
-        "created": "2025-12-09 13:19:37",
-        "changed": "2025-12-09 13:19:37",
-        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd"
-    },
-    {
-        "uuid": "ea2ee12f-950f-4c7e-8eea-cd9fff303df9",
-        "target_route_uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea",
-        "path": "127.0.0.1/example-custom-url",
+        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd",
         "history": 1,
-        "created": "2025-12-09 13:18:38",
+        "path": "127.0.0.1/example-custom-url-1",
+        "target_route_uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea",
+        "uuid": "027caf7d-7a6d-48cb-9de7-2958d4aad63b"
+    },
+    {
         "changed": "2025-12-09 13:19:37",
-        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd"
+        "created": "2025-12-09 13:19:37",
+        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd",
+        "history": 0,
+        "path": "127.0.0.1/example-custom-url-3",
+        "target_route_uuid": "",
+        "uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea"
+    },
+    {
+        "changed": "2025-12-09 13:19:37",
+        "created": "2025-12-09 13:18:38",
+        "customUrl": "8985a284-c40c-47a5-a966-028753c572dd",
+        "history": 1,
+        "path": "127.0.0.1/example-custom-url",
+        "target_route_uuid": "e89c2f2b-af47-4505-af00-23e477aaf6ea",
+        "uuid": "ea2ee12f-950f-4c7e-8eea-cd9fff303df9"
     }
 ]
