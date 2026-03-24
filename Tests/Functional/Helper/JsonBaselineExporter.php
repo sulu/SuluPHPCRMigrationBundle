@@ -62,7 +62,7 @@ class JsonBaselineExporter
 
         $normalizedRows = \array_map(
             fn (array $row): array => \array_map(
-                fn (mixed $value): mixed => $value ?? '',
+                fn (mixed $value): mixed => $this->normalizeValue($value),
                 $row
             ),
             $rows
@@ -107,6 +107,26 @@ class JsonBaselineExporter
         }
 
         return $tables;
+    }
+
+    private function normalizeValue(mixed $value): mixed
+    {
+        if (null === $value) {
+            return '';
+        }
+
+        if (!\is_string($value) || '' === $value) {
+            return $value;
+        }
+
+        if ('{' === $value[0] || '[' === $value[0]) {
+            $decoded = \json_decode($value, true);
+            if (\is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        return $value;
     }
 
     private function shouldExcludeTable(string $tableName): bool

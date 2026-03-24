@@ -5,10 +5,12 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -27,7 +29,29 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "default",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Test Default Snippet\", \"changed\": {\"date\": \"2025-12-09 10:38:14.123000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2025-12-09 10:35:14.119000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"description\": \"<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>\"}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "title": "Test Default Snippet",
+            "changed": {
+                "date": "2025-12-09 10:38:14.123000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:35:14.119000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>"
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:14",
@@ -43,10 +67,12 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -65,7 +91,19 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "default",
-        "templateData": "{\"title\": \"Timestamp Fallback Snippet\", \"changed\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "templateData": {
+            "title": "Timestamp Fallback Snippet",
+            "changed": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2026-03-05 13:51:18",
@@ -81,10 +119,12 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -103,7 +143,30 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "footer",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Footer Snippet\", \"changed\": {\"date\": \"2025-12-09 10:38:22.526000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2025-12-09 10:35:37.080000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"description\": \"<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>\", \"copyrightText\": \"Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.\"}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "title": "Footer Snippet",
+            "changed": {
+                "date": "2025-12-09 10:38:22.526000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:35:37.080000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>",
+            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum."
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:37",
@@ -119,10 +182,12 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -141,7 +206,32 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "sidebar",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"image\": {\"id\": 5}, \"title\": \"Example Sidebar\", \"changed\": {\"date\": \"2025-12-09 10:38:37.442000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"content\": \"<p>Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.</p>\", \"created\": {\"date\": \"2025-12-09 10:35:47.173000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "image": {
+                "id": 5
+            },
+            "title": "Example Sidebar",
+            "changed": {
+                "date": "2025-12-09 10:38:37.442000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "content": "<p>Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.</p>",
+            "created": {
+                "date": "2025-12-09 10:35:47.173000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:47",
@@ -157,10 +247,12 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -179,7 +271,29 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "default",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Test Default Snippet\", \"changed\": {\"date\": \"2025-12-09 10:38:14.123000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2025-12-09 10:35:14.119000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"description\": \"<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>\"}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "title": "Test Default Snippet",
+            "changed": {
+                "date": "2025-12-09 10:38:14.123000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:35:14.119000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>"
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:14",
@@ -195,10 +309,12 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -217,7 +333,28 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "default",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Timestamp Fallback Snippet\", \"changed\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2026-03-05 13:51:18.748000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "title": "Timestamp Fallback Snippet",
+            "changed": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2026-03-05 13:51:18",
@@ -233,10 +370,12 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -255,7 +394,30 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "footer",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"title\": \"Footer Snippet\", \"changed\": {\"date\": \"2025-12-09 10:38:22.526000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"created\": {\"date\": \"2025-12-09 10:35:37.080000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"description\": \"<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>\", \"copyrightText\": \"Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.\"}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "title": "Footer Snippet",
+            "changed": {
+                "date": "2025-12-09 10:38:22.526000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:35:37.080000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>",
+            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum."
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:37",
@@ -271,10 +433,12 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "templateKey": "",
-        "templateData": "[]",
+        "templateData": [],
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "",
@@ -293,7 +457,32 @@
         "availableLocales": "",
         "version": 0,
         "templateKey": "sidebar",
-        "templateData": "{\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"image\": {\"id\": 5}, \"title\": \"Example Sidebar\", \"changed\": {\"date\": \"2025-12-09 10:38:37.442000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}, \"content\": \"<p>Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.</p>\", \"created\": {\"date\": \"2025-12-09 10:35:47.173000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
+        "templateData": {
+            "seo": {
+                "title": "",
+                "noIndex": false,
+                "keywords": "",
+                "noFollow": false,
+                "description": "",
+                "canonicalUrl": "",
+                "hideInSitemap": false
+            },
+            "image": {
+                "id": 5
+            },
+            "title": "Example Sidebar",
+            "changed": {
+                "date": "2025-12-09 10:38:37.442000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "content": "<p>Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.</p>",
+            "created": {
+                "date": "2025-12-09 10:35:47.173000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
         "excerptSegment": "",
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:47",

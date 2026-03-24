@@ -5,7 +5,11 @@
         "published": 1,
         "base_domain": "*.*/*",
         "webspace": "website",
-        "domain_parts": "[\"127.0.0\", \"1\", \"example-custom-url-3\"]",
+        "domain_parts": [
+            "127.0.0",
+            "1",
+            "example-custom-url-3"
+        ],
         "target_document": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
         "target_locale": "de",
         "canonical": 0,

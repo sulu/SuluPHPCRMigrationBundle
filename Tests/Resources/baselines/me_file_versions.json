@@ -6,9 +6,15 @@
         "subVersion": 0,
         "size": 1057754,
         "downloadCounter": 0,
-        "storageOptions": "{\"segment\":\"10\",\"fileName\":\"26-4209x2769.jpg\"}",
+        "storageOptions": {
+            "segment": "10",
+            "fileName": "26-4209x2769.jpg"
+        },
         "mimeType": "image/jpeg",
-        "properties": "{\"width\":4209,\"height\":2769}",
+        "properties": {
+            "width": 4209,
+            "height": 2769
+        },
         "focusPointX": "",
         "focusPointY": "",
         "created": "2025-12-09 10:36:17",
@@ -25,9 +31,15 @@
         "subVersion": 0,
         "size": 585221,
         "downloadCounter": 0,
-        "storageOptions": "{\"segment\":\"09\",\"fileName\":\"21-3008x2008.jpg\"}",
+        "storageOptions": {
+            "segment": "09",
+            "fileName": "21-3008x2008.jpg"
+        },
         "mimeType": "image/jpeg",
-        "properties": "{\"width\":3008,\"height\":2008}",
+        "properties": {
+            "width": 3008,
+            "height": 2008
+        },
         "focusPointX": "",
         "focusPointY": "",
         "created": "2025-12-09 10:36:17",
@@ -44,9 +56,15 @@
         "subVersion": 0,
         "size": 549606,
         "downloadCounter": 0,
-        "storageOptions": "{\"segment\":\"10\",\"fileName\":\"27-3264x1836.jpg\"}",
+        "storageOptions": {
+            "segment": "10",
+            "fileName": "27-3264x1836.jpg"
+        },
         "mimeType": "image/jpeg",
-        "properties": "{\"width\":3264,\"height\":1836}",
+        "properties": {
+            "width": 3264,
+            "height": 1836
+        },
         "focusPointX": "",
         "focusPointY": "",
         "created": "2025-12-09 10:36:17",
@@ -63,9 +81,15 @@
         "subVersion": 0,
         "size": 418422,
         "downloadCounter": 0,
-        "storageOptions": "{\"segment\":\"02\",\"fileName\":\"19-2500x1667.jpg\"}",
+        "storageOptions": {
+            "segment": "02",
+            "fileName": "19-2500x1667.jpg"
+        },
         "mimeType": "image/jpeg",
-        "properties": "{\"width\":2500,\"height\":1667}",
+        "properties": {
+            "width": 2500,
+            "height": 1667
+        },
         "focusPointX": "",
         "focusPointY": "",
         "created": "2025-12-09 10:36:17",
@@ -82,9 +106,15 @@
         "subVersion": 0,
         "size": 490823,
         "downloadCounter": 0,
-        "storageOptions": "{\"segment\":\"03\",\"fileName\":\"0-5000x3333.jpg\"}",
+        "storageOptions": {
+            "segment": "03",
+            "fileName": "0-5000x3333.jpg"
+        },
         "mimeType": "image/jpeg",
-        "properties": "{\"width\":5000,\"height\":3333}",
+        "properties": {
+            "width": 5000,
+            "height": 3333
+        },
         "focusPointX": "",
         "focusPointY": "",
         "created": "2025-12-09 10:36:18",

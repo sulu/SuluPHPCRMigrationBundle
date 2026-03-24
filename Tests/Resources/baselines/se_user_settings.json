@@ -10,7 +10,7 @@
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.activities.list.filter",
         "idUsers": 1
     },
@@ -20,12 +20,12 @@
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.analytics.list.filter",
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.articles.list.filter",
         "idUsers": 1
     },
@@ -35,7 +35,7 @@
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.categories.list.filter",
         "idUsers": 1
     },
@@ -60,12 +60,12 @@
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.custom_urls.list.filter",
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.media.media_overview.filter",
         "idUsers": 1
     },
@@ -85,7 +85,7 @@
         "idUsers": 1
     },
     {
-        "settingsValue": "[]",
+        "settingsValue": [],
         "settingsKey": "sulu_admin.list_store.snippets.list.filter",
         "idUsers": 1
     }

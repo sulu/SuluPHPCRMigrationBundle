@@ -8,17 +8,30 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "",
-        "templateData": "[]",
-        "seoData": "{\"title\": null, \"keywords\": null, \"description\": null, \"canonicalUrl\": null}",
+        "templateData": [],
+        "seoData": {
+            "title": null,
+            "keywords": null,
+            "description": null,
+            "canonicalUrl": null
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": null, \"image\": null, \"title\": null, \"description\": null}",
+        "excerptData": {
+            "icon": null,
+            "more": null,
+            "image": null,
+            "title": null,
+            "description": null
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "",
@@ -45,12 +58,35 @@
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "default",
-        "templateData": "{\"title\": \"Example article\", \"article\": \"<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>\", \"lastModified\": {\"date\": \"2025-12-03 00:00:00.000000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
-        "seoData": "{\"title\": \"Article seo title\", \"keywords\": \"Article, Seo, Keywords\", \"description\": \"Article seo description\", \"canonicalUrl\": \"article-seo-url.io\"}",
+        "templateData": {
+            "title": "Example article",
+            "article": "<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>",
+            "lastModified": {
+                "date": "2025-12-03 00:00:00.000000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
+        "seoData": {
+            "title": "Article seo title",
+            "keywords": "Article, Seo, Keywords",
+            "description": "Article seo description",
+            "canonicalUrl": "article-seo-url.io"
+        },
         "seoNoIndex": 1,
         "seoNoFollow": 1,
         "seoHideInSitemap": 1,
-        "excerptData": "{\"icon\": {\"id\": 2}, \"more\": \"ArticleExcerptMore\", \"image\": {\"id\": 3}, \"title\": \"ArticleExcerptTitle\", \"description\": \"<p>ArticleExcerptDescription</p>\"}",
+        "excerptData": {
+            "icon": {
+                "id": 2
+            },
+            "more": "ArticleExcerptMore",
+            "image": {
+                "id": 3
+            },
+            "title": "ArticleExcerptTitle",
+            "description": "<p>ArticleExcerptDescription</p>"
+        },
         "excerptSegment": "",
         "mainWebspace": "website",
         "authored": "2025-12-09 15:12:10",
@@ -72,17 +108,30 @@
         "stage": "draft",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "",
-        "templateData": "[]",
-        "seoData": "{\"title\": null, \"keywords\": null, \"description\": null, \"canonicalUrl\": null}",
+        "templateData": [],
+        "seoData": {
+            "title": null,
+            "keywords": null,
+            "description": null,
+            "canonicalUrl": null
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": null, \"image\": null, \"title\": null, \"description\": null}",
+        "excerptData": {
+            "icon": null,
+            "more": null,
+            "image": null,
+            "title": null,
+            "description": null
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "",
@@ -109,12 +158,26 @@
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "blog",
-        "templateData": "{\"title\": \"Timestamp Fallback Article\", \"blocks\": []}",
-        "seoData": "{\"title\": null, \"keywords\": null, \"description\": null, \"canonicalUrl\": null}",
+        "templateData": {
+            "title": "Timestamp Fallback Article",
+            "blocks": []
+        },
+        "seoData": {
+            "title": null,
+            "keywords": null,
+            "description": null,
+            "canonicalUrl": null
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": null, \"image\": null, \"title\": null, \"description\": null}",
+        "excerptData": {
+            "icon": null,
+            "more": null,
+            "image": null,
+            "title": null,
+            "description": null
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "2026-03-05 13:51:33",
@@ -136,17 +199,30 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "",
-        "templateData": "[]",
-        "seoData": "{\"title\": null, \"keywords\": null, \"description\": null, \"canonicalUrl\": null}",
+        "templateData": [],
+        "seoData": {
+            "title": null,
+            "keywords": null,
+            "description": null,
+            "canonicalUrl": null
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": null, \"image\": null, \"title\": null, \"description\": null}",
+        "excerptData": {
+            "icon": null,
+            "more": null,
+            "image": null,
+            "title": null,
+            "description": null
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "",
@@ -173,12 +249,35 @@
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "default",
-        "templateData": "{\"title\": \"Example article\", \"article\": \"<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>\", \"lastModified\": {\"date\": \"2025-12-03 00:00:00.000000\", \"timezone\": \"+00:00\", \"timezone_type\": 1}}",
-        "seoData": "{\"title\": \"Article seo title\", \"keywords\": \"Article, Seo, Keywords\", \"description\": \"Article seo description\", \"canonicalUrl\": \"article-seo-url.io\"}",
+        "templateData": {
+            "title": "Example article",
+            "article": "<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>",
+            "lastModified": {
+                "date": "2025-12-03 00:00:00.000000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            }
+        },
+        "seoData": {
+            "title": "Article seo title",
+            "keywords": "Article, Seo, Keywords",
+            "description": "Article seo description",
+            "canonicalUrl": "article-seo-url.io"
+        },
         "seoNoIndex": 1,
         "seoNoFollow": 1,
         "seoHideInSitemap": 1,
-        "excerptData": "{\"icon\": {\"id\": 2}, \"more\": \"ArticleExcerptMore\", \"image\": {\"id\": 3}, \"title\": \"ArticleExcerptTitle\", \"description\": \"<p>ArticleExcerptDescription</p>\"}",
+        "excerptData": {
+            "icon": {
+                "id": 2
+            },
+            "more": "ArticleExcerptMore",
+            "image": {
+                "id": 3
+            },
+            "title": "ArticleExcerptTitle",
+            "description": "<p>ArticleExcerptDescription</p>"
+        },
         "excerptSegment": "",
         "mainWebspace": "website",
         "authored": "2025-12-09 15:12:10",
@@ -200,17 +299,30 @@
         "stage": "live",
         "locale": "",
         "ghostLocale": "de",
-        "availableLocales": "[\"de\"]",
+        "availableLocales": [
+            "de"
+        ],
         "version": 0,
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "",
-        "templateData": "[]",
-        "seoData": "{\"title\": null, \"keywords\": null, \"description\": null, \"canonicalUrl\": null}",
+        "templateData": [],
+        "seoData": {
+            "title": null,
+            "keywords": null,
+            "description": null,
+            "canonicalUrl": null
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": null, \"image\": null, \"title\": null, \"description\": null}",
+        "excerptData": {
+            "icon": null,
+            "more": null,
+            "image": null,
+            "title": null,
+            "description": null
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "",
@@ -237,12 +349,26 @@
         "shadowLocale": "",
         "shadowLocales": "",
         "templateKey": "blog",
-        "templateData": "{\"title\": \"Timestamp Fallback Article\", \"blocks\": []}",
-        "seoData": "{\"title\": \"\", \"keywords\": \"\", \"description\": \"\", \"canonicalUrl\": \"\"}",
+        "templateData": {
+            "title": "Timestamp Fallback Article",
+            "blocks": []
+        },
+        "seoData": {
+            "title": "",
+            "keywords": "",
+            "description": "",
+            "canonicalUrl": ""
+        },
         "seoNoIndex": 0,
         "seoNoFollow": 0,
         "seoHideInSitemap": 0,
-        "excerptData": "{\"icon\": null, \"more\": \"\", \"image\": null, \"title\": \"\", \"description\": \"\"}",
+        "excerptData": {
+            "icon": null,
+            "more": "",
+            "image": null,
+            "title": "",
+            "description": ""
+        },
         "excerptSegment": "",
         "mainWebspace": "",
         "authored": "2026-03-05 13:51:33",

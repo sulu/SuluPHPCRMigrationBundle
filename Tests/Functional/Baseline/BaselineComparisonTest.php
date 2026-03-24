@@ -252,7 +252,7 @@ class BaselineComparisonTest extends KernelTestCase
             }
             if (\is_array($value)) {
                 $result[$key] = $this->removeExcludedFields($value);
-            } elseif (\is_string($value) && \str_starts_with($value, '{')) {
+            } elseif (\is_string($value) && ('{' === ($value[0] ?? '') || '[' === ($value[0] ?? ''))) {
                 $decoded = \json_decode($value, true);
                 $result[$key] = \is_array($decoded) ? $this->removeExcludedFields($decoded) : $value;
             } else {

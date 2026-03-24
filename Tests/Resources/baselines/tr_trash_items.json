@@ -3,9 +3,146 @@
         "id": 1,
         "resourceKey": "pages",
         "resourceId": "786eedc0-e161-4fa4-871d-8a5765442dfd",
-        "restoreData": "{\"locales\": [{\"title\": \"Example Page 2\", \"author\": \"1\", \"locale\": \"en\", \"created\": \"2025-12-09T10:42:24+00:00\", \"creator\": 1, \"authored\": \"2025-12-09T10:33:53+00:00\", \"suluOrder\": 20, \"permissions\": [], \"lastModified\": null, \"redirectType\": 1, \"shadowLocale\": null, \"structureData\": {\"url\": \"/example-page-2\", \"title\": \"Example Page 2\", \"blocks\": [{\"type\": \"text\", \"image\": {\"id\": null}, \"title\": \"Lorem Ipsum\", \"settings\": {}, \"description\": \"<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>\"}, {\"type\": \"quote\", \"quote\": \"Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.\", \"author\": \"John Doe\", \"settings\": {}, \"authorSnippet\": \"0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03\"}, {\"type\": \"gallery\", \"title\": \"Images\", \"images\": {\"ids\": [5, 1, 2], \"displayOption\": null}, \"settings\": {}}, {\"type\": \"smart_content_pages\", \"title\": \"Smart Pages\", \"settings\": {}, \"smartContent\": {\"tags\": null, \"types\": [\"homepage\", \"default\"], \"sortBy\": null, \"presentAs\": null, \"categories\": null, \"dataSource\": \"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\", \"sortMethod\": \"asc\", \"limitResult\": null, \"tagOperator\": \"or\", \"categoryOperator\": \"or\", \"audienceTargeting\": null, \"includeSubFolders\": true}}, {\"type\": \"nested\", \"title\": \"Nested Blocks\", \"settings\": {}, \"innerBlocks\": [{\"text\": \"<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>\", \"type\": \"inner_text\", \"settings\": {}}, {\"type\": \"inner_image\", \"image\": {\"id\": 4, \"displayOption\": null}, \"caption\": \"Aute aute elit velit est ipsum est in.\", \"settings\": {}}]}], \"article\": \"<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>\", \"subtitle\": \"Example subtitle\", \"headerImage\": {\"id\": 3}, \"relatedPages\": [\"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\"], \"sidebarSnippet\": \"0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03\"}, \"structureType\": \"default\", \"extensionsData\": {\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"excerpt\": {\"icon\": {\"ids\": []}, \"more\": \"\", \"tags\": [], \"title\": \"\", \"images\": {\"ids\": []}, \"segments\": [], \"categories\": [], \"description\": \"\"}}, \"resourceSegment\": \"/example-page-2\", \"redirectExternal\": null, \"navigationContexts\": [], \"redirectTargetUuid\": null, \"shadowLocaleEnabled\": false}], \"parentUuid\": \"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\"}",
+        "restoreData": {
+            "locales": [
+                {
+                    "title": "Example Page 2",
+                    "author": "1",
+                    "locale": "en",
+                    "created": "2025-12-09T10:42:24+00:00",
+                    "creator": 1,
+                    "authored": "2025-12-09T10:33:53+00:00",
+                    "suluOrder": 20,
+                    "permissions": [],
+                    "lastModified": null,
+                    "redirectType": 1,
+                    "shadowLocale": null,
+                    "structureData": {
+                        "url": "/example-page-2",
+                        "title": "Example Page 2",
+                        "blocks": [
+                            {
+                                "type": "text",
+                                "image": {
+                                    "id": null
+                                },
+                                "title": "Lorem Ipsum",
+                                "settings": [],
+                                "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
+                            },
+                            {
+                                "type": "quote",
+                                "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
+                                "author": "John Doe",
+                                "settings": [],
+                                "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
+                            },
+                            {
+                                "type": "gallery",
+                                "title": "Images",
+                                "images": {
+                                    "ids": [
+                                        5,
+                                        1,
+                                        2
+                                    ],
+                                    "displayOption": null
+                                },
+                                "settings": []
+                            },
+                            {
+                                "type": "smart_content_pages",
+                                "title": "Smart Pages",
+                                "settings": [],
+                                "smartContent": {
+                                    "tags": null,
+                                    "types": [
+                                        "homepage",
+                                        "default"
+                                    ],
+                                    "sortBy": null,
+                                    "presentAs": null,
+                                    "categories": null,
+                                    "dataSource": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+                                    "sortMethod": "asc",
+                                    "limitResult": null,
+                                    "tagOperator": "or",
+                                    "categoryOperator": "or",
+                                    "audienceTargeting": null,
+                                    "includeSubFolders": true
+                                }
+                            },
+                            {
+                                "type": "nested",
+                                "title": "Nested Blocks",
+                                "settings": [],
+                                "innerBlocks": [
+                                    {
+                                        "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
+                                        "type": "inner_text",
+                                        "settings": []
+                                    },
+                                    {
+                                        "type": "inner_image",
+                                        "image": {
+                                            "id": 4,
+                                            "displayOption": null
+                                        },
+                                        "caption": "Aute aute elit velit est ipsum est in.",
+                                        "settings": []
+                                    }
+                                ]
+                            }
+                        ],
+                        "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
+                        "subtitle": "Example subtitle",
+                        "headerImage": {
+                            "id": 3
+                        },
+                        "relatedPages": [
+                            "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
+                        ],
+                        "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
+                    },
+                    "structureType": "default",
+                    "extensionsData": {
+                        "seo": {
+                            "title": "",
+                            "noIndex": false,
+                            "keywords": "",
+                            "noFollow": false,
+                            "description": "",
+                            "canonicalUrl": "",
+                            "hideInSitemap": false
+                        },
+                        "excerpt": {
+                            "icon": {
+                                "ids": []
+                            },
+                            "more": "",
+                            "tags": [],
+                            "title": "",
+                            "images": {
+                                "ids": []
+                            },
+                            "segments": [],
+                            "categories": [],
+                            "description": ""
+                        }
+                    },
+                    "resourceSegment": "/example-page-2",
+                    "redirectExternal": null,
+                    "navigationContexts": [],
+                    "redirectTargetUuid": null,
+                    "shadowLocaleEnabled": false
+                }
+            ],
+            "parentUuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
+        },
         "restoreType": "translation",
-        "restoreOptions": "{\"locale\": \"en\"}",
+        "restoreOptions": {
+            "locale": "en"
+        },
         "resourceSecurityContext": "sulu.webspaces.website",
         "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "resourceSecurityObjectId": "786eedc0-e161-4fa4-871d-8a5765442dfd",
@@ -17,9 +154,146 @@
         "id": 2,
         "resourceKey": "pages",
         "resourceId": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
-        "restoreData": "{\"locales\": [{\"title\": \"Example Page 1\", \"author\": \"1\", \"locale\": \"de\", \"created\": \"2025-12-09T10:33:53+00:00\", \"creator\": 1, \"authored\": \"2025-12-09T10:33:53+00:00\", \"suluOrder\": 20, \"permissions\": [], \"lastModified\": null, \"redirectType\": 1, \"shadowLocale\": null, \"structureData\": {\"url\": \"/example-page-1\", \"title\": \"Example Page 1\", \"blocks\": [{\"type\": \"text\", \"image\": {\"id\": null}, \"title\": \"Lorem Ipsum\", \"settings\": {}, \"description\": \"<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>\"}, {\"type\": \"quote\", \"quote\": \"Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.\", \"author\": \"John Doe\", \"settings\": {}, \"authorSnippet\": \"0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03\"}, {\"type\": \"gallery\", \"title\": \"Images\", \"images\": {\"ids\": [5, 1, 2], \"displayOption\": null}, \"settings\": {}}, {\"type\": \"smart_content_pages\", \"title\": \"Smart Pages\", \"settings\": {}, \"smartContent\": {\"tags\": null, \"types\": [\"homepage\", \"default\"], \"sortBy\": null, \"presentAs\": null, \"categories\": null, \"dataSource\": \"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\", \"sortMethod\": \"asc\", \"limitResult\": null, \"tagOperator\": \"or\", \"categoryOperator\": \"or\", \"audienceTargeting\": null, \"includeSubFolders\": true}}, {\"type\": \"nested\", \"title\": \"Nested Blocks\", \"settings\": {}, \"innerBlocks\": [{\"text\": \"<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>\", \"type\": \"inner_text\", \"settings\": {}}, {\"type\": \"inner_image\", \"image\": {\"id\": 4, \"displayOption\": null}, \"caption\": \"Aute aute elit velit est ipsum est in.\", \"settings\": {}}]}], \"article\": \"<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>\", \"subtitle\": \"Example subtitle\", \"headerImage\": {\"id\": 3}, \"relatedPages\": [\"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\"], \"sidebarSnippet\": \"0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03\"}, \"structureType\": \"default\", \"extensionsData\": {\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"excerpt\": {\"icon\": {\"ids\": []}, \"more\": \"\", \"tags\": [], \"title\": \"\", \"images\": {\"ids\": []}, \"segments\": [], \"categories\": [], \"description\": \"\"}}, \"resourceSegment\": \"/example-page-1\", \"redirectExternal\": null, \"navigationContexts\": [], \"redirectTargetUuid\": null, \"shadowLocaleEnabled\": false}], \"parentUuid\": \"db367f2b-7e1d-42e0-8ea2-b39b3d7511bf\"}",
+        "restoreData": {
+            "locales": [
+                {
+                    "title": "Example Page 1",
+                    "author": "1",
+                    "locale": "de",
+                    "created": "2025-12-09T10:33:53+00:00",
+                    "creator": 1,
+                    "authored": "2025-12-09T10:33:53+00:00",
+                    "suluOrder": 20,
+                    "permissions": [],
+                    "lastModified": null,
+                    "redirectType": 1,
+                    "shadowLocale": null,
+                    "structureData": {
+                        "url": "/example-page-1",
+                        "title": "Example Page 1",
+                        "blocks": [
+                            {
+                                "type": "text",
+                                "image": {
+                                    "id": null
+                                },
+                                "title": "Lorem Ipsum",
+                                "settings": [],
+                                "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
+                            },
+                            {
+                                "type": "quote",
+                                "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
+                                "author": "John Doe",
+                                "settings": [],
+                                "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
+                            },
+                            {
+                                "type": "gallery",
+                                "title": "Images",
+                                "images": {
+                                    "ids": [
+                                        5,
+                                        1,
+                                        2
+                                    ],
+                                    "displayOption": null
+                                },
+                                "settings": []
+                            },
+                            {
+                                "type": "smart_content_pages",
+                                "title": "Smart Pages",
+                                "settings": [],
+                                "smartContent": {
+                                    "tags": null,
+                                    "types": [
+                                        "homepage",
+                                        "default"
+                                    ],
+                                    "sortBy": null,
+                                    "presentAs": null,
+                                    "categories": null,
+                                    "dataSource": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+                                    "sortMethod": "asc",
+                                    "limitResult": null,
+                                    "tagOperator": "or",
+                                    "categoryOperator": "or",
+                                    "audienceTargeting": null,
+                                    "includeSubFolders": true
+                                }
+                            },
+                            {
+                                "type": "nested",
+                                "title": "Nested Blocks",
+                                "settings": [],
+                                "innerBlocks": [
+                                    {
+                                        "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
+                                        "type": "inner_text",
+                                        "settings": []
+                                    },
+                                    {
+                                        "type": "inner_image",
+                                        "image": {
+                                            "id": 4,
+                                            "displayOption": null
+                                        },
+                                        "caption": "Aute aute elit velit est ipsum est in.",
+                                        "settings": []
+                                    }
+                                ]
+                            }
+                        ],
+                        "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
+                        "subtitle": "Example subtitle",
+                        "headerImage": {
+                            "id": 3
+                        },
+                        "relatedPages": [
+                            "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
+                        ],
+                        "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
+                    },
+                    "structureType": "default",
+                    "extensionsData": {
+                        "seo": {
+                            "title": "",
+                            "noIndex": false,
+                            "keywords": "",
+                            "noFollow": false,
+                            "description": "",
+                            "canonicalUrl": "",
+                            "hideInSitemap": false
+                        },
+                        "excerpt": {
+                            "icon": {
+                                "ids": []
+                            },
+                            "more": "",
+                            "tags": [],
+                            "title": "",
+                            "images": {
+                                "ids": []
+                            },
+                            "segments": [],
+                            "categories": [],
+                            "description": ""
+                        }
+                    },
+                    "resourceSegment": "/example-page-1",
+                    "redirectExternal": null,
+                    "navigationContexts": [],
+                    "redirectTargetUuid": null,
+                    "shadowLocaleEnabled": false
+                }
+            ],
+            "parentUuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
+        },
         "restoreType": "translation",
-        "restoreOptions": "{\"locale\": \"de\"}",
+        "restoreOptions": {
+            "locale": "de"
+        },
         "resourceSecurityContext": "sulu.webspaces.website",
         "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "resourceSecurityObjectId": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
@@ -31,9 +305,69 @@
         "id": 3,
         "resourceKey": "pages",
         "resourceId": "3b18b1d6-d13a-4d51-8cea-45e2132ad5a5",
-        "restoreData": "{\"locales\": [{\"title\": \"Child Page 1 with external link\", \"author\": \"1\", \"locale\": \"de\", \"created\": \"2025-12-09T10:52:51+00:00\", \"creator\": 1, \"authored\": \"2025-12-09T10:52:51+00:00\", \"suluOrder\": 20, \"permissions\": [], \"lastModified\": null, \"redirectType\": 4, \"shadowLocale\": null, \"structureData\": {\"url\": \"/example-page-1-1-1/child-page-1-with-external-link\", \"title\": \"Child Page 1 with external link\", \"blocks\": [], \"article\": \"\", \"subtitle\": \"\", \"headerImage\": {\"id\": null}, \"relatedPages\": [], \"sidebarSnippet\": null}, \"structureType\": \"default\", \"extensionsData\": {\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"excerpt\": {\"icon\": {\"ids\": []}, \"more\": \"\", \"tags\": [], \"title\": \"\", \"images\": {\"ids\": []}, \"segments\": [], \"categories\": [], \"description\": \"\"}}, \"resourceSegment\": \"/example-page-1-1-1/child-page-1-with-external-link\", \"redirectExternal\": \"http://sulu.io\", \"navigationContexts\": [], \"redirectTargetUuid\": null, \"shadowLocaleEnabled\": false}], \"parentUuid\": \"c32200c7-1402-41ea-aff9-e19cf37f5f91\"}",
+        "restoreData": {
+            "locales": [
+                {
+                    "title": "Child Page 1 with external link",
+                    "author": "1",
+                    "locale": "de",
+                    "created": "2025-12-09T10:52:51+00:00",
+                    "creator": 1,
+                    "authored": "2025-12-09T10:52:51+00:00",
+                    "suluOrder": 20,
+                    "permissions": [],
+                    "lastModified": null,
+                    "redirectType": 4,
+                    "shadowLocale": null,
+                    "structureData": {
+                        "url": "/example-page-1-1-1/child-page-1-with-external-link",
+                        "title": "Child Page 1 with external link",
+                        "blocks": [],
+                        "article": "",
+                        "subtitle": "",
+                        "headerImage": {
+                            "id": null
+                        },
+                        "relatedPages": [],
+                        "sidebarSnippet": null
+                    },
+                    "structureType": "default",
+                    "extensionsData": {
+                        "seo": {
+                            "title": "",
+                            "noIndex": false,
+                            "keywords": "",
+                            "noFollow": false,
+                            "description": "",
+                            "canonicalUrl": "",
+                            "hideInSitemap": false
+                        },
+                        "excerpt": {
+                            "icon": {
+                                "ids": []
+                            },
+                            "more": "",
+                            "tags": [],
+                            "title": "",
+                            "images": {
+                                "ids": []
+                            },
+                            "segments": [],
+                            "categories": [],
+                            "description": ""
+                        }
+                    },
+                    "resourceSegment": "/example-page-1-1-1/child-page-1-with-external-link",
+                    "redirectExternal": "http://sulu.io",
+                    "navigationContexts": [],
+                    "redirectTargetUuid": null,
+                    "shadowLocaleEnabled": false
+                }
+            ],
+            "parentUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91"
+        },
         "restoreType": "",
-        "restoreOptions": "[]",
+        "restoreOptions": [],
         "resourceSecurityContext": "sulu.webspaces.website",
         "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "resourceSecurityObjectId": "3b18b1d6-d13a-4d51-8cea-45e2132ad5a5",
@@ -45,9 +379,69 @@
         "id": 4,
         "resourceKey": "pages",
         "resourceId": "1b328681-4fc7-42fe-8c0c-3c14c48a0aeb",
-        "restoreData": "{\"locales\": [{\"title\": \"Child page 2 with internal link\", \"author\": \"1\", \"locale\": \"de\", \"created\": \"2025-12-09T10:53:13+00:00\", \"creator\": 1, \"authored\": \"2025-12-09T10:53:13+00:00\", \"suluOrder\": 30, \"permissions\": [], \"lastModified\": null, \"redirectType\": 2, \"shadowLocale\": null, \"structureData\": {\"url\": \"/example-page-1-1-1/child-page-2-with-internal-link\", \"title\": \"Child page 2 with internal link\", \"blocks\": [], \"article\": \"\", \"subtitle\": \"\", \"headerImage\": {\"id\": null}, \"relatedPages\": [], \"sidebarSnippet\": null}, \"structureType\": \"default\", \"extensionsData\": {\"seo\": {\"title\": \"\", \"noIndex\": false, \"keywords\": \"\", \"noFollow\": false, \"description\": \"\", \"canonicalUrl\": \"\", \"hideInSitemap\": false}, \"excerpt\": {\"icon\": {\"ids\": []}, \"more\": \"\", \"tags\": [], \"title\": \"\", \"images\": {\"ids\": []}, \"segments\": [], \"categories\": [], \"description\": \"\"}}, \"resourceSegment\": \"/example-page-1-1-1/child-page-2-with-internal-link\", \"redirectExternal\": null, \"navigationContexts\": [], \"redirectTargetUuid\": \"c32200c7-1402-41ea-aff9-e19cf37f5f91\", \"shadowLocaleEnabled\": false}], \"parentUuid\": \"c32200c7-1402-41ea-aff9-e19cf37f5f91\"}",
+        "restoreData": {
+            "locales": [
+                {
+                    "title": "Child page 2 with internal link",
+                    "author": "1",
+                    "locale": "de",
+                    "created": "2025-12-09T10:53:13+00:00",
+                    "creator": 1,
+                    "authored": "2025-12-09T10:53:13+00:00",
+                    "suluOrder": 30,
+                    "permissions": [],
+                    "lastModified": null,
+                    "redirectType": 2,
+                    "shadowLocale": null,
+                    "structureData": {
+                        "url": "/example-page-1-1-1/child-page-2-with-internal-link",
+                        "title": "Child page 2 with internal link",
+                        "blocks": [],
+                        "article": "",
+                        "subtitle": "",
+                        "headerImage": {
+                            "id": null
+                        },
+                        "relatedPages": [],
+                        "sidebarSnippet": null
+                    },
+                    "structureType": "default",
+                    "extensionsData": {
+                        "seo": {
+                            "title": "",
+                            "noIndex": false,
+                            "keywords": "",
+                            "noFollow": false,
+                            "description": "",
+                            "canonicalUrl": "",
+                            "hideInSitemap": false
+                        },
+                        "excerpt": {
+                            "icon": {
+                                "ids": []
+                            },
+                            "more": "",
+                            "tags": [],
+                            "title": "",
+                            "images": {
+                                "ids": []
+                            },
+                            "segments": [],
+                            "categories": [],
+                            "description": ""
+                        }
+                    },
+                    "resourceSegment": "/example-page-1-1-1/child-page-2-with-internal-link",
+                    "redirectExternal": null,
+                    "navigationContexts": [],
+                    "redirectTargetUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
+                    "shadowLocaleEnabled": false
+                }
+            ],
+            "parentUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91"
+        },
         "restoreType": "",
-        "restoreOptions": "[]",
+        "restoreOptions": [],
         "resourceSecurityContext": "sulu.webspaces.website",
         "resourceSecurityObjectType": "Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior",
         "resourceSecurityObjectId": "1b328681-4fc7-42fe-8c0c-3c14c48a0aeb",
