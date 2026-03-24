@@ -63,14 +63,23 @@ class ArticlePersister extends AbstractPersister
             $data['templateData']['title'] = $data['title'];
         }
 
-        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
-            $routePathName = $document['localizations'][$locale]['routePathName'];
-            $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
-            // check routePathName property and fallback to routePath
-            $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
+        if (null !== $locale && isset($document['localizations'][$locale])) {
+            $localeData = $document['localizations'][$locale];
 
-            // content bundle is only compatible with "url"
-            $data['templateData']['url'] = $routePath; // is used in the content bundle
+            if (isset($localeData['routePathName'])) {
+                $routePathName = $localeData['routePathName'];
+                // Handle i18n prefix (e.g., 'i18n:en-routePath' -> 'routePath')
+                $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
+                // check routePathName property and fallback to routePath
+                $url = $localeData[$routePathName] ?? $localeData['routePath'] ?? null;
+            } else {
+                $url = $localeData['routePath'] ?? null;
+            }
+
+            if (isset($url) && \is_string($url)) {
+                // content bundle is only compatible with "url"
+                $data['templateData']['url'] = $url;
+            }
         }
 
         // Transform segments map to single segment value
@@ -215,11 +224,11 @@ class ArticlePersister extends AbstractPersister
         return 'article_dimension_content_id';
     }
 
-    protected function getSlug(array $document, string $locale): string
+    protected function getSlug(array $document, string $locale): ?string
     {
         $localizedData = $document['localizations'][$locale];
 
-        // Check if both routePath and routePathName are missing
+        // Missing routePathName hints at PHPCR migrations not being run before updating
         if (!isset($localizedData['routePath']) && !isset($localizedData['routePathName'])) {
             throw new RoutePathNameNotFoundException($document['jcr']['uuid'], $locale);
         }
