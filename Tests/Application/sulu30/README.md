@@ -28,9 +28,8 @@ or update schema:
 ## Export Schema
 
 ```bash
-# Dump schema only (no data)
+# Dump schema only (no data) — from bundle root
 mysqldump -h 127.0.0.1 -u root -p --no-data migration_sulu_30 > Tests/Resources/fixtures/sulu30_schema.sql
-
-# Then prepare the test fixture (from bundle root)
-php Tests/Scripts/prepare-test-fixture.php
 ```
+
+The test fixture (`test_fixture.sql`) is auto-generated at test runtime by `TestFixtureBuilder` when source files change.

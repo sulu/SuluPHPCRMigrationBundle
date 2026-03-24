@@ -54,6 +54,6 @@ composer export-fixture
 
 # 4. Run tests to regenerate baselines (from bundle root)
 cd ../../..
-rm Tests/Resources/baselines/*.csv
+rm Tests/Resources/baselines/*.json
 composer test
 ```
