@@ -71,7 +71,8 @@ class JsonBaselineExporter
         $schemaManager = $this->connection->createSchemaManager();
         $indexes = $schemaManager->listTableIndexes($table);
         $primaryKeyColumns = isset($indexes['primary']) ? $indexes['primary']->getColumns() : [];
-        $orderBy = [] === $primaryKeyColumns ? '' : ' ORDER BY ' . \implode(', ', $primaryKeyColumns);
+        $quotedOrderByColumns = \array_map($this->connection->quoteIdentifier(...), $primaryKeyColumns);
+        $orderBy = [] === $quotedOrderByColumns ? '' : ' ORDER BY ' . \implode(', ', $quotedOrderByColumns);
 
         $quotedTable = $this->connection->quoteIdentifier($table);
         $rows = $this->connection->fetchAllAssociative("SELECT * FROM {$quotedTable}{$orderBy}");
