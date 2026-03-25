@@ -29,9 +29,9 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 8,
+        "lft": 10,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 9,
+        "rgt": 11,
         "uuid": "786eedc0-e161-4fa4-871d-8a5765442dfd",
         "webspaceKey": "website"
     },
@@ -60,7 +60,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-03-25 08:31:56",
+        "changed": "2026-03-25 09:28:40",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": "",
@@ -89,9 +89,9 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 10,
+        "lft": 8,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 11,
+        "rgt": 9,
         "uuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
         "webspaceKey": "website"
     },

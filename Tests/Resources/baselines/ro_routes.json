@@ -46,15 +46,6 @@
     },
     {
         "id": 6,
-        "locale": "de",
-        "parent_id": 1,
-        "resource_id": "786eedc0-e161-4fa4-871d-8a5765442dfd",
-        "resource_key": "pages",
-        "slug": "/example-page-2",
-        "webspace": "website"
-    },
-    {
-        "id": 7,
         "locale": "en",
         "parent_id": 2,
         "resource_id": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
@@ -63,12 +54,21 @@
         "webspace": "website"
     },
     {
-        "id": 8,
+        "id": 7,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
         "resource_key": "pages",
         "slug": "/example-page-1-1-1",
+        "webspace": "website"
+    },
+    {
+        "id": 8,
+        "locale": "de",
+        "parent_id": 1,
+        "resource_id": "786eedc0-e161-4fa4-871d-8a5765442dfd",
+        "resource_key": "pages",
+        "slug": "/example-page-2",
         "webspace": "website"
     },
     {

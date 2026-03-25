@@ -218,6 +218,8 @@ class MigratePhpcrCommand extends Command
 
         // Sort by depth (number of path segments) then by sulu:order to ensure
         // parent nodes are inserted into the nested set before their children.
+        // Path is used as a final tiebreaker to guarantee deterministic ordering
+        // across different databases (usort is unstable in PHP).
         \usort($nodesArray, function(NodeInterface $a, NodeInterface $b) {
             $aDepth = \count(\explode('/', $a->getPath()));
             $bDepth = \count(\explode('/', $b->getPath()));
@@ -229,7 +231,11 @@ class MigratePhpcrCommand extends Command
             $aOrder = $a->hasProperty('sulu:order') ? $a->getProperty('sulu:order')->getValue() : 0;
             $bOrder = $b->hasProperty('sulu:order') ? $b->getProperty('sulu:order')->getValue() : 0;
 
-            return $aOrder <=> $bOrder;
+            if ($aOrder !== $bOrder) {
+                return $aOrder <=> $bOrder;
+            }
+
+            return $a->getPath() <=> $b->getPath();
         });
 
         return $nodesArray;
