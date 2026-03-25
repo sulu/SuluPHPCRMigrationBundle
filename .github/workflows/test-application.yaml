@@ -62,6 +62,11 @@ jobs:
                       php-extensions: 'ctype, iconv, pdo_mysql'
                       tools: 'composer:v2'
 
+                    - php-version: '8.5'
+                      dependency-versions: 'highest'
+                      php-extensions: 'ctype, iconv, pdo_mysql'
+                      tools: 'composer:v2'
+
         steps:
             - name: Checkout project
               uses: actions/checkout@v4
@@ -96,9 +101,19 @@ jobs:
     # PostgreSQL test job: Validates that migration produces identical results on PostgreSQL.
     # Uses pgloader to migrate MySQL fixture data to PostgreSQL, then runs tests against PostgreSQL.
     php-postgres:
-        name: "PHP 8.3 PostgreSQL"
+        name: "PHP ${{ matrix.php-version }} PostgreSQL (${{ matrix.dependency-versions }})"
         runs-on: ubuntu-22.04
         timeout-minutes: 15
+
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php-version: '8.2'
+                      dependency-versions: 'lowest'
+
+                    - php-version: '8.5'
+                      dependency-versions: 'highest'
 
         services:
             postgres:
@@ -160,7 +175,7 @@ jobs:
             - name: Install and configure PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.3'
+                  php-version: ${{ matrix.php-version }}
                   extensions: ctype, iconv, pdo_mysql, pdo_pgsql
                   tools: composer:v2
                   coverage: none
@@ -168,7 +183,7 @@ jobs:
             - name: Install composer dependencies
               uses: ramsey/composer-install@v3
               with:
-                  dependency-versions: highest
+                  dependency-versions: ${{ matrix.dependency-versions }}
 
             - name: Load MySQL fixture
               run: mysql -h 127.0.0.1 -u root -proot sulu_migration_test < Tests/Resources/fixtures/test_fixture.sql
