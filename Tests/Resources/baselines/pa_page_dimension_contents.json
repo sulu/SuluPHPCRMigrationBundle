@@ -248,7 +248,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "c5c3e052",
                     "type": "text",
                     "image": {
                         "id": null
@@ -258,7 +257,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "4aeecd94",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -266,7 +264,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "e4e7a62d",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -280,7 +277,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "be797208",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -303,19 +299,16 @@
                     }
                 },
                 {
-                    "_id": "b360d1b1",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "0a496db4",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "de69199c",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -398,7 +391,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "9876f7da",
                     "type": "text",
                     "image": {
                         "id": null
@@ -423,7 +415,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "2a680f29",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -432,7 +423,6 @@
                         "segments": null,
                         "schedules": [
                             {
-                                "_id": "0f9619cb",
                                 "end": "2025-12-31T00:00:00",
                                 "type": "fixed",
                                 "start": "2025-12-17T00:00:00"
@@ -446,7 +436,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "d8ef950b",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -460,7 +449,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "64090593",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -483,19 +471,16 @@
                     }
                 },
                 {
-                    "_id": "015c450e",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "4b962c25",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "99ca0835",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -619,7 +604,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "96b091d7",
                     "type": "text",
                     "image": {
                         "id": null
@@ -629,7 +613,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "93033a36",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -637,7 +620,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "b8dd0168",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -651,7 +633,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "039a51f7",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -674,19 +655,16 @@
                     }
                 },
                 {
-                    "_id": "d128f19a",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "7564fe3b",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "6823c1d1",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -819,7 +797,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "2245b02a",
                     "type": "text",
                     "image": {
                         "id": null
@@ -829,7 +806,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "c1b936bb",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -837,7 +813,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "90bbc2e2",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -851,7 +826,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "5d4159ee",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -874,19 +848,16 @@
                     }
                 },
                 {
-                    "_id": "106d8e80",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "fc738f5f",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "d4710f76",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -969,7 +940,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "90452577",
                     "type": "text",
                     "image": {
                         "id": null
@@ -979,7 +949,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "bd262b76",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -987,7 +956,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "e520b7bc",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -1001,7 +969,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "93c5d694",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -1024,19 +991,16 @@
                     }
                 },
                 {
-                    "_id": "76efd74f",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "96201eb2",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "5f9927d6",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -1288,7 +1252,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-03-24 21:08:46",
+        "changed": "2026-03-25 08:31:56",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -1331,7 +1295,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-03-24 21:08:46",
+        "changed": "2026-03-25 08:31:56",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -1371,7 +1335,6 @@
             },
             "sections": [
                 {
-                    "_id": "009a8ddd",
                     "text": "<p>Single Column description</p>",
                     "type": "1",
                     "title": "Single Column",
@@ -1391,7 +1354,6 @@
                     }
                 },
                 {
-                    "_id": "7554650d",
                     "type": "2",
                     "title": "Two Columns",
                     "column1": "<p>Column 1 description</p>",
@@ -1986,7 +1948,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "d392cdcc",
                     "type": "text",
                     "image": {
                         "id": null
@@ -1996,7 +1957,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "de8752d2",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -2004,7 +1964,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "8728c76d",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -2018,7 +1977,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "ea478bdf",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -2041,19 +1999,16 @@
                     }
                 },
                 {
-                    "_id": "3d8eb353",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "6ea3af86",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "ffd43101",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -2136,7 +2091,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "3a5427fc",
                     "type": "text",
                     "image": {
                         "id": null
@@ -2161,7 +2115,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "e3dcb6f4",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -2170,7 +2123,6 @@
                         "segments": null,
                         "schedules": [
                             {
-                                "_id": "f011f001",
                                 "end": "2025-12-31T00:00:00",
                                 "type": "fixed",
                                 "start": "2025-12-17T00:00:00"
@@ -2184,7 +2136,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "c046cad1",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -2198,7 +2149,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "01f8fc51",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -2221,19 +2171,16 @@
                     }
                 },
                 {
-                    "_id": "4115749b",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "48152a19",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "0e799c2e",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -2357,7 +2304,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "83e180d0",
                     "type": "text",
                     "image": {
                         "id": null
@@ -2367,7 +2313,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "1120c993",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -2375,7 +2320,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "4af8e7ae",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -2389,7 +2333,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "6c4055f4",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -2412,19 +2355,16 @@
                     }
                 },
                 {
-                    "_id": "73231f77",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "bff6ff01",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "0e412ba5",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -2557,7 +2497,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "3b7409fa",
                     "type": "text",
                     "image": {
                         "id": null
@@ -2567,7 +2506,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "94d9b5e4",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -2575,7 +2513,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "f7f9a039",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -2589,7 +2526,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "38b10dff",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -2612,19 +2548,16 @@
                     }
                 },
                 {
-                    "_id": "1099d011",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "d385b8e9",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "d1f809af",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -2707,7 +2640,6 @@
             "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
             "blocks": [
                 {
-                    "_id": "95b67b01",
                     "type": "text",
                     "image": {
                         "id": null
@@ -2717,7 +2649,6 @@
                     "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
                 },
                 {
-                    "_id": "e12b79e7",
                     "type": "quote",
                     "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
                     "author": "John Doe",
@@ -2725,7 +2656,6 @@
                     "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
                 },
                 {
-                    "_id": "c8686baf",
                     "type": "gallery",
                     "title": "Images",
                     "images": {
@@ -2739,7 +2669,6 @@
                     "settings": []
                 },
                 {
-                    "_id": "d3a8f398",
                     "type": "smart_content_pages",
                     "title": "Smart Pages",
                     "settings": [],
@@ -2762,19 +2691,16 @@
                     }
                 },
                 {
-                    "_id": "55815f5e",
                     "type": "nested",
                     "title": "Nested Blocks",
                     "settings": [],
                     "innerBlocks": [
                         {
-                            "_id": "81d23180",
                             "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
                             "type": "inner_text",
                             "settings": []
                         },
                         {
-                            "_id": "277242b8",
                             "type": "inner_image",
                             "image": {
                                 "id": 4,
@@ -3026,7 +2952,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-03-24 21:08:46",
+        "changed": "2026-03-25 08:31:56",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -3069,7 +2995,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-03-24 21:08:46",
+        "changed": "2026-03-25 08:31:56",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -3109,7 +3035,6 @@
             },
             "sections": [
                 {
-                    "_id": "753115a7",
                     "text": "<p>Single Column description</p>",
                     "type": "1",
                     "title": "Single Column",
@@ -3129,7 +3054,6 @@
                     }
                 },
                 {
-                    "_id": "9565dd33",
                     "type": "2",
                     "title": "Two Columns",
                     "column1": "<p>Column 1 description</p>",
