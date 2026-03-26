@@ -93,7 +93,7 @@ class MigratePhpcrCommand extends Command
                 $sessionName = $currentSession->getWorkspace()->getName();
                 $io->section('Migrating ' . $documentType . ' documents in ' . $sessionName);
 
-                $queryManager = $session->getWorkspace()->getQueryManager();
+                $queryManager = $currentSession->getWorkspace()->getQueryManager();
 
                 if (\in_array($documentType, self::FULL_LOAD_TYPES, true)) {
                     // Pages require parent-before-child ordering for nested set inserts, so all
