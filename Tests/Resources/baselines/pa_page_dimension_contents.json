@@ -594,7 +594,7 @@
         "linkProvider": "",
         "locale": "en",
         "pageUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
-        "route_id": 6,
+        "route_id": 5,
         "seoData": {
             "canonicalUrl": "this is my canonical",
             "description": "Seo Description",
@@ -737,7 +737,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
-        "route_id": 7,
+        "route_id": 6,
         "seoData": {
             "canonicalUrl": "this is my canonical",
             "description": "Seo Description",
@@ -921,7 +921,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "786eedc0-e161-4fa4-871d-8a5765442dfd",
-        "route_id": 8,
+        "route_id": 7,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1107,7 +1107,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "6dc030f9-9ee9-4f97-af14-bd9e696c32b5",
-        "route_id": 9,
+        "route_id": 8,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1213,7 +1213,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "a94e4697-b95f-46d6-9b25-f6cd606fb7c2",
-        "route_id": 10,
+        "route_id": 9,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -1252,7 +1252,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-03-25 09:28:39",
+        "changed": "2026-03-26 13:58:00",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -1295,7 +1295,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-03-25 09:28:39",
+        "changed": "2026-03-26 13:58:00",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -1314,7 +1314,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "af78e52e-1e75-4bb2-a58e-c9592dd059d8",
-        "route_id": 11,
+        "route_id": 10,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1450,7 +1450,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 12,
+        "route_id": 11,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1556,7 +1556,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 13,
+        "route_id": 12,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -1661,7 +1661,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 14,
+        "route_id": 13,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1752,7 +1752,7 @@
         "changed": "2025-12-09 09:37:45",
         "created": "2025-12-09 09:37:45",
         "excerptData": {
-            "description": null,
+            "description": "",
             "icon": null,
             "image": null,
             "more": null,
@@ -1770,10 +1770,10 @@
         "pageUuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "route_id": 1,
         "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
         },
         "seoHideInSitemap": 0,
         "seoNoFollow": 0,
@@ -2223,11 +2223,11 @@
         "author_id": "",
         "authored": "",
         "availableLocales": [
-            "en",
-            "de"
+            "de",
+            "en"
         ],
-        "changed": "2025-12-09 10:54:03",
-        "created": "2025-12-09 10:44:07",
+        "changed": "2025-12-09 10:54:13",
+        "created": "2025-12-09 10:42:48",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -2236,7 +2236,7 @@
             "title": null
         },
         "excerptSegment": "",
-        "ghostLocale": "en",
+        "ghostLocale": "de",
         "id": 30,
         "idUsersChanger": "",
         "idUsersCreator": "",
@@ -2271,8 +2271,8 @@
         "author_id": 1,
         "authored": "2025-12-09 10:33:53",
         "availableLocales": "",
-        "changed": "2025-12-09 10:54:03",
-        "created": "2025-12-09 10:44:07",
+        "changed": "2025-12-09 10:54:13",
+        "created": "2025-12-09 10:42:48",
         "excerptData": {
             "description": "<p>Magna deserunt dolore nisi consequat tempor Lorem dolor eiusmod nisi qui dolor id. Amet id ex enim cillum labore qui nulla deserunt exercitation id do occaecat. Aute magna occaecat aliqua duis est mollit. Magna quis eiusmod ea id deserunt occaecat dolor reprehenderit sunt sunt non est aliquip. Officia Lorem eu ipsum minim amet non laborum excepteur eiusmod. Minim enim elit sint veniam sunt officia culpa. Pariatur dolore anim adipisicing enim esse irure.</p>",
             "icon": {
@@ -2289,155 +2289,12 @@
         "id": 31,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2025-12-09 10:54:13",
-        "linkData": "",
-        "linkProvider": "",
-        "locale": "en",
-        "pageUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
-        "route_id": 6,
-        "seoData": {
-            "canonicalUrl": "this is my canonical",
-            "description": "Seo Description",
-            "keywords": "Seo Keywords",
-            "title": "Seo Title"
-        },
-        "seoHideInSitemap": 1,
-        "seoNoFollow": 1,
-        "seoNoIndex": 1,
-        "shadowLocale": "de",
-        "shadowLocales": "",
-        "stage": "live",
-        "templateData": {
-            "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
-            "blocks": [
-                {
-                    "type": "text",
-                    "image": {
-                        "id": null
-                    },
-                    "title": "Lorem Ipsum",
-                    "settings": [],
-                    "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
-                },
-                {
-                    "type": "quote",
-                    "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
-                    "author": "John Doe",
-                    "settings": [],
-                    "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
-                },
-                {
-                    "type": "gallery",
-                    "title": "Images",
-                    "images": {
-                        "ids": [
-                            5,
-                            1,
-                            2
-                        ],
-                        "displayOption": null
-                    },
-                    "settings": []
-                },
-                {
-                    "type": "smart_content_pages",
-                    "title": "Smart Pages",
-                    "settings": [],
-                    "smartContent": {
-                        "tags": null,
-                        "types": [
-                            "homepage",
-                            "default"
-                        ],
-                        "sortBy": null,
-                        "presentAs": null,
-                        "categories": null,
-                        "dataSource": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-                        "sortMethod": "asc",
-                        "limitResult": null,
-                        "tagOperator": "or",
-                        "categoryOperator": "or",
-                        "audienceTargeting": null,
-                        "includeSubFolders": true
-                    }
-                },
-                {
-                    "type": "nested",
-                    "title": "Nested Blocks",
-                    "settings": [],
-                    "innerBlocks": [
-                        {
-                            "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
-                            "type": "inner_text",
-                            "settings": []
-                        },
-                        {
-                            "type": "inner_image",
-                            "image": {
-                                "id": 4,
-                                "displayOption": null
-                            },
-                            "caption": "Aute aute elit velit est ipsum est in.",
-                            "settings": []
-                        }
-                    ]
-                }
-            ],
-            "changed": {
-                "date": "2025-12-09 10:54:13.198000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:42:48.978000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "headerImage": {
-                "id": 3
-            },
-            "relatedPages": [
-                "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
-            ],
-            "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
-            "subtitle": "Example subtitle",
-            "title": "Example Page 1",
-            "url": "/example-page-1-1"
-        },
-        "templateKey": "default",
-        "title": "Example Page 1",
-        "version": 0,
-        "workflowPlace": "published",
-        "workflowPublished": "2025-12-09 10:54:13"
-    },
-    {
-        "author_id": 1,
-        "authored": "2025-12-09 10:33:53",
-        "availableLocales": "",
-        "changed": "2025-12-09 10:54:03",
-        "created": "2025-12-09 10:44:07",
-        "excerptData": {
-            "description": "<p>Magna deserunt dolore nisi consequat tempor Lorem dolor eiusmod nisi qui dolor id. Amet id ex enim cillum labore qui nulla deserunt exercitation id do occaecat. Aute magna occaecat aliqua duis est mollit. Magna quis eiusmod ea id deserunt occaecat dolor reprehenderit sunt sunt non est aliquip. Officia Lorem eu ipsum minim amet non laborum excepteur eiusmod. Minim enim elit sint veniam sunt officia culpa. Pariatur dolore anim adipisicing enim esse irure.</p>",
-            "icon": {
-                "id": 1
-            },
-            "image": {
-                "id": 3
-            },
-            "more": "This is my more text",
-            "title": "This is my excerpt"
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 32,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
         "lastModified": "2025-12-09 10:54:03",
         "linkData": "",
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
-        "route_id": 7,
+        "route_id": 6,
         "seoData": {
             "canonicalUrl": "this is my canonical",
             "description": "Seo Description",
@@ -2554,6 +2411,149 @@
         "workflowPublished": "2025-12-09 10:54:03"
     },
     {
+        "author_id": 1,
+        "authored": "2025-12-09 10:33:53",
+        "availableLocales": "",
+        "changed": "2025-12-09 10:54:13",
+        "created": "2025-12-09 10:42:48",
+        "excerptData": {
+            "description": "<p>Magna deserunt dolore nisi consequat tempor Lorem dolor eiusmod nisi qui dolor id. Amet id ex enim cillum labore qui nulla deserunt exercitation id do occaecat. Aute magna occaecat aliqua duis est mollit. Magna quis eiusmod ea id deserunt occaecat dolor reprehenderit sunt sunt non est aliquip. Officia Lorem eu ipsum minim amet non laborum excepteur eiusmod. Minim enim elit sint veniam sunt officia culpa. Pariatur dolore anim adipisicing enim esse irure.</p>",
+            "icon": {
+                "id": 1
+            },
+            "image": {
+                "id": 3
+            },
+            "more": "This is my more text",
+            "title": "This is my excerpt"
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 32,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2025-12-09 10:54:13",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
+        "route_id": 5,
+        "seoData": {
+            "canonicalUrl": "this is my canonical",
+            "description": "Seo Description",
+            "keywords": "Seo Keywords",
+            "title": "Seo Title"
+        },
+        "seoHideInSitemap": 1,
+        "seoNoFollow": 1,
+        "seoNoIndex": 1,
+        "shadowLocale": "de",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": {
+            "article": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>",
+            "blocks": [
+                {
+                    "type": "text",
+                    "image": {
+                        "id": null
+                    },
+                    "title": "Lorem Ipsum",
+                    "settings": [],
+                    "description": "<p>Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.</p>"
+                },
+                {
+                    "type": "quote",
+                    "quote": "Anim cillum aliqua laborum do sint laborum. Non aliquip aliqua cillum fugiat magna non nulla in laboris culpa fugiat quis. Dolore est in esse pariatur reprehenderit sit Lorem sunt duis ad magna ad. In deserunt ipsum eu reprehenderit sit adipisicing magna anim in exercitation ex velit aliqua ad non. Excepteur id cupidatat exercitation aliquip fugiat magna ea id esse dolore. Voluptate magna sunt proident ipsum deserunt sint quis sit mollit. Amet ex laborum consequat ipsum nostrud exercitation et mollit ipsum commodo amet.",
+                    "author": "John Doe",
+                    "settings": [],
+                    "authorSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03"
+                },
+                {
+                    "type": "gallery",
+                    "title": "Images",
+                    "images": {
+                        "ids": [
+                            5,
+                            1,
+                            2
+                        ],
+                        "displayOption": null
+                    },
+                    "settings": []
+                },
+                {
+                    "type": "smart_content_pages",
+                    "title": "Smart Pages",
+                    "settings": [],
+                    "smartContent": {
+                        "tags": null,
+                        "types": [
+                            "homepage",
+                            "default"
+                        ],
+                        "sortBy": null,
+                        "presentAs": null,
+                        "categories": null,
+                        "dataSource": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+                        "sortMethod": "asc",
+                        "limitResult": null,
+                        "tagOperator": "or",
+                        "categoryOperator": "or",
+                        "audienceTargeting": null,
+                        "includeSubFolders": true
+                    }
+                },
+                {
+                    "type": "nested",
+                    "title": "Nested Blocks",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "text": "<p>Aute aute elit velit est ipsum est in. Excepteur non quis sit voluptate proident sunt nisi dolore mollit velit consectetur aliquip nisi quis cillum. Do eu nisi nisi irure nulla reprehenderit laborum voluptate. Consectetur nisi non consectetur mollit nisi aliqua consequat. Minim aliqua voluptate magna id quis laboris reprehenderit. Dolor amet aliquip id commodo. Sint do aliquip amet eu veniam non occaecat. Amet nisi cupidatat consectetur sit quis elit ad dolor qui quis elit labore.</p>",
+                            "type": "inner_text",
+                            "settings": []
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 4,
+                                "displayOption": null
+                            },
+                            "caption": "Aute aute elit velit est ipsum est in.",
+                            "settings": []
+                        }
+                    ]
+                }
+            ],
+            "changed": {
+                "date": "2025-12-09 10:54:13.198000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:42:48.978000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "headerImage": {
+                "id": 3
+            },
+            "relatedPages": [
+                "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
+            ],
+            "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+            "subtitle": "Example subtitle",
+            "title": "Example Page 1",
+            "url": "/example-page-1-1"
+        },
+        "templateKey": "default",
+        "title": "Example Page 1",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2025-12-09 10:54:13"
+    },
+    {
         "author_id": "",
         "authored": "",
         "availableLocales": [
@@ -2621,7 +2621,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "786eedc0-e161-4fa4-871d-8a5765442dfd",
-        "route_id": 8,
+        "route_id": 7,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2723,11 +2723,9 @@
             "headerImage": {
                 "id": 3
             },
-            "pageStyle": "default",
             "relatedPages": [
                 "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf"
             ],
-            "showInNavigation": false,
             "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
             "subtitle": "Example subtitle",
             "title": "Example Page 2 only DE",
@@ -2807,7 +2805,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "6dc030f9-9ee9-4f97-af14-bd9e696c32b5",
-        "route_id": 9,
+        "route_id": 8,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2897,7 +2895,7 @@
         "changed": "2025-12-09 10:52:15",
         "created": "2025-12-09 10:52:15",
         "excerptData": {
-            "description": null,
+            "description": "",
             "icon": null,
             "image": null,
             "more": null,
@@ -2913,12 +2911,12 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "a94e4697-b95f-46d6-9b25-f6cd606fb7c2",
-        "route_id": 10,
+        "route_id": 9,
         "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
         },
         "seoHideInSitemap": 0,
         "seoNoFollow": 0,
@@ -2952,7 +2950,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-03-25 09:28:40",
+        "changed": "2026-03-26 13:58:01",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -2995,7 +2993,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-03-25 09:28:40",
+        "changed": "2026-03-26 13:58:01",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -3014,7 +3012,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "af78e52e-1e75-4bb2-a58e-c9592dd059d8",
-        "route_id": 11,
+        "route_id": 10,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -3150,7 +3148,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 12,
+        "route_id": 11,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -3240,11 +3238,11 @@
         "changed": "2026-03-05 13:51:03",
         "created": "2026-03-05 13:51:03",
         "excerptData": {
-            "description": null,
+            "description": "",
             "icon": null,
             "image": null,
-            "more": null,
-            "title": null
+            "more": "",
+            "title": ""
         },
         "excerptSegment": "",
         "ghostLocale": "",
@@ -3256,12 +3254,12 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 13,
+        "route_id": 12,
         "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
         },
         "seoHideInSitemap": 0,
         "seoNoFollow": 0,
@@ -3361,7 +3359,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 14,
+        "route_id": 13,
         "seoData": {
             "canonicalUrl": "",
             "description": "",

@@ -37,15 +37,6 @@
     },
     {
         "id": 5,
-        "locale": "de",
-        "parent_id": "",
-        "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
-        "resource_key": "route_histories",
-        "slug": "/example-page-1",
-        "webspace": "website"
-    },
-    {
-        "id": 6,
         "locale": "en",
         "parent_id": 2,
         "resource_id": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
@@ -54,7 +45,7 @@
         "webspace": "website"
     },
     {
-        "id": 7,
+        "id": 6,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "c32200c7-1402-41ea-aff9-e19cf37f5f91",
@@ -63,7 +54,7 @@
         "webspace": "website"
     },
     {
-        "id": 8,
+        "id": 7,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "786eedc0-e161-4fa4-871d-8a5765442dfd",
@@ -72,7 +63,7 @@
         "webspace": "website"
     },
     {
-        "id": 9,
+        "id": 8,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "6dc030f9-9ee9-4f97-af14-bd9e696c32b5",
@@ -81,7 +72,7 @@
         "webspace": "website"
     },
     {
-        "id": 10,
+        "id": 9,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "a94e4697-b95f-46d6-9b25-f6cd606fb7c2",
@@ -90,7 +81,7 @@
         "webspace": "website"
     },
     {
-        "id": 11,
+        "id": 10,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "af78e52e-1e75-4bb2-a58e-c9592dd059d8",
@@ -99,7 +90,7 @@
         "webspace": "website"
     },
     {
-        "id": 12,
+        "id": 11,
         "locale": "de",
         "parent_id": 4,
         "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
@@ -108,21 +99,30 @@
         "webspace": "website"
     },
     {
-        "id": 13,
+        "id": 12,
         "locale": "de",
-        "parent_id": 11,
+        "parent_id": 10,
         "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
         "resource_key": "pages",
         "slug": "/numeric-block-test/timestamp-fallback-page",
         "webspace": "website"
     },
     {
-        "id": 14,
+        "id": 13,
         "locale": "de",
         "parent_id": 4,
         "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
         "resource_key": "pages",
         "slug": "/example-page-1-1/child-page-2-with-internal-link",
+        "webspace": "website"
+    },
+    {
+        "id": 14,
+        "locale": "de",
+        "parent_id": "",
+        "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "resource_key": "route_histories",
+        "slug": "/example-page-1",
         "webspace": "website"
     },
     {

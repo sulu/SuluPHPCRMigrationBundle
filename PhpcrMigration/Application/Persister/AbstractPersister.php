@@ -72,7 +72,7 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         if ($this->isRoutable()) {
-            $routes = $this->createOrUpdateRoutes($document);
+            $routes = $this->createOrUpdateRoutes($document, $isLive);
             foreach ($routes as $locale => $route) {
                 // We have to add the routes to the document, because the
                 // `createOrUpdateDimensionContent` method needs them to
@@ -501,7 +501,7 @@ abstract class AbstractPersister implements PersisterInterface
      *
      * @return array<string, array<string, mixed>>
      */
-    protected function createOrUpdateRoutes(array $document): array
+    protected function createOrUpdateRoutes(array $document, bool $isLive): array
     {
         $routes = [];
         $localizations = $document['localizations'];
@@ -563,7 +563,12 @@ abstract class AbstractPersister implements PersisterInterface
                 $routes[$locale] = $route;
             }
 
-            // history routes
+            // History routes only from live — draft may contain premature history URLs
+            // for URL changes that haven't been published yet.
+            if (!$isLive) {
+                continue;
+            }
+
             $historyUrls = $localizedData[AbstractPersister::HISTORY_URLS] ?? null;
             if (null === $historyUrls) {
                 continue;
