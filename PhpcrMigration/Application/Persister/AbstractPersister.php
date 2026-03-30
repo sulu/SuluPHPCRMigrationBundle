@@ -421,6 +421,14 @@ abstract class AbstractPersister implements PersisterInterface
         foreach ($localizations as $locale => $localizedData) {
             $locale = 'null' === $locale ? null : $locale;
 
+            if ($isLive && null !== $locale && (!\array_key_exists('state', $localizedData) || 2 !== $localizedData['state'])) {
+                continue;
+            }
+
+            if ($isLive && null === $locale && [] === $availableLocales) {
+                continue;
+            }
+
             $localizedData['availableLocales'] = null;
             $localizedData['ghostLocale'] = null;
             if (null === $locale) {
