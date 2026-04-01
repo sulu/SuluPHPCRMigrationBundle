@@ -50,8 +50,7 @@ class SnippetPersister extends AbstractPersister
         $data['workflowPlace'] = 'published';
 
         if (isset($data['title'])) {
-            // TODO error collector with titles that were too long
-            $data['title'] = \str_split((string) $data['title'], 64)[0];
+            $data['title'] = \str_split((string) $data['title'], 191)[0];
             $data['templateData']['title'] = $data['title'];
         }
 

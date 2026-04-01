@@ -64,8 +64,7 @@ class PagePersister extends AbstractPersister
         $data['workflowPlace'] = null === $locale ? null : (2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft');
 
         if (isset($data['title'])) {
-            // TODO error collector with titles that were too long
-            $data['title'] = \str_split((string) $data['title'], 63)[0] ?? '';
+            $data['title'] = \str_split((string) $data['title'], 191)[0] ?? '';
             $data['templateData']['title'] = $data['title'];
         }
 

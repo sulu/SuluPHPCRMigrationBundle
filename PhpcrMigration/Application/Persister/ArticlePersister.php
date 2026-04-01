@@ -57,7 +57,7 @@ class ArticlePersister extends AbstractPersister
         $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
 
         if (isset($data['title'])) {
-            $data['title'] = \str_split((string) $data['title'], 64)[0];
+            $data['title'] = \str_split((string) $data['title'], 191)[0];
             $data['templateData']['title'] = $data['title'];
         }
 
