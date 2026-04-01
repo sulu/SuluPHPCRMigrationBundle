@@ -540,7 +540,7 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            if (\strlen($slug) > 144) {
+            if (\strlen($slug) > SlugTooLongException::MAX_LENGTH) {
                 throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale);
             }
 

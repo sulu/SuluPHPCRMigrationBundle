@@ -53,7 +53,7 @@ class SnippetPersister extends AbstractPersister
         if (isset($data['title'])) {
             $title = (string) $data['title'];
 
-            if (\strlen($title) > 191) {
+            if (\strlen($title) > TitleTooLongException::MAX_LENGTH) {
                 throw new TitleTooLongException($title, $document['jcr']['uuid'], $locale);
             }
 

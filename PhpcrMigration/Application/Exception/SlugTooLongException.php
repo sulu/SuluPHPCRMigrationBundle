@@ -15,13 +15,16 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception;
 
 class SlugTooLongException extends \RuntimeException
 {
+    public const MAX_LENGTH = 144;
+
     public function __construct(string $slug, string $uuid, string $locale)
     {
         parent::__construct(\sprintf(
-            'Slug "%s" for document "%s" (locale: %s) exceeds the maximum length of 144 characters.',
+            'Slug "%s" for document "%s" (locale: %s) exceeds the maximum length of %d characters.',
             $slug,
             $uuid,
             $locale,
+            self::MAX_LENGTH,
         ));
     }
 }
