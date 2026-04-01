@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\TitleTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -57,8 +58,14 @@ class ArticlePersister extends AbstractPersister
         $data['workflowPlace'] = 2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft';
 
         if (isset($data['title'])) {
-            $data['title'] = \str_split((string) $data['title'], 191)[0];
-            $data['templateData']['title'] = $data['title'];
+            $title = (string) $data['title'];
+
+            if (\strlen($title) > 191) {
+                throw new TitleTooLongException($title, $document['jcr']['uuid'], $locale);
+            }
+
+            $data['title'] = $title;
+            $data['templateData']['title'] = $title;
         }
 
         if (null !== $locale && isset($document['localizations'][$locale])) {
