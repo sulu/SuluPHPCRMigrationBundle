@@ -82,7 +82,11 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         $this->entityRepository->beginTransaction();
-        $this->createOrUpdateEntity($document);
+        // Content rich entity should not be updated for live workspace, all the necessary data is already in the draft.
+        if (!$isLive) {
+            $this->createOrUpdateEntity($document);
+        }
+
         $this->createOrUpdateDimensionContent($document, $isLive);
         $this->entityRepository->commit();
     }
@@ -415,11 +419,20 @@ abstract class AbstractPersister implements PersisterInterface
          * @var array{
          *     availableLocales?: string[],
          *     templateData?: mixed[],
+         *     state?: int,
          * } $localizedData
          * @var string $locale
          */
         foreach ($localizations as $locale => $localizedData) {
             $locale = 'null' === $locale ? null : $locale;
+
+            if ($isLive && null !== $locale && (!\array_key_exists('state', $localizedData) || 2 !== $localizedData['state'])) {
+                continue;
+            }
+
+            if ($isLive && null === $locale && [] === $availableLocales) {
+                continue;
+            }
 
             $localizedData['availableLocales'] = null;
             $localizedData['ghostLocale'] = null;

@@ -42,41 +42,41 @@
     {
         "id": 9,
         "name": "main",
-        "page_dimension_content_id": 28
+        "page_dimension_content_id": 34
     },
     {
         "id": 10,
         "name": "footer",
-        "page_dimension_content_id": 28
+        "page_dimension_content_id": 34
     },
     {
         "id": 11,
         "name": "main",
-        "page_dimension_content_id": 29
+        "page_dimension_content_id": 35
     },
     {
         "id": 12,
         "name": "footer",
-        "page_dimension_content_id": 29
+        "page_dimension_content_id": 35
     },
     {
         "id": 13,
         "name": "main",
-        "page_dimension_content_id": 31
+        "page_dimension_content_id": 37
     },
     {
         "id": 14,
         "name": "footer",
-        "page_dimension_content_id": 31
+        "page_dimension_content_id": 37
     },
     {
         "id": 15,
         "name": "main",
-        "page_dimension_content_id": 32
+        "page_dimension_content_id": 38
     },
     {
         "id": 16,
         "name": "footer",
-        "page_dimension_content_id": 32
+        "page_dimension_content_id": 38
     }
 ]
