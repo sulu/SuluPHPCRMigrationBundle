@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\TitleTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -50,9 +51,14 @@ class SnippetPersister extends AbstractPersister
         $data['workflowPlace'] = 'published';
 
         if (isset($data['title'])) {
-            // TODO error collector with titles that were too long
-            $data['title'] = \str_split((string) $data['title'], 64)[0];
-            $data['templateData']['title'] = $data['title'];
+            $title = (string) $data['title'];
+
+            if (\strlen($title) > TitleTooLongException::MAX_LENGTH) {
+                throw new TitleTooLongException($title, $document['jcr']['uuid'], $locale);
+            }
+
+            $data['title'] = $title;
+            $data['templateData']['title'] = $title;
         }
 
         // Snippets store template as unlocalized property (same template for all locales)

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidDocumentException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\SlugTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -539,6 +540,10 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
+            if (\strlen($slug) > SlugTooLongException::MAX_LENGTH) {
+                throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale);
+            }
+
             // main route
             $data = [
                 'resource_key' => $resourceKey,
@@ -589,6 +594,10 @@ abstract class AbstractPersister implements PersisterInterface
 
             $historyResourceId = $resourceKey . '::' . $resourceId;
             foreach ($historyUrls as $url) {
+                if (\strlen($url) > 144) {
+                    throw new SlugTooLongException($url, $document['jcr']['uuid'], $locale);
+                }
+
                 $data = [
                     'resource_key' => AbstractPersister::ROUTE_RESOURCE_KEY,
                     'resource_id' => $historyResourceId,
