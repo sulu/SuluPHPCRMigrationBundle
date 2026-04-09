@@ -421,6 +421,8 @@ abstract class AbstractPersister implements PersisterInterface
          *     availableLocales?: string[],
          *     templateData?: mixed[],
          *     state?: int,
+         *     'shadow-on'?: bool,
+         *     'shadow-base'?: string,
          * } $localizedData
          * @var string $locale
          */
@@ -445,6 +447,20 @@ abstract class AbstractPersister implements PersisterInterface
             // Build JSON structures for seoData and excerptData (Sulu 3.0 format)
             $localizedData['_seoData'] = $this->buildSeoData($localizedData);
             $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
+
+            if (null !== $locale) {
+                $isShadow = $localizedData['shadow-on'] ?? false;
+                $shadowBase = $localizedData['shadow-base'] ?? null;
+                if ($isShadow && \is_string($shadowBase) && isset($localizations[$shadowBase]['template'])) {
+                    $sourceData = $localizations[$shadowBase];
+                    $sourceData['shadow-on'] = $isShadow;
+                    $sourceData['shadow-base'] = $shadowBase;
+                    $sourceData['state'] = $localizedData['state'] ?? $sourceData['state'];
+                    $localizedData = $sourceData;
+                    $localizedData['_seoData'] = $this->buildSeoData($localizedData);
+                    $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
+                }
+            }
 
             try {
                 $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
@@ -553,6 +569,16 @@ abstract class AbstractPersister implements PersisterInterface
                 'webspace' => $webspace,
                 'parent_id' => $parentRouteId,
             ];
+
+            $this->entityRepository->removeBy(
+                self::ROUTE_TABLE,
+                [
+                    'resource_key' => self::ROUTE_RESOURCE_KEY,
+                    'webspace' => $webspace,
+                    'locale' => $locale,
+                    'slug' => $slug,
+                ],
+            );
 
             $this->entityRepository->insertOrUpdate(
                 $data,

@@ -121,7 +121,9 @@ class PagePersister extends AbstractPersister
             $data['shadowLocales'] = null;
 
             if (isset($data['shadowLocale'])) {
-                $shadowTemplateKey = $document['localizations'][$locale]['template'] ?? null;
+                $shadowTemplateKey = $document['localizations'][$locale]['template']
+                    ?? $document['localizations'][$data['shadowLocale']]['template']
+                    ?? null;
                 if (null === $shadowTemplateKey) {
                     throw new InvalidDocumentException('Template key of shadow locale is missing.');
                 }
