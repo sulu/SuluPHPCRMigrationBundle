@@ -32,6 +32,8 @@ class ArticlePersister extends AbstractPersister
     {
         $data = parent::removeNonTemplateData($data);
 
+        $data['shadow-on'] = null;
+        $data['shadow-base'] = null;
         $data['seo'] = null;
         $data['excerpt'] = null;
         $data['stage'] = null;
@@ -151,6 +153,8 @@ class ArticlePersister extends AbstractPersister
             'templateData' => 'json',
             'mainWebspace' => 'string',
             'customizeWebspaceSettings' => 'boolean',
+            'shadowLocale' => 'string',
+            'shadowLocales' => 'json',
         ];
     }
 
