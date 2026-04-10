@@ -57,13 +57,17 @@ class PagePersister extends AbstractPersister
     protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
     {
         $data = parent::mapDimensionContentData($document, $locale, $data, $isLive);
+        $data = $this->mapShadowLocaleData($document, $locale, $data);
 
         $data[$this->getDimensionContentEntityIdMappingName()] = $document['jcr']['uuid'];
         $data['locale'] = $locale;
         $data['stage'] = $isLive ? 'live' : 'draft';
         $data['workflowPlace'] = null === $locale ? null : (2 === ($data['workflowPlace'] ?? null) ? 'published' : 'draft');
 
-        if (isset($data['title'])) {
+        /** @var array<string, mixed> $templateData */
+        $templateData = $data['templateData'] ?? [];
+
+        if (isset($data['title']) && \is_scalar($data['title'])) {
             $title = (string) $data['title'];
 
             if (\strlen($title) > TitleTooLongException::MAX_LENGTH) {
@@ -71,7 +75,7 @@ class PagePersister extends AbstractPersister
             }
 
             $data['title'] = $title;
-            $data['templateData']['title'] = $title;
+            $templateData['title'] = $title;
         }
 
         if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
@@ -81,8 +85,10 @@ class PagePersister extends AbstractPersister
             $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
 
             // content bundle is only compatible with "url"
-            $data['templateData']['url'] = $routePath; // is used in the content bundle
+            $templateData['url'] = $routePath; // is used in the content bundle
         }
+
+        $data['templateData'] = $templateData;
 
         // Transform segments map to single segment value for current webspace
         if (isset($data['excerptSegment']) && \is_array($data['excerptSegment'])) {
@@ -117,6 +123,14 @@ class PagePersister extends AbstractPersister
 
         /** @var array<string, mixed> $localization */
         $localization = $document['localizations'][$locale] ?? [];
+
+        // Shadow locales inherit link type from their shadow target: read target's localization instead.
+        $isShadow = $localization['shadow-on'] ?? false;
+        $shadowBase = $localization['shadow-base'] ?? null;
+        if ($isShadow && \is_string($shadowBase) && isset($document['localizations'][$shadowBase])) {
+            $localization = $document['localizations'][$shadowBase];
+        }
+
         $nodeType = $localization['nodeType'] ?? 1;
 
         if (2 === $nodeType) {

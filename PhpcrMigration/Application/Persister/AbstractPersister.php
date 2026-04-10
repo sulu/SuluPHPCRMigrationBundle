@@ -681,7 +681,6 @@ abstract class AbstractPersister implements PersisterInterface
     protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
     {
         $data['templateData'] = [];
-        $data = $this->mapShadowLocaleData($document, $locale, $data);
 
         return $data;
     }
