@@ -205,6 +205,37 @@ composer test
 composer test
 ```
 
+### Adding Test Content via PHPCR Fixtures
+
+For simple additions where opening the admin UI is overkill, write a fixture class and run a command.
+Each fixture runs at most once per database, tracked via the `App\Entity\AppliedFixture` Doctrine entity
+in the `phpcr_migration_fixtures` table, which travels with the dump.
+
+#### 1. Create a fixture
+
+Add a class under `Tests/Application/sulu26/src/PhpcrFixture/` implementing `App\PhpcrFixture\PhpcrFixtureInterface`.
+Autowiring picks it up automatically.
+
+For Phpcr Example fixtures see https://github.com/sulu/sulu-demo/tree/master/src/DataFixtures
+
+#### 2. Apply, export, and regenerate baselines
+
+```bash
+# Apply fixtures (from sulu26 dir)
+cd Tests/Application/sulu26
+bin/adminconsole sulu:phpcr-migration:fixtures:apply
+
+# Export and regenerate (from bundle root)
+cd ../..
+composer export-fixture
+composer test-baseline-regenerate
+composer test
+```
+
+Re-running the apply command is safe — already-applied fixtures are skipped.
+
+To re-apply a modified fixture, delete its row from `phpcr_migration_fixtures` (or drop the database and `composer import-fixture`), then run the command again.
+
 ## Updating Sulu 3.0 Schema
 
 When Sulu 3.0 introduces schema changes:
