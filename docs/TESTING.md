@@ -195,14 +195,8 @@ composer import-fixture
 From bundle root:
 
 ```bash
-# Remove existing baselines
-rm Tests/Resources/baselines/*.json
-
-# Run tests to generate new baselines
-composer test
-
-# Run tests again to validate
-composer test
+composer test-baseline-regenerate   # Deletes old baselines and generates new ones
+composer test                       # Validates baselines
 ```
 
 ### Adding Test Content via PHPCR Fixtures
@@ -214,23 +208,82 @@ in the `phpcr_migration_fixtures` table, which travels with the dump.
 #### 1. Create a fixture
 
 Add a class under `Tests/Application/sulu26/src/PhpcrFixture/` implementing `App\PhpcrFixture\PhpcrFixtureInterface`.
-Autowiring picks it up automatically.
+Autowiring picks it up automatically. Inject `DocumentManagerInterface` to create PHPCR documents.
 
-For Phpcr Example fixtures see https://github.com/sulu/sulu-demo/tree/master/src/DataFixtures
+Example (`ArticleWebspaceFixture.php`):
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\PhpcrFixture;
+
+use Sulu\Bundle\ArticleBundle\Document\ArticleDocument;
+use Sulu\Component\Content\Document\WorkflowStage;
+use Sulu\Component\DocumentManager\DocumentManagerInterface;
+
+class ArticleWebspaceFixture implements PhpcrFixtureInterface
+{
+    public function __construct(
+        private readonly DocumentManagerInterface $documentManager,
+    ) {
+    }
+
+    public function load(): void
+    {
+        /** @var ArticleDocument $article */
+        $article = $this->documentManager->create('article');
+        $article->setLocale('de');
+        $article->setTitle('My article');
+        $article->setStructureType('default');
+        $article->setWorkflowStage(WorkflowStage::PUBLISHED);
+        $article->setAuthor(1);
+        $article->getStructure()->bind([
+            'title' => 'My article',
+            'article' => '<p>Content here.</p>',
+        ]);
+
+        $this->documentManager->persist($article, 'de');
+        $this->documentManager->flush();
+        $this->documentManager->publish($article, 'de');
+        $this->documentManager->flush();
+        $this->documentManager->clear();
+    }
+}
+```
+
+Available document types: `article` (`ArticleDocument`), `page` (`PageDocument`), `snippet` (`SnippetDocument`).
+For more examples see https://github.com/sulu/sulu-demo/tree/master/src/DataFixtures
 
 #### 2. Apply, export, and regenerate baselines
 
 ```bash
-# Apply fixtures (from sulu26 dir)
 cd Tests/Application/sulu26
+
+# Import the existing dump into MySQL
+composer import-fixture
+
+# If adding new webspaces, initialize PHPCR structure first
+bin/adminconsole sulu:document:initialize --force
+
+# Create the fixtures tracking table (needed on first import)
+bin/adminconsole doctrine:schema:update --force
+
+# Apply fixtures
 bin/adminconsole sulu:phpcr-migration:fixtures:apply
 
-# Export and regenerate (from bundle root)
-cd ../..
+# Export updated dump (from sulu26 dir)
 composer export-fixture
-composer test-baseline-regenerate
-composer test
+
+# Regenerate baselines (from bundle root)
+cd ../../..
+composer test-baseline-regenerate   # Deletes old baselines and generates new ones
+composer test                       # Validates baselines
 ```
+
+The `import-fixture` and `export-fixture` scripts default to `root:ChangeMe@127.0.0.1`.
+Override with env vars: `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PWD`.
 
 Re-running the apply command is safe — already-applied fixtures are skipped.
 
