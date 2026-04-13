@@ -49,13 +49,14 @@ final class ApplyFixturesCommandTest extends TestCase
 
     public function testAppliesPendingFixtures(): void
     {
-        $fixture = new TestFixture();
+        $fixture = $this->prophesize(PhpcrFixtureInterface::class);
+        $fixture->load()->shouldBeCalledOnce();
 
         $this->repository->findAll()->willReturn([]);
         $this->entityManager->persist(Argument::type(AppliedFixture::class))->shouldBeCalledOnce();
         $this->entityManager->flush()->shouldBeCalled();
 
-        $tester = $this->tester([$fixture]);
+        $tester = $this->tester([$fixture->reveal()]);
         $exit = $tester->execute([]);
 
         self::assertSame(Command::SUCCESS, $exit);
@@ -64,12 +65,14 @@ final class ApplyFixturesCommandTest extends TestCase
 
     public function testSkipsAlreadyAppliedFixtures(): void
     {
-        $fixture = new TestFixture();
+        $fixture = $this->prophesize(PhpcrFixtureInterface::class);
+        $fixture->load()->shouldNotBeCalled();
 
-        $this->repository->findAll()->willReturn([new AppliedFixture(TestFixture::class)]);
+        $fixtureClass = $fixture->reveal()::class;
+        $this->repository->findAll()->willReturn([new AppliedFixture($fixtureClass)]);
         $this->entityManager->persist(Argument::any())->shouldNotBeCalled();
 
-        $tester = $this->tester([$fixture]);
+        $tester = $this->tester([$fixture->reveal()]);
         $tester->execute([]);
 
         self::assertStringContainsString('0 applied', $tester->getDisplay());
@@ -88,15 +91,5 @@ final class ApplyFixturesCommandTest extends TestCase
         $app->add($command);
 
         return new CommandTester($app->find('sulu:phpcr-migration:fixtures:apply'));
-    }
-}
-
-/**
- * @internal
- */
-final class TestFixture implements PhpcrFixtureInterface
-{
-    public function load(): void
-    {
     }
 }

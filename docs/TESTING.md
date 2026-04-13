@@ -203,7 +203,9 @@ composer test                       # Validates baselines
 
 For simple additions where opening the admin UI is overkill, write a fixture class and run a command.
 Each fixture runs at most once per database, tracked via the `App\Entity\AppliedFixture` Doctrine entity
-in the `phpcr_migration_fixtures` table, which travels with the dump.
+in the `phpcr_migration_fixtures` table. This table is created by `doctrine:schema:update --force` and
+included in the dump after the first `composer export-fixture` cycle.
+Fixtures should be independent of each other — do not rely on execution order.
 
 #### 1. Create a fixture
 
@@ -254,7 +256,7 @@ class ArticleWebspaceFixture implements PhpcrFixtureInterface
 ```
 
 Available document types: `article` (`ArticleDocument`), `page` (`PageDocument`), `snippet` (`SnippetDocument`).
-For more examples see https://github.com/sulu/sulu-demo/tree/master/src/DataFixtures
+For PHPCR example fixtures, see [the Sulu demo DataFixtures directory](https://github.com/sulu/sulu-demo/tree/master/src/DataFixtures).
 
 #### 2. Apply, export, and regenerate baselines
 
