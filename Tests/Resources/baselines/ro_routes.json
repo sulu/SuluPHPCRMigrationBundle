@@ -92,6 +92,24 @@
     {
         "id": 11,
         "locale": "de",
+        "parent_id": 1,
+        "resource_id": "dcd4a9a0-2585-41c1-8a12-ecc0c4cfa6c1",
+        "resource_key": "pages",
+        "slug": "/linkziel-seite",
+        "webspace": "website"
+    },
+    {
+        "id": 12,
+        "locale": "de",
+        "parent_id": 1,
+        "resource_id": "db7b8d99-a38a-4afb-a042-6357f87e2a2f",
+        "resource_key": "pages",
+        "slug": "/schatten-interner-link",
+        "webspace": "website"
+    },
+    {
+        "id": 13,
+        "locale": "de",
         "parent_id": 4,
         "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
         "resource_key": "pages",
@@ -99,7 +117,7 @@
         "webspace": "website"
     },
     {
-        "id": 12,
+        "id": 14,
         "locale": "de",
         "parent_id": 10,
         "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
@@ -108,7 +126,7 @@
         "webspace": "website"
     },
     {
-        "id": 13,
+        "id": 15,
         "locale": "de",
         "parent_id": 4,
         "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
@@ -117,7 +135,7 @@
         "webspace": "website"
     },
     {
-        "id": 14,
+        "id": 16,
         "locale": "de",
         "parent_id": "",
         "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
@@ -126,7 +144,16 @@
         "webspace": "website"
     },
     {
-        "id": 15,
+        "id": 17,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "db7b8d99-a38a-4afb-a042-6357f87e2a2f",
+        "resource_key": "pages",
+        "slug": "/shadow-internal-link",
+        "webspace": "website"
+    },
+    {
+        "id": 18,
         "locale": "de",
         "parent_id": "",
         "resource_id": "52634b61-09b3-4224-a428-4a885dceb98f",
@@ -135,12 +162,30 @@
         "webspace": ""
     },
     {
-        "id": 16,
+        "id": 19,
         "locale": "de",
         "parent_id": "",
         "resource_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
         "resource_key": "articles",
         "slug": "/blog/timestamp-fallback-article",
+        "webspace": ""
+    },
+    {
+        "id": 20,
+        "locale": "de",
+        "parent_id": "",
+        "resource_id": "a4a9449f-8260-4737-9b55-8bee5cee103c",
+        "resource_key": "articles",
+        "slug": "/blog/schatten-artikel",
+        "webspace": ""
+    },
+    {
+        "id": 21,
+        "locale": "en",
+        "parent_id": "",
+        "resource_id": "a4a9449f-8260-4737-9b55-8bee5cee103c",
+        "resource_key": "articles",
+        "slug": "/blog/shadow-article",
         "webspace": ""
     }
 ]
