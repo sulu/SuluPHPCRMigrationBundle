@@ -64,6 +64,11 @@ class Kernel extends BaseKernel
             ]])
             ->public();
 
+        // Set default webspace parameters to test the fallback path in ArticlePersister.
+        // Articles without explicit webspace in PHPCR should get these defaults applied.
+        $container->parameters()->set('sulu_article.default_main_webspace', ['default' => 'website']);
+        $container->parameters()->set('sulu_article.default_additional_webspaces', ['default' => ['website_2']]);
+
         $container->extension('sulu_phpcr_migration', [
             'DSN' => 'dbal://default?workspace=default',
             'target' => [
