@@ -1,6 +1,22 @@
 [
     {
         "category_id": 2,
+        "page_dimension_content_id": 5
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 5
+    },
+    {
+        "category_id": 2,
+        "page_dimension_content_id": 6
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 6
+    },
+    {
+        "category_id": 2,
         "page_dimension_content_id": 8
     },
     {
@@ -17,82 +33,34 @@
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 11
+        "page_dimension_content_id": 34
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 11
+        "page_dimension_content_id": 34
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 12
+        "page_dimension_content_id": 35
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 12
+        "page_dimension_content_id": 35
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 49
+        "page_dimension_content_id": 37
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 49
+        "page_dimension_content_id": 37
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 50
+        "page_dimension_content_id": 38
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 50
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 51
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 51
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 52
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 52
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 54
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 54
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 55
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 55
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 56
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 56
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 57
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 57
+        "page_dimension_content_id": 38
     }
 ]
