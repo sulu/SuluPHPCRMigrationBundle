@@ -421,6 +421,8 @@ abstract class AbstractPersister implements PersisterInterface
          *     availableLocales?: string[],
          *     templateData?: mixed[],
          *     state?: int,
+         *     'shadow-on'?: bool,
+         *     'shadow-base'?: string,
          * } $localizedData
          * @var string $locale
          */
@@ -445,6 +447,26 @@ abstract class AbstractPersister implements PersisterInterface
             // Build JSON structures for seoData and excerptData (Sulu 3.0 format)
             $localizedData['_seoData'] = $this->buildSeoData($localizedData);
             $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
+
+            if (null !== $locale) {
+                $isShadow = $localizedData['shadow-on'] ?? false;
+                $shadowBase = $localizedData['shadow-base'] ?? null;
+
+                // Skip shadow locale in live when the source locale is not published.
+                if ($isShadow && \is_string($shadowBase) && $isLive && 2 !== ($localizations[$shadowBase]['state'] ?? 0)) {
+                    continue;
+                }
+
+                if ($isShadow && \is_string($shadowBase) && isset($localizations[$shadowBase]['template'])) {
+                    $sourceData = $localizations[$shadowBase];
+                    $sourceData['shadow-on'] = $isShadow;
+                    $sourceData['shadow-base'] = $shadowBase;
+                    $sourceData['state'] = $localizedData['state'] ?? $sourceData['state'];
+                    $localizedData = $sourceData;
+                    $localizedData['_seoData'] = $this->buildSeoData($localizedData);
+                    $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
+                }
+            }
 
             try {
                 $data = $this->mapDataViaMapping($localizedData, $this->getDimensionContentMapping());
@@ -554,6 +576,16 @@ abstract class AbstractPersister implements PersisterInterface
                 'parent_id' => $parentRouteId,
             ];
 
+            $this->entityRepository->removeBy(
+                self::ROUTE_TABLE,
+                [
+                    'resource_key' => self::ROUTE_RESOURCE_KEY,
+                    'webspace' => $webspace,
+                    'locale' => $locale,
+                    'slug' => $slug,
+                ],
+            );
+
             $this->entityRepository->insertOrUpdate(
                 $data,
                 self::ROUTE_TABLE,
@@ -655,6 +687,53 @@ abstract class AbstractPersister implements PersisterInterface
     protected function mapDimensionContentData(array $document, ?string $locale, array $data, bool $isLive): array
     {
         $data['templateData'] = [];
+
+        return $data;
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function mapShadowLocaleData(array $document, ?string $locale, array $data): array
+    {
+        /** @var array<string, array<string, mixed>> $localizations */
+        $localizations = $document['localizations'];
+
+        if (null !== $locale) {
+            $localeKey = $locale;
+            $shadowOn = $localizations[$localeKey]['shadow-on'] ?? false;
+            $shadowBase = $localizations[$localeKey]['shadow-base'] ?? null;
+            $data['shadowLocale'] = ($shadowOn && \is_string($shadowBase)) ? $shadowBase : null;
+            $data['shadowLocales'] = null;
+
+            if (isset($data['shadowLocale'])) {
+                $shadowTemplateKey = $document['localizations'][$locale]['template']
+                    ?? $document['localizations'][$data['shadowLocale']]['template']
+                    ?? null;
+                if (null === $shadowTemplateKey) {
+                    throw new InvalidDocumentException('Template key of shadow locale is missing.');
+                }
+                $data['templateKey'] = $shadowTemplateKey;
+            }
+
+            return $data;
+        }
+
+        $shadowLocales = [];
+        foreach ($localizations as $localeKey => $localization) {
+            if ('null' !== $localeKey) {
+                $shadowOn = $localization['shadow-on'] ?? false;
+                $shadowBase = $localization['shadow-base'] ?? null;
+                if ($shadowOn && \is_string($shadowBase)) {
+                    $shadowLocales[$localeKey] = $shadowBase;
+                }
+            }
+        }
+        $data['shadowLocale'] = null;
+        $data['shadowLocales'] = [] !== $shadowLocales ? $shadowLocales : null;
 
         return $data;
     }

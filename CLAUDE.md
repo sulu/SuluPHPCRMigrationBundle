@@ -77,16 +77,10 @@ To add new test content via code (requires MySQL running locally):
 #    Implement App\PhpcrFixture\PhpcrFixtureInterface (see ArticleWebspaceFixture.php for example)
 #    Inject DocumentManagerInterface for creating documents
 
-# 2. Import, apply, and export (from sulu26 dir)
-cd Tests/Application/sulu26
-composer import-fixture                                    # Load dump into MySQL
-bin/adminconsole doctrine:schema:update --force             # Ensure fixtures table exists
-bin/adminconsole sulu:document:initialize --force           # Needed if adding new webspaces
-bin/adminconsole sulu:phpcr-migration:fixtures:apply        # Run fixture classes
-composer export-fixture                                    # Export updated dump
+# 2. Import, apply fixtures, and export (from bundle root)
+composer apply-fixture
 
 # 3. Regenerate baselines (from bundle root)
-cd ../../..
 composer test-baseline-regenerate   # Deletes old baselines and generates new ones
 composer test                       # Validates baselines
 ```
