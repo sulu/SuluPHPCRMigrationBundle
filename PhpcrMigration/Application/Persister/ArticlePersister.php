@@ -101,7 +101,6 @@ class ArticlePersister extends AbstractPersister
         // customizeWebspaceSettings is true if mainWebspace is explicitly set in PHPCR
         $data['customizeWebspaceSettings'] = isset($document['localizations'][$locale]['mainWebspace']);
 
-        // In Sulu 2.6, default webspaces were applied at runtime. In 3.0 they must be stored.
         // Apply configured defaults when PHPCR has no explicit webspace settings,
         // or when customizeWebspaceSettings is true but mainWebspace ended up null (invalid in Sulu 3).
         if ([] !== $this->defaultMainWebspaceMap && null !== $locale && !isset($data['mainWebspace'])) {
@@ -323,7 +322,6 @@ class ArticlePersister extends AbstractPersister
 
         $additionalWebspaces = $document['localizations'][$locale]['additionalWebspaces'] ?? null;
 
-        // Apply configured defaults when PHPCR has no explicit additional webspace settings.
         if (null === $additionalWebspaces && [] !== $this->defaultAdditionalWebspacesMap) {
             $additionalWebspaces = $this->defaultAdditionalWebspacesMap[$locale]
                 ?? $this->defaultAdditionalWebspacesMap['default']
