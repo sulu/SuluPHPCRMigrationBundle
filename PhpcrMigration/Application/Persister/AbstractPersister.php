@@ -451,6 +451,12 @@ abstract class AbstractPersister implements PersisterInterface
             if (null !== $locale) {
                 $isShadow = $localizedData['shadow-on'] ?? false;
                 $shadowBase = $localizedData['shadow-base'] ?? null;
+
+                // Skip shadow locale in live when the source locale is not published.
+                if ($isShadow && \is_string($shadowBase) && $isLive && 2 !== ($localizations[$shadowBase]['state'] ?? 0)) {
+                    continue;
+                }
+
                 if ($isShadow && \is_string($shadowBase) && isset($localizations[$shadowBase]['template'])) {
                     $sourceData = $localizations[$shadowBase];
                     $sourceData['shadow-on'] = $isShadow;
