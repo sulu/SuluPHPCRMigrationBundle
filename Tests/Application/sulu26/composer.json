@@ -124,8 +124,18 @@
         "post-create-project-cmd": [
             "@php bin/adminconsole sulu:admin:info --ansi"
         ],
-        "import-fixture": "sh -c 'mysql -h ${MYSQL_HOST:-127.0.0.1} -u ${MYSQL_USER:-root} -p${MYSQL_PWD:-ChangeMe} migration_sulu_26 < ../../Resources/fixtures/sulu26_dump.sql 2>/dev/null'",
+        "import-fixture": "sh -c 'mysql -h ${MYSQL_HOST:-127.0.0.1} -u ${MYSQL_USER:-root} -p${MYSQL_PWD:-ChangeMe} -e \"DROP DATABASE IF EXISTS migration_sulu_26; CREATE DATABASE migration_sulu_26;\" 2>/dev/null && mysql -h ${MYSQL_HOST:-127.0.0.1} -u ${MYSQL_USER:-root} -p${MYSQL_PWD:-ChangeMe} migration_sulu_26 < ../../Resources/fixtures/sulu26_dump.sql 2>/dev/null'",
         "export-fixture": "sh -c 'mysqldump -h ${MYSQL_HOST:-127.0.0.1} -u ${MYSQL_USER:-root} -p${MYSQL_PWD:-ChangeMe} migration_sulu_26 2>/dev/null > ../../Resources/fixtures/sulu26_dump.sql'",
+        "apply-fixture": [
+            "echo '> Importing fixture dump into MySQL...'",
+            "@import-fixture",
+            "@php bin/adminconsole sulu:document:initialize --force",
+            "@php bin/adminconsole doctrine:schema:update --force",
+            "@php bin/adminconsole sulu:phpcr-migration:fixtures:apply",
+            "echo '> Exporting updated fixture dump...'",
+            "@export-fixture",
+            "echo '> Done. Run `composer test-baseline-regenerate` from the bundle root to update baselines.'"
+        ],
         "bootstrap-test-environment": [
             "@php bin/adminconsole doctrine:database:drop --if-exists --force --env test",
             "@php bin/adminconsole doctrine:database:create --env test",

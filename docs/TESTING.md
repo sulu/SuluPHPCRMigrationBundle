@@ -261,28 +261,15 @@ For PHPCR example fixtures, see [the Sulu demo DataFixtures directory](https://g
 #### 2. Apply, export, and regenerate baselines
 
 ```bash
-cd Tests/Application/sulu26
-
-# Import the existing dump into MySQL
-composer import-fixture
-
-# If adding new webspaces, initialize PHPCR structure first
-bin/adminconsole sulu:document:initialize --force
-
-# Create the fixtures tracking table (needed on first import)
-bin/adminconsole doctrine:schema:update --force
-
-# Apply fixtures
-bin/adminconsole sulu:phpcr-migration:fixtures:apply
-
-# Export updated dump (from sulu26 dir)
-composer export-fixture
+# Import, apply fixtures, and export updated dump (from bundle root or sulu26 dir)
+composer apply-fixture
 
 # Regenerate baselines (from bundle root)
-cd ../../..
 composer test-baseline-regenerate   # Deletes old baselines and generates new ones
 composer test                       # Validates baselines
 ```
+
+The `apply-fixture` script runs: `import-fixture` → `sulu:document:initialize` → `doctrine:schema:update` → `sulu:phpcr-migration:fixtures:apply` → `export-fixture`.
 
 The `import-fixture` and `export-fixture` scripts default to `root:ChangeMe@127.0.0.1`.
 Override with env vars: `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PWD`.

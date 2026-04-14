@@ -24,5 +24,31 @@
         "locale": "de",
         "path": "/blog/timestamp-fallback-article",
         "target_id": ""
+    },
+    {
+        "changed": "2026-04-14 07:27:20",
+        "created": "2026-04-14 07:27:20",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
+        "history": 0,
+        "id": 3,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "path": "/blog/schatten-artikel",
+        "target_id": ""
+    },
+    {
+        "changed": "2026-04-14 07:27:20",
+        "created": "2026-04-14 07:27:20",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
+        "history": 0,
+        "id": 4,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "en",
+        "path": "/blog/shadow-article",
+        "target_id": ""
     }
 ]
