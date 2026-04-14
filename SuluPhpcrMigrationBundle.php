@@ -28,6 +28,13 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+        if (!$builder->hasParameter('sulu_article.default_main_webspace')) {
+            $builder->setParameter('sulu_article.default_main_webspace', []);
+        }
+        if (!$builder->hasParameter('sulu_article.default_additional_webspaces')) {
+            $builder->setParameter('sulu_article.default_additional_webspaces', []);
+        }
+
         $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/Resources/config'));
         $loader->load('repository.xml');
         $loader->load('session.xml');

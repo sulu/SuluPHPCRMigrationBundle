@@ -21,9 +21,15 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class ArticlePersister extends AbstractPersister
 {
+    /**
+     * @param array<string, string> $defaultMainWebspaceMap
+     * @param array<string, list<string>> $defaultAdditionalWebspacesMap
+     */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
+        private readonly array $defaultMainWebspaceMap = [],
+        private readonly array $defaultAdditionalWebspacesMap = [],
     ) {
         parent::__construct($propertyAccessor, $entityRepository);
     }
@@ -92,8 +98,19 @@ class ArticlePersister extends AbstractPersister
             $data['excerptSegment'] = [] === $segments ? null : \reset($segments);
         }
 
-        // customizeWebspaceSettings is true if mainWebspace is set
+        // customizeWebspaceSettings is true if mainWebspace is explicitly set in PHPCR
         $data['customizeWebspaceSettings'] = isset($document['localizations'][$locale]['mainWebspace']);
+
+        // Apply configured defaults when PHPCR has no explicit webspace settings,
+        // or when customizeWebspaceSettings is true but mainWebspace ended up null (invalid in Sulu 3).
+        if ([] !== $this->defaultMainWebspaceMap && null !== $locale && !isset($data['mainWebspace'])) {
+            $defaultMainWebspace = $this->defaultMainWebspaceMap[$locale]
+                ?? $this->defaultMainWebspaceMap['default']
+                ?? null;
+            if (null !== $defaultMainWebspace) {
+                $data['mainWebspace'] = $defaultMainWebspace;
+            }
+        }
 
         return $data;
     }
@@ -304,6 +321,12 @@ class ArticlePersister extends AbstractPersister
         }
 
         $additionalWebspaces = $document['localizations'][$locale]['additionalWebspaces'] ?? null;
+
+        if (null === $additionalWebspaces && [] !== $this->defaultAdditionalWebspacesMap) {
+            $additionalWebspaces = $this->defaultAdditionalWebspacesMap[$locale]
+                ?? $this->defaultAdditionalWebspacesMap['default']
+                ?? null;
+        }
 
         if (null === $additionalWebspaces) {
             return;

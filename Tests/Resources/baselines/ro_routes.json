@@ -174,13 +174,22 @@
         "id": 20,
         "locale": "de",
         "parent_id": "",
+        "resource_id": "73bb3e17-3d33-46d0-bbc9-62229b343dd4",
+        "resource_key": "articles",
+        "slug": "/blog/article-with-custom-webspaces",
+        "webspace": ""
+    },
+    {
+        "id": 21,
+        "locale": "de",
+        "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
         "resource_key": "articles",
         "slug": "/blog/schatten-artikel",
         "webspace": ""
     },
     {
-        "id": 21,
+        "id": 22,
         "locale": "en",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",

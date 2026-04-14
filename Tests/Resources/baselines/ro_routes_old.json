@@ -50,5 +50,18 @@
         "locale": "en",
         "path": "/blog/shadow-article",
         "target_id": ""
+    },
+    {
+        "changed": "2026-04-14 08:24:00",
+        "created": "2026-04-14 08:24:00",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "73bb3e17-3d33-46d0-bbc9-62229b343dd4",
+        "history": 0,
+        "id": 5,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "path": "/blog/article-with-custom-webspaces",
+        "target_id": ""
     }
 ]

@@ -23,6 +23,8 @@
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\ArticlePersister">
             <argument type="service" id="property_accessor"/>
             <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
+            <argument>%sulu_article.default_main_webspace%</argument>
+            <argument>%sulu_article.default_additional_webspaces%</argument>
 
             <tag name="sulu_phpcr_migration.persister" type="article"/>
         </service>

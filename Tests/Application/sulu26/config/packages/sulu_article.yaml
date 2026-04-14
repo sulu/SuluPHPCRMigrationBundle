@@ -3,7 +3,8 @@ sulu_article:
     hosts:
         - '%env(resolve:ELASTICSEARCH_HOST)%'
     default_main_webspace: website
-    default_additional_webspaces: []
+    default_additional_webspaces:
+        - website_2
 
 sulu_route:
     mappings:
