@@ -46,7 +46,8 @@ Functional tests use MySQL with JSON baseline comparison. Requires env vars: `DA
 
 ```bash
 # Regenerate baselines after migration changes
-rm Tests/Resources/baselines/*.json && composer test   # First run generates, second validates
+composer test-baseline-regenerate   # Deletes old baselines and generates new ones
+composer test                       # Validates baselines
 ```
 
 `Tests/Application/sulu26/` and `sulu30/` are optional skeletons for creating test content or updating schema.
@@ -66,3 +67,28 @@ See **[docs/TESTING.md](docs/TESTING.md)** for comprehensive documentation on:
 - Adding new test content
 - Updating Sulu 3.0 schema
 - Baseline comparison details
+
+### Adding PHPCR Fixture Workflow
+
+To add new test content via code (requires MySQL running locally):
+
+```bash
+# 1. Create fixture class at Tests/Application/sulu26/src/PhpcrFixture/
+#    Implement App\PhpcrFixture\PhpcrFixtureInterface (see ArticleWebspaceFixture.php for example)
+#    Inject DocumentManagerInterface for creating documents
+
+# 2. Import, apply, and export (from sulu26 dir)
+cd Tests/Application/sulu26
+composer import-fixture                                    # Load dump into MySQL
+bin/adminconsole doctrine:schema:update --force             # Ensure fixtures table exists
+bin/adminconsole sulu:document:initialize --force           # Needed if adding new webspaces
+bin/adminconsole sulu:phpcr-migration:fixtures:apply        # Run fixture classes
+composer export-fixture                                    # Export updated dump
+
+# 3. Regenerate baselines (from bundle root)
+cd ../../..
+composer test-baseline-regenerate   # Deletes old baselines and generates new ones
+composer test                       # Validates baselines
+```
+
+MySQL scripts default to `root:ChangeMe@127.0.0.1`. Override: `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PWD`.
