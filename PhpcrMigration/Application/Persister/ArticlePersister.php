@@ -158,6 +158,7 @@ class ArticlePersister extends AbstractPersister
         return [
             'author_id' => 'integer',
             'authored' => 'datetime',
+            'lastModified' => 'datetime',
             'route_id' => 'integer',
             'title' => 'string',
             'locale' => 'string',
@@ -186,6 +187,7 @@ class ArticlePersister extends AbstractPersister
         return [
             '[author_id]' => '[author]',
             '[authored]' => '[authored]',
+            '[lastModified]' => '[lastModified]',
             '[route_id]' => '[_route][id]',
             '[title]' => '[title]',
             '[ghostLocale]' => '[ghostLocale]',
