@@ -668,14 +668,77 @@ abstract class AbstractPersister implements PersisterInterface
             return null;
         }
 
-        /** @var array{id?: int} $parentRoute */
+        /** @var array{id?: int}|null $parentRoute */
         $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
             'resource_key' => $this->getEntityResourceKey(),
             'resource_id' => $parentId,
             'locale' => $locale,
         ]);
 
+        // Fallback: parent may be a different entity type (e.g. article → page)
+        if (null === $parentRoute && 'pages' !== $this->getEntityResourceKey()) {
+            /** @var array{id?: int}|null $parentRoute */
+            $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+                'resource_key' => 'pages',
+                'resource_id' => $parentId,
+                'locale' => $locale,
+            ]);
+        }
+
         return $parentRoute['id'] ?? null;
+    }
+
+    /**
+     * Build the structured page_tree_route URL format for Sulu 3.
+     *
+     * Sulu 2.6 stores page_tree_route companion properties in PHPCR:
+     *   {propertyName}-page = parent page UUID
+     *   {propertyName}-page-path = parent page path
+     *   {propertyName}-suffix = URL suffix after parent path
+     *
+     * Sulu 3's PageTreeRoutePropertyResolver expects:
+     *   {"page": {"uuid": "...", "path": "..."}, "suffix": "..."}
+     *
+     * @param array<string, mixed> $localeData
+     *
+     * @return array{page: array{uuid: string, path: string}, suffix: string}|null
+     */
+    protected function buildPageTreeRouteUrl(array $localeData, string $routePropertyName): ?array
+    {
+        $pageUuid = $localeData[$routePropertyName . '-page'] ?? null;
+        $suffix = $localeData[$routePropertyName . '-suffix'] ?? null;
+        $pagePath = $localeData[$routePropertyName . '-page-path'] ?? null;
+
+        if (!\is_string($pageUuid) || !\is_string($suffix)) {
+            return null;
+        }
+
+        return [
+            'page' => [
+                'uuid' => $pageUuid,
+                'path' => \is_string($pagePath) ? $pagePath : '',
+            ],
+            'suffix' => $suffix,
+        ];
+    }
+
+    /**
+     * Resolve the route property name from the PHPCR routePathName value.
+     *
+     * Strips the i18n locale prefix (e.g., "i18n:en-routePath" → "routePath").
+     *
+     * @param array<string, mixed> $localeData
+     */
+    protected function resolveRoutePropertyName(array $localeData): ?string
+    {
+        $routePathName = $localeData['routePathName'] ?? null;
+        if (!\is_string($routePathName)) {
+            return null;
+        }
+
+        return \str_starts_with($routePathName, 'i18n:')
+            ? \explode('-', $routePathName, 2)[1]
+            : $routePathName;
     }
 
     /**
