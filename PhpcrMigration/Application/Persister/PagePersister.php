@@ -78,13 +78,11 @@ class PagePersister extends AbstractPersister
             $templateData['title'] = $title;
         }
 
-        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
-            $routePropertyName = $this->resolveRoutePropertyName($document['localizations'][$locale]);
-            $routePropertyName ??= 'routePath';
-            $routePath = $document['localizations'][$locale][$routePropertyName] ?? $document['localizations'][$locale]['routePath'];
-
-            $pageTreeRouteUrl = $this->buildPageTreeRouteUrl($document['localizations'][$locale], $routePropertyName);
-            $templateData['url'] = $pageTreeRouteUrl ?? $routePath;
+        if (isset($document['localizations'][$locale])) {
+            $url = $this->resolveTemplateUrl($document['localizations'][$locale]);
+            if (null !== $url) {
+                $templateData['url'] = $url;
+            }
         }
 
         $data['templateData'] = $templateData;
