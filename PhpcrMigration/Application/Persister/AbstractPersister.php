@@ -675,7 +675,6 @@ abstract class AbstractPersister implements PersisterInterface
             'locale' => $locale,
         ]);
 
-        // Fallback: parent may be a different entity type (e.g. article → page)
         if (null === $parentRoute && 'pages' !== $this->getEntityResourceKey()) {
             /** @var array{id?: int}|null $parentRoute */
             $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
@@ -689,16 +688,6 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Build the structured page_tree_route URL format for Sulu 3.
-     *
-     * Sulu 2.6 stores page_tree_route companion properties in PHPCR:
-     *   {propertyName}-page = parent page UUID
-     *   {propertyName}-page-path = parent page path
-     *   {propertyName}-suffix = URL suffix after parent path
-     *
-     * Sulu 3's PageTreeRoutePropertyResolver expects:
-     *   {"page": {"uuid": "...", "path": "..."}, "suffix": "..."}
-     *
      * @param array<string, mixed> $localeData
      *
      * @return array{page: array{uuid: string, path: string}, suffix: string}|null
@@ -723,10 +712,6 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Resolve the route property name from the PHPCR routePathName value.
-     *
-     * Strips the i18n locale prefix (e.g., "i18n:en-routePath" → "routePath").
-     *
      * @param array<string, mixed> $localeData
      */
     protected function resolveRoutePropertyName(array $localeData): ?string
@@ -829,6 +814,8 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function removeNonTemplateData(array $data): array
     {
+        $routePropertyName = $this->resolveRoutePropertyName($data);
+
         unset(
             $data['_url'],
             $data['_history_urls'],
@@ -842,8 +829,16 @@ abstract class AbstractPersister implements PersisterInterface
             $data['availableLocales'],
             $data['ghostLocale'],
             $data['routePathName'],
-            $data['routePath']
+            $data['routePath'],
         );
+
+        if (null !== $routePropertyName) {
+            unset(
+                $data[$routePropertyName . '-page'],
+                $data[$routePropertyName . '-page-path'],
+                $data[$routePropertyName . '-suffix'],
+            );
+        }
 
         foreach ($data as $key => $value) {
             // remove block-length property

@@ -1,0 +1,5 @@
+sulu_phpcr_migration:
+    DSN: 'dbal://default?workspace=default'
+    target:
+        dbal:
+            connection: default

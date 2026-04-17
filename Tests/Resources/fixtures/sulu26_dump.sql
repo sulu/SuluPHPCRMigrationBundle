@@ -2077,7 +2077,7 @@ CREATE TABLE `phpcr_type_childs` (
   `primary_types` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `default_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2086,7 +2086,7 @@ CREATE TABLE `phpcr_type_childs` (
 
 LOCK TABLES `phpcr_type_childs` WRITE;
 /*!40000 ALTER TABLE `phpcr_type_childs` DISABLE KEYS */;
-INSERT INTO `phpcr_type_childs` VALUES (2,12,'*',0,0,0,1,'phpcrmig:version',NULL),(6,9,'*',0,0,0,1,'',NULL);
+INSERT INTO `phpcr_type_childs` VALUES (2,12,'*',0,0,0,1,'phpcrmig:version',NULL),(7,9,'*',0,0,0,1,'',NULL);
 /*!40000 ALTER TABLE `phpcr_type_childs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2860,4 +2860,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-16 14:53:25
+-- Dump completed on 2026-04-16 16:17:09

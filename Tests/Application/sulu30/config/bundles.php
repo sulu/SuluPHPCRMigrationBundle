@@ -40,6 +40,7 @@ use Sulu\Bundle\TestBundle\SuluTestBundle;
 use Sulu\Bundle\TrashBundle\SuluTrashBundle;
 use Sulu\Bundle\WebsiteBundle\SuluWebsiteBundle;
 use Sulu\Content\Infrastructure\Symfony\HttpKernel\SuluContentBundle;
+use Sulu\Bundle\PhpcrMigrationBundle\SuluPhpcrMigrationBundle;
 use Sulu\CustomUrl\Infrastructure\Symfony\HttpKernel\SuluCustomUrlBundle;
 use Sulu\Messenger\Infrastructure\Symfony\HttpKernel\SuluMessengerBundle;
 use Sulu\Page\Infrastructure\Symfony\HttpKernel\SuluPageBundle;
@@ -99,4 +100,5 @@ return [
     SuluSearchBundle::class => ['all' => true],
     SuluCustomUrlBundle::class => ['all' => true],
     SealBundle::class => ['all' => true],
+    SuluPhpcrMigrationBundle::class => ['all' => true],
 ];

@@ -84,7 +84,6 @@ class ArticlePersister extends AbstractPersister
             $localeData = $document['localizations'][$locale];
             $routePropertyName = $this->resolveRoutePropertyName($localeData);
 
-            // Build structured page_tree_route URL if companion properties exist
             $pageTreeRouteUrl = null !== $routePropertyName
                 ? $this->buildPageTreeRouteUrl($localeData, $routePropertyName)
                 : null;
@@ -94,7 +93,6 @@ class ArticlePersister extends AbstractPersister
             } else {
                 $url = $this->resolveRoutePath($localeData);
                 if (null !== $url) {
-                    // content bundle is only compatible with "url"
                     $templateData['url'] = $url;
                 }
             }
@@ -310,7 +308,6 @@ class ArticlePersister extends AbstractPersister
             return null;
         }
 
-        // page_tree_route stores the parent page UUID in {routePropertyName}-page
         $pageUuid = $localeData[$routePropertyName . '-page'] ?? null;
 
         return \is_string($pageUuid) ? $pageUuid : null;

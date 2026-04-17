@@ -367,9 +367,6 @@
         "stage": "draft",
         "templateData": {
             "article": "<p>This article uses page_tree_route routing under a parent page.</p>",
-            "routePath-page": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
-            "routePath-page-path": "/example-page-1",
-            "routePath-suffix": "/page-tree-route-article",
             "title": "Page Tree Route Article",
             "url": {
                 "page": {
@@ -894,9 +891,6 @@
         "stage": "live",
         "templateData": {
             "article": "<p>This article uses page_tree_route routing under a parent page.</p>",
-            "routePath-page": "16060395-4bbf-4e1d-9c8e-fe5265890c99",
-            "routePath-page-path": "/example-page-1",
-            "routePath-suffix": "/page-tree-route-article",
             "title": "Page Tree Route Article",
             "url": {
                 "page": {

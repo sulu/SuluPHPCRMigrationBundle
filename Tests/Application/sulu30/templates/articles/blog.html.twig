@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>{{ content.title }}</h1>
+
+    {% if content.teaser is defined and content.teaser %}
+        <p class="teaser">{{ content.teaser }}</p>
+    {% endif %}
+
+    {% for block in content.blocks|default([]) %}
+        {% if block.type == 'text' %}
+            <h2>{{ block.title }}</h2>
+            {{ block.description|raw }}
+        {% elseif block.type == 'quote' %}
+            <blockquote>{{ block.quote }}</blockquote>
+            {% if block.author is defined %}<cite>{{ block.author }}</cite>{% endif %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

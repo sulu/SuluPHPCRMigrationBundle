@@ -83,10 +83,7 @@ class PagePersister extends AbstractPersister
             $routePropertyName ??= 'routePath';
             $routePath = $document['localizations'][$locale][$routePropertyName] ?? $document['localizations'][$locale]['routePath'];
 
-            // Build structured page_tree_route URL if companion properties exist
             $pageTreeRouteUrl = $this->buildPageTreeRouteUrl($document['localizations'][$locale], $routePropertyName);
-
-            // content bundle is only compatible with "url"
             $templateData['url'] = $pageTreeRouteUrl ?? $routePath;
         }
 
