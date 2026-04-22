@@ -78,14 +78,11 @@ class PagePersister extends AbstractPersister
             $templateData['title'] = $title;
         }
 
-        if (isset($document['localizations'][$locale]['routePathName']) && isset($document['localizations'][$locale]['routePath'])) {
-            $routePathName = $document['localizations'][$locale]['routePathName'];
-            $routePathName = \str_starts_with($routePathName, 'i18n:') ? \explode('-', $routePathName, 2)[1] : $routePathName;
-            // check routePathName property and fallback to routePath
-            $routePath = $document['localizations'][$locale][$routePathName] ?? $document['localizations'][$locale]['routePath'];
-
-            // content bundle is only compatible with "url"
-            $templateData['url'] = $routePath; // is used in the content bundle
+        if (isset($document['localizations'][$locale])) {
+            $url = $this->resolveTemplateUrl($document['localizations'][$locale]);
+            if (null !== $url) {
+                $templateData['url'] = $url;
+            }
         }
 
         $data['templateData'] = $templateData;

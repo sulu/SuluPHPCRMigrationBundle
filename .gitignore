@@ -67,3 +67,7 @@ jackrabbit/*
 # Keep fixtures but not local overrides
 !Tests/Resources/fixtures/
 Tests/Resources/fixtures/*.local.sqlite
+
+# sulu30 test app dependencies (installed separately, contains symlink back to bundle root)
+Tests/Application/sulu30/vendor/
+Tests/Application/sulu30/composer.lock

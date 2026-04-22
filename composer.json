@@ -84,7 +84,8 @@
         ],
         "export-fixture": "composer -d Tests/Application/sulu26 export-fixture",
         "import-fixture": "composer -d Tests/Application/sulu26 import-fixture",
-        "apply-fixture": "composer -d Tests/Application/sulu26 apply-fixture"
+        "apply-fixture": "composer -d Tests/Application/sulu26 apply-fixture",
+        "sulu30-migrate": "composer -d Tests/Application/sulu30 migrate"
     },
     "config": {
         "sort-packages": true,

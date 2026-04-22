@@ -57,6 +57,10 @@ abstract class AbstractPersister implements PersisterInterface
 
     public const ROUTE_RESOURCE_KEY = 'route_histories';
 
+    protected const PAGE_TREE_ROUTE_PAGE_SUFFIX = '-page';
+    protected const PAGE_TREE_ROUTE_PATH_SUFFIX = '-page-path';
+    protected const PAGE_TREE_ROUTE_SUFFIX_SUFFIX = '-suffix';
+
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
         protected EntityRepositoryInterface $entityRepository,
@@ -668,14 +672,88 @@ abstract class AbstractPersister implements PersisterInterface
             return null;
         }
 
-        /** @var array{id?: int} $parentRoute */
+        /** @var array{id?: int}|null $parentRoute */
         $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
             'resource_key' => $this->getEntityResourceKey(),
             'resource_id' => $parentId,
             'locale' => $locale,
         ]);
 
+        if (null === $parentRoute && 'pages' !== $this->getEntityResourceKey()) {
+            /** @var array{id?: int}|null $parentRoute */
+            $parentRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+                'resource_key' => 'pages',
+                'resource_id' => $parentId,
+                'locale' => $locale,
+            ]);
+        }
+
         return $parentRoute['id'] ?? null;
+    }
+
+    /**
+     * @param array<string, mixed> $localeData
+     *
+     * @return array{page: array{uuid: string, path: string}, suffix: string}|null
+     */
+    protected function buildPageTreeRouteUrl(array $localeData, string $routePropertyName): ?array
+    {
+        $pageUuid = $localeData[$routePropertyName . self::PAGE_TREE_ROUTE_PAGE_SUFFIX] ?? null;
+        $suffix = $localeData[$routePropertyName . self::PAGE_TREE_ROUTE_SUFFIX_SUFFIX] ?? null;
+        $pagePath = $localeData[$routePropertyName . self::PAGE_TREE_ROUTE_PATH_SUFFIX] ?? null;
+
+        if (!\is_string($pageUuid) || !\is_string($suffix)) {
+            return null;
+        }
+
+        return [
+            'page' => [
+                'uuid' => $pageUuid,
+                'path' => \is_string($pagePath) ? $pagePath : '',
+            ],
+            'suffix' => $suffix,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $localeData
+     */
+    protected function resolveRoutePropertyName(array $localeData): ?string
+    {
+        $routePathName = $localeData['routePathName'] ?? null;
+        if (!\is_string($routePathName)) {
+            return null;
+        }
+
+        return \str_starts_with($routePathName, 'i18n:')
+            ? \explode('-', $routePathName, 2)[1]
+            : $routePathName;
+    }
+
+    /**
+     * @param array<string, mixed> $localeData
+     *
+     * @return array{page: array{uuid: string, path: string}, suffix: string}|string|null
+     */
+    protected function resolveTemplateUrl(array $localeData): array|string|null
+    {
+        $routePropertyName = $this->resolveRoutePropertyName($localeData);
+
+        if (null !== $routePropertyName) {
+            $pageTreeRouteUrl = $this->buildPageTreeRouteUrl($localeData, $routePropertyName);
+            if (null !== $pageTreeRouteUrl) {
+                return $pageTreeRouteUrl;
+            }
+
+            $resolved = $localeData[$routePropertyName] ?? null;
+            if (\is_string($resolved)) {
+                return $resolved;
+            }
+        }
+
+        $routePath = $localeData['routePath'] ?? null;
+
+        return \is_string($routePath) ? $routePath : null;
     }
 
     /**
@@ -766,6 +844,8 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function removeNonTemplateData(array $data): array
     {
+        $routePropertyName = $this->resolveRoutePropertyName($data);
+
         unset(
             $data['_url'],
             $data['_history_urls'],
@@ -779,8 +859,16 @@ abstract class AbstractPersister implements PersisterInterface
             $data['availableLocales'],
             $data['ghostLocale'],
             $data['routePathName'],
-            $data['routePath']
+            $data['routePath'],
         );
+
+        if (null !== $routePropertyName) {
+            unset(
+                $data[$routePropertyName . self::PAGE_TREE_ROUTE_PAGE_SUFFIX],
+                $data[$routePropertyName . self::PAGE_TREE_ROUTE_PATH_SUFFIX],
+                $data[$routePropertyName . self::PAGE_TREE_ROUTE_SUFFIX_SUFFIX],
+            );
+        }
 
         foreach ($data as $key => $value) {
             // remove block-length property

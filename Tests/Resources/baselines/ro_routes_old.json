@@ -63,5 +63,18 @@
         "locale": "de",
         "path": "/blog/article-with-custom-webspaces",
         "target_id": ""
+    },
+    {
+        "changed": "2026-04-16 12:53:24",
+        "created": "2026-04-16 12:53:24",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "history": 0,
+        "id": 6,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "en",
+        "path": "/example-page-1/page-tree-route-article",
+        "target_id": ""
     }
 ]

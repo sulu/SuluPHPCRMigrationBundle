@@ -81,10 +81,8 @@ class ArticlePersister extends AbstractPersister
         }
 
         if (null !== $locale && isset($document['localizations'][$locale])) {
-            $url = $this->resolveRoutePath($document['localizations'][$locale]);
-
+            $url = $this->resolveTemplateUrl($document['localizations'][$locale]);
             if (null !== $url) {
-                // content bundle is only compatible with "url"
                 $templateData['url'] = $url;
             }
         }
@@ -249,27 +247,17 @@ class ArticlePersister extends AbstractPersister
     }
 
     /**
-     * Resolves the route path from localized PHPCR data.
-     * Uses routePathName to find the actual property, falls back to routePath.
-     *
      * @param array<string, mixed> $localeData
      */
     private function resolveRoutePath(array $localeData): ?string
     {
-        if (isset($localeData['routePathName']) && \is_string($localeData['routePathName'])) {
-            $routePathName = $localeData['routePathName'];
-            // Handle i18n prefix (e.g., 'i18n:en-routePath' -> 'routePath')
-            $routePathName = \str_starts_with($routePathName, 'i18n:')
-                ? \explode('-', $routePathName, 2)[1]
-                : $routePathName;
+        $routePropertyName = $this->resolveRoutePropertyName($localeData);
 
-            $resolved = $localeData[$routePathName] ?? null;
-
+        if (null !== $routePropertyName) {
+            $resolved = $localeData[$routePropertyName] ?? null;
             if (\is_string($resolved)) {
                 return $resolved;
             }
-
-            // Fall through to routePath if routePathName didn't resolve
         }
 
         $routePath = $localeData['routePath'] ?? null;
@@ -288,8 +276,20 @@ class ArticlePersister extends AbstractPersister
 
     protected function getParentId(array $document, string $locale): ?string
     {
-        // TODO page tree route support
-        return null;
+        if (!isset($document['localizations'][$locale])) {
+            return null;
+        }
+
+        $localeData = $document['localizations'][$locale];
+        $routePropertyName = $this->resolveRoutePropertyName($localeData);
+
+        if (null === $routePropertyName) {
+            return null;
+        }
+
+        $pageUuid = $localeData[$routePropertyName . self::PAGE_TREE_ROUTE_PAGE_SUFFIX] ?? null;
+
+        return \is_string($pageUuid) ? $pageUuid : null;
     }
 
     protected function getDefaultData(): array
