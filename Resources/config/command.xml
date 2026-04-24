@@ -11,6 +11,9 @@
             <argument type="service" id="sulu_phpcr_migration.persister_pool"/>
             <argument type="tagged_iterator" tag="sulu_phpcr_migration.post_migration_query"/>
             <argument type="service" id="doctrine.dbal.default_connection"/>
+            <argument type="service" id="sulu_phpcr_migration.entity_repository"/>
+            <argument type="service" id="sulu_phpcr_migration.dry_run_collector"/>
+            <argument>%kernel.project_dir%</argument>
 
             <tag name="console.command"/>
         </service>

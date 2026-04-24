@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Sulu.
  *
@@ -19,12 +21,15 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\NodeParse
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query\PostMigrationQueryInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\DryRunCollector;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -32,6 +37,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class MigratePhpcrCommand extends Command
 {
     private const BATCH_SIZE = 1000;
+
+    private const LIVE_SUFFIX = '_live';
 
     /**
      * Document types that must be loaded in full upfront for ordering reasons.
@@ -42,6 +49,8 @@ class MigratePhpcrCommand extends Command
      */
     private const FULL_LOAD_TYPES = ['page', 'snippet_area'];
 
+    private bool $isDryRun = false;
+
     /**
      * @param iterable<PostMigrationQueryInterface> $postMigrationQueries
      */
@@ -51,6 +60,9 @@ class MigratePhpcrCommand extends Command
         private readonly PersisterPool $persisterPool,
         private readonly iterable $postMigrationQueries,
         private readonly Connection $connection,
+        private readonly EntityRepositoryInterface $entityRepository,
+        private readonly DryRunCollector $dryRunCollector,
+        private readonly string $projectDir,
     ) {
         parent::__construct();
     }
@@ -67,10 +79,30 @@ class MigratePhpcrCommand extends Command
             InputArgument::OPTIONAL,
             \sprintf('The document type(s) to migrate. Available: %s', \implode(', ', $types)),
         );
+        $this->addOption(
+            'dry-run',
+            null,
+            InputOption::VALUE_NONE,
+            'Run the migration without writing to the target database. Collects errors into a JSON report.',
+        );
+        $this->addOption(
+            'report',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Override the JSON report path (only used with --dry-run). Default: var/phpcr-migration/dry-run-YYYYMMDD-HHMMSS.json',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+        $this->isDryRun = (bool) $input->getOption('dry-run');
+
+        if ($this->isDryRun) {
+            $this->entityRepository->setDryRun(true);
+            $io->note('Running in dry-run mode. No data will be written to the target database.');
+        }
+
         $session = $this->sessionManager->getDefaultSession();
         $liveSession = $this->sessionManager->getLiveSession();
 
@@ -80,7 +112,6 @@ class MigratePhpcrCommand extends Command
             ? \array_map(fn (string $type) => $this->persisterPool->getPersister($type), \explode(',', $documentTypesArg))
             : $this->persisterPool->getPersisters();
 
-        $io = new SymfonyStyle($input, $output);
         foreach ($persisters as $persister) {
             $documentType = $persister::getType();
             $io->title('Migrating ' . $documentType . ' documents');
@@ -91,6 +122,9 @@ class MigratePhpcrCommand extends Command
             /** @var SessionInterface $currentSession */
             foreach ($sessions as $currentSession) {
                 $sessionName = $currentSession->getWorkspace()->getName();
+                $isLive = \str_ends_with($sessionName, self::LIVE_SUFFIX);
+                $workspaceKey = $isLive ? \substr($sessionName, 0, -\strlen(self::LIVE_SUFFIX)) : $sessionName;
+
                 $io->section('Migrating ' . $documentType . ' documents in ' . $sessionName);
 
                 $queryManager = $currentSession->getWorkspace()->getQueryManager();
@@ -109,12 +143,11 @@ class MigratePhpcrCommand extends Command
                     $progressBar = $io->createProgressBar(\count($nodes));
                     $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                     foreach ($nodes as $node) {
-                        $this->persistNode($node, $persister, $sessionName);
+                        $this->processNode($node, $persister, $isLive, $workspaceKey);
                         $progressBar->advance();
                     }
                 } else {
                     // Flat document types (articles, snippets, custom_urls) use batched fetching.
-                    $isLive = \str_ends_with($sessionName, '_live');
                     $progressBar = $io->createProgressBar();
                     $progressBar->setFormat(ProgressBar::FORMAT_DEBUG);
                     $lastPath = null;
@@ -137,7 +170,7 @@ class MigratePhpcrCommand extends Command
                         }
 
                         foreach ($batch as $node) {
-                            $this->persistNode($node, $persister, $sessionName);
+                            $this->processNode($node, $persister, $isLive, $workspaceKey);
                             $progressBar->advance();
                         }
 
@@ -156,6 +189,19 @@ class MigratePhpcrCommand extends Command
             }
         }
 
+        if ($this->isDryRun) {
+            $io->section('Post-migration queries');
+            $io->writeln('Skipped in dry-run mode.');
+            $io->newLine();
+
+            $reportPath = $this->resolveReportPath($input);
+            $this->writeReport($this->dryRunCollector->toArray(), $reportPath);
+            $this->dryRunCollector->printSummary($io);
+            $io->writeln(\sprintf('Report written to: %s', $reportPath));
+
+            return Command::SUCCESS;
+        }
+
         foreach ($this->postMigrationQueries as $query) {
             $query->execute($this->connection);
         }
@@ -165,7 +211,65 @@ class MigratePhpcrCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function persistNode(NodeInterface $node, PersisterInterface $persister, string $sessionName): void
+    private function processNode(
+        NodeInterface $node,
+        PersisterInterface $persister,
+        bool $isLive,
+        string $workspaceKey,
+    ): void {
+        $documentType = $persister::getType();
+
+        try {
+            $this->persistNode($node, $persister, $isLive);
+        } catch (\Throwable $e) {
+            if (!$this->isDryRun) {
+                throw $e;
+            }
+
+            $this->dryRunCollector->record($e, [
+                'documentType' => $documentType,
+                'workspace' => $workspaceKey,
+                'uuid' => $node->getIdentifier(),
+                'path' => $node->getPath(),
+            ]);
+        }
+
+        if ($this->isDryRun) {
+            $this->dryRunCollector->recordProcessed($documentType, $workspaceKey);
+        }
+    }
+
+    private function resolveReportPath(InputInterface $input): string
+    {
+        /** @var string|null $reportOption */
+        $reportOption = $input->getOption('report');
+        if (null !== $reportOption && '' !== $reportOption) {
+            return $reportOption;
+        }
+
+        $timestamp = (new \DateTimeImmutable())->format('Ymd-His');
+
+        return $this->projectDir . '/var/phpcr-migration/dry-run-' . $timestamp . '.json';
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    private function writeReport(array $payload, string $path): void
+    {
+        $directory = \dirname($path);
+        if (!\is_dir($directory) && !\mkdir($directory, 0755, true) && !\is_dir($directory)) {
+            throw new \RuntimeException(\sprintf('Could not create report directory "%s".', $directory));
+        }
+
+        $json = \json_encode($payload, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
+
+        if (false === \file_put_contents($path, $json)) {
+            throw new \RuntimeException(\sprintf('Could not write dry-run report to "%s".', $path));
+        }
+    }
+
+    private function persistNode(NodeInterface $node, PersisterInterface $persister, bool $isLive): void
     {
         $documents = $this->nodeParser->parse($node, $persister::getType());
 
@@ -173,16 +277,10 @@ class MigratePhpcrCommand extends Command
         if ($this->isListOfDocuments($documents)) {
             /** @var array<string, mixed> $document */
             foreach ($documents as $document) {
-                $persister->persist(
-                    document: $document,
-                    isLive: \str_ends_with($sessionName, '_live'),
-                );
+                $persister->persist(document: $document, isLive: $isLive);
             }
         } else {
-            $persister->persist(
-                document: $documents,
-                isLive: \str_ends_with($sessionName, '_live'),
-            );
+            $persister->persist(document: $documents, isLive: $isLive);
         }
     }
 

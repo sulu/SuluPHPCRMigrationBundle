@@ -4,6 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <!-- Command -->
+        <service id="sulu_phpcr_migration.dry_run_collector"
+                 class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\DryRunCollector"/>
+
         <service id="sulu_phpcr_migration.entity_repository"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository">
             <argument type="service" id="sulu_phpcr_migration.target_connection"/>
