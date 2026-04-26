@@ -16,11 +16,23 @@
         "snippet_dimension_content_id": 10
     },
     {
+        "category_id": 3,
+        "snippet_dimension_content_id": 11
+    },
+    {
         "category_id": 2,
-        "snippet_dimension_content_id": 14
+        "snippet_dimension_content_id": 16
+    },
+    {
+        "category_id": 2,
+        "snippet_dimension_content_id": 17
     },
     {
         "category_id": 1,
-        "snippet_dimension_content_id": 16
+        "snippet_dimension_content_id": 19
+    },
+    {
+        "category_id": 1,
+        "snippet_dimension_content_id": 20
     }
 ]
