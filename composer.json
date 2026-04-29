@@ -19,6 +19,7 @@
         "php": "^8.2",
         "jackalope/jackalope-doctrine-dbal": "^2.0",
         "jackalope/jackalope-jackrabbit": "^2.0",
+        "sulu/sulu": "^3.0",
         "symfony/config": "^6.1 || ^7.0",
         "symfony/console": "^6.1 || ^7.0",
         "symfony/dependency-injection": "^6.1 || ^7.0",

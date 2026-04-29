@@ -899,53 +899,6 @@ abstract class AbstractPersister implements PersisterInterface
 
     /**
      * @param Document $document
-     * @param array<string, mixed> $data
-     *
-     * @return array<string, mixed>
-     */
-    protected function mapShadowLocaleData(array $document, ?string $locale, array $data): array
-    {
-        /** @var array<string, array<string, mixed>> $localizations */
-        $localizations = $document['localizations'];
-
-        if (null !== $locale) {
-            $localeKey = $locale;
-            $shadowOn = $localizations[$localeKey]['shadow-on'] ?? false;
-            $shadowBase = $localizations[$localeKey]['shadow-base'] ?? null;
-            $data['shadowLocale'] = ($shadowOn && \is_string($shadowBase)) ? $shadowBase : null;
-            $data['shadowLocales'] = null;
-
-            if (isset($data['shadowLocale'])) {
-                $shadowTemplateKey = $document['localizations'][$locale]['template']
-                    ?? $document['localizations'][$data['shadowLocale']]['template']
-                    ?? null;
-                if (null === $shadowTemplateKey) {
-                    throw new InvalidDocumentException('Template key of shadow locale is missing.');
-                }
-                $data['templateKey'] = $shadowTemplateKey;
-            }
-
-            return $data;
-        }
-
-        $shadowLocales = [];
-        foreach ($localizations as $localeKey => $localization) {
-            if ('null' !== $localeKey) {
-                $shadowOn = $localization['shadow-on'] ?? false;
-                $shadowBase = $localization['shadow-base'] ?? null;
-                if ($shadowOn && \is_string($shadowBase)) {
-                    $shadowLocales[$localeKey] = $shadowBase;
-                }
-            }
-        }
-        $data['shadowLocale'] = null;
-        $data['shadowLocales'] = [] !== $shadowLocales ? $shadowLocales : null;
-
-        return $data;
-    }
-
-    /**
-     * @param Document $document
      * @param mixed[] $data
      *
      * @return mixed[]

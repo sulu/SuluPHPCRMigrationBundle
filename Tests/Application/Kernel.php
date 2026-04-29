@@ -68,6 +68,7 @@ class Kernel extends BaseKernel
         // Articles without explicit webspace in PHPCR should get these defaults applied.
         $container->parameters()->set('sulu_article.default_main_webspace', ['default' => 'website']);
         $container->parameters()->set('sulu_article.default_additional_webspaces', ['default' => ['website_2']]);
+        $container->parameters()->set('sulu_admin.templates.configuration', []);
 
         $container->extension('sulu_phpcr_migration', [
             'DSN' => 'dbal://default?workspace=default',
