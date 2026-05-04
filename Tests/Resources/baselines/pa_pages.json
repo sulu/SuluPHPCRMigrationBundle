@@ -7,7 +7,7 @@
         "idUsersCreator": "",
         "lft": 22,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 25,
+        "rgt": 27,
         "uuid": "138b926f-6b6f-4cab-b1d9-961b3b2a957d",
         "webspaceKey": "website"
     },
@@ -53,9 +53,9 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 26,
+        "lft": 28,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 27,
+        "rgt": 29,
         "uuid": "53702843-f929-4976-8f6a-7aad5d18c115",
         "webspaceKey": "website"
     },
@@ -101,9 +101,9 @@
         "depth": 0,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 31,
+        "lft": 33,
         "parent_id": "",
-        "rgt": 32,
+        "rgt": 34,
         "uuid": "9a4e1b0d-4d43-4688-98a8-78cf99ffb409",
         "webspaceKey": "website_2"
     },
@@ -120,7 +120,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-05-04 11:22:37",
+        "changed": "2026-05-04 12:06:49",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": "",
@@ -161,10 +161,22 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 28,
+        "lft": 30,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 29,
+        "rgt": 31,
         "uuid": "c4440a5d-9012-4e75-8a0e-81005381fac8",
+        "webspaceKey": "website"
+    },
+    {
+        "changed": "2026-05-04 12:01:14",
+        "created": "2026-05-04 12:01:14",
+        "depth": 2,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lft": 25,
+        "parent_id": "138b926f-6b6f-4cab-b1d9-961b3b2a957d",
+        "rgt": 26,
+        "uuid": "c50e440b-3774-4ddb-8287-30dd9cc4a9cb",
         "webspaceKey": "website"
     },
     {
@@ -187,7 +199,7 @@
         "idUsersCreator": "",
         "lft": 1,
         "parent_id": "",
-        "rgt": 30,
+        "rgt": 32,
         "uuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "webspaceKey": "website"
     }

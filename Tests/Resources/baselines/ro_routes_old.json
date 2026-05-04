@@ -76,5 +76,18 @@
         "locale": "en",
         "path": "/example-page-1/page-tree-route-article",
         "target_id": ""
+    },
+    {
+        "changed": "2026-05-04 14:00:51",
+        "created": "2026-05-04 14:00:51",
+        "entity_class": "Sulu\\Bundle\\ArticleBundle\\Document\\ArticleDocument",
+        "entity_id": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
+        "history": 0,
+        "id": 7,
+        "idUsersChanger": 1,
+        "idUsersCreator": 1,
+        "locale": "de",
+        "path": "/blog/test-with-json",
+        "target_id": ""
     }
 ]

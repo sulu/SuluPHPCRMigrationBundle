@@ -156,13 +156,22 @@
         "id": 18,
         "locale": "de",
         "parent_id": "",
+        "resource_id": "c50e440b-3774-4ddb-8287-30dd9cc4a9cb",
+        "resource_key": "pages",
+        "slug": "/test-with-json",
+        "webspace": "website"
+    },
+    {
+        "id": 19,
+        "locale": "de",
+        "parent_id": "",
         "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
         "resource_key": "route_histories",
         "slug": "/example-page-1",
         "webspace": "website"
     },
     {
-        "id": 19,
+        "id": 20,
         "locale": "en",
         "parent_id": 2,
         "resource_id": "c4440a5d-9012-4e75-8a0e-81005381fac8",
@@ -171,7 +180,7 @@
         "webspace": "website"
     },
     {
-        "id": 20,
+        "id": 21,
         "locale": "de",
         "parent_id": "",
         "resource_id": "52634b61-09b3-4224-a428-4a885dceb98f",
@@ -180,7 +189,7 @@
         "webspace": ""
     },
     {
-        "id": 21,
+        "id": 22,
         "locale": "de",
         "parent_id": "",
         "resource_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
@@ -189,7 +198,7 @@
         "webspace": ""
     },
     {
-        "id": 22,
+        "id": 23,
         "locale": "de",
         "parent_id": "",
         "resource_id": "73bb3e17-3d33-46d0-bbc9-62229b343dd4",
@@ -198,7 +207,7 @@
         "webspace": ""
     },
     {
-        "id": 23,
+        "id": 24,
         "locale": "en",
         "parent_id": 5,
         "resource_id": "41d35252-a394-4c25-8ada-e7cf58c967c0",
@@ -207,7 +216,7 @@
         "webspace": ""
     },
     {
-        "id": 24,
+        "id": 25,
         "locale": "de",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
@@ -216,7 +225,16 @@
         "webspace": ""
     },
     {
-        "id": 25,
+        "id": 26,
+        "locale": "de",
+        "parent_id": "",
+        "resource_id": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
+        "resource_key": "articles",
+        "slug": "/blog/test-with-json",
+        "webspace": ""
+    },
+    {
+        "id": 27,
         "locale": "en",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
