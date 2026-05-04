@@ -22,5 +22,17 @@
     {
         "article_dimension_content_id": 13,
         "category_id": 3
+    },
+    {
+        "article_dimension_content_id": 14,
+        "category_id": 1
+    },
+    {
+        "article_dimension_content_id": 14,
+        "category_id": 2
+    },
+    {
+        "article_dimension_content_id": 14,
+        "category_id": 3
     }
 ]

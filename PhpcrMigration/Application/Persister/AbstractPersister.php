@@ -520,6 +520,7 @@ abstract class AbstractPersister implements PersisterInterface
                     $entityIdMappingName => $data[$entityIdMappingName],
                     'locale' => $locale,
                     'stage' => $data['stage'],
+                    'version' => 0,
                 ],
             );
 
@@ -530,10 +531,90 @@ abstract class AbstractPersister implements PersisterInterface
                 $entityIdMappingName => $data[$entityIdMappingName],
                 'locale' => $locale,
                 'stage' => $data['stage'],
+                'version' => 0,
             ]);
 
             $this->insertDataRelationsToDimensionContent($document, $locale, $dimensionContent);
+
+            // Sulu 3.0 publishing creates an additional "version" snapshot of the draft
+            // so users can roll back. Mirror that here for every published locale, otherwise
+            // the migrated state cannot be restored after a publish in 3.0.
+            if ($isLive && null !== $locale) {
+                $this->createOrUpdateVersionDimensionContent($document, $locale, $data, $localizedData);
+            }
         }
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, mixed> $liveData data already prepared for the live row
+     * @param array<string, mixed> $localizedData raw localized PHPCR data for the locale
+     */
+    protected function createOrUpdateVersionDimensionContent(array $document, string $locale, array $liveData, array $localizedData): void
+    {
+        $versionTimestamp = $this->resolveVersionTimestamp($document, $localizedData);
+
+        $versionData = $liveData;
+        $versionData['stage'] = 'draft';
+        $versionData['version'] = $versionTimestamp;
+        // route is bound to draft/live only — versions cannot be restored with a route.
+        // unset (not null) so the column is omitted entirely for non-routable entities like snippets.
+        unset($versionData['route_id']);
+
+        // Sulu 3.0 ignores `url` when copying to a version (PublishTransitionSubscriber),
+        // because url is owned by the route and cannot be restored from a version.
+        if (isset($versionData['templateData']) && \is_array($versionData['templateData'])) {
+            unset($versionData['templateData']['url']);
+        }
+
+        $entityIdMappingName = $this->getDimensionContentEntityIdMappingName();
+
+        $where = [
+            $entityIdMappingName => $versionData[$entityIdMappingName],
+            'locale' => $locale,
+            'stage' => 'draft',
+            'version' => $versionTimestamp,
+        ];
+
+        $this->entityRepository->insertOrUpdate(
+            $versionData,
+            $this->getDimensionContentTableName(),
+            $this->getDimensionContentTableTypes(),
+            $where,
+        );
+
+        /**
+         * @var DimensionContent $versionDimensionContent
+         */
+        $versionDimensionContent = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), $where);
+
+        $this->insertDataRelationsToDimensionContent($document, $locale, $versionDimensionContent);
+    }
+
+    /**
+     * Pick a stable Unix timestamp so re-running the migration does not create
+     * duplicate version rows for the same content.
+     *
+     * @param Document $document
+     * @param array<string, mixed> $localizedData
+     */
+    protected function resolveVersionTimestamp(array $document, array $localizedData): int
+    {
+        foreach (['published', 'lastModified', 'changed', 'created'] as $key) {
+            $value = $localizedData[$key] ?? null;
+            if ($value instanceof \DateTimeInterface) {
+                return $value->getTimestamp();
+            }
+        }
+
+        foreach (['changed', 'created'] as $key) {
+            $value = $document['sulu'][$key] ?? null;
+            if ($value instanceof \DateTimeInterface) {
+                return $value->getTimestamp();
+            }
+        }
+
+        return \time();
     }
 
     /**

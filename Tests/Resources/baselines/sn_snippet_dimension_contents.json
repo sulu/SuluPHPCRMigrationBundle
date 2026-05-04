@@ -304,6 +304,47 @@
         "workflowPublished": "2025-12-09 10:35:14"
     },
     {
+        "availableLocales": "",
+        "changed": "2025-12-09 10:38:14",
+        "created": "2025-12-09 10:35:14",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 11,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "43420664-7b06-464e-a6b1-f73a0847f1f9",
+        "stage": "draft",
+        "templateData": {
+            "changed": {
+                "date": "2025-12-09 10:38:14.123000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2025-12-09 10:35:14.119000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Sit deserunt id ex tempor. Quis mollit non eiusmod Lorem nulla incididunt.</p>",
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Test Default Snippet"
+        },
+        "templateKey": "default",
+        "title": "Test Default Snippet",
+        "version": 1765276694,
+        "workflowPlace": "published",
+        "workflowPublished": "2025-12-09 10:35:14"
+    },
+    {
         "availableLocales": [
             "de"
         ],
@@ -311,7 +352,7 @@
         "created": "2026-03-05 13:51:18",
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 11,
+        "id": 12,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "",
@@ -330,7 +371,7 @@
         "created": "2026-03-05 13:51:18",
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 12,
+        "id": 13,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "de",
@@ -365,6 +406,46 @@
         "workflowPublished": "2026-03-05 13:51:18"
     },
     {
+        "availableLocales": "",
+        "changed": "2026-03-05 13:51:18",
+        "created": "2026-03-05 13:51:18",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 14,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "b93f34fe-5975-4f84-9380-0e98d225a0dc",
+        "stage": "draft",
+        "templateData": {
+            "changed": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-03-05 13:51:18.748000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Timestamp Fallback Snippet"
+        },
+        "templateKey": "default",
+        "title": "Timestamp Fallback Snippet",
+        "version": 1772718678,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-03-05 13:51:18"
+    },
+    {
         "availableLocales": [
             "de"
         ],
@@ -372,7 +453,7 @@
         "created": "2025-12-09 10:35:37",
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 13,
+        "id": 15,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "",
@@ -391,7 +472,7 @@
         "created": "2025-12-09 10:35:37",
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 14,
+        "id": 16,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "de",
@@ -428,6 +509,48 @@
         "workflowPublished": "2025-12-09 10:35:37"
     },
     {
+        "availableLocales": "",
+        "changed": "2025-12-09 10:38:22",
+        "created": "2025-12-09 10:35:37",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 17,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0784afdc-28e5-4df2-a314-967e4853fc71",
+        "stage": "draft",
+        "templateData": {
+            "changed": {
+                "date": "2025-12-09 10:38:22.526000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "copyrightText": "Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.",
+            "created": {
+                "date": "2025-12-09 10:35:37.080000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "description": "<p>Nisi id Lorem esse sit et. Pariatur laborum proident quis laborum non eu ex magna cillum aliquip anim consequat sunt veniam culpa. Aliqua tempor aliqua in mollit dolore nostrud excepteur. Commodo incididunt aliquip ipsum elit labore ex cupidatat officia voluptate reprehenderit esse Lorem labore eiusmod enim. Velit in voluptate excepteur amet et cillum ad laborum aliqua ipsum consectetur. Aliquip do sint est eiusmod duis mollit labore. Est laborum ut irure et quis est culpa dolore consequat fugiat cupidatat nulla nostrud minim. Ipsum elit elit velit minim nulla nulla ad officia.</p>",
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Footer Snippet"
+        },
+        "templateKey": "footer",
+        "title": "Footer Snippet",
+        "version": 1765276702,
+        "workflowPlace": "published",
+        "workflowPublished": "2025-12-09 10:35:37"
+    },
+    {
         "availableLocales": [
             "de"
         ],
@@ -435,7 +558,7 @@
         "created": "2025-12-09 10:35:47",
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 15,
+        "id": 18,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "",
@@ -454,7 +577,7 @@
         "created": "2025-12-09 10:35:47",
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 16,
+        "id": 19,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "locale": "de",
@@ -489,6 +612,50 @@
         "templateKey": "sidebar",
         "title": "Example Sidebar",
         "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2025-12-09 10:35:47"
+    },
+    {
+        "availableLocales": "",
+        "changed": "2025-12-09 10:38:37",
+        "created": "2025-12-09 10:35:47",
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 20,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "locale": "de",
+        "snippetUuid": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
+        "stage": "draft",
+        "templateData": {
+            "changed": {
+                "date": "2025-12-09 10:38:37.442000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "content": "<p>Ut ad occaecat magna incididunt proident reprehenderit do consequat nulla duis consectetur reprehenderit veniam cillum.</p>",
+            "created": {
+                "date": "2025-12-09 10:35:47.173000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "image": {
+                "id": 5
+            },
+            "seo": {
+                "canonicalUrl": "",
+                "description": "",
+                "hideInSitemap": false,
+                "keywords": "",
+                "noFollow": false,
+                "noIndex": false,
+                "title": ""
+            },
+            "title": "Example Sidebar"
+        },
+        "templateKey": "sidebar",
+        "title": "Example Sidebar",
+        "version": 1765276717,
         "workflowPlace": "published",
         "workflowPublished": "2025-12-09 10:35:47"
     }
