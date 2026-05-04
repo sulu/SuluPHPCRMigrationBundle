@@ -72,6 +72,30 @@ php bin/adminconsole sulu:phpcr-migration:migrate snippet
 
 Allowed types are: `snippet`, `page`, `article`
 
+### Dry-run mode
+
+Preview a migration without writing anything to the target database:
+
+```shell
+php bin/adminconsole sulu:phpcr-migration:migrate --dry-run
+```
+
+This executes the full parse and persist pipeline against your real PHPCR
+content, but every database write is intercepted in-memory. The command
+collects every exception (one per document or document/locale pair),
+continues past failures, and at the end prints a grouped summary plus a
+JSON report you can hand off for data cleanup.
+
+Default report path: `var/phpcr-migration/dry-run-YYYYMMDD-HHMMSS.json`.
+Override it with `--report=/path/to/report.json`.
+
+**Limitations.** Dry-run catches PHP-level validation errors (title/slug
+length, missing webspace or parent, missing shadow template, etc.) but
+does **not** catch database-level issues such as foreign-key violations,
+unique-key collisions between two rows that would be written in the same
+run, column truncation, or NOT NULL violations on columns populated only
+by database defaults. Post-migration queries (permission contexts, access
+controls, automation tasks) are skipped in dry-run mode.
 
 ## 🛠️&nbsp; Development
 

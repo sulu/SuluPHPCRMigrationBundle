@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Sulu.
  *
@@ -40,23 +42,44 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     private array $existsCache = [];
 
+    private const DRY_RUN_STUB_ROW = ['id' => 0, 'depth' => 0];
+
+    private bool $dryRun = false;
+
     public function __construct(
         protected Connection $connection,
     ) {
     }
 
+    public function setDryRun(bool $dryRun): void
+    {
+        $this->dryRun = $dryRun;
+    }
+
     public function beginTransaction(): void
     {
+        if ($this->dryRun) {
+            return;
+        }
+
         $this->connection->beginTransaction();
     }
 
     public function commit(): void
     {
+        if ($this->dryRun) {
+            return;
+        }
+
         $this->connection->commit();
     }
 
     public function insertOrUpdate(array $data, string $tableName, array $types, array $where = []): void
     {
+        if ($this->dryRun) {
+            return;
+        }
+
         $exists = [] !== $where && $this->exists($tableName, $where);
 
         if ($exists) {
@@ -91,6 +114,12 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function findOneBy(string $tableName, array $where): ?array
     {
+        if ($this->dryRun) {
+            // Stubbed row so downstream persister logic (excerpt relations, nested-set
+            // depth lookups, parent-route resolution) has something to work with.
+            return self::DRY_RUN_STUB_ROW;
+        }
+
         [$conditions, $params] = $this->parseWhereParts($where);
 
         $query = 'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
@@ -134,6 +163,10 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function removeBy(string $tableName, array $where): int|string
     {
+        if ($this->dryRun) {
+            return 0;
+        }
+
         [$conditions, $params] = $this->parseWhereParts($where);
 
         $query = 'DELETE FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
@@ -185,6 +218,10 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     public function createOrUpdateRootNode(array $data, string $tableName, array $types, array $where = []): void
     {
+        if ($this->dryRun) {
+            return;
+        }
+
         $exists = [] !== $where && $this->exists($tableName, $where);
 
         if ($exists) {
@@ -214,6 +251,10 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     public function addOrUpdateChildNode(array $data, string $tableName, array $types, string $parentId, array $where = []): void
     {
+        if ($this->dryRun) {
+            return;
+        }
+
         $exists = [] !== $where && $this->exists($tableName, $where);
 
         if ($exists) {
@@ -313,5 +354,6 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
         $this->sequences = null;
         $this->tableExistsCache = [];
         $this->existsCache = [];
+        $this->dryRun = false;
     }
 }

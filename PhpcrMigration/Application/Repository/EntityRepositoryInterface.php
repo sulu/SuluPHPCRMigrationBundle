@@ -13,6 +13,8 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository
 
 interface EntityRepositoryInterface
 {
+    public function setDryRun(bool $dryRun): void;
+
     public function beginTransaction(): void;
 
     public function commit(): void;
