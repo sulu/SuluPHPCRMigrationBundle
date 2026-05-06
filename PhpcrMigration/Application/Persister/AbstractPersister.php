@@ -407,18 +407,23 @@ abstract class AbstractPersister implements PersisterInterface
         /** @var array<string, mixed[]> $localizations */
         $localizations = $document['localizations'];
 
-        $availableLocales = [];
+        $liveAvailableLocales = [];
+        $draftAvailableLocales = [];
         $ghostLocale = null;
         foreach ($localizations as $locale => $localization) {
             if ('null' !== $locale && null === $ghostLocale) {
                 $ghostLocale = $locale;
             }
 
-            // add only published locales to availableLocales
-            if (\array_key_exists('state', $localization) && 2 === $localization['state']) {
-                $availableLocales[] = $locale;
+            if ('null' !== $locale && \array_key_exists('state', $localization)) {
+                $draftAvailableLocales[] = $locale;
+                if (2 === $localization['state']) {
+                    $liveAvailableLocales[] = $locale;
+                }
             }
         }
+
+        $availableLocales = $isLive ? $liveAvailableLocales : $draftAvailableLocales;
 
         /**
          * @var array{
@@ -437,7 +442,7 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            if ($isLive && null === $locale && [] === $availableLocales) {
+            if ($isLive && null === $locale && [] === $liveAvailableLocales) {
                 continue;
             }
 
