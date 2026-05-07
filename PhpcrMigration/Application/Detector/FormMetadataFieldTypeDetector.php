@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service;
+namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Detector;
 
 use PHPCR\NodeInterface;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\FieldMetadata;
@@ -40,12 +40,21 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     /**
      * Returns the field type for a given PHPCR property.
      *
-     * @param string $type The content type (e.g. "page", "article", "snippet")
+     * @param string $documentType The content type (e.g. "page", "article", "snippet")
      * @param string $propertyName The PHPCR property name (e.g. "i18n:en-title", "i18n:en-blocks-code#0", "i18n:en-blocks-blocks#0-code#0")
-     * @param string $locale The locale to use for looking up block types
+     * @param string[] $knownLocales Locales discovered for the node; used to resolve which locale to look up the template under
      */
-    public function getType(string $type, string $propertyName, NodeInterface $node, string $locale): ?string
-    {
+    public function getType(
+        string $documentType,
+        string $propertyName,
+        NodeInterface $node,
+        array $knownLocales,
+    ): ?string {
+        $locale = $this->resolveLocale($propertyName, $knownLocales);
+        if (null === $locale) {
+            return null;
+        }
+
         if ([] === $this->map) {
             $this->buildTemplateFormIndex($locale);
         }
@@ -56,9 +65,34 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         }
 
         $plainPropertyName = $this->stripLocalePrefix($propertyName, $locale);
-        $mappingKey = $this->transformPropertyNameToMappingKey($type, $templateKey, $plainPropertyName, $node, $locale);
+        $mappingKey = $this->transformPropertyNameToMappingKey(
+            $documentType,
+            $templateKey,
+            $plainPropertyName,
+            $node,
+            $locale,
+        );
 
         return $this->map[$mappingKey] ?? null;
+    }
+
+    /**
+     * @param string[] $knownLocales
+     */
+    private function resolveLocale(string $propertyName, array $knownLocales): ?string
+    {
+        if (\str_starts_with($propertyName, 'i18n:')) {
+            $afterPrefix = \substr($propertyName, 5);
+            $sortedLocales = $knownLocales;
+            \usort($sortedLocales, fn ($a, $b) => \strlen($b) - \strlen($a));
+            foreach ($sortedLocales as $locale) {
+                if (\str_starts_with($afterPrefix, $locale . '-')) {
+                    return $locale;
+                }
+            }
+        }
+
+        return $knownLocales[0] ?? null;
     }
 
     /**
@@ -75,9 +109,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         return $name;
     }
 
-    /**
-     * Gets the template key from the node.
-     */
     private function getTemplateKey(NodeInterface $node, string $locale): ?string
     {
         $templateProperty = 'i18n:' . $locale . '-template';
@@ -154,8 +185,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     }
 
     /**
-     * Parses a PHPCR property name into segments.
-     *
      * @return array<array{field: string, index: int|null}>
      */
     private function parsePropertyName(string $propertyName): array
@@ -165,7 +194,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         $remaining = $propertyName;
 
         while ('' !== $remaining) {
-            // Try to match "field#index-" or "field#index" at the end or "field-" or "field" at the end
+            // Try to match "field#index-" or "field#index" or "field-" or "field" at the end
             if (\preg_match('/^([a-zA-Z_]\w*)#(\d+)(?:-(.*))?$/', $remaining, $matches)) {
                 $segments[] = ['field' => $matches[1], 'index' => (int) $matches[2]];
                 $remaining = $matches[3] ?? '';
@@ -202,8 +231,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     }
 
     /**
-     * Recursively processes form items and adds them to the map.
-     *
      * @param ItemMetadata[] $items
      * @param string $prefix Current path prefix (e.g. "page.default" or "page.default.blocks.text")
      */
@@ -218,9 +245,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         }
     }
 
-    /**
-     * Processes a single field metadata and adds it to the map.
-     */
     private function processFieldMetadata(FieldMetadata $field, string $prefix): void
     {
         $fieldPath = $prefix . '.' . $field->getName();

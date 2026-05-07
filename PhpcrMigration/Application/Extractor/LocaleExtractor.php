@@ -11,24 +11,24 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service;
+namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Extractor;
 
 use PHPCR\NodeInterface;
 
-class LocaleDiscoveryService
+class LocaleExtractor
 {
+    private const VALID_SUFFIXES = ['-title', '-template', '-created'];
+    private const MIN_REQUIRED_MATCHES = 2;
+
     /**
      * @var array<string, string[]>
      */
     private array $localeCache = [];
 
-    private const VALID_SUFFIXES = ['-title', '-template', '-created'];
-    private const MIN_REQUIRED_MATCHES = 2;
-
     /**
      * @return string[]
      */
-    public function discoverLocales(NodeInterface $node): array
+    public function extract(NodeInterface $node): array
     {
         $nodeIdentifier = $node->getIdentifier();
         if (isset($this->localeCache[$nodeIdentifier])) {
@@ -39,11 +39,6 @@ class LocaleDiscoveryService
         $this->localeCache[$nodeIdentifier] = $locales;
 
         return $locales;
-    }
-
-    public function clearCache(): void
-    {
-        $this->localeCache = [];
     }
 
     /**

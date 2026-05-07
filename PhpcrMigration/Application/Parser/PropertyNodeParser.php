@@ -11,21 +11,17 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser;
 
-use Jackalope\Property;
 use PHPCR\NodeInterface;
-use PHPCR\PropertyInterface;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\FieldTypeDetectorInterface;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\LocaleDiscoveryService;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Extractor\LocaleExtractor;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Resolver\PropertyValueResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class PropertyNodeParser implements NodeParserInterface
 {
-    public const SKIP_DECODE_FIELD_TYPES = ['text_line', 'text_area'];
-
     public function __construct(
         private readonly PropertyAccessorInterface $propertyAccessor,
-        private readonly LocaleDiscoveryService $localeDiscoveryService,
-        private readonly FieldTypeDetectorInterface $plainTextFieldDetector,
+        private readonly LocaleExtractor $localeExtractor,
+        private readonly PropertyValueResolver $propertyValueResolver,
     ) {
     }
 
@@ -49,18 +45,11 @@ class PropertyNodeParser implements NodeParserInterface
             'sulu' => [],
             'jcr' => [],
         ];
-        $discoveredLocales = $this->localeDiscoveryService->discoverLocales($node);
+        $knownLocales = $this->localeExtractor->extract($node);
 
         foreach ($node->getProperties() as $property) {
-            $locale = $this->extractLocaleFromPropertyName($property->getName(), $discoveredLocales);
-
-            $skipDecode = false;
-            if (null !== $locale) {
-                $fieldType = $this->plainTextFieldDetector->getType($documentType, $property->getName(), $node, $locale);
-                $skipDecode = \in_array($fieldType, self::SKIP_DECODE_FIELD_TYPES, true);
-            }
-
-            $document = $this->parseProperty($property, $document, $discoveredLocales, $skipDecode);
+            $value = $this->propertyValueResolver->resolve($property, $node, $documentType, $knownLocales);
+            $document = $this->placeProperty($property->getName(), $value, $document, $knownLocales);
         }
 
         /** @var array<string, array<string, mixed>> $localizations */
@@ -107,10 +96,8 @@ class PropertyNodeParser implements NodeParserInterface
      *
      * @return mixed[]
      */
-    private function parseProperty(PropertyInterface $property, array $document, array $knownLocales, bool $skipDecode = false): array
+    private function placeProperty(string $name, mixed $value, array $document, array $knownLocales): array
     {
-        $name = $property->getName();
-        $value = $this->resolvePropertyValue($property, $skipDecode);
         $propertyPath = $this->getLocalizedPath($name, $knownLocales);
         $propertyPath = $this->getPropertyPath($propertyPath, $name);
 
@@ -137,23 +124,6 @@ class PropertyNodeParser implements NodeParserInterface
         return \str_contains($name, '-type#');
     }
 
-    private function resolvePropertyValue(PropertyInterface $property, bool $skipDecode = false): mixed
-    {
-        $value = $property instanceof Property ? $property->getValueForStorage() : $property->getValue();
-        if (\is_string($value) && '' !== $value && '0' !== $value) {
-            if ($skipDecode) {
-                return $value;
-            }
-
-            $decoded = \json_decode($value, true);
-            if (\JSON_ERROR_NONE === \json_last_error()) {
-                return $decoded;
-            }
-        }
-
-        return $value;
-    }
-
     /**
      * @param string[] $locales
      */
@@ -174,8 +144,6 @@ class PropertyNodeParser implements NodeParserInterface
     }
 
     /**
-     * Extracts the locale from a PHPCR property name.
-     *
      * @param string[] $locales
      */
     private function extractLocaleFromPropertyName(string $name, array $locales): ?string
