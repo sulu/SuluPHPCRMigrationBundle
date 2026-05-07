@@ -21,7 +21,7 @@ jobs:
             mysql:
                 image: mysql:8.0
                 env:
-                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_ROOT_PASSWORD: ChangeMe
                     MYSQL_DATABASE: sulu_migration_test
                 ports:
                     - 3306:3306
@@ -35,7 +35,7 @@ jobs:
             DATABASE_HOST: 127.0.0.1
             DATABASE_PORT: 3306
             DATABASE_USER: root
-            DATABASE_PASSWORD: root
+            DATABASE_PASSWORD: ChangeMe
             DATABASE_NAME: sulu_migration_test
 
         strategy:

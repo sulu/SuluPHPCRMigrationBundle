@@ -32,7 +32,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      *                                                     Keys are the type keys ("page", "article", "snippet", …).
      */
     public function __construct(
-        private readonly ?MetadataProviderInterface $formMetadataProvider,
+        private readonly MetadataProviderInterface $formMetadataProvider,
         private readonly array $templatesConfiguration = [],
     ) {
     }
@@ -47,7 +47,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     public function getType(string $type, string $propertyName, NodeInterface $node, string $locale): ?string
     {
         if ([] === $this->map) {
-            $this->buildTemplateFormIndex();
+            $this->buildTemplateFormIndex($locale);
         }
 
         $templateKey = $this->getTemplateKey($node, $locale);
@@ -55,13 +55,9 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             return null;
         }
 
-        // Strip locale prefix from property name (e.g., "i18n:en-blocks-code#0" becomes "blocks-code#0")
         $plainPropertyName = $this->stripLocalePrefix($propertyName, $locale);
-
-        // Transform PHPCR property name to mapping key
         $mappingKey = $this->transformPropertyNameToMappingKey($type, $templateKey, $plainPropertyName, $node, $locale);
 
-        // Todo: For example created is missing...
         return $this->map[$mappingKey] ?? null;
     }
 
@@ -77,20 +73,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         }
 
         return $name;
-    }
-
-    /**
-     * Returns the full mapping for debugging purposes.
-     *
-     * @return array<string, string>
-     */
-    public function getMap(): array
-    {
-        if ([] === $this->map) {
-            $this->buildTemplateFormIndex();
-        }
-
-        return $this->map;
     }
 
     /**
@@ -120,7 +102,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         NodeInterface $node,
         string $locale,
     ): string {
-        // Start with type.templateKey
         $keyParts = [$type, $templateKey];
 
         $segments = $this->parsePropertyName($propertyName);
@@ -129,14 +110,13 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             return \implode('.', $keyParts) . '.' . $propertyName;
         }
 
-        // For simple properties without blocks
         if (1 === \count($segments) && null === $segments[0]['index']) {
             $keyParts[] = $segments[0]['field'];
 
             return \implode('.', $keyParts);
         }
 
-        $phpcr_prefix = '';
+        $phpcrPrefix = '';
         $count = \count($segments);
 
         for ($i = 0; $i < $count - 1; ++$i) {
@@ -151,12 +131,12 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             if (null !== $nextIndex) {
                 if (null === $currentIndex) {
                     // Block field not yet in prefix — include field name in type lookup
-                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcr_prefix . $field . '-type#' . $nextIndex;
-                    $phpcr_prefix .= $field . '-' . $nextSegment['field'] . '#' . $nextIndex . '-';
+                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcrPrefix . $field . '-type#' . $nextIndex;
+                    $phpcrPrefix .= $field . '-' . $nextSegment['field'] . '#' . $nextIndex . '-';
                 } else {
                     // Block field already incorporated into prefix — omit field name in type lookup
-                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcr_prefix . 'type#' . $nextIndex;
-                    $phpcr_prefix .= $nextSegment['field'] . '#' . $nextIndex . '-';
+                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcrPrefix . 'type#' . $nextIndex;
+                    $phpcrPrefix .= $nextSegment['field'] . '#' . $nextIndex . '-';
                 }
 
                 if ($node->hasProperty($typePropertyName)) {
@@ -168,7 +148,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             }
         }
 
-        // Add leaf property name
         $keyParts[] = $segments[$count - 1]['field'];
 
         return \implode('.', $keyParts);
@@ -194,7 +173,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
                 $segments[] = ['field' => $matches[1], 'index' => null];
                 $remaining = $matches[2] ?? '';
             } else {
-                // Can't parse, return empty and fallback
                 return [];
             }
         }
@@ -209,19 +187,10 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      *         "type.templateKey.blockField.blockType.subField" for block fields
      *         "type.templateKey.blockField.blockType.nestedBlock.nestedType.subField" for nested blocks
      */
-    private function buildTemplateFormIndex(): void
+    private function buildTemplateFormIndex(string $locale): void
     {
-        if (!$this->formMetadataProvider instanceof MetadataProviderInterface) {
-            return;
-        }
-
         foreach (\array_keys($this->templatesConfiguration) as $typeKey) {
-            try {
-                $metadata = $this->formMetadataProvider->getMetadata((string) $typeKey, 'en', []);
-                // @phpstan-ignore-next-line
-            } catch (\Throwable) {
-                continue;
-            }
+            $metadata = $this->formMetadataProvider->getMetadata((string) $typeKey, $locale, []);
 
             if ($metadata instanceof TypedFormMetadata) {
                 foreach ($metadata->getForms() as $formKey => $formMetadata) {
@@ -242,7 +211,6 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     {
         foreach ($items as $item) {
             if ($item instanceof SectionMetadata) {
-                // Sections don't add to the path, just process their children
                 $this->processItems($item->getItems(), $prefix);
             } elseif ($item instanceof FieldMetadata) {
                 $this->processFieldMetadata($item, $prefix);
@@ -258,13 +226,11 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         $fieldPath = $prefix . '.' . $field->getName();
 
         if ('block' === $field->getType()) {
-            // For blocks, iterate through each block type and process their items
             foreach ($field->getTypes() as $blockTypeKey => $blockTypeForm) {
                 $blockPrefix = $fieldPath . '.' . $blockTypeKey;
                 $this->processItems($blockTypeForm->getItems(), $blockPrefix);
             }
         } else {
-            // Regular field - add to map
             $this->map[$fieldPath] = $field->getType();
         }
     }

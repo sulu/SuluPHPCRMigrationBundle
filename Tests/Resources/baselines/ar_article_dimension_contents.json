@@ -71,7 +71,7 @@
         "lastModified": "2025-12-03 00:00:00",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 21,
+        "route_id": 18,
         "seoData": {
             "canonicalUrl": "article-seo-url.io",
             "description": "Article seo description",
@@ -168,7 +168,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 22,
+        "route_id": 19,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -260,7 +260,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website_2",
-        "route_id": 23,
+        "route_id": 20,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -285,14 +285,14 @@
         "workflowPublished": "2026-04-14 08:24:00"
     },
     {
-        "articleUuid": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "articleUuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
         "author_id": "",
         "authored": "",
         "availableLocales": [
-            "en"
+            "de"
         ],
-        "changed": "2026-04-16 12:53:23",
-        "created": "2026-04-16 12:53:23",
+        "changed": "2026-04-30 06:32:07",
+        "created": "2026-04-30 06:32:07",
         "customizeWebspaceSettings": 0,
         "excerptData": {
             "description": null,
@@ -302,7 +302,7 @@
             "title": null
         },
         "excerptSegment": "",
-        "ghostLocale": "en",
+        "ghostLocale": "de",
         "id": 7,
         "idUsersChanger": "",
         "idUsersCreator": "",
@@ -330,13 +330,13 @@
         "workflowPublished": ""
     },
     {
-        "articleUuid": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "articleUuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
         "author_id": 1,
-        "authored": "2026-04-16 12:53:23",
+        "authored": "2026-04-30 06:32:07",
         "availableLocales": "",
-        "changed": "2026-04-16 12:53:23",
-        "created": "2026-04-16 12:53:23",
-        "customizeWebspaceSettings": 1,
+        "changed": "2026-04-30 06:32:07",
+        "created": "2026-04-30 06:32:07",
+        "customizeWebspaceSettings": 0,
         "excerptData": {
             "description": null,
             "icon": null,
@@ -350,9 +350,9 @@
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
-        "locale": "en",
+        "locale": "de",
         "mainWebspace": "website",
-        "route_id": 24,
+        "route_id": 21,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -366,21 +366,22 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "article": "<p>This article uses page_tree_route routing under a parent page.</p>",
-            "title": "Page Tree Route Article",
-            "url": {
-                "page": {
-                    "path": "/example-page-1",
-                    "uuid": "16060395-4bbf-4e1d-9c8e-fe5265890c99"
-                },
-                "suffix": "/page-tree-route-article"
-            }
+            "blocks": [
+                {
+                    "type": "quote",
+                    "quote": "{\n      \"code\": 1234,\n      \"message\": \"Bad Request\",\n      \"title\": \"My Custom error message\"\n}",
+                    "author": "Code",
+                    "settings": []
+                }
+            ],
+            "title": "Json inside Text area",
+            "url": "/blog/json-inside-text-area"
         },
-        "templateKey": "page_tree_route",
-        "title": "Page Tree Route Article",
+        "templateKey": "blog",
+        "title": "Json inside Text area",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-04-16 12:53:24"
+        "workflowPublished": "2026-04-30 06:32:07"
     },
     {
         "articleUuid": "beca5871-758e-4999-8821-6a0a09ab6d80",
@@ -452,7 +453,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 25,
+        "route_id": 22,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -499,7 +500,7 @@
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 25,
+        "route_id": 22,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -524,108 +525,6 @@
         "workflowPublished": "2026-04-14 07:27:20"
     },
     {
-        "articleUuid": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
-        "author_id": "",
-        "authored": "",
-        "availableLocales": [
-            "de"
-        ],
-        "changed": "2026-05-04 12:00:51",
-        "created": "2026-05-04 12:00:51",
-        "customizeWebspaceSettings": 0,
-        "excerptData": {
-            "description": null,
-            "icon": null,
-            "image": null,
-            "more": null,
-            "title": null
-        },
-        "excerptSegment": "",
-        "ghostLocale": "de",
-        "id": 12,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "locale": "",
-        "mainWebspace": "",
-        "route_id": "",
-        "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "draft",
-        "templateData": [],
-        "templateKey": "",
-        "title": "",
-        "version": 0,
-        "workflowPlace": "draft",
-        "workflowPublished": ""
-    },
-    {
-        "articleUuid": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
-        "author_id": 1,
-        "authored": "2026-05-04 12:00:51",
-        "availableLocales": "",
-        "changed": "2026-05-04 12:00:51",
-        "created": "2026-05-04 12:00:51",
-        "customizeWebspaceSettings": 0,
-        "excerptData": {
-            "description": null,
-            "icon": null,
-            "image": null,
-            "more": null,
-            "title": null
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 13,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "locale": "de",
-        "mainWebspace": "website",
-        "route_id": 26,
-        "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "draft",
-        "templateData": {
-            "blocks": [
-                {
-                    "type": "quote",
-                    "quote": {
-                        "code": 1234,
-                        "title": "My Custom error message",
-                        "message": "Bad Request"
-                    },
-                    "settings": []
-                }
-            ],
-            "title": "Test with json",
-            "url": "/blog/test-with-json"
-        },
-        "templateKey": "blog",
-        "title": "Test with json",
-        "version": 0,
-        "workflowPlace": "published",
-        "workflowPublished": "2026-05-04 12:00:51"
-    },
-    {
         "articleUuid": "52634b61-09b3-4224-a428-4a885dceb98f",
         "author_id": "",
         "authored": "",
@@ -644,7 +543,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 14,
+        "id": 12,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -691,13 +590,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 15,
+        "id": 13,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-03 00:00:00",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 21,
+        "route_id": 18,
         "seoData": {
             "canonicalUrl": "article-seo-url.io",
             "description": "Article seo description",
@@ -747,7 +646,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 16,
+        "id": 14,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-03 00:00:00",
@@ -800,7 +699,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 17,
+        "id": 15,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -843,13 +742,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 18,
+        "id": 16,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 22,
+        "route_id": 19,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -890,7 +789,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 19,
+        "id": 17,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -938,7 +837,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 20,
+        "id": 18,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -981,13 +880,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 21,
+        "id": 19,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website_2",
-        "route_id": 23,
+        "route_id": 20,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1028,7 +927,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 22,
+        "id": 20,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -1058,14 +957,14 @@
         "workflowPublished": "2026-04-14 08:24:00"
     },
     {
-        "articleUuid": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "articleUuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
         "author_id": "",
         "authored": "",
         "availableLocales": [
-            "en"
+            "de"
         ],
-        "changed": "2026-04-16 12:53:23",
-        "created": "2026-04-16 12:53:23",
+        "changed": "2026-04-30 06:32:07",
+        "created": "2026-04-30 06:32:07",
         "customizeWebspaceSettings": 0,
         "excerptData": {
             "description": null,
@@ -1075,8 +974,8 @@
             "title": null
         },
         "excerptSegment": "",
-        "ghostLocale": "en",
-        "id": 23,
+        "ghostLocale": "de",
+        "id": 21,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -1103,13 +1002,13 @@
         "workflowPublished": ""
     },
     {
-        "articleUuid": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "articleUuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
         "author_id": 1,
-        "authored": "2026-04-16 12:53:23",
+        "authored": "2026-04-30 06:32:07",
         "availableLocales": "",
-        "changed": "2026-04-16 12:53:23",
-        "created": "2026-04-16 12:53:23",
-        "customizeWebspaceSettings": 1,
+        "changed": "2026-04-30 06:32:07",
+        "created": "2026-04-30 06:32:07",
+        "customizeWebspaceSettings": 0,
         "excerptData": {
             "description": "",
             "icon": null,
@@ -1119,13 +1018,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 24,
+        "id": 22,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
-        "locale": "en",
+        "locale": "de",
         "mainWebspace": "website",
-        "route_id": 24,
+        "route_id": 21,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1139,30 +1038,31 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "article": "<p>This article uses page_tree_route routing under a parent page.</p>",
-            "title": "Page Tree Route Article",
-            "url": {
-                "page": {
-                    "path": "/example-page-1",
-                    "uuid": "16060395-4bbf-4e1d-9c8e-fe5265890c99"
-                },
-                "suffix": "/page-tree-route-article"
-            }
+            "blocks": [
+                {
+                    "type": "quote",
+                    "quote": "{\n      \"code\": 1234,\n      \"message\": \"Bad Request\",\n      \"title\": \"My Custom error message\"\n}",
+                    "author": "Code",
+                    "settings": []
+                }
+            ],
+            "title": "Json inside Text area",
+            "url": "/blog/json-inside-text-area"
         },
-        "templateKey": "page_tree_route",
-        "title": "Page Tree Route Article",
+        "templateKey": "blog",
+        "title": "Json inside Text area",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-04-16 12:53:24"
+        "workflowPublished": "2026-04-30 06:32:07"
     },
     {
-        "articleUuid": "41d35252-a394-4c25-8ada-e7cf58c967c0",
+        "articleUuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
         "author_id": 1,
-        "authored": "2026-04-16 12:53:23",
+        "authored": "2026-04-30 06:32:07",
         "availableLocales": "",
-        "changed": "2026-04-16 12:53:23",
-        "created": "2026-04-16 12:53:23",
-        "customizeWebspaceSettings": 1,
+        "changed": "2026-04-30 06:32:07",
+        "created": "2026-04-30 06:32:07",
+        "customizeWebspaceSettings": 0,
         "excerptData": {
             "description": "",
             "icon": null,
@@ -1172,11 +1072,11 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 25,
+        "id": 23,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
-        "locale": "en",
+        "locale": "de",
         "mainWebspace": "website",
         "route_id": "",
         "seoData": {
@@ -1192,14 +1092,21 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "article": "<p>This article uses page_tree_route routing under a parent page.</p>",
-            "title": "Page Tree Route Article"
+            "blocks": [
+                {
+                    "type": "quote",
+                    "quote": "{\n      \"code\": 1234,\n      \"message\": \"Bad Request\",\n      \"title\": \"My Custom error message\"\n}",
+                    "author": "Code",
+                    "settings": []
+                }
+            ],
+            "title": "Json inside Text area"
         },
-        "templateKey": "page_tree_route",
-        "title": "Page Tree Route Article",
-        "version": 1776344003,
+        "templateKey": "blog",
+        "title": "Json inside Text area",
+        "version": 1777530727,
         "workflowPlace": "published",
-        "workflowPublished": "2026-04-16 12:53:24"
+        "workflowPublished": "2026-04-30 06:32:07"
     },
     {
         "articleUuid": "beca5871-758e-4999-8821-6a0a09ab6d80",
@@ -1221,7 +1128,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 26,
+        "id": 24,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -1264,13 +1171,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 27,
+        "id": 25,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 25,
+        "route_id": 22,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1311,7 +1218,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 28,
+        "id": 26,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -1357,13 +1264,13 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 29,
+        "id": 27,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 27,
+        "route_id": 23,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1404,7 +1311,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 30,
+        "id": 28,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -1432,163 +1339,5 @@
         "version": 1776151640,
         "workflowPlace": "published",
         "workflowPublished": "2026-04-14 07:27:20"
-    },
-    {
-        "articleUuid": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
-        "author_id": "",
-        "authored": "",
-        "availableLocales": [
-            "de"
-        ],
-        "changed": "2026-05-04 12:00:51",
-        "created": "2026-05-04 12:00:51",
-        "customizeWebspaceSettings": 0,
-        "excerptData": {
-            "description": null,
-            "icon": null,
-            "image": null,
-            "more": null,
-            "title": null
-        },
-        "excerptSegment": "",
-        "ghostLocale": "de",
-        "id": 31,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "locale": "",
-        "mainWebspace": "",
-        "route_id": "",
-        "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "live",
-        "templateData": [],
-        "templateKey": "",
-        "title": "",
-        "version": 0,
-        "workflowPlace": "draft",
-        "workflowPublished": ""
-    },
-    {
-        "articleUuid": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
-        "author_id": 1,
-        "authored": "2026-05-04 12:00:51",
-        "availableLocales": "",
-        "changed": "2026-05-04 12:00:51",
-        "created": "2026-05-04 12:00:51",
-        "customizeWebspaceSettings": 0,
-        "excerptData": {
-            "description": "",
-            "icon": null,
-            "image": null,
-            "more": "",
-            "title": ""
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 32,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "locale": "de",
-        "mainWebspace": "website",
-        "route_id": 26,
-        "seoData": {
-            "canonicalUrl": "",
-            "description": "",
-            "keywords": "",
-            "title": ""
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "live",
-        "templateData": {
-            "blocks": [
-                {
-                    "type": "quote",
-                    "quote": {
-                        "code": 1234,
-                        "title": "My Custom error message",
-                        "message": "Bad Request"
-                    },
-                    "settings": []
-                }
-            ],
-            "title": "Test with json",
-            "url": "/blog/test-with-json"
-        },
-        "templateKey": "blog",
-        "title": "Test with json",
-        "version": 0,
-        "workflowPlace": "published",
-        "workflowPublished": "2026-05-04 12:00:51"
-    },
-    {
-        "articleUuid": "fdb5e523-9813-44ce-9dab-faeb26de5a93",
-        "author_id": 1,
-        "authored": "2026-05-04 12:00:51",
-        "availableLocales": "",
-        "changed": "2026-05-04 12:00:51",
-        "created": "2026-05-04 12:00:51",
-        "customizeWebspaceSettings": 0,
-        "excerptData": {
-            "description": "",
-            "icon": null,
-            "image": null,
-            "more": "",
-            "title": ""
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 33,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "locale": "de",
-        "mainWebspace": "website",
-        "route_id": "",
-        "seoData": {
-            "canonicalUrl": "",
-            "description": "",
-            "keywords": "",
-            "title": ""
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "draft",
-        "templateData": {
-            "blocks": [
-                {
-                    "type": "quote",
-                    "quote": {
-                        "code": 1234,
-                        "title": "My Custom error message",
-                        "message": "Bad Request"
-                    },
-                    "settings": []
-                }
-            ],
-            "title": "Test with json"
-        },
-        "templateKey": "blog",
-        "title": "Test with json",
-        "version": 1777896051,
-        "workflowPlace": "published",
-        "workflowPublished": "2026-05-04 12:00:51"
     }
 ]

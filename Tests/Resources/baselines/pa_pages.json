@@ -7,7 +7,7 @@
         "idUsersCreator": "",
         "lft": 22,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 27,
+        "rgt": 25,
         "uuid": "138b926f-6b6f-4cab-b1d9-961b3b2a957d",
         "webspaceKey": "website"
     },
@@ -53,9 +53,9 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 28,
+        "lft": 26,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 29,
+        "rgt": 27,
         "uuid": "53702843-f929-4976-8f6a-7aad5d18c115",
         "webspaceKey": "website"
     },
@@ -96,18 +96,6 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-04-16 12:53:21",
-        "created": "2026-04-16 12:53:21",
-        "depth": 0,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lft": 33,
-        "parent_id": "",
-        "rgt": 34,
-        "uuid": "9a4e1b0d-4d43-4688-98a8-78cf99ffb409",
-        "webspaceKey": "website_2"
-    },
-    {
         "changed": "2025-12-09 10:52:15",
         "created": "2025-12-09 10:52:15",
         "depth": 1,
@@ -120,7 +108,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-05-04 12:06:49",
+        "changed": "2026-05-07 12:27:46",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": "",
@@ -161,22 +149,10 @@
         "depth": 1,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 30,
+        "lft": 28,
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
-        "rgt": 31,
+        "rgt": 29,
         "uuid": "c4440a5d-9012-4e75-8a0e-81005381fac8",
-        "webspaceKey": "website"
-    },
-    {
-        "changed": "2026-05-04 12:01:14",
-        "created": "2026-05-04 12:01:14",
-        "depth": 2,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lft": 25,
-        "parent_id": "138b926f-6b6f-4cab-b1d9-961b3b2a957d",
-        "rgt": 26,
-        "uuid": "c50e440b-3774-4ddb-8287-30dd9cc4a9cb",
         "webspaceKey": "website"
     },
     {
@@ -199,7 +175,7 @@
         "idUsersCreator": "",
         "lft": 1,
         "parent_id": "",
-        "rgt": 32,
+        "rgt": 30,
         "uuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "webspaceKey": "website"
     }

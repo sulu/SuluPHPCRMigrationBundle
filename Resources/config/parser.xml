@@ -6,9 +6,9 @@
         <service id="sulu_phpcr_migration.locale_discovery_service"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\LocaleDiscoveryService"/>
 
-        <service id="sulu_phpcr_migration.plain_text_field_detector"
+        <service id="sulu_phpcr_migration.field_type_detector"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\FormMetadataFieldTypeDetector">
-            <argument type="service" id="sulu_admin.form_metadata_provider" on-invalid="null"/>
+            <argument type="service" id="sulu_admin.form_metadata_provider"/>
             <argument>%sulu_admin.templates.configuration%</argument>
         </service>
 
@@ -16,7 +16,7 @@
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\PropertyNodeParser">
             <argument type="service" id="property_accessor"/>
             <argument type="service" id="sulu_phpcr_migration.locale_discovery_service"/>
-            <argument type="service" id="sulu_phpcr_migration.plain_text_field_detector" on-invalid="null"/>
+            <argument type="service" id="sulu_phpcr_migration.field_type_detector"/>
 
             <tag name="sulu_phpcr_migration.node_parser"/>
         </service>

@@ -20,10 +20,12 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class PropertyNodeParser implements NodeParserInterface
 {
+    public const SKIP_DECODE_FIELD_TYPES = ['text_line', 'text_area'];
+
     public function __construct(
         private readonly PropertyAccessorInterface $propertyAccessor,
         private readonly LocaleDiscoveryService $localeDiscoveryService,
-        private readonly ?FieldTypeDetectorInterface $plainTextFieldDetector = null,
+        private readonly FieldTypeDetectorInterface $plainTextFieldDetector,
     ) {
     }
 
@@ -53,9 +55,9 @@ class PropertyNodeParser implements NodeParserInterface
             $locale = $this->extractLocaleFromPropertyName($property->getName(), $discoveredLocales);
 
             $skipDecode = false;
-            if ($this->plainTextFieldDetector instanceof FieldTypeDetectorInterface && null !== $locale) {
+            if (null !== $locale) {
                 $fieldType = $this->plainTextFieldDetector->getType($documentType, $property->getName(), $node, $locale);
-                $skipDecode = \in_array($fieldType, ['text_line', 'text_area'], true);
+                $skipDecode = \in_array($fieldType, self::SKIP_DECODE_FIELD_TYPES, true);
             }
 
             $document = $this->parseProperty($property, $document, $discoveredLocales, $skipDecode);
@@ -157,48 +159,18 @@ class PropertyNodeParser implements NodeParserInterface
      */
     private function getLocalizedPath(string &$name, array $locales = []): string
     {
-        $propertyPath = '';
         if (\str_starts_with($name, 'i18n:')) {
-            $afterPrefix = \substr($name, 5);
+            $locale = $this->extractLocaleFromPropertyName($name, $locales);
+            if (null !== $locale) {
+                $name = \substr($name, \strlen('i18n:' . $locale . '-'));
 
-            $notMatchingLocales = [];
-            foreach ($locales as $locale) {
-                if (\str_starts_with($afterPrefix, $locale . '-')) {
-                    $remaining = \substr($afterPrefix, \strlen($locale) + 1);
-
-                    // Check if remaining starts with another locale (e.g., "de" matched but "de-ch" is the actual locale)
-                    $matchingLocales = \array_diff($locales, \array_merge($notMatchingLocales, [$locale]));
-                    if ($this->startsWithAnotherLocale($remaining, $locale, $matchingLocales)) {
-                        $notMatchingLocales[] = $locale;
-                        continue;
-                    }
-
-                    $propertyPath = '[localizations][' . $locale . ']';
-                    $name = $remaining;
-
-                    return $propertyPath;
-                }
+                return '[localizations][' . $locale . ']';
             }
         } elseif ($this->isUnLocalizedProperty($name)) {
-            $propertyPath = '[localizations][null]';
+            return '[localizations][null]';
         }
 
-        return $propertyPath;
-    }
-
-    /**
-     * @param string[] $locales
-     */
-    private function startsWithAnotherLocale(string $remaining, string $matchedLocale, array $locales): bool
-    {
-        foreach ($locales as $locale) {
-            // Check if remaining starts with a locale that extends the matched one (e.g., "ch-" for "de-ch")
-            if (\str_starts_with($matchedLocale . '-' . $remaining, $locale . '-')) {
-                return true;
-            }
-        }
-
-        return false;
+        return '';
     }
 
     /**
