@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query;
 
 use Doctrine\DBAL\Connection;
+use Sulu\Page\Domain\Model\Page;
 
 class UpdateAccessControlEntityClassQuery implements PostMigrationQueryInterface
 {
@@ -22,7 +23,7 @@ class UpdateAccessControlEntityClassQuery implements PostMigrationQueryInterface
         $connection->executeStatement(
             'UPDATE se_access_controls SET entityClass = :newEntityClass WHERE entityClass = :oldEntityClass',
             [
-                'newEntityClass' => 'Sulu\\Page\\Domain\\Model\\Page',
+                'newEntityClass' => Page::class,
                 'oldEntityClass' => 'Sulu\\Component\\Content\\Document\\Behavior\\SecurityBehavior',
             ]
         );

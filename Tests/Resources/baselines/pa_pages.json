@@ -96,18 +96,6 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-04-16 12:53:21",
-        "created": "2026-04-16 12:53:21",
-        "depth": 0,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lft": 31,
-        "parent_id": "",
-        "rgt": 32,
-        "uuid": "9a4e1b0d-4d43-4688-98a8-78cf99ffb409",
-        "webspaceKey": "website_2"
-    },
-    {
         "changed": "2025-12-09 10:52:15",
         "created": "2025-12-09 10:52:15",
         "depth": 1,
@@ -120,7 +108,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-04-26 00:36:40",
+        "changed": "2026-05-07 12:27:46",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": "",
