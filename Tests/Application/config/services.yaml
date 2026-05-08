@@ -1,0 +1,6 @@
+services:
+    # Functional tests resolve the migration command from the container; private services are
+    # not reachable, so expose it under the FQCN as a public alias.
+    Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand:
+        alias: sulu_phpcr_migration.migrate_command
+        public: true

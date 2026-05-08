@@ -112,13 +112,10 @@ vendor/bin/phpunit --group optional
 
 ### Environment Variables
 
-Tests require MySQL:
+Tests require MySQL. The default in `Tests/Application/.env` already points at a local MySQL on `127.0.0.1:3306`; override via `DATABASE_URL` if needed:
 
 ```bash
-export DATABASE_HOST=127.0.0.1
-export DATABASE_USER=root
-export DATABASE_PASSWORD=ChangeMe
-export DATABASE_NAME=sulu_migration_test
+export DATABASE_URL="mysql://root:ChangeMe@127.0.0.1:3306/sulu_migration?serverVersion=8.0&charset=utf8mb4"
 ```
 
 ### Running PostgreSQL Tests Locally
@@ -137,7 +134,7 @@ pgloader ../Resources/pgloader.load
 
 # Run tests against PostgreSQL
 cd ../..
-DATABASE_DRIVER=pdo_pgsql DATABASE_PORT=5432 DATABASE_USER=postgres DATABASE_PASSWORD=postgres vendor/bin/phpunit
+DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sulu_migration?serverVersion=16&charset=UTF8" vendor/bin/phpunit
 ```
 
 **Why both MySQL and PostgreSQL?**

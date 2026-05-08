@@ -105,6 +105,11 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         return null;
     }
 
+    /**
+     * Sulu pages, articles and snippets store their template under `i18n:{locale}-template`.
+     * Document types that keep the template on a non-localized property are not supported here:
+     * `getType()` returns null for them and the property falls back to JSON decoding.
+     */
     private function getTemplateKey(NodeInterface $node, string $locale): ?string
     {
         $cacheKey = $node->getIdentifier() . '.' . $locale;
@@ -223,6 +228,9 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         foreach (\array_keys($this->templatesConfiguration) as $typeKey) {
             $metadata = $this->formMetadataProvider->getMetadata((string) $typeKey, $locale, []);
 
+            // Only TypedFormMetadata (page/article/snippet) is indexed. Other metadata shapes
+            // contribute nothing to the map, so getType() returns null for their properties
+            // and they keep the legacy JSON-decoding behaviour.
             if ($metadata instanceof TypedFormMetadata) {
                 foreach ($metadata->getForms() as $formKey => $formMetadata) {
                     $prefix = $typeKey . '.' . $formKey;
