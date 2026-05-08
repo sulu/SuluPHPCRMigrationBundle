@@ -22,14 +22,8 @@ interface FieldTypeDetectorInterface
      *
      * @param string $documentType The content type (e.g. "page", "article", "snippet")
      * @param string $propertyName The PHPCR property name (e.g. "i18n:en-title", "i18n:en-blocks-code#0")
-     * @param string[] $knownLocales Locales discovered for the node; the detector picks one to look up the template
      *
      * @return string|null The field type (e.g. "text_editor", "text_line") or null if not found
      */
-    public function getType(
-        string $documentType,
-        string $propertyName,
-        NodeInterface $node,
-        array $knownLocales,
-    ): ?string;
+    public function getType(string $documentType, string $propertyName, NodeInterface $node): ?string;
 }

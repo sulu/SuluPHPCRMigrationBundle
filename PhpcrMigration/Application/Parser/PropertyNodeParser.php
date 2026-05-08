@@ -45,11 +45,10 @@ class PropertyNodeParser implements NodeParserInterface
             'sulu' => [],
             'jcr' => [],
         ];
-        $knownLocales = $this->localeExtractor->extract($node);
 
         foreach ($node->getProperties() as $property) {
-            $value = $this->propertyValueResolver->resolve($property, $node, $documentType, $knownLocales);
-            $document = $this->placeProperty($property->getName(), $value, $document, $knownLocales);
+            $value = $this->propertyValueResolver->resolve($property, $node, $documentType);
+            $document = $this->setProperty($property->getName(), $value, $document, $node);
         }
 
         /** @var array<string, array<string, mixed>> $localizations */
@@ -92,13 +91,12 @@ class PropertyNodeParser implements NodeParserInterface
 
     /**
      * @param mixed[] $document
-     * @param string[] $knownLocales
      *
      * @return mixed[]
      */
-    private function placeProperty(string $name, mixed $value, array $document, array $knownLocales): array
+    private function setProperty(string $name, mixed $value, array $document, NodeInterface $node): array
     {
-        $propertyPath = $this->getLocalizedPath($name, $knownLocales);
+        $propertyPath = $this->getLocalizedPath($name, $node);
         $propertyPath = $this->getPropertyPath($propertyPath, $name);
 
         if ($this->isBlockTypeProperty($name) && (\is_scalar($value) || (\is_object($value) && \method_exists($value, '__toString')))) {
@@ -124,13 +122,10 @@ class PropertyNodeParser implements NodeParserInterface
         return \str_contains($name, '-type#');
     }
 
-    /**
-     * @param string[] $locales
-     */
-    private function getLocalizedPath(string &$name, array $locales = []): string
+    private function getLocalizedPath(string &$name, NodeInterface $node): string
     {
         if (\str_starts_with($name, LocaleExtractor::I18N_PREFIX)) {
-            $locale = $this->localeExtractor->matchLocale($name, $locales);
+            $locale = $this->localeExtractor->matchLocale($name, $node);
             if (null !== $locale) {
                 $name = $this->localeExtractor->stripPrefix($name, $locale);
 

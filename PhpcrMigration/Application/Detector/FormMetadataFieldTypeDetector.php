@@ -49,15 +49,10 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      *
      * @param string $documentType The content type (e.g. "page", "article", "snippet")
      * @param string $propertyName The PHPCR property name (e.g. "i18n:en-title", "i18n:en-blocks-code#0", "i18n:en-blocks-blocks#0-code#0")
-     * @param string[] $knownLocales Locales discovered for the node; used to resolve which locale to look up the template under
      */
-    public function getType(
-        string $documentType,
-        string $propertyName,
-        NodeInterface $node,
-        array $knownLocales,
-    ): ?string {
-        $locale = $this->resolveLocale($propertyName, $knownLocales);
+    public function getType(string $documentType, string $propertyName, NodeInterface $node): ?string
+    {
+        $locale = $this->resolveLocale($propertyName, $node);
         if (null === $locale) {
             return null;
         }
@@ -85,24 +80,16 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         return $this->map[$mappingKey] ?? null;
     }
 
-    /**
-     * @param string[] $knownLocales
-     */
-    private function resolveLocale(string $propertyName, array $knownLocales): ?string
+    private function resolveLocale(string $propertyName, NodeInterface $node): ?string
     {
-        $matched = $this->localeExtractor->matchLocale($propertyName, $knownLocales);
+        $matched = $this->localeExtractor->matchLocale($propertyName, $node);
         if (null !== $matched) {
             return $matched;
         }
 
-        // Fallback: use the first known locale to look up the (locale-independent)
-        // template structure for unlocalized properties. $knownLocales may use
-        // associative keys ({locale} => {locale}), so we cannot index by 0.
-        foreach ($knownLocales as $locale) {
-            return $locale;
-        }
-
-        return null;
+        // Fallback: use any known locale to look up the (locale-independent)
+        // template structure for unlocalized properties.
+        return $this->localeExtractor->firstLocale($node);
     }
 
     /**

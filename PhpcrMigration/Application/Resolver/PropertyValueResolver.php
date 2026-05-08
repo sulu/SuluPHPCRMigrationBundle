@@ -27,15 +27,8 @@ final class PropertyValueResolver
     ) {
     }
 
-    /**
-     * @param string[] $knownLocales
-     */
-    public function resolve(
-        PropertyInterface $property,
-        NodeInterface $node,
-        string $documentType,
-        array $knownLocales,
-    ): mixed {
+    public function resolve(PropertyInterface $property, NodeInterface $node, string $documentType): mixed
+    {
         $value = $property instanceof Property
             ? $property->getValueForStorage()
             : $property->getValue();
@@ -44,7 +37,7 @@ final class PropertyValueResolver
             return $value;
         }
 
-        if ($this->shouldSkipDecode($property->getName(), $node, $documentType, $knownLocales)) {
+        if ($this->shouldSkipDecode($property->getName(), $node, $documentType)) {
             return $value;
         }
 
@@ -53,21 +46,9 @@ final class PropertyValueResolver
         return \JSON_ERROR_NONE === \json_last_error() ? $decoded : $value;
     }
 
-    /**
-     * @param string[] $knownLocales
-     */
-    private function shouldSkipDecode(
-        string $propertyName,
-        NodeInterface $node,
-        string $documentType,
-        array $knownLocales,
-    ): bool {
-        $fieldType = $this->fieldTypeDetector->getType(
-            $documentType,
-            $propertyName,
-            $node,
-            $knownLocales,
-        );
+    private function shouldSkipDecode(string $propertyName, NodeInterface $node, string $documentType): bool
+    {
+        $fieldType = $this->fieldTypeDetector->getType($documentType, $propertyName, $node);
 
         return \in_array($fieldType, self::SKIP_DECODE_FIELD_TYPES, true);
     }

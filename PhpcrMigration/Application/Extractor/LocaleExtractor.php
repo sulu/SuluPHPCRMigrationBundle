@@ -52,13 +52,12 @@ class LocaleExtractor
 
     /**
      * Returns the locale that matches the `i18n:{locale}-` prefix on the given property name.
-     * Returns null if the name is not i18n-prefixed or no known locale matches.
+     * Returns null if the name is not i18n-prefixed or no known locale on the node matches.
      *
-     * Expects $knownLocales sorted longest-first (the result of {@see extract()} already is).
-     *
-     * @param string[] $knownLocales
+     * Relies on {@see extract()} returning locales longest-first so that nested locales
+     * like "de-ch" are matched before "de".
      */
-    public function matchLocale(string $propertyName, array $knownLocales): ?string
+    public function matchLocale(string $propertyName, NodeInterface $node): ?string
     {
         if (!\str_starts_with($propertyName, self::I18N_PREFIX)) {
             return null;
@@ -66,10 +65,25 @@ class LocaleExtractor
 
         $afterPrefix = \substr($propertyName, \strlen(self::I18N_PREFIX));
 
-        foreach ($knownLocales as $locale) {
+        foreach ($this->extract($node) as $locale) {
             if (\str_starts_with($afterPrefix, $locale . '-')) {
                 return $locale;
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns any one of the locales present on the node, or null if none.
+     *
+     * Useful when the caller needs an arbitrary locale to look up locale-independent
+     * structures (e.g. template metadata) for an unlocalized property.
+     */
+    public function firstLocale(NodeInterface $node): ?string
+    {
+        foreach ($this->extract($node) as $locale) {
+            return $locale;
         }
 
         return null;
