@@ -9,6 +9,7 @@
         <service id="sulu_phpcr_migration.field_type_detector"
                  class="Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Detector\FormMetadataFieldTypeDetector">
             <argument type="service" id="sulu_admin.form_metadata_provider"/>
+            <argument type="service" id="sulu_phpcr_migration.locale_extractor"/>
             <argument>%sulu_admin.templates.configuration%</argument>
         </service>
 

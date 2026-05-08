@@ -23,6 +23,12 @@ services:
 
     Sulu\Component\DocumentManager\DocumentManagerInterface: '@sulu_document_manager.document_manager'
 
+    App\PhpcrFixture\UnlocalizedFieldsPageFixture:
+        arguments:
+            $documentManager: '@sulu_document_manager.document_manager'
+            $defaultSession: '@doctrine_phpcr.admin.default_session'
+            $liveSession: '@doctrine_phpcr.admin.live_session'
+
     App\PhpcrFixture\Command\ApplyFixturesCommand:
         arguments:
             $fixtures: !tagged_iterator sulu_phpcr_migration.fixture

@@ -19,6 +19,7 @@ use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\ItemMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\SectionMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\TypedFormMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\MetadataProviderInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Extractor\LocaleExtractor;
 
 class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
 {
@@ -28,11 +29,17 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     private array $map = [];
 
     /**
+     * @var array<string, string|null> Cache of resolved template keys per "{nodeIdentifier}.{locale}"
+     */
+    private array $templateKeyCache = [];
+
+    /**
      * @param array<string, mixed> $templatesConfiguration Value of the sulu_admin.templates.configuration parameter.
      *                                                     Keys are the type keys ("page", "article", "snippet", …).
      */
     public function __construct(
         private readonly MetadataProviderInterface $formMetadataProvider,
+        private readonly LocaleExtractor $localeExtractor,
         private readonly array $templatesConfiguration = [],
     ) {
     }
@@ -56,6 +63,8 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         }
 
         if ([] === $this->map) {
+            // Form metadata is locale-independent in structure, so the map can be built once
+            // with any available locale and shared across subsequent calls.
             $this->buildTemplateFormIndex($locale);
         }
 
@@ -64,7 +73,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             return null;
         }
 
-        $plainPropertyName = $this->stripLocalePrefix($propertyName, $locale);
+        $plainPropertyName = $this->localeExtractor->stripPrefix($propertyName, $locale);
         $mappingKey = $this->transformPropertyNameToMappingKey(
             $documentType,
             $templateKey,
@@ -81,45 +90,37 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      */
     private function resolveLocale(string $propertyName, array $knownLocales): ?string
     {
-        if (\str_starts_with($propertyName, 'i18n:')) {
-            $afterPrefix = \substr($propertyName, 5);
-            $sortedLocales = $knownLocales;
-            \usort($sortedLocales, fn ($a, $b) => \strlen($b) - \strlen($a));
-            foreach ($sortedLocales as $locale) {
-                if (\str_starts_with($afterPrefix, $locale . '-')) {
-                    return $locale;
-                }
-            }
+        $matched = $this->localeExtractor->matchLocale($propertyName, $knownLocales);
+        if (null !== $matched) {
+            return $matched;
         }
 
-        return $knownLocales[0] ?? null;
-    }
-
-    /**
-     * Strips the locale prefix from a PHPCR property name.
-     * E.g., "i18n:en-blocks-code#0" becomes "blocks-code#0".
-     */
-    private function stripLocalePrefix(string $name, string $locale): string
-    {
-        $prefix = 'i18n:' . $locale . '-';
-        if (\str_starts_with($name, $prefix)) {
-            return \substr($name, \strlen($prefix));
+        // Fallback: use the first known locale to look up the (locale-independent)
+        // template structure for unlocalized properties. $knownLocales may use
+        // associative keys ({locale} => {locale}), so we cannot index by 0.
+        foreach ($knownLocales as $locale) {
+            return $locale;
         }
 
-        return $name;
+        return null;
     }
 
     private function getTemplateKey(NodeInterface $node, string $locale): ?string
     {
-        $templateProperty = 'i18n:' . $locale . '-template';
+        $cacheKey = $node->getIdentifier() . '.' . $locale;
+        if (\array_key_exists($cacheKey, $this->templateKeyCache)) {
+            return $this->templateKeyCache[$cacheKey];
+        }
+
+        $templateProperty = LocaleExtractor::I18N_PREFIX . $locale . '-template';
 
         if (!$node->hasProperty($templateProperty)) {
-            return null;
+            return $this->templateKeyCache[$cacheKey] = null;
         }
 
         $value = $node->getPropertyValue($templateProperty);
 
-        return \is_string($value) && '' !== $value ? $value : null;
+        return $this->templateKeyCache[$cacheKey] = \is_string($value) && '' !== $value ? $value : null;
     }
 
     /**
@@ -149,6 +150,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
 
         $phpcrPrefix = '';
         $count = \count($segments);
+        $localePrefix = LocaleExtractor::I18N_PREFIX . $locale . '-';
 
         for ($i = 0; $i < $count - 1; ++$i) {
             $segment = $segments[$i];
@@ -162,11 +164,11 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             if (null !== $nextIndex) {
                 if (null === $currentIndex) {
                     // Block field not yet in prefix — include field name in type lookup
-                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcrPrefix . $field . '-type#' . $nextIndex;
+                    $typePropertyName = $localePrefix . $phpcrPrefix . $field . '-type#' . $nextIndex;
                     $phpcrPrefix .= $field . '-' . $nextSegment['field'] . '#' . $nextIndex . '-';
                 } else {
                     // Block field already incorporated into prefix — omit field name in type lookup
-                    $typePropertyName = 'i18n:' . $locale . '-' . $phpcrPrefix . 'type#' . $nextIndex;
+                    $typePropertyName = $localePrefix . $phpcrPrefix . 'type#' . $nextIndex;
                     $phpcrPrefix .= $nextSegment['field'] . '#' . $nextIndex . '-';
                 }
 

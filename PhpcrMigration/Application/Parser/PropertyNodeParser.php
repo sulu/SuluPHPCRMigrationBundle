@@ -129,10 +129,10 @@ class PropertyNodeParser implements NodeParserInterface
      */
     private function getLocalizedPath(string &$name, array $locales = []): string
     {
-        if (\str_starts_with($name, 'i18n:')) {
-            $locale = $this->extractLocaleFromPropertyName($name, $locales);
+        if (\str_starts_with($name, LocaleExtractor::I18N_PREFIX)) {
+            $locale = $this->localeExtractor->matchLocale($name, $locales);
             if (null !== $locale) {
-                $name = \substr($name, \strlen('i18n:' . $locale . '-'));
+                $name = $this->localeExtractor->stripPrefix($name, $locale);
 
                 return '[localizations][' . $locale . ']';
             }
@@ -141,28 +141,6 @@ class PropertyNodeParser implements NodeParserInterface
         }
 
         return '';
-    }
-
-    /**
-     * @param string[] $locales
-     */
-    private function extractLocaleFromPropertyName(string $name, array $locales): ?string
-    {
-        if (!\str_starts_with($name, 'i18n:')) {
-            return null;
-        }
-
-        $afterPrefix = \substr($name, 5);
-        $sortedLocales = $locales;
-        \usort($sortedLocales, fn ($a, $b) => \strlen($b) - \strlen($a));
-
-        foreach ($sortedLocales as $locale) {
-            if (\str_starts_with($afterPrefix, $locale . '-')) {
-                return $locale;
-            }
-        }
-
-        return null;
     }
 
     private function getPropertyPath(string $propertyPath, string $name): string
