@@ -1,22 +1,6 @@
 [
     {
         "category_id": 2,
-        "page_dimension_content_id": 5
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 5
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 6
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 6
-    },
-    {
-        "category_id": 2,
         "page_dimension_content_id": 8
     },
     {
@@ -33,66 +17,82 @@
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 41
+        "page_dimension_content_id": 11
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 41
+        "page_dimension_content_id": 11
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 42
+        "page_dimension_content_id": 12
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 42
+        "page_dimension_content_id": 12
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 43
+        "page_dimension_content_id": 51
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 43
+        "page_dimension_content_id": 51
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 44
+        "page_dimension_content_id": 52
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 44
+        "page_dimension_content_id": 52
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 46
+        "page_dimension_content_id": 53
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 46
+        "page_dimension_content_id": 53
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 47
+        "page_dimension_content_id": 54
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 47
+        "page_dimension_content_id": 54
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 48
+        "page_dimension_content_id": 56
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 48
+        "page_dimension_content_id": 56
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 49
+        "page_dimension_content_id": 57
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 49
+        "page_dimension_content_id": 57
+    },
+    {
+        "category_id": 2,
+        "page_dimension_content_id": 58
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 58
+    },
+    {
+        "category_id": 2,
+        "page_dimension_content_id": 59
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 59
     }
 ]
