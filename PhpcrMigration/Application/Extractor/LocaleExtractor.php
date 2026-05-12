@@ -22,10 +22,12 @@ class LocaleExtractor
     private const VALID_SUFFIXES = ['-title', '-template', '-created'];
     private const MIN_REQUIRED_MATCHES = 2;
 
+    private ?string $cachedNodeIdentifier = null;
+
     /**
-     * @var array<string, array<string, string>>
+     * @var array<string, string>
      */
-    private array $localeCache = [];
+    private array $cachedLocales = [];
 
     /**
      * Extracts the locales present on a node.
@@ -34,20 +36,24 @@ class LocaleExtractor
      * for prefix matches handle nested locales (e.g. "de-ch" vs "de") correctly
      * without needing to sort themselves.
      *
+     * Memoizes the result for the most recently seen node. Nodes are processed one
+     * at a time during migration, so size-1 memoization keeps the per-node hot path
+     * fast without growing memory across the run.
+     *
      * @return array<string, string>
      */
     public function extract(NodeInterface $node): array
     {
         $nodeIdentifier = $node->getIdentifier();
-        if (isset($this->localeCache[$nodeIdentifier])) {
-            return $this->localeCache[$nodeIdentifier];
+        if ($nodeIdentifier === $this->cachedNodeIdentifier) {
+            return $this->cachedLocales;
         }
 
         $locales = $this->extractValidatedLocales($node);
         \uksort($locales, fn ($a, $b) => \strlen($b) - \strlen($a));
-        $this->localeCache[$nodeIdentifier] = $locales;
+        $this->cachedNodeIdentifier = $nodeIdentifier;
 
-        return $locales;
+        return $this->cachedLocales = $locales;
     }
 
     /**

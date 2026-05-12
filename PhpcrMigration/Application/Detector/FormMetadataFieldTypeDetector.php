@@ -28,10 +28,12 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      */
     private array $map = [];
 
+    private ?string $cachedTemplateNodeIdentifier = null;
+
     /**
-     * @var array<string, string|null> Cache of resolved template keys per "{nodeIdentifier}.{locale}"
+     * @var array<string, string|null> Per-locale template keys for the currently-cached node
      */
-    private array $templateKeyCache = [];
+    private array $cachedTemplateKeysForNode = [];
 
     /**
      * @param array<string, mixed> $templatesConfiguration Value of the sulu_admin.templates.configuration parameter.
@@ -99,20 +101,25 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      */
     private function getTemplateKey(NodeInterface $node, string $locale): ?string
     {
-        $cacheKey = $node->getIdentifier() . '.' . $locale;
-        if (\array_key_exists($cacheKey, $this->templateKeyCache)) {
-            return $this->templateKeyCache[$cacheKey];
+        $nodeIdentifier = $node->getIdentifier();
+        if ($nodeIdentifier !== $this->cachedTemplateNodeIdentifier) {
+            $this->cachedTemplateNodeIdentifier = $nodeIdentifier;
+            $this->cachedTemplateKeysForNode = [];
+        }
+
+        if (\array_key_exists($locale, $this->cachedTemplateKeysForNode)) {
+            return $this->cachedTemplateKeysForNode[$locale];
         }
 
         $templateProperty = LocaleExtractor::I18N_PREFIX . $locale . '-template';
 
         if (!$node->hasProperty($templateProperty)) {
-            return $this->templateKeyCache[$cacheKey] = null;
+            return $this->cachedTemplateKeysForNode[$locale] = null;
         }
 
         $value = $node->getPropertyValue($templateProperty);
 
-        return $this->templateKeyCache[$cacheKey] = \is_string($value) && '' !== $value ? $value : null;
+        return $this->cachedTemplateKeysForNode[$locale] = \is_string($value) && '' !== $value ? $value : null;
     }
 
     /**
