@@ -18,9 +18,6 @@ use Sulu\Bundle\TestBundle\Kernel\SuluTestKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Minimal test kernel for functional tests.
- */
 class Kernel extends SuluTestKernel
 {
     public function registerBundles(): iterable
@@ -38,66 +35,29 @@ class Kernel extends SuluTestKernel
     {
         parent::registerContainerConfiguration($loader);
 
+        $loader->load(__DIR__ . '/config/services.yaml');
+
         $loader->load(function(ContainerBuilder $container): void {
-            // Manually configure DBAL connection (without DoctrineBundle)
-            $driver = $_SERVER['DATABASE_DRIVER'] ?? $_ENV['DATABASE_DRIVER'] ?? 'pdo_mysql';
-            $isPgsql = 'pdo_pgsql' === $driver;
-            $charset = $isPgsql ? 'UTF8' : 'utf8mb4';
-            $serverVersion = $isPgsql ? '16.0' : '8.0';
-
-            // Override the Doctrine DBAL connection that SuluTestKernel sets up via DATABASE_URL.
-            // url=null prevents DoctrineBundle from using DATABASE_URL (which has MySQL-specific params).
-            // server_version must be explicit — DoctrineBundle rejects empty strings for PostgreSQL.
-            $container->loadFromExtension('doctrine', [
-                'dbal' => [
-                    'url' => null,
-                    'dbname_suffix' => '',
-                    'driver' => $driver,
-                    'server_version' => $serverVersion,
-                    'host' => '%env(DATABASE_HOST)%',
-                    'port' => '%env(int:DATABASE_PORT)%',
-                    'user' => '%env(DATABASE_USER)%',
-                    'password' => '%env(DATABASE_PASSWORD)%',
-                    'dbname' => '%env(DATABASE_NAME)%',
-                    'charset' => $charset,
-                ],
-            ]);
-
-            // Set default webspace parameters to test the fallback path in ArticlePersister.
-            // Articles without explicit webspace in PHPCR should get these defaults applied.
+            // SuluArticleBundle declares default_main_webspace / default_additional_webspaces
+            // as configurable but ships no defaults. These values exercise ArticlePersister's
+            // fallback path for articles without an explicit webspace in PHPCR.
             $container->setParameter('sulu_article.default_main_webspace', ['default' => 'website']);
             $container->setParameter('sulu_article.default_additional_webspaces', ['default' => ['website_2']]);
 
-            // Configure template directories so FormMetadataFieldTypeDetector can identify
-            // text_area/text_line fields and skip JSON decoding for them.
+            // sulu/sulu auto-prepends '%kernel.project_dir%/config/templates/...' but our
+            // templates live under sulu30. Point the detector at them explicitly.
             $container->loadFromExtension('sulu_admin', [
                 'templates' => [
-                    'article' => [
-                        'directories' => ['articles' => __DIR__ . '/sulu30/config/templates/articles'],
-                    ],
-                    'page' => [
-                        'directories' => ['pages' => __DIR__ . '/sulu30/config/templates/pages'],
-                    ],
-                    'snippet' => [
-                        'directories' => ['snippets' => __DIR__ . '/sulu30/config/templates/snippets'],
-                    ],
+                    'article' => ['directories' => ['articles' => __DIR__ . '/sulu30/config/templates/articles']],
+                    'page' => ['directories' => ['pages' => __DIR__ . '/sulu30/config/templates/pages']],
+                    'snippet' => ['directories' => ['snippets' => __DIR__ . '/sulu30/config/templates/snippets']],
                 ],
             ]);
 
             $container->loadFromExtension('sulu_phpcr_migration', [
                 'DSN' => 'dbal://default?workspace=default',
-                'target' => [
-                    'dbal' => [
-                        'connection' => 'default',
-                    ],
-                ],
+                'target' => ['dbal' => ['connection' => 'default']],
             ]);
-
-            // Make migration command publicly accessible for tests
-            $container->setAlias(
-                \Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand::class,
-                'sulu_phpcr_migration.migrate_command'
-            )->setPublic(true);
         });
     }
 }

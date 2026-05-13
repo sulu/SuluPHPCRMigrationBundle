@@ -13,9 +13,9 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser;
 
 use PHPCR\NodeInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\LegacyRouteTableNotFoundException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Extractor\LocaleExtractor;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\AbstractPersister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\LocaleDiscoveryService;
 
 class ArticleNodeParser implements NodeParserInterface
 {
@@ -23,7 +23,7 @@ class ArticleNodeParser implements NodeParserInterface
 
     public function __construct(
         private readonly EntityRepositoryInterface $repository,
-        private readonly LocaleDiscoveryService $localeDiscoveryService,
+        private readonly LocaleExtractor $localeExtractor,
     ) {
     }
 
@@ -74,7 +74,7 @@ class ArticleNodeParser implements NodeParserInterface
             ]
         );
 
-        $discoveredLocales = $this->localeDiscoveryService->discoverLocales($node);
+        $discoveredLocales = $this->localeExtractor->extract($node);
         foreach ($routes as $route) {
             if (!\is_array($route)) {
                 continue;

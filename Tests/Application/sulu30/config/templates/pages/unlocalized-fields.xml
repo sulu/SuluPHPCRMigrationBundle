@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>unlocalized-fields</key>
+
+    <view>pages/default</view>
+    <controller>Sulu\Content\UserInterface\Controller\Website\ContentController::indexAction</controller>
+    <cacheLifetime>86400</cacheLifetime>
+
+    <meta>
+        <title lang="en">Unlocalized Fields Test</title>
+        <title lang="de">Unlokalisierte Felder Test</title>
+    </meta>
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="en">Title</title>
+                <title lang="de">Titel</title>
+            </meta>
+            <tag name="sulu.rlp.part"/>
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title lang="en">Resourcelocator</title>
+                <title lang="de">Adresse</title>
+            </meta>
+            <tag name="sulu.rlp"/>
+        </property>
+
+        <property name="unlocalizedJsonLine" type="text_line" multilingual="false">
+            <meta>
+                <title lang="en">Unlocalized JSON-looking text_line</title>
+                <title lang="de">Unlokalisiertes JSON-ähnliches text_line</title>
+            </meta>
+        </property>
+
+        <property name="unlocalizedJsonArea" type="text_area" multilingual="false">
+            <meta>
+                <title lang="en">Unlocalized JSON-looking text_area</title>
+                <title lang="de">Unlokalisiertes JSON-ähnliches text_area</title>
+            </meta>
+        </property>
+    </properties>
+</template>

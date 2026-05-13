@@ -42,7 +42,7 @@ Clean Architecture: `UserInterface/` → `Application/` → `Infrastructure/`. N
 
 ## Testing
 
-Functional tests use MySQL with JSON baseline comparison. Requires env vars: `DATABASE_HOST`, `DATABASE_USER`, `DATABASE_PASSWORD`, `DATABASE_NAME`.
+Functional tests use MySQL with JSON baseline comparison. Connection is read from `DATABASE_URL` (defaults to `mysql://root:ChangeMe@127.0.0.1:3306/sulu_migration` via `Tests/Application/.env`). SuluTestKernel appends `_test` so the actual DB used is `sulu_migration_test`.
 
 ```bash
 # Regenerate baselines after migration changes

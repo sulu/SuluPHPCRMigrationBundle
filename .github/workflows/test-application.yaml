@@ -32,11 +32,7 @@ jobs:
                     --health-retries=3
 
         env:
-            DATABASE_HOST: 127.0.0.1
-            DATABASE_PORT: 3306
-            DATABASE_USER: root
-            DATABASE_PASSWORD: ChangeMe
-            DATABASE_NAME: sulu_migration_test
+            DATABASE_URL: "mysql://root:ChangeMe@127.0.0.1:3306/sulu_migration?serverVersion=8.0&charset=utf8mb4"
 
         strategy:
             fail-fast: false
@@ -130,13 +126,7 @@ jobs:
                     --health-retries 5
 
         env:
-            DATABASE_DRIVER: pdo_pgsql
-            DATABASE_CHARSET: UTF8
-            DATABASE_HOST: 127.0.0.1
-            DATABASE_PORT: 5432
-            DATABASE_USER: postgres
-            DATABASE_PASSWORD: postgres
-            DATABASE_NAME: sulu_migration_test
+            DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/sulu_migration?serverVersion=16&charset=UTF8"
 
         steps:
             - name: Checkout project
