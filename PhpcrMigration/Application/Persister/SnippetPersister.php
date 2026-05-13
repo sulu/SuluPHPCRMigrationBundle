@@ -103,6 +103,8 @@ class SnippetPersister extends AbstractPersister
             '[uuid]' => '[jcr][uuid]',
             '[created]' => '[sulu][created]',
             '[changed]' => '[sulu][changed]',
+            '[idUsersCreator]' => '[sulu][creator]',
+            '[idUsersChanger]' => '[sulu][changer]',
         ];
     }
 
@@ -125,6 +127,8 @@ class SnippetPersister extends AbstractPersister
             'authored' => 'datetime',
             'workflowPlace' => 'string',
             'workflowPublished' => 'datetime',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 
