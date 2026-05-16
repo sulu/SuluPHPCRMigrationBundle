@@ -75,6 +75,14 @@ class PropertyNodeParser implements NodeParserInterface
                 $suluDocument['changed'] = $lastLocalization['changed'];
             }
 
+            if (!\array_key_exists('creator', $suluDocument) && isset($lastLocalization['creator'])) {
+                $suluDocument['creator'] = $lastLocalization['creator'];
+            }
+
+            if (!\array_key_exists('changer', $suluDocument) && isset($lastLocalization['changer'])) {
+                $suluDocument['changer'] = $lastLocalization['changer'];
+            }
+
             $document['sulu'] = $suluDocument;
         }
 

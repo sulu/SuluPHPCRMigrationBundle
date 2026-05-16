@@ -134,6 +134,8 @@ class ArticlePersister extends AbstractPersister
             'uuid' => 'string',
             'created' => 'datetime',
             'changed' => 'datetime',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 
@@ -143,6 +145,8 @@ class ArticlePersister extends AbstractPersister
             '[uuid]' => '[jcr][uuid]',
             '[created]' => '[sulu][created]',
             '[changed]' => '[sulu][changed]',
+            '[idUsersCreator]' => '[sulu][creator]',
+            '[idUsersChanger]' => '[sulu][changer]',
         ];
     }
 
@@ -177,6 +181,8 @@ class ArticlePersister extends AbstractPersister
             'customizeWebspaceSettings' => 'boolean',
             'shadowLocale' => 'string',
             'shadowLocales' => 'json',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 

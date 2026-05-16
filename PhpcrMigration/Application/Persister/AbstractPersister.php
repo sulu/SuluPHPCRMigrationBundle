@@ -484,6 +484,14 @@ abstract class AbstractPersister implements PersisterInterface
                 $data['created'] = $created instanceof \DateTimeInterface ? $created->format('Y-m-d H:i:s') : $now;
                 $changed = $document['sulu']['changed'] ?? null;
                 $data['changed'] = $changed instanceof \DateTimeInterface ? $changed->format('Y-m-d H:i:s') : $now;
+                $creator = $localizedData['creator'] ?? $document['sulu']['creator'] ?? null;
+                if (null !== $creator) {
+                    $data['idUsersCreator'] = $creator;
+                }
+                $changer = $localizedData['changer'] ?? $document['sulu']['changer'] ?? null;
+                if (null !== $changer) {
+                    $data['idUsersChanger'] = $changer;
+                }
 
                 $data = \array_merge($this->getDefaultData(), $data);
                 $data = $this->mapDimensionContentData($document, $locale, $data, $isLive);

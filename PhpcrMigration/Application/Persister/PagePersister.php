@@ -235,6 +235,8 @@ class PagePersister extends AbstractPersister
             '[webspaceKey]' => '[sulu][webspaceKey]',
             '[created]' => '[sulu][created]',
             '[changed]' => '[sulu][changed]',
+            '[idUsersCreator]' => '[sulu][creator]',
+            '[idUsersChanger]' => '[sulu][changer]',
         ];
     }
 
@@ -269,6 +271,8 @@ class PagePersister extends AbstractPersister
             'workflowPublished' => 'datetime',
             'linkProvider' => 'string',
             'linkData' => 'json',
+            'idUsersCreator' => 'integer',
+            'idUsersChanger' => 'integer',
         ];
     }
 
