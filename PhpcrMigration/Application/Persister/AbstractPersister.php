@@ -362,6 +362,7 @@ abstract class AbstractPersister implements PersisterInterface
     {
         $data = $this->mapDataViaMapping($document, $this->getEntityMapping());
         $data = $this->mapEntityData($document, $data);
+        $data = $this->validateData($data);
 
         // if parentId key exists, we assume that this is a nested document
         if (\array_key_exists('parentId', $document['sulu'])) {
@@ -1132,8 +1133,12 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function validateData(array $data): array
     {
+        $userExists = fn (mixed $value): bool => $this->entityRepository->exists('se_users', ['id' => $value]);
+
         $validators = [
             'author_id' => fn (mixed $value): bool => $this->entityRepository->exists('co_contacts', ['id' => $value]),
+            'idUsersCreator' => $userExists,
+            'idUsersChanger' => $userExists,
         ];
 
         foreach ($validators as $key => $isValid) {
