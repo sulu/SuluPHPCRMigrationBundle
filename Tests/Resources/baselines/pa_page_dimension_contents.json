@@ -1411,7 +1411,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-18 10:24:38",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -1454,7 +1454,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-18 10:24:38",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -2189,8 +2189,8 @@
         "availableLocales": [
             "en"
         ],
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -2207,7 +2207,7 @@
         "linkData": "",
         "linkProvider": "",
         "locale": "",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": "",
         "seoData": {
             "canonicalUrl": null,
@@ -2230,10 +2230,10 @@
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-18 10:17:44",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -2246,11 +2246,11 @@
         "id": 34,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-18 10:17:44",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": 17,
         "seoData": {
             "canonicalUrl": null,
@@ -2265,26 +2265,55 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "article": "<p>Page with deleted creator and changer.</p>",
-            "blocks": [],
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "title": "Orphan Creator Changer Page",
-            "url": "/orphan-creator-changer-page"
+            "title": "Hyphenated Property Nested Block",
+            "url": "/hyphenated-property-nested-block"
         },
         "templateKey": "default",
-        "title": "Orphan Creator Changer Page",
+        "title": "Hyphenated Property Nested Block",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-18 10:17:44"
     },
     {
         "author_id": "",
@@ -5296,7 +5325,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-18 10:24:38",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -5339,7 +5368,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-18 10:24:38",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -5427,7 +5456,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-18 10:24:38",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -6224,8 +6253,8 @@
         "availableLocales": [
             "en"
         ],
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -6242,7 +6271,7 @@
         "linkData": "",
         "linkProvider": "",
         "locale": "",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": "",
         "seoData": {
             "canonicalUrl": null,
@@ -6265,10 +6294,10 @@
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-18 10:17:44",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": "",
             "icon": null,
@@ -6281,11 +6310,11 @@
         "id": 91,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-18 10:17:44",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": 17,
         "seoData": {
             "canonicalUrl": "",
@@ -6300,33 +6329,62 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "article": "<p>Page with deleted creator and changer.</p>",
-            "blocks": [],
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "title": "Orphan Creator Changer Page",
-            "url": "/orphan-creator-changer-page"
+            "title": "Hyphenated Property Nested Block",
+            "url": "/hyphenated-property-nested-block"
         },
         "templateKey": "default",
-        "title": "Orphan Creator Changer Page",
+        "title": "Hyphenated Property Nested Block",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-18 10:17:44"
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-18 10:17:44",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": "",
             "icon": null,
@@ -6339,11 +6397,11 @@
         "id": 92,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-18 10:17:44",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": "",
         "seoData": {
             "canonicalUrl": "",
@@ -6358,25 +6416,54 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "article": "<p>Page with deleted creator and changer.</p>",
-            "blocks": [],
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-18 10:17:44.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
-            "title": "Orphan Creator Changer Page"
+            "title": "Hyphenated Property Nested Block"
         },
         "templateKey": "default",
-        "title": "Orphan Creator Changer Page",
-        "version": 1779104914,
+        "title": "Hyphenated Property Nested Block",
+        "version": 1779099464,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-18 10:17:44"
     },
     {
         "author_id": "",

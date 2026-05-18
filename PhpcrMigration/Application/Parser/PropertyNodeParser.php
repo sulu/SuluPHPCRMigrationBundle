@@ -181,26 +181,49 @@ class PropertyNodeParser implements NodeParserInterface
 
     private function parseBlockPropertyPath(string $path): string
     {
+        // A PHPCR property path is `<parent-name>(-<segment>)+` where each
+        // following segment is either `<name>#<idx>` (a block-array step) or
+        // the trailing `length` marker for the deepest array level.
+        //
+        // The property `<name>` itself may contain `-` (e.g. `background-image`).
+        // Such hyphenated names span multiple `-`-separated segments until the
+        // next `#<idx>` boundary or the trailing `length`. This loop merges
+        // those continuation segments back into a single hyphenated name.
         $segments = \explode('-', $path);
-        $result = '';
-
-        // First segment is always a block name
-        $result .= '[' . $segments[0] . ']';
+        $result = '[' . $segments[0] . ']';
         $counter = \count($segments);
 
+        /** @var list<string> $accumulatedName */
+        $accumulatedName = [];
         for ($i = 1; $i < $counter; ++$i) {
             $segment = $segments[$i];
 
             if (\preg_match('/^(.+)#(\d+)$/', $segment, $matches)) {
-                // For segments with index (like 'block#0')
-                $name = $matches[1];
+                $accumulatedName[] = $matches[1];
+                $name = \implode('-', $accumulatedName);
                 $index = (int) $matches[2];
 
                 $result .= '[' . $index . '][' . $name . ']';
-            } else {
-                // Regular segments without index (like type / length)
-                $result .= '[' . $segment . ']';
+                $accumulatedName = [];
+                continue;
             }
+
+            if ('length' === $segment && $i === $counter - 1) {
+                if ([] !== $accumulatedName) {
+                    $result .= '[' . \implode('-', $accumulatedName) . ']';
+                    $accumulatedName = [];
+                }
+                $result .= '[length]';
+                continue;
+            }
+
+            // Continuation segment of a hyphenated property name; keep
+            // accumulating until we hit `#<idx>` or the trailing `length`.
+            $accumulatedName[] = $segment;
+        }
+
+        if ([] !== $accumulatedName) {
+            $result .= '[' . \implode('-', $accumulatedName) . ']';
         }
 
         return $result;
