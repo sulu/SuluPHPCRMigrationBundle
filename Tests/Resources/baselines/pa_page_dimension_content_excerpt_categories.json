@@ -33,22 +33,6 @@
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 54
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 54
-    },
-    {
-        "category_id": 2,
-        "page_dimension_content_id": 55
-    },
-    {
-        "category_id": 3,
-        "page_dimension_content_id": 55
-    },
-    {
-        "category_id": 2,
         "page_dimension_content_id": 56
     },
     {
@@ -65,19 +49,19 @@
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 59
+        "page_dimension_content_id": 58
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 59
+        "page_dimension_content_id": 58
     },
     {
         "category_id": 2,
-        "page_dimension_content_id": 60
+        "page_dimension_content_id": 59
     },
     {
         "category_id": 3,
-        "page_dimension_content_id": 60
+        "page_dimension_content_id": 59
     },
     {
         "category_id": 2,
@@ -94,5 +78,21 @@
     {
         "category_id": 3,
         "page_dimension_content_id": 62
+    },
+    {
+        "category_id": 2,
+        "page_dimension_content_id": 63
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 63
+    },
+    {
+        "category_id": 2,
+        "page_dimension_content_id": 64
+    },
+    {
+        "category_id": 3,
+        "page_dimension_content_id": 64
     }
 ]
