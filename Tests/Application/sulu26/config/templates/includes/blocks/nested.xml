@@ -56,6 +56,15 @@
                                             <title lang="de">Bildunterschrift</title>
                                         </meta>
                                     </property>
+                                    <property name="background-image" type="single_media_selection">
+                                        <meta>
+                                            <title lang="en">Background Image</title>
+                                            <title lang="de">Hintergrundbild</title>
+                                        </meta>
+                                        <params>
+                                            <param name="types" value="image"/>
+                                        </params>
+                                    </property>
                                 </properties>
                             </type>
                         </types>

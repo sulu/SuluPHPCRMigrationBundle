@@ -1411,7 +1411,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-19 10:02:02",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -1454,7 +1454,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-19 10:02:02",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -2189,8 +2189,8 @@
         "availableLocales": [
             "en"
         ],
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -2207,7 +2207,7 @@
         "linkData": "",
         "linkProvider": "",
         "locale": "",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": "",
         "seoData": {
             "canonicalUrl": null,
@@ -2230,10 +2230,10 @@
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-18 10:17:44",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -2246,12 +2246,144 @@
         "id": 34,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-18 10:17:44",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": 17,
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "changed": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "title": "Hyphenated Property Nested Block",
+            "url": "/hyphenated-property-nested-block"
+        },
+        "templateKey": "default",
+        "title": "Hyphenated Property Nested Block",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-05-18 10:17:44"
+    },
+    {
+        "author_id": "",
+        "authored": "",
+        "availableLocales": [
+            "en"
+        ],
+        "changed": "2026-05-19 10:01:27",
+        "created": "2026-05-19 10:01:27",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "en",
+        "id": 35,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "",
+        "pageUuid": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "",
+        "workflowPublished": ""
+    },
+    {
+        "author_id": "",
+        "authored": "2026-05-19 10:01:27",
+        "availableLocales": "",
+        "changed": "2026-05-19 10:01:27",
+        "created": "2026-05-19 10:01:27",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 36,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-05-19 10:01:27",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
+        "route_id": 18,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2268,12 +2400,12 @@
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
@@ -2284,7 +2416,7 @@
         "title": "Orphan Creator Changer Page",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-19 10:01:27"
     },
     {
         "author_id": "",
@@ -2303,7 +2435,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 35,
+        "id": 37,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2346,7 +2478,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 36,
+        "id": 38,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -2358,7 +2490,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 18,
+        "route_id": 19,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2413,7 +2545,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 37,
+        "id": 39,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2456,7 +2588,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 38,
+        "id": 40,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -2464,7 +2596,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 19,
+        "route_id": 20,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2515,7 +2647,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 39,
+        "id": 41,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2558,7 +2690,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 40,
+        "id": 42,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-31 09:44:00",
@@ -2617,7 +2749,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 41,
+        "id": 43,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2660,7 +2792,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 42,
+        "id": 44,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",
@@ -2672,7 +2804,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 20,
+        "route_id": 21,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2727,7 +2859,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 43,
+        "id": 45,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2770,7 +2902,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 44,
+        "id": 46,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-31 09:43:39",
@@ -2832,7 +2964,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 45,
+        "id": 47,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -2875,7 +3007,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 46,
+        "id": 48,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -2931,7 +3063,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 47,
+        "id": 49,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -2986,7 +3118,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 48,
+        "id": 50,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3043,7 +3175,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 49,
+        "id": 51,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3102,7 +3234,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 50,
+        "id": 52,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -3145,7 +3277,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 51,
+        "id": 53,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3201,7 +3333,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 52,
+        "id": 54,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3256,7 +3388,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 53,
+        "id": 55,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3313,7 +3445,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 54,
+        "id": 56,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3372,7 +3504,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 55,
+        "id": 57,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -3419,7 +3551,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 56,
+        "id": 58,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:43:47",
@@ -3562,7 +3694,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 57,
+        "id": 59,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:43:47",
@@ -3704,7 +3836,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 58,
+        "id": 60,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-11 22:50:06",
@@ -3876,7 +4008,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 59,
+        "id": 61,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-11 22:50:06",
@@ -4046,7 +4178,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 60,
+        "id": 62,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -4095,7 +4227,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 61,
+        "id": 63,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4238,7 +4370,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 62,
+        "id": 64,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4380,7 +4512,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 63,
+        "id": 65,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4523,7 +4655,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 64,
+        "id": 66,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4663,7 +4795,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 65,
+        "id": 67,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -4706,7 +4838,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 66,
+        "id": 68,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:42:38",
@@ -4845,7 +4977,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 67,
+        "id": 69,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:42:38",
@@ -4985,7 +5117,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 68,
+        "id": 70,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5028,7 +5160,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 69,
+        "id": 71,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:50:39",
@@ -5089,7 +5221,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 70,
+        "id": 72,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:50:39",
@@ -5151,7 +5283,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 71,
+        "id": 73,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5194,7 +5326,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 72,
+        "id": 74,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:52:15",
@@ -5250,7 +5382,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 73,
+        "id": 75,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:52:15",
@@ -5296,7 +5428,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-19 10:02:02",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -5307,7 +5439,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 74,
+        "id": 76,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5339,7 +5471,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-19 10:02:02",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -5350,7 +5482,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 75,
+        "id": 77,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5427,7 +5559,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:52",
+        "changed": "2026-05-19 10:02:02",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -5438,7 +5570,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 76,
+        "id": 78,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5527,7 +5659,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 77,
+        "id": 79,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -5570,7 +5702,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 78,
+        "id": 80,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5628,7 +5760,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 79,
+        "id": 81,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5688,7 +5820,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 80,
+        "id": 82,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -5731,7 +5863,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 81,
+        "id": 83,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5792,7 +5924,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 82,
+        "id": 84,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5852,7 +5984,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 83,
+        "id": 85,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5860,7 +5992,7 @@
         "linkProvider": "",
         "locale": "en",
         "pageUuid": "c4440a5d-9012-4e75-8a0e-81005381fac8",
-        "route_id": 22,
+        "route_id": 23,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -5909,7 +6041,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 84,
+        "id": 86,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -5968,7 +6100,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 85,
+        "id": 87,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -6011,7 +6143,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 86,
+        "id": 88,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6067,7 +6199,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 87,
+        "id": 89,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6122,7 +6254,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 88,
+        "id": 90,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6178,7 +6310,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 89,
+        "id": 91,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6224,8 +6356,8 @@
         "availableLocales": [
             "en"
         ],
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": null,
             "icon": null,
@@ -6235,14 +6367,14 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 90,
+        "id": 92,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
         "linkData": "",
         "linkProvider": "",
         "locale": "",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": "",
         "seoData": {
             "canonicalUrl": null,
@@ -6265,10 +6397,10 @@
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-18 10:17:44",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
         "excerptData": {
             "description": "",
             "icon": null,
@@ -6278,15 +6410,233 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 91,
+        "id": 93,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-18 10:17:44",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
         "route_id": 17,
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": {
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "changed": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "title": "Hyphenated Property Nested Block",
+            "url": "/hyphenated-property-nested-block"
+        },
+        "templateKey": "default",
+        "title": "Hyphenated Property Nested Block",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-05-18 10:17:44"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-05-18 10:17:44",
+        "availableLocales": "",
+        "changed": "2026-05-18 10:17:44",
+        "created": "2026-05-18 10:17:44",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 94,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-05-18 10:17:44",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "blocks": [
+                {
+                    "type": "nested",
+                    "title": "Outer Nested Block",
+                    "settings": [],
+                    "innerBlocks": [
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 5
+                            },
+                            "caption": "First inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 4
+                            }
+                        },
+                        {
+                            "type": "inner_image",
+                            "image": {
+                                "id": 3
+                            },
+                            "caption": "Second inner image",
+                            "settings": [],
+                            "background-image": {
+                                "id": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "changed": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "created": {
+                "date": "2026-05-18 10:17:44.318000",
+                "timezone": "+00:00",
+                "timezone_type": 1
+            },
+            "title": "Hyphenated Property Nested Block"
+        },
+        "templateKey": "default",
+        "title": "Hyphenated Property Nested Block",
+        "version": 1779099464,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-05-18 10:17:44"
+    },
+    {
+        "author_id": "",
+        "authored": "",
+        "availableLocales": [
+            "en"
+        ],
+        "changed": "2026-05-19 10:01:27",
+        "created": "2026-05-19 10:01:27",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "en",
+        "id": 95,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "",
+        "pageUuid": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "",
+        "workflowPublished": ""
+    },
+    {
+        "author_id": "",
+        "authored": "2026-05-19 10:01:27",
+        "availableLocales": "",
+        "changed": "2026-05-19 10:01:27",
+        "created": "2026-05-19 10:01:27",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 96,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-05-19 10:01:27",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
+        "route_id": 18,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -6303,12 +6653,12 @@
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
@@ -6319,14 +6669,14 @@
         "title": "Orphan Creator Changer Page",
         "version": 0,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-19 10:01:27"
     },
     {
         "author_id": "",
-        "authored": "2026-05-18 11:48:34",
+        "authored": "2026-05-19 10:01:27",
         "availableLocales": "",
-        "changed": "2026-05-18 11:48:34",
-        "created": "2026-05-18 11:48:34",
+        "changed": "2026-05-19 10:01:27",
+        "created": "2026-05-19 10:01:27",
         "excerptData": {
             "description": "",
             "icon": null,
@@ -6336,14 +6686,14 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 92,
+        "id": 97,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lastModified": "2026-05-18 11:48:34",
+        "lastModified": "2026-05-19 10:01:27",
         "linkData": "",
         "linkProvider": "",
         "locale": "en",
-        "pageUuid": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "pageUuid": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
         "route_id": "",
         "seoData": {
             "canonicalUrl": "",
@@ -6361,12 +6711,12 @@
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
             "changed": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
             "created": {
-                "date": "2026-05-18 11:48:34.956000",
+                "date": "2026-05-19 10:01:27.318000",
                 "timezone": "+00:00",
                 "timezone_type": 1
             },
@@ -6374,9 +6724,9 @@
         },
         "templateKey": "default",
         "title": "Orphan Creator Changer Page",
-        "version": 1779104914,
+        "version": 1779184887,
         "workflowPlace": "published",
-        "workflowPublished": "2026-05-18 11:48:35"
+        "workflowPublished": "2026-05-19 10:01:27"
     },
     {
         "author_id": "",
@@ -6395,7 +6745,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 93,
+        "id": 98,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -6438,7 +6788,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 94,
+        "id": 99,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -6450,7 +6800,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 18,
+        "route_id": 19,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -6503,7 +6853,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 95,
+        "id": 100,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -6569,7 +6919,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 96,
+        "id": 101,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -6612,7 +6962,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 97,
+        "id": 102,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -6620,7 +6970,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 19,
+        "route_id": 20,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -6669,7 +7019,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 98,
+        "id": 103,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -6727,7 +7077,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 99,
+        "id": 104,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -6770,7 +7120,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 100,
+        "id": 105,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",
@@ -6782,7 +7132,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 20,
+        "route_id": 21,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -6835,7 +7185,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 101,
+        "id": 106,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",

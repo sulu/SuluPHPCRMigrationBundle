@@ -147,13 +147,22 @@
         "id": 17,
         "locale": "en",
         "parent_id": 2,
-        "resource_id": "9ecf1ae7-c325-44d4-9fd3-e9fe0e7dfbc7",
+        "resource_id": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
+        "resource_key": "pages",
+        "slug": "/hyphenated-property-nested-block",
+        "webspace": "website"
+    },
+    {
+        "id": 18,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
         "resource_key": "pages",
         "slug": "/orphan-creator-changer-page",
         "webspace": "website"
     },
     {
-        "id": 18,
+        "id": 19,
         "locale": "de",
         "parent_id": 6,
         "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
@@ -162,7 +171,7 @@
         "webspace": "website"
     },
     {
-        "id": 19,
+        "id": 20,
         "locale": "de",
         "parent_id": 12,
         "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
@@ -171,7 +180,7 @@
         "webspace": "website"
     },
     {
-        "id": 20,
+        "id": 21,
         "locale": "de",
         "parent_id": 6,
         "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
@@ -180,7 +189,7 @@
         "webspace": "website"
     },
     {
-        "id": 21,
+        "id": 22,
         "locale": "de",
         "parent_id": "",
         "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
@@ -189,7 +198,7 @@
         "webspace": "website"
     },
     {
-        "id": 22,
+        "id": 23,
         "locale": "en",
         "parent_id": 2,
         "resource_id": "c4440a5d-9012-4e75-8a0e-81005381fac8",
@@ -198,7 +207,7 @@
         "webspace": "website"
     },
     {
-        "id": 23,
+        "id": 24,
         "locale": "de",
         "parent_id": "",
         "resource_id": "52634b61-09b3-4224-a428-4a885dceb98f",
@@ -207,7 +216,7 @@
         "webspace": ""
     },
     {
-        "id": 24,
+        "id": 25,
         "locale": "de",
         "parent_id": "",
         "resource_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
@@ -216,7 +225,7 @@
         "webspace": ""
     },
     {
-        "id": 25,
+        "id": 26,
         "locale": "de",
         "parent_id": "",
         "resource_id": "73bb3e17-3d33-46d0-bbc9-62229b343dd4",
@@ -225,7 +234,7 @@
         "webspace": ""
     },
     {
-        "id": 26,
+        "id": 27,
         "locale": "de",
         "parent_id": "",
         "resource_id": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
@@ -234,7 +243,7 @@
         "webspace": ""
     },
     {
-        "id": 27,
+        "id": 28,
         "locale": "de",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
@@ -243,7 +252,7 @@
         "webspace": ""
     },
     {
-        "id": 28,
+        "id": 29,
         "locale": "en",
         "parent_id": 5,
         "resource_id": "d1124790-b73f-445a-b092-7905f5fe592a",
@@ -252,7 +261,7 @@
         "webspace": ""
     },
     {
-        "id": 29,
+        "id": 30,
         "locale": "en",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
