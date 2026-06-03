@@ -652,8 +652,7 @@ abstract class AbstractPersister implements PersisterInterface
             if ('null' === $locale) {
                 continue;
             }
-            // Skip locales with no content of their own (e.g. ghost locales). Drafts
-            // (state === 1) are kept: Sulu 3.0 stores routes for unpublished content too.
+            // Skip ghost locales (no state). Drafts (state 1) are kept — Sulu 3.0 routes them too.
             if (!\array_key_exists('state', $localizedData)) {
                 continue;
             }
@@ -693,33 +692,39 @@ abstract class AbstractPersister implements PersisterInterface
                 ],
             );
 
-            // Sulu 3.0 enforces a unique (webspace, locale, slug). A 2.6 draft could
-            // reuse another document's published URL, so skip instead of crashing with a
-            // duplicate-key error when a different resource already owns this slug.
-            // Runs after the history cleanup so reclaiming a history slug still works.
+            // Unique (webspace, locale, slug): on a collision the published document wins by
+            // reclaiming the slug (the loser's route_id clears via the FK's ON DELETE SET NULL);
+            // a draft yields. After the history cleanup so reclaiming a history slug still works.
             $conflictingRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
                 'webspace' => $webspace,
                 'locale' => $locale,
                 'slug' => $slug,
             ]);
-            $conflictingResourceId = $conflictingRoute['resource_id'] ?? null;
             if (
-                null !== $conflictingResourceId
+                null !== $conflictingRoute
                 && (
-                    $conflictingResourceId !== $resourceId
+                    ($conflictingRoute['resource_id'] ?? null) !== $resourceId
                     || ($conflictingRoute['resource_key'] ?? null) !== $resourceKey
                 )
             ) {
-                echo \sprintf(
-                    "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s::%s'.\n",
-                    $resourceId,
-                    $locale,
-                    $slug,
-                    (string) ($conflictingRoute['resource_key'] ?? '?'),
-                    (string) $conflictingResourceId,
-                );
+                $incomingIsPublished = 2 === $localizedData['state'];
 
-                continue;
+                if ($incomingIsPublished && !$this->isExistingRoutePublished($conflictingRoute)) {
+                    $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
+                } else {
+                    $ownerKey = $conflictingRoute['resource_key'] ?? null;
+                    $ownerId = $conflictingRoute['resource_id'] ?? null;
+                    echo \sprintf(
+                        "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s::%s'.\n",
+                        $resourceId,
+                        $locale,
+                        $slug,
+                        \is_string($ownerKey) ? $ownerKey : '?',
+                        \is_string($ownerId) ? $ownerId : '?',
+                    );
+
+                    continue;
+                }
             }
 
             $this->entityRepository->insertOrUpdate(
@@ -796,6 +801,28 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         return $routes;
+    }
+
+    /**
+     * Whether the existing route's owner is published in that locale (from the migrated draft's
+     * workflowPlace). Non-same-type owners are assumed published, so they are never reclaimed.
+     *
+     * @param mixed[] $route
+     */
+    private function isExistingRoutePublished(array $route): bool
+    {
+        $resourceId = $route['resource_id'] ?? null;
+        if (!\is_string($resourceId) || ($route['resource_key'] ?? null) !== $this->getEntityResourceKey()) {
+            return true;
+        }
+
+        $owner = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), [
+            $this->getDimensionContentEntityIdMappingName() => $resourceId,
+            'locale' => $route['locale'] ?? null,
+            'stage' => 'draft',
+        ]);
+
+        return 'published' === ($owner['workflowPlace'] ?? null);
     }
 
     protected function getParentRouteId(?string $parentId, ?string $locale): ?int

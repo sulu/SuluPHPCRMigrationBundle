@@ -351,9 +351,8 @@ class PagePersister extends AbstractPersister
             return $localizedData[AbstractPersister::URL];
         }
 
-        // Draft-only locales have no route node, so fall back to the page's own resource
-        // locator (`i18n:{locale}-url`) so unpublished pages keep their route. A stale or
-        // duplicated URL that collides with an existing route is skipped in createOrUpdateRoutes.
+        // Draft-only locales have no route node — fall back to the page's own resource
+        // locator (`i18n:{locale}-url`) so unpublished pages keep their route.
         $url = $localizedData['url'] ?? null;
 
         return \is_string($url) ? $url : null;
