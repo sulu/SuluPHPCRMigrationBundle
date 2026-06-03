@@ -346,11 +346,17 @@ class PagePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
-        if (!isset($localizedData[AbstractPersister::URL])) {
-            return null;
+        // Published pages: slug comes from the migrated route node.
+        if (isset($localizedData[AbstractPersister::URL])) {
+            return $localizedData[AbstractPersister::URL];
         }
 
-        return $localizedData[AbstractPersister::URL];
+        // Draft-only locales have no route node, so fall back to the page's own resource
+        // locator (`i18n:{locale}-url`) so unpublished pages keep their route. A stale or
+        // duplicated URL that collides with an existing route is skipped in createOrUpdateRoutes.
+        $url = $localizedData['url'] ?? null;
+
+        return \is_string($url) ? $url : null;
     }
 
     protected function getWebspace(array $document, string $locale): ?string

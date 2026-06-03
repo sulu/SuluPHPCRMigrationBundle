@@ -111,13 +111,22 @@
         "id": 13,
         "locale": "de",
         "parent_id": 1,
+        "resource_id": "138b926f-6b6f-4cab-b1d9-961b3b2a957d",
+        "resource_key": "pages",
+        "slug": "/example-page-unpublished",
+        "webspace": "website"
+    },
+    {
+        "id": 14,
+        "locale": "de",
+        "parent_id": 1,
         "resource_id": "53702843-f929-4976-8f6a-7aad5d18c115",
         "resource_key": "pages",
         "slug": "/linkziel-seite",
         "webspace": "website"
     },
     {
-        "id": 14,
+        "id": 15,
         "locale": "de",
         "parent_id": 1,
         "resource_id": "c4440a5d-9012-4e75-8a0e-81005381fac8",
@@ -126,97 +135,7 @@
         "webspace": "website"
     },
     {
-        "id": 15,
-        "locale": "en",
-        "parent_id": 2,
-        "resource_id": "eb797a7a-4ca6-4e24-93fe-fe18a7beff7c",
-        "resource_key": "pages",
-        "slug": "/unlocalized-fields-page",
-        "webspace": "website"
-    },
-    {
         "id": 16,
-        "locale": "de",
-        "parent_id": 1,
-        "resource_id": "eb797a7a-4ca6-4e24-93fe-fe18a7beff7c",
-        "resource_key": "pages",
-        "slug": "/seite-mit-unlokalisierten-feldern",
-        "webspace": "website"
-    },
-    {
-        "id": 17,
-        "locale": "en",
-        "parent_id": 2,
-        "resource_id": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
-        "resource_key": "pages",
-        "slug": "/hyphenated-property-nested-block",
-        "webspace": "website"
-    },
-    {
-        "id": 18,
-        "locale": "en",
-        "parent_id": 2,
-        "resource_id": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
-        "resource_key": "pages",
-        "slug": "/orphan-creator-changer-page",
-        "webspace": "website"
-    },
-    {
-        "id": 19,
-        "locale": "en",
-        "parent_id": 2,
-        "resource_id": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
-        "resource_key": "pages",
-        "slug": "/date-fields-page",
-        "webspace": "website"
-    },
-    {
-        "id": 20,
-        "locale": "de",
-        "parent_id": 1,
-        "resource_id": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
-        "resource_key": "pages",
-        "slug": "/datumsfelder-seite",
-        "webspace": "website"
-    },
-    {
-        "id": 21,
-        "locale": "de",
-        "parent_id": 6,
-        "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "resource_key": "pages",
-        "slug": "/example-page-1-1/child-page-1-with-external-link",
-        "webspace": "website"
-    },
-    {
-        "id": 22,
-        "locale": "de",
-        "parent_id": 12,
-        "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "resource_key": "pages",
-        "slug": "/numeric-block-test/timestamp-fallback-page",
-        "webspace": "website"
-    },
-    {
-        "id": 23,
-        "locale": "de",
-        "parent_id": 6,
-        "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "resource_key": "pages",
-        "slug": "/example-page-1-1/child-page-2-with-internal-link",
-        "webspace": "website"
-    },
-    {
-        "id": 24,
-        "locale": "de",
-        "parent_id": "",
-        "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
-        "resource_key": "route_histories",
-        "slug": "/example-page-1",
-        "webspace": "website"
-    },
-    {
-        "id": 25,
         "locale": "en",
         "parent_id": 2,
         "resource_id": "c4440a5d-9012-4e75-8a0e-81005381fac8",
@@ -225,7 +144,106 @@
         "webspace": "website"
     },
     {
+        "id": 17,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "eb797a7a-4ca6-4e24-93fe-fe18a7beff7c",
+        "resource_key": "pages",
+        "slug": "/unlocalized-fields-page",
+        "webspace": "website"
+    },
+    {
+        "id": 18,
+        "locale": "de",
+        "parent_id": 1,
+        "resource_id": "eb797a7a-4ca6-4e24-93fe-fe18a7beff7c",
+        "resource_key": "pages",
+        "slug": "/seite-mit-unlokalisierten-feldern",
+        "webspace": "website"
+    },
+    {
+        "id": 19,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "ac41db9b-316a-41fc-844f-846dad4b8de9",
+        "resource_key": "pages",
+        "slug": "/draft-only-page",
+        "webspace": "website"
+    },
+    {
+        "id": 20,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "fda99191-5658-4686-b7d0-d3f29f0cfbf2",
+        "resource_key": "pages",
+        "slug": "/hyphenated-property-nested-block",
+        "webspace": "website"
+    },
+    {
+        "id": 21,
+        "locale": "en",
+        "parent_id": 2,
+        "resource_id": "da43b63c-ac27-41a8-bfa3-16cf17809e46",
+        "resource_key": "pages",
+        "slug": "/orphan-creator-changer-page",
+        "webspace": "website"
+    },
+    {
+        "id": 22,
+        "locale": "de",
+        "parent_id": 6,
+        "resource_id": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
+        "resource_key": "pages",
+        "slug": "/example-page-1-1/child-page-1-with-external-link",
+        "webspace": "website"
+    },
+    {
+        "id": 23,
+        "locale": "de",
+        "parent_id": 12,
+        "resource_id": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
+        "resource_key": "pages",
+        "slug": "/numeric-block-test/timestamp-fallback-page",
+        "webspace": "website"
+    },
+    {
+        "id": 24,
+        "locale": "de",
+        "parent_id": 13,
+        "resource_id": "32163363-a901-4af3-8e92-abdfcb54bd92",
+        "resource_key": "pages",
+        "slug": "/example-child-of-unpublished",
+        "webspace": "website"
+    },
+    {
+        "id": 25,
+        "locale": "de",
+        "parent_id": 6,
+        "resource_id": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
+        "resource_key": "pages",
+        "slug": "/example-page-1-1/child-page-2-with-internal-link",
+        "webspace": "website"
+    },
+    {
         "id": 26,
+        "locale": "de",
+        "parent_id": 6,
+        "resource_id": "3ac78818-8844-4677-b80c-796056dac13b",
+        "resource_key": "pages",
+        "slug": "/example-page-1-1/example-was-published",
+        "webspace": "website"
+    },
+    {
+        "id": 27,
+        "locale": "de",
+        "parent_id": "",
+        "resource_id": "pages::16060395-4bbf-4e1d-9c8e-fe5265890c99",
+        "resource_key": "route_histories",
+        "slug": "/example-page-1",
+        "webspace": "website"
+    },
+    {
+        "id": 28,
         "locale": "de",
         "parent_id": "",
         "resource_id": "52634b61-09b3-4224-a428-4a885dceb98f",
@@ -234,7 +252,7 @@
         "webspace": ""
     },
     {
-        "id": 27,
+        "id": 29,
         "locale": "de",
         "parent_id": "",
         "resource_id": "b5224d7b-b780-419b-9faf-7ff991bf6b3f",
@@ -243,7 +261,7 @@
         "webspace": ""
     },
     {
-        "id": 28,
+        "id": 30,
         "locale": "de",
         "parent_id": "",
         "resource_id": "73bb3e17-3d33-46d0-bbc9-62229b343dd4",
@@ -252,7 +270,7 @@
         "webspace": ""
     },
     {
-        "id": 29,
+        "id": 31,
         "locale": "de",
         "parent_id": "",
         "resource_id": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d",
@@ -261,7 +279,7 @@
         "webspace": ""
     },
     {
-        "id": 30,
+        "id": 32,
         "locale": "de",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
@@ -270,21 +288,30 @@
         "webspace": ""
     },
     {
-        "id": 31,
-        "locale": "en",
-        "parent_id": 5,
-        "resource_id": "d1124790-b73f-445a-b092-7905f5fe592a",
-        "resource_key": "articles",
-        "slug": "/example-page-1/page-tree-route-article",
-        "webspace": ""
-    },
-    {
-        "id": 32,
+        "id": 33,
         "locale": "en",
         "parent_id": "",
         "resource_id": "beca5871-758e-4999-8821-6a0a09ab6d80",
         "resource_key": "articles",
         "slug": "/blog/shadow-article",
+        "webspace": ""
+    },
+    {
+        "id": 34,
+        "locale": "en",
+        "parent_id": "",
+        "resource_id": "a30f6550-40aa-4af1-8225-785359384dba",
+        "resource_key": "articles",
+        "slug": "/blog/draft-only-article",
+        "webspace": ""
+    },
+    {
+        "id": 35,
+        "locale": "en",
+        "parent_id": 5,
+        "resource_id": "d1124790-b73f-445a-b092-7905f5fe592a",
+        "resource_key": "articles",
+        "slug": "/example-page-1/page-tree-route-article",
         "webspace": ""
     }
 ]

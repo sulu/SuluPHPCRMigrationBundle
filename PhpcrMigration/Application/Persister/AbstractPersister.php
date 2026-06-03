@@ -652,8 +652,9 @@ abstract class AbstractPersister implements PersisterInterface
             if ('null' === $locale) {
                 continue;
             }
-            // skip non-published entries
-            if (!\array_key_exists('state', $localizedData) || 1 === $localizedData['state']) {
+            // Skip locales with no content of their own (e.g. ghost locales). Drafts
+            // (state === 1) are kept: Sulu 3.0 stores routes for unpublished content too.
+            if (!\array_key_exists('state', $localizedData)) {
                 continue;
             }
 
@@ -691,6 +692,35 @@ abstract class AbstractPersister implements PersisterInterface
                     'slug' => $slug,
                 ],
             );
+
+            // Sulu 3.0 enforces a unique (webspace, locale, slug). A 2.6 draft could
+            // reuse another document's published URL, so skip instead of crashing with a
+            // duplicate-key error when a different resource already owns this slug.
+            // Runs after the history cleanup so reclaiming a history slug still works.
+            $conflictingRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+                'webspace' => $webspace,
+                'locale' => $locale,
+                'slug' => $slug,
+            ]);
+            $conflictingResourceId = $conflictingRoute['resource_id'] ?? null;
+            if (
+                null !== $conflictingResourceId
+                && (
+                    $conflictingResourceId !== $resourceId
+                    || ($conflictingRoute['resource_key'] ?? null) !== $resourceKey
+                )
+            ) {
+                echo \sprintf(
+                    "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s::%s'.\n",
+                    $resourceId,
+                    $locale,
+                    $slug,
+                    (string) ($conflictingRoute['resource_key'] ?? '?'),
+                    (string) $conflictingResourceId,
+                );
+
+                continue;
+            }
 
             $this->entityRepository->insertOrUpdate(
                 $data,
