@@ -804,14 +804,12 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Whether the existing route's owner is published in that locale (from the migrated draft's
-     * workflowPlace). Non-same-type owners are assumed published, so they are never reclaimed.
-     *
      * @param mixed[] $route
      */
     private function isExistingRoutePublished(array $route): bool
     {
         $resourceId = $route['resource_id'] ?? null;
+        // Only same-type owners can be resolved here; assume published so they are never reclaimed.
         if (!\is_string($resourceId) || ($route['resource_key'] ?? null) !== $this->getEntityResourceKey()) {
             return true;
         }
