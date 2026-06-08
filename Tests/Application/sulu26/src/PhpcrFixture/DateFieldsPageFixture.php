@@ -18,10 +18,8 @@ use Sulu\Component\Content\Document\WorkflowStage;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
 
 /**
- * Creates a page with populated `date` and `datetime` content fields. Sulu 2.6 stores these
- * as PHPCR DATE properties (\DateTime objects). The migration must convert them to the
- * 'Y-m-d' / 'Y-m-d\TH:i:s' strings expected by Sulu 3's Date/DateTimePropertyResolver,
- * otherwise the fields silently resolve to null on the website.
+ * Page with `date` and `datetime` fields, stored by Sulu 2.6 as PHPCR \DateTime values,
+ * to verify the migration converts them to the strings Sulu 3's resolvers expect (not null).
  */
 class DateFieldsPageFixture implements PhpcrFixtureInterface
 {

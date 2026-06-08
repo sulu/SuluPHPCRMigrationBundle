@@ -23,9 +23,7 @@ final class PropertyValueResolver
     private const SKIP_DECODE_FIELD_TYPES = ['text_line', 'text_area'];
 
     /**
-     * PHPCR DATE properties are read as \DateTime objects. Sulu 3's Date/DateTimePropertyResolver
-     * accept only a string in these formats and resolve anything else to null, so date fields must
-     * be normalized to the matching format during migration.
+     * Formats expected by Sulu 3's Date/DateTimePropertyResolver, which return null for anything else.
      *
      * @var array<string, string>
      */
@@ -70,13 +68,11 @@ final class PropertyValueResolver
             return null;
         }
 
-        // A PHP-serialized \DateTime that already lost its object type, e.g. {"date": ..., "timezone": ...}.
         if (\is_array($value) && \is_string($value['date'] ?? null)) {
             $value = $value['date'];
         }
 
         if (\is_string($value)) {
-            // date_create_immutable() returns false instead of throwing on an unparseable string.
             $parsed = \date_create_immutable($value);
             if (false === $parsed) {
                 return $value;
