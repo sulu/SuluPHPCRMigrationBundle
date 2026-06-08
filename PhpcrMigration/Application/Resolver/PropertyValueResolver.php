@@ -22,6 +22,18 @@ final class PropertyValueResolver
 {
     private const SKIP_DECODE_FIELD_TYPES = ['text_line', 'text_area'];
 
+    /**
+     * PHPCR DATE properties are read as \DateTime objects. Sulu 3's Date/DateTimePropertyResolver
+     * accept only a string in these formats and resolve anything else to null, so date fields must
+     * be normalized to the matching format during migration.
+     *
+     * @var array<string, string>
+     */
+    private const DATE_FIELD_FORMATS = [
+        'date' => 'Y-m-d',
+        'datetime' => 'Y-m-d\TH:i:s',
+    ];
+
     public function __construct(
         private readonly FieldTypeDetectorInterface $fieldTypeDetector,
     ) {
@@ -33,11 +45,17 @@ final class PropertyValueResolver
             ? $property->getValueForStorage()
             : $property->getValue();
 
+        $fieldType = $this->fieldTypeDetector->getType($documentType, $property->getName(), $node);
+
+        if (null !== $fieldType && isset(self::DATE_FIELD_FORMATS[$fieldType])) {
+            return $this->formatDate($value, self::DATE_FIELD_FORMATS[$fieldType]);
+        }
+
         if (!\is_string($value) || '' === $value || '0' === $value) {
             return $value;
         }
 
-        if ($this->shouldSkipDecode($property->getName(), $node, $documentType)) {
+        if (\in_array($fieldType, self::SKIP_DECODE_FIELD_TYPES, true)) {
             return $value;
         }
 
@@ -46,10 +64,26 @@ final class PropertyValueResolver
         return \JSON_ERROR_NONE === \json_last_error() ? $decoded : $value;
     }
 
-    private function shouldSkipDecode(string $propertyName, NodeInterface $node, string $documentType): bool
+    private function formatDate(mixed $value, string $format): mixed
     {
-        $fieldType = $this->fieldTypeDetector->getType($documentType, $propertyName, $node);
+        if (null === $value || '' === $value) {
+            return null;
+        }
 
-        return \in_array($fieldType, self::SKIP_DECODE_FIELD_TYPES, true);
+        // A PHP-serialized \DateTime that already lost its object type, e.g. {"date": ..., "timezone": ...}.
+        if (\is_array($value) && \is_string($value['date'] ?? null)) {
+            $value = $value['date'];
+        }
+
+        if (\is_string($value)) {
+            // date_create_immutable() returns false instead of throwing on an unparseable string.
+            $parsed = \date_create_immutable($value);
+            if (false === $parsed) {
+                return $value;
+            }
+            $value = $parsed;
+        }
+
+        return $value instanceof \DateTimeInterface ? $value->format($format) : $value;
     }
 }
