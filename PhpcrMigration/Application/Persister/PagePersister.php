@@ -346,6 +346,12 @@ class PagePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
+        // Shadows have no reliable resource locator of their own — use the source locale's slug.
+        $shadowBase = $localizedData['shadow-base'] ?? null;
+        if (($localizedData['shadow-on'] ?? false) && \is_string($shadowBase) && isset($document['localizations'][$shadowBase])) {
+            return $this->getSlug($document, $shadowBase);
+        }
+
         // Published pages: slug comes from the migrated route node.
         if (isset($localizedData[AbstractPersister::URL])) {
             return $localizedData[AbstractPersister::URL];

@@ -29,6 +29,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         template: string,
  *         state: int,
  *         url?: string,
+ *         'shadow-on'?: bool,
+ *         'shadow-base'?: string,
  *         navContexts?: string[],
  *         excerpt?: array{
  *             categories?: int[],
@@ -433,6 +435,7 @@ abstract class AbstractPersister implements PersisterInterface
          *     state?: int,
          *     'shadow-on'?: bool,
          *     'shadow-base'?: string,
+         *     _route?: array<string, mixed>,
          * } $localizedData
          * @var string $locale
          */
@@ -468,10 +471,18 @@ abstract class AbstractPersister implements PersisterInterface
                 }
 
                 if ($isShadow && \is_string($shadowBase) && isset($localizations[$shadowBase]['template'])) {
+                    // Mirror the source content, but keep the shadow's own route, not the source's.
+                    $ownRoute = $localizedData['_route'] ?? null;
+
                     $sourceData = $localizations[$shadowBase];
                     $sourceData['shadow-on'] = $isShadow;
                     $sourceData['shadow-base'] = $shadowBase;
                     $sourceData['state'] = $localizedData['state'] ?? $sourceData['state'];
+
+                    if (null !== $ownRoute) {
+                        $sourceData['_route'] = $ownRoute;
+                    }
+
                     $localizedData = $sourceData;
                     $localizedData['_seoData'] = $this->buildSeoData($localizedData);
                     $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
@@ -693,8 +704,8 @@ abstract class AbstractPersister implements PersisterInterface
             );
 
             // Unique (webspace, locale, slug): on a collision the published document wins by
-            // reclaiming the slug (the loser's route_id clears via the FK's ON DELETE SET NULL);
-            // a draft yields. After the history cleanup so reclaiming a history slug still works.
+            // reclaiming the slug while a draft yields. After the history cleanup so reclaiming
+            // a history slug still works.
             $conflictingRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
                 'webspace' => $webspace,
                 'locale' => $locale,
@@ -710,6 +721,15 @@ abstract class AbstractPersister implements PersisterInterface
                 $incomingIsPublished = 2 === $localizedData['state'];
 
                 if ($incomingIsPublished && !$this->isExistingRoutePublished($conflictingRoute)) {
+                    // route_id on the dimension content table is ON DELETE CASCADE, so detach the
+                    // losing draft's dimension contents before dropping its route — otherwise the
+                    // cascade would delete the migrated draft content instead of just freeing the slug.
+                    $this->entityRepository->insertOrUpdate(
+                        ['route_id' => null],
+                        $this->getDimensionContentTableName(),
+                        ['route_id' => 'integer'],
+                        ['route_id' => $conflictingRoute['id']],
+                    );
                     $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
                 } else {
                     $ownerKey = $conflictingRoute['resource_key'] ?? null;
@@ -757,6 +777,12 @@ abstract class AbstractPersister implements PersisterInterface
             // History routes only from live — draft may contain premature history URLs
             // for URL changes that haven't been published yet.
             if (!$isLive) {
+                continue;
+            }
+
+            // Shadows have no own url history; a history route would collide with their
+            // source-slug main route on the (webspace, locale, slug) unique key.
+            if ($localizedData['shadow-on'] ?? false) {
                 continue;
             }
 
@@ -814,10 +840,13 @@ abstract class AbstractPersister implements PersisterInterface
             return true;
         }
 
+        // version 0 is the live-backed draft row; non-zero versions are publish snapshots
+        // that also carry stage 'draft' and would misreport the owner's workflow state.
         $owner = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), [
             $this->getDimensionContentEntityIdMappingName() => $resourceId,
             'locale' => $route['locale'] ?? null,
             'stage' => 'draft',
+            'version' => 0,
         ]);
 
         return 'published' === ($owner['workflowPlace'] ?? null);
