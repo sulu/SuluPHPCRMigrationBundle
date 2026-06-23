@@ -71,7 +71,7 @@
         "lastModified": "2025-12-03 00:00:00",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 24,
+        "route_id": 26,
         "seoData": {
             "canonicalUrl": "article-seo-url.io",
             "description": "Article seo description",
@@ -86,11 +86,6 @@
         "stage": "draft",
         "templateData": {
             "article": "<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>",
-            "lastModified": {
-                "date": "2025-12-03 00:00:00.000000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example article",
             "url": "/blog/example-article"
         },
@@ -168,7 +163,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 25,
+        "route_id": 27,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -260,7 +255,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website_2",
-        "route_id": 26,
+        "route_id": 28,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -352,7 +347,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 27,
+        "route_id": 29,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -454,7 +449,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 28,
+        "route_id": 30,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -501,7 +496,7 @@
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 28,
+        "route_id": 30,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -685,7 +680,7 @@
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 29,
+        "route_id": 31,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -787,7 +782,7 @@
         "lastModified": "2025-12-03 00:00:00",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 24,
+        "route_id": 26,
         "seoData": {
             "canonicalUrl": "article-seo-url.io",
             "description": "Article seo description",
@@ -802,11 +797,6 @@
         "stage": "live",
         "templateData": {
             "article": "<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>",
-            "lastModified": {
-                "date": "2025-12-03 00:00:00.000000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example article",
             "url": "/blog/example-article"
         },
@@ -858,11 +848,6 @@
         "stage": "draft",
         "templateData": {
             "article": "<p>Fugiat exercitation elit labore laborum consequat proident qui fugiat fugiat sit. Nostrud ullamco Lorem eiusmod enim aute officia duis velit consectetur amet enim consectetur. Consectetur do pariatur deserunt commodo eu magna irure dolor. Nisi deserunt qui deserunt veniam veniam adipisicing in eu aute officia cillum enim quis Lorem ex. Do aliquip adipisicing non qui sint esse aliqua deserunt anim ea eiusmod labore elit. Sunt qui Lorem ad veniam occaecat duis id exercitation ullamco. Irure aliquip elit ea aliqua Lorem eiusmod anim tempor ut officia in. Labore nostrud eiusmod ea consectetur.</p>",
-            "lastModified": {
-                "date": "2025-12-03 00:00:00.000000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example article"
         },
         "templateKey": "default",
@@ -939,7 +924,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 25,
+        "route_id": 27,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1077,7 +1062,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website_2",
-        "route_id": 26,
+        "route_id": 28,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1215,7 +1200,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 27,
+        "route_id": 29,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1368,7 +1353,7 @@
         "lastModified": "",
         "locale": "de",
         "mainWebspace": "website",
-        "route_id": 28,
+        "route_id": 30,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1461,7 +1446,7 @@
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 30,
+        "route_id": 32,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -1599,7 +1584,7 @@
         "lastModified": "",
         "locale": "en",
         "mainWebspace": "website",
-        "route_id": 29,
+        "route_id": 31,
         "seoData": {
             "canonicalUrl": "",
             "description": "",

@@ -505,6 +505,13 @@ abstract class AbstractPersister implements PersisterInterface
                 /** @var mixed[] $templateData */
                 $templateData = $data['templateData'] ?? [];
                 $data['templateData'] = \array_merge($localizedData, $templateData);
+                // Drop audit dates so they don't leak into templateData as serialized \DateTime blobs.
+                // Not removed in removeNonTemplateData() because resolveVersionTimestamp() still needs them.
+                unset(
+                    $data['templateData']['created'],
+                    $data['templateData']['changed'],
+                    $data['templateData']['lastModified'],
+                );
                 $data['templateData'] = $this->addBlockIds($data['templateData']);
 
                 // SULU 3.0 MIGRATION FIX: Ensure ALL data is UTF-8 encoded (not just templateData)
