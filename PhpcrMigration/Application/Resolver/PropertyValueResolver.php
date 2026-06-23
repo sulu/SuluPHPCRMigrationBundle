@@ -68,6 +68,13 @@ final class PropertyValueResolver
             return null;
         }
 
+        if (\is_string($value) && \str_starts_with($value, '{')) {
+            $decoded = \json_decode($value, true);
+            if (\is_array($decoded)) {
+                $value = $decoded;
+            }
+        }
+
         if (\is_array($value) && \is_string($value['date'] ?? null)) {
             $value = $value['date'];
         }
