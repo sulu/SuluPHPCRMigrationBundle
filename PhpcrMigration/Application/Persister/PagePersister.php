@@ -344,13 +344,41 @@ class PagePersister extends AbstractPersister
 
     protected function getSlug(array $document, string $locale): ?string
     {
+        return $this->resolveSlug($document, $locale, []);
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, true> $visited locales already resolved, guards cyclic shadow references
+     */
+    private function resolveSlug(array $document, string $locale, array $visited): ?string
+    {
         $localizedData = $document['localizations'][$locale];
 
-        if (!isset($localizedData[AbstractPersister::URL])) {
-            return null;
+        // Shadows have no reliable resource locator of their own — use the source locale's slug.
+        // Track visited locales so a cyclic shadow reference (a -> b -> a) cannot recurse forever.
+        $shadowBase = $localizedData['shadow-base'] ?? null;
+        if (
+            ($localizedData['shadow-on'] ?? false)
+            && \is_string($shadowBase)
+            && !isset($visited[$locale])
+            && isset($document['localizations'][$shadowBase])
+        ) {
+            $visited[$locale] = true;
+
+            return $this->resolveSlug($document, $shadowBase, $visited);
         }
 
-        return $localizedData[AbstractPersister::URL];
+        // Published pages: slug comes from the migrated route node.
+        if (isset($localizedData[AbstractPersister::URL])) {
+            return $localizedData[AbstractPersister::URL];
+        }
+
+        // Draft-only locales have no route node — fall back to the page's own resource
+        // locator (`i18n:{locale}-url`) so unpublished pages keep their route.
+        $url = $localizedData['url'] ?? null;
+
+        return \is_string($url) ? $url : null;
     }
 
     protected function getWebspace(array $document, string $locale): ?string

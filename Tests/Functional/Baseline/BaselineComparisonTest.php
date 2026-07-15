@@ -160,6 +160,94 @@ class BaselineComparisonTest extends KernelTestCase
         $this->assertTableMatchesBaseline($table);
     }
 
+    /**
+     * @return \Generator<string, array{string, string, string}>
+     */
+    public static function routableResourceProvider(): \Generator
+    {
+        yield 'pages' => ['pa_page_dimension_contents', 'pageUuid', 'pages'];
+        yield 'articles' => ['ar_article_dimension_contents', 'articleUuid', 'articles'];
+    }
+
+    /**
+     * Baseline comparison excludes every `*_id` column, so it cannot see route<->dimension linkage.
+     * These invariants resolve the foreign keys and assert the relationship, catching corruption
+     * (e.g. a shadow linked to the source locale's route) that the snapshot blesses.
+     *
+     * @dataProvider routableResourceProvider
+     */
+    public function testDimensionContentsLinkToOwnLocaleRoute(string $dimensionTable, string $entityIdColumn, string $resourceKey): void
+    {
+        /** @var Connection $connection */
+        $connection = self::getContainer()->get('doctrine.dbal.default_connection');
+
+        $crossLinked = $this->fetchCount(
+            $connection,
+            "SELECT COUNT(*)
+             FROM {$dimensionTable} dc
+             INNER JOIN ro_routes r ON r.id = dc.route_id
+             WHERE dc.locale IS NOT NULL
+               AND (r.locale <> dc.locale OR r.resource_id <> dc.{$entityIdColumn} OR r.resource_key <> :resourceKey)",
+            ['resourceKey' => $resourceKey]
+        );
+        $this->assertSame(0, $crossLinked, \sprintf(
+            '%d %s dimension content row(s) are linked to a route of a different locale/resource.',
+            $crossLinked,
+            $resourceKey
+        ));
+
+        // crossLinked uses an inner join on route_id, so a row with a NULL route_id is invisible to it.
+        // Assert the reverse: whenever an own-locale route exists, the version-0 row must be linked to it,
+        // catching a regression where the route is created but the dimension content link is dropped.
+        $missingLinks = $this->fetchCount(
+            $connection,
+            "SELECT COUNT(*)
+             FROM {$dimensionTable} dc
+             INNER JOIN ro_routes expected
+                 ON expected.resource_id = dc.{$entityIdColumn} AND expected.locale = dc.locale AND expected.resource_key = :resourceKey
+             WHERE dc.locale IS NOT NULL
+               AND dc.version = 0
+               AND dc.route_id IS NULL",
+            ['resourceKey' => $resourceKey]
+        );
+        $this->assertSame(0, $missingLinks, \sprintf(
+            '%d %s dimension content row(s) have an own-locale route but are not linked to it.',
+            $missingLinks,
+            $resourceKey
+        ));
+
+        // A shadow whose source locale is routed must be linked to its own route.
+        $unlinkedShadows = $this->fetchCount(
+            $connection,
+            "SELECT COUNT(*)
+             FROM {$dimensionTable} dc
+             INNER JOIN ro_routes src
+                 ON src.resource_id = dc.{$entityIdColumn} AND src.locale = dc.shadowLocale AND src.resource_key = :resourceKey
+             LEFT JOIN ro_routes own ON own.id = dc.route_id
+             WHERE dc.locale IS NOT NULL
+               AND dc.version = 0
+               AND dc.shadowLocale IS NOT NULL AND dc.shadowLocale <> ''
+               AND (own.id IS NULL OR own.locale <> dc.locale)",
+            ['resourceKey' => $resourceKey]
+        );
+        $this->assertSame(0, $unlinkedShadows, \sprintf(
+            '%d shadow %s dimension content row(s) with a routed source are not linked to their own route.',
+            $unlinkedShadows,
+            $resourceKey
+        ));
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     */
+    private function fetchCount(Connection $connection, string $sql, array $params): int
+    {
+        $value = $connection->fetchOne($sql, $params);
+        \assert(\is_int($value) || \is_string($value));
+
+        return (int) $value;
+    }
+
     private const EXCLUDED_FIELDS = ['_id', 'id', 'uuid', 'changed'];
 
     private function assertTableMatchesBaseline(string $table): void

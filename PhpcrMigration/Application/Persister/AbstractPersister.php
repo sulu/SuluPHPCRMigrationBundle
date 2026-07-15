@@ -29,6 +29,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         template: string,
  *         state: int,
  *         url?: string,
+ *         'shadow-on'?: bool,
+ *         'shadow-base'?: string,
  *         navContexts?: string[],
  *         excerpt?: array{
  *             categories?: int[],
@@ -433,6 +435,7 @@ abstract class AbstractPersister implements PersisterInterface
          *     state?: int,
          *     'shadow-on'?: bool,
          *     'shadow-base'?: string,
+         *     _route?: array<string, mixed>,
          * } $localizedData
          * @var string $locale
          */
@@ -468,10 +471,23 @@ abstract class AbstractPersister implements PersisterInterface
                 }
 
                 if ($isShadow && \is_string($shadowBase) && isset($localizations[$shadowBase]['template'])) {
+                    // Mirror the source content, but keep the shadow's own route, not the source's.
+                    $ownRoute = $localizedData['_route'] ?? null;
+
                     $sourceData = $localizations[$shadowBase];
                     $sourceData['shadow-on'] = $isShadow;
                     $sourceData['shadow-base'] = $shadowBase;
                     $sourceData['state'] = $localizedData['state'] ?? $sourceData['state'];
+
+                    if (null !== $ownRoute) {
+                        $sourceData['_route'] = $ownRoute;
+                    } else {
+                        // The shadow has no route of its own (e.g. its slug collided and was skipped).
+                        // Drop the inherited source route so its dimension content is left unlinked
+                        // instead of pointing at a different-locale route.
+                        unset($sourceData['_route']);
+                    }
+
                     $localizedData = $sourceData;
                     $localizedData['_seoData'] = $this->buildSeoData($localizedData);
                     $localizedData['_excerptData'] = $this->buildExcerptData($localizedData);
@@ -652,8 +668,8 @@ abstract class AbstractPersister implements PersisterInterface
             if ('null' === $locale) {
                 continue;
             }
-            // skip non-published entries
-            if (!\array_key_exists('state', $localizedData) || 1 === $localizedData['state']) {
+            // Skip ghost locales (no state). Drafts (state 1) are kept — Sulu 3.0 routes them too.
+            if (!\array_key_exists('state', $localizedData)) {
                 continue;
             }
 
@@ -692,6 +708,55 @@ abstract class AbstractPersister implements PersisterInterface
                 ],
             );
 
+            // Unique (webspace, locale, slug): on a collision the published document wins by
+            // reclaiming the slug while a draft yields. After the history cleanup so reclaiming
+            // a history slug still works.
+            $conflictingRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+                'webspace' => $webspace,
+                'locale' => $locale,
+                'slug' => $slug,
+            ]);
+            if (
+                null !== $conflictingRoute
+                && (
+                    ($conflictingRoute['resource_id'] ?? null) !== $resourceId
+                    || ($conflictingRoute['resource_key'] ?? null) !== $resourceKey
+                )
+            ) {
+                $incomingIsPublished = 2 === $localizedData['state'];
+
+                if ($incomingIsPublished && !$this->isExistingRoutePublished($conflictingRoute)) {
+                    // route_id on the dimension content table is ON DELETE CASCADE, so detach the
+                    // losing draft's dimension contents before dropping its route — otherwise the
+                    // cascade would delete the migrated draft content instead of just freeing the slug.
+                    // Guard with exists(): insertOrUpdate would INSERT a bogus row (with NULL stage
+                    // and version) when the conflicting route is orphaned and nothing references it.
+                    $dimensionContentTable = $this->getDimensionContentTableName();
+                    if ($this->entityRepository->exists($dimensionContentTable, ['route_id' => $conflictingRoute['id']])) {
+                        $this->entityRepository->insertOrUpdate(
+                            ['route_id' => null],
+                            $dimensionContentTable,
+                            ['route_id' => 'integer'],
+                            ['route_id' => $conflictingRoute['id']],
+                        );
+                    }
+                    $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
+                } else {
+                    $ownerKey = $conflictingRoute['resource_key'] ?? null;
+                    $ownerId = $conflictingRoute['resource_id'] ?? null;
+                    echo \sprintf(
+                        "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s::%s'.\n",
+                        $resourceId,
+                        $locale,
+                        $slug,
+                        \is_string($ownerKey) ? $ownerKey : '?',
+                        \is_string($ownerId) ? $ownerId : '?',
+                    );
+
+                    continue;
+                }
+            }
+
             $this->entityRepository->insertOrUpdate(
                 $data,
                 self::ROUTE_TABLE,
@@ -722,6 +787,12 @@ abstract class AbstractPersister implements PersisterInterface
             // History routes only from live — draft may contain premature history URLs
             // for URL changes that haven't been published yet.
             if (!$isLive) {
+                continue;
+            }
+
+            // Shadows have no own url history; a history route would collide with their
+            // source-slug main route on the (webspace, locale, slug) unique key.
+            if ($localizedData['shadow-on'] ?? false) {
                 continue;
             }
 
@@ -766,6 +837,29 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         return $routes;
+    }
+
+    /**
+     * @param mixed[] $route
+     */
+    private function isExistingRoutePublished(array $route): bool
+    {
+        $resourceId = $route['resource_id'] ?? null;
+        // Only same-type owners can be resolved here; assume published so they are never reclaimed.
+        if (!\is_string($resourceId) || ($route['resource_key'] ?? null) !== $this->getEntityResourceKey()) {
+            return true;
+        }
+
+        // version 0 is the live-backed draft row; non-zero versions are publish snapshots
+        // that also carry stage 'draft' and would misreport the owner's workflow state.
+        $owner = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), [
+            $this->getDimensionContentEntityIdMappingName() => $resourceId,
+            'locale' => $route['locale'] ?? null,
+            'stage' => 'draft',
+            'version' => 0,
+        ]);
+
+        return 'published' === ($owner['workflowPlace'] ?? null);
     }
 
     protected function getParentRouteId(?string $parentId, ?string $locale): ?int
