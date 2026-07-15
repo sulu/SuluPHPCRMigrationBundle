@@ -344,12 +344,29 @@ class PagePersister extends AbstractPersister
 
     protected function getSlug(array $document, string $locale): ?string
     {
+        return $this->resolveSlug($document, $locale, []);
+    }
+
+    /**
+     * @param Document $document
+     * @param array<string, true> $visited locales already resolved, guards cyclic shadow references
+     */
+    private function resolveSlug(array $document, string $locale, array $visited): ?string
+    {
         $localizedData = $document['localizations'][$locale];
 
         // Shadows have no reliable resource locator of their own — use the source locale's slug.
+        // Track visited locales so a cyclic shadow reference (a -> b -> a) cannot recurse forever.
         $shadowBase = $localizedData['shadow-base'] ?? null;
-        if (($localizedData['shadow-on'] ?? false) && \is_string($shadowBase) && isset($document['localizations'][$shadowBase])) {
-            return $this->getSlug($document, $shadowBase);
+        if (
+            ($localizedData['shadow-on'] ?? false)
+            && \is_string($shadowBase)
+            && !isset($visited[$locale])
+            && isset($document['localizations'][$shadowBase])
+        ) {
+            $visited[$locale] = true;
+
+            return $this->resolveSlug($document, $shadowBase, $visited);
         }
 
         // Published pages: slug comes from the migrated route node.
