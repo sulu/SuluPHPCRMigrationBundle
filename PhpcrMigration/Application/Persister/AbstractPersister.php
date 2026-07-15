@@ -481,6 +481,11 @@ abstract class AbstractPersister implements PersisterInterface
 
                     if (null !== $ownRoute) {
                         $sourceData['_route'] = $ownRoute;
+                    } else {
+                        // The shadow has no route of its own (e.g. its slug collided and was skipped).
+                        // Drop the inherited source route so its dimension content is left unlinked
+                        // instead of pointing at a different-locale route.
+                        unset($sourceData['_route']);
                     }
 
                     $localizedData = $sourceData;
