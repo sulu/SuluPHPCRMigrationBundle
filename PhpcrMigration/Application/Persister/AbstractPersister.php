@@ -724,12 +724,17 @@ abstract class AbstractPersister implements PersisterInterface
                     // route_id on the dimension content table is ON DELETE CASCADE, so detach the
                     // losing draft's dimension contents before dropping its route — otherwise the
                     // cascade would delete the migrated draft content instead of just freeing the slug.
-                    $this->entityRepository->insertOrUpdate(
-                        ['route_id' => null],
-                        $this->getDimensionContentTableName(),
-                        ['route_id' => 'integer'],
-                        ['route_id' => $conflictingRoute['id']],
-                    );
+                    // Guard with exists(): insertOrUpdate would INSERT a bogus row (with NULL stage
+                    // and version) when the conflicting route is orphaned and nothing references it.
+                    $dimensionContentTable = $this->getDimensionContentTableName();
+                    if ($this->entityRepository->exists($dimensionContentTable, ['route_id' => $conflictingRoute['id']])) {
+                        $this->entityRepository->insertOrUpdate(
+                            ['route_id' => null],
+                            $dimensionContentTable,
+                            ['route_id' => 'integer'],
+                            ['route_id' => $conflictingRoute['id']],
+                        );
+                    }
                     $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
                 } else {
                     $ownerKey = $conflictingRoute['resource_key'] ?? null;
