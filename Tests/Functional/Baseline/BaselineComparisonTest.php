@@ -196,6 +196,26 @@ class BaselineComparisonTest extends KernelTestCase
             $resourceKey
         ));
 
+        // crossLinked uses an inner join on route_id, so a row with a NULL route_id is invisible to it.
+        // Assert the reverse: whenever an own-locale route exists, the version-0 row must be linked to it,
+        // catching a regression where the route is created but the dimension content link is dropped.
+        $missingLinks = $this->fetchCount(
+            $connection,
+            "SELECT COUNT(*)
+             FROM {$dimensionTable} dc
+             INNER JOIN ro_routes expected
+                 ON expected.resource_id = dc.{$entityIdColumn} AND expected.locale = dc.locale AND expected.resource_key = :resourceKey
+             WHERE dc.locale IS NOT NULL
+               AND dc.version = 0
+               AND dc.route_id IS NULL",
+            ['resourceKey' => $resourceKey]
+        );
+        $this->assertSame(0, $missingLinks, \sprintf(
+            '%d %s dimension content row(s) have an own-locale route but are not linked to it.',
+            $missingLinks,
+            $resourceKey
+        ));
+
         // A shadow whose source locale is routed must be linked to its own route.
         $unlinkedShadows = $this->fetchCount(
             $connection,
