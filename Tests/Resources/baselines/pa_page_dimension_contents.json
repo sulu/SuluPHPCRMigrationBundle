@@ -82,16 +82,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -139,16 +129,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -241,16 +221,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -298,16 +268,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -479,16 +439,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:43:47.332000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:42:48.978000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -651,16 +601,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-11 22:50:06.618000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -842,16 +782,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -985,16 +915,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -1169,16 +1089,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:42:38.699000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:33:53.754000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -1281,16 +1191,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:50:39.859000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:29.005000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -1386,16 +1286,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example Page 4 with website permissions",
             "url": "/example-page-4-with-website-permissions"
         },
@@ -1411,7 +1301,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-06-11 20:58:11",
+        "changed": "2026-07-15 13:05:35",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -1454,7 +1344,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-06-11 20:58:11",
+        "changed": "2026-07-15 13:05:35",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -1487,11 +1377,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "created": {
-                "date": "2025-12-11 22:03:04.319000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "sections": [
                 {
                     "text": "<p>Single Column description</p>",
@@ -1622,16 +1507,6 @@
         "templateData": {
             "article": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-03-31 09:43:19.080000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-31 09:43:01.878000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -1730,16 +1605,6 @@
         "templateData": {
             "article": "<p>Diese Seite ist das Ziel eines internen Links.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Linkziel-Seite",
             "url": "/linkziel-seite"
         },
@@ -1839,16 +1704,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Interner-Link",
             "url": "/schatten-interner-link"
         },
@@ -1900,16 +1755,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Interner-Link",
             "url": "/schatten-interner-link"
         },
@@ -2005,16 +1850,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Unlocalized Fields Page",
             "url": "/unlocalized-fields-page"
         },
@@ -2061,16 +1896,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Seite mit unlokalisierten Feldern",
             "url": "/seite-mit-unlokalisierten-feldern"
         },
@@ -2164,16 +1989,6 @@
         "templateData": {
             "article": "<p>This page was never published.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-05-12 07:45:28.325000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-12 07:45:28.325000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Draft Only Page",
             "url": "/draft-only-page"
         },
@@ -2296,16 +2111,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Hyphenated Property Nested Block",
             "url": "/hyphenated-property-nested-block"
         },
@@ -2399,16 +2204,6 @@
         "templateData": {
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Orphan Creator Changer Page",
             "url": "/orphan-creator-changer-page"
         },
@@ -2417,6 +2212,148 @@
         "version": 0,
         "workflowPlace": "published",
         "workflowPublished": "2026-05-19 10:01:27"
+    },
+    {
+        "author_id": "",
+        "authored": "",
+        "availableLocales": [
+            "en",
+            "de"
+        ],
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "en",
+        "id": 37,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "",
+        "workflowPublished": ""
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 38,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": 22,
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "dateField": "2024-01-15",
+            "datetimeField": "2024-01-15T13:45:30",
+            "title": "Date Fields Page",
+            "url": "/date-fields-page"
+        },
+        "templateKey": "date-fields",
+        "title": "Date Fields Page",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 39,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "de",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": 23,
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "dateField": "2023-12-24",
+            "datetimeField": "2023-12-24T18:00:00",
+            "title": "Datumsfelder Seite",
+            "url": "/datumsfelder-seite"
+        },
+        "templateKey": "date-fields",
+        "title": "Datumsfelder Seite",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
     },
     {
         "author_id": "",
@@ -2436,7 +2373,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 37,
+        "id": 40,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -2481,7 +2418,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 38,
+        "id": 41,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -2489,7 +2426,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "401a00bf-1f8f-4a18-9528-2d421e15a276",
-        "route_id": 22,
+        "route_id": 24,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2504,16 +2441,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle",
             "url": "/schatten-quelle"
         },
@@ -2538,7 +2465,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 39,
+        "id": 42,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -2546,7 +2473,7 @@
         "linkProvider": "",
         "locale": "en",
         "pageUuid": "401a00bf-1f8f-4a18-9528-2d421e15a276",
-        "route_id": 23,
+        "route_id": 25,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2561,16 +2488,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle",
             "url": "/schatten-quelle"
         },
@@ -2597,7 +2514,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 40,
+        "id": 43,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2640,7 +2557,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 41,
+        "id": 44,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -2652,7 +2569,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 24,
+        "route_id": 26,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2667,16 +2584,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:04.557000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:51.913000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -2707,7 +2614,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 42,
+        "id": 45,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2750,7 +2657,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 43,
+        "id": 46,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -2758,7 +2665,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 25,
+        "route_id": 27,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2773,16 +2680,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Timestamp Fallback Page",
             "url": "/numeric-block-test/timestamp-fallback-page"
         },
@@ -2809,7 +2706,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 44,
+        "id": 47,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2852,7 +2749,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 45,
+        "id": 48,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-31 09:44:00",
@@ -2860,7 +2757,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "32163363-a901-4af3-8e92-abdfcb54bd92",
-        "route_id": 26,
+        "route_id": 28,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -2875,16 +2772,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-03-31 09:44:00.064000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-31 09:44:00.064000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example child of unpublished",
             "url": "/example-child-of-unpublished"
         },
@@ -2911,7 +2798,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 46,
+        "id": 49,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -2954,7 +2841,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 47,
+        "id": 50,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",
@@ -2966,7 +2853,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 27,
+        "route_id": 29,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -2981,16 +2868,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:25.087000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:53:13.939000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -3021,7 +2898,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 48,
+        "id": 51,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -3064,7 +2941,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 49,
+        "id": 52,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-31 09:43:39",
@@ -3072,7 +2949,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "3ac78818-8844-4677-b80c-796056dac13b",
-        "route_id": 28,
+        "route_id": 30,
         "seoData": {
             "canonicalUrl": null,
             "description": null,
@@ -3088,16 +2965,6 @@
         "templateData": {
             "article": "<p>Example was published&nbsp;</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-03-31 09:43:39.354000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-31 09:43:39.354000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "subtitle": "Example was published ",
             "title": "Example was published",
             "url": "/example-page-1-1/example-was-published"
@@ -3126,7 +2993,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 50,
+        "id": 53,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -3169,7 +3036,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 51,
+        "id": 54,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3191,16 +3058,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -3225,7 +3082,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 52,
+        "id": 55,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3247,16 +3104,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.698000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage"
         },
         "templateKey": "homepage",
@@ -3280,7 +3127,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 53,
+        "id": 56,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3303,16 +3150,6 @@
         "stage": "live",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -3337,7 +3174,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 54,
+        "id": 57,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2025-12-09 09:37:45",
@@ -3360,16 +3197,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 09:37:45.779000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage"
         },
         "templateKey": "homepage",
@@ -3396,7 +3223,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 55,
+        "id": 58,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -3439,7 +3266,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 56,
+        "id": 59,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3461,16 +3288,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -3495,7 +3312,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 57,
+        "id": 60,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3517,16 +3334,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.032000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage"
         },
         "templateKey": "homepage",
@@ -3550,7 +3357,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 58,
+        "id": 61,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3573,16 +3380,6 @@
         "stage": "live",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage",
             "url": "/"
         },
@@ -3607,7 +3404,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 59,
+        "id": 62,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:13",
@@ -3630,16 +3427,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:13.115000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Homepage"
         },
         "templateKey": "homepage",
@@ -3666,7 +3453,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 60,
+        "id": 63,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -3713,7 +3500,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 61,
+        "id": 64,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:43:47",
@@ -3810,16 +3597,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:43:47.332000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:42:48.978000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -3856,7 +3633,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 62,
+        "id": 65,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:43:47",
@@ -3953,16 +3730,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:43:47.332000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:42:48.978000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -3998,7 +3765,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 63,
+        "id": 66,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-11 22:50:06",
@@ -4124,16 +3891,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-11 22:50:06.618000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4170,7 +3927,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 64,
+        "id": 67,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-11 22:50:06",
@@ -4296,16 +4053,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-11 22:50:06.618000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4340,7 +4087,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 65,
+        "id": 68,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -4389,7 +4136,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 66,
+        "id": 69,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4486,16 +4233,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4532,7 +4269,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 67,
+        "id": 70,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4629,16 +4366,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4674,7 +4401,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 68,
+        "id": 71,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4771,16 +4498,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4817,7 +4534,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 69,
+        "id": 72,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:54:03",
@@ -4914,16 +4631,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:54:03.516000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:07.201000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -4957,7 +4664,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 70,
+        "id": 73,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5000,7 +4707,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 71,
+        "id": 74,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:42:38",
@@ -5097,16 +4804,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:42:38.699000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:33:53.754000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -5139,7 +4836,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 72,
+        "id": 75,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:42:38",
@@ -5236,16 +4933,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2025-12-09 10:42:38.699000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:33:53.754000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": 3
             },
@@ -5279,7 +4966,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 73,
+        "id": 76,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5322,7 +5009,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 74,
+        "id": 77,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:50:39",
@@ -5345,16 +5032,6 @@
         "stage": "live",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:50:39.859000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:29.005000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -5383,7 +5060,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 75,
+        "id": 78,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:50:39",
@@ -5406,16 +5083,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:50:39.859000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:44:29.005000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -5445,7 +5112,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 76,
+        "id": 79,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5488,7 +5155,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 77,
+        "id": 80,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:52:15",
@@ -5510,16 +5177,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example Page 4 with website permissions",
             "url": "/example-page-4-with-website-permissions"
         },
@@ -5544,7 +5201,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 78,
+        "id": 81,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:52:15",
@@ -5566,16 +5223,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:15.130000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Example Page 4 with website permissions"
         },
         "templateKey": "default",
@@ -5590,7 +5237,7 @@
         "availableLocales": [
             "de"
         ],
-        "changed": "2026-06-11 20:58:11",
+        "changed": "2026-07-15 13:05:35",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": null,
@@ -5601,7 +5248,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 79,
+        "id": 82,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5633,7 +5280,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-06-11 20:58:11",
+        "changed": "2026-07-15 13:05:35",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -5644,7 +5291,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 80,
+        "id": 83,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5666,11 +5313,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "created": {
-                "date": "2025-12-11 22:03:04.319000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "sections": [
                 {
                     "text": "<p>Single Column description</p>",
@@ -5721,7 +5363,7 @@
         "author_id": 1,
         "authored": "2025-12-11 22:03:04",
         "availableLocales": "",
-        "changed": "2026-06-11 20:58:11",
+        "changed": "2026-07-15 13:05:35",
         "created": "2025-12-11 22:03:04",
         "excerptData": {
             "description": "",
@@ -5732,7 +5374,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 81,
+        "id": 84,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -5754,11 +5396,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "created": {
-                "date": "2025-12-11 22:03:04.319000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "sections": [
                 {
                     "text": "<p>Single Column description</p>",
@@ -5821,167 +5458,6 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 82,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "",
-        "linkData": "",
-        "linkProvider": "",
-        "locale": "",
-        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
-        "route_id": "",
-        "seoData": {
-            "canonicalUrl": null,
-            "description": null,
-            "keywords": null,
-            "title": null
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "live",
-        "templateData": [],
-        "templateKey": "",
-        "title": "",
-        "version": 0,
-        "workflowPlace": "",
-        "workflowPublished": ""
-    },
-    {
-        "author_id": "",
-        "authored": "2026-04-14 07:27:21",
-        "availableLocales": "",
-        "changed": "2026-04-14 07:27:21",
-        "created": "2026-04-14 07:27:21",
-        "excerptData": {
-            "description": "",
-            "icon": null,
-            "image": null,
-            "more": "",
-            "title": ""
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 83,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "2026-04-14 07:27:21",
-        "linkData": "",
-        "linkProvider": "",
-        "locale": "de",
-        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
-        "route_id": 14,
-        "seoData": {
-            "canonicalUrl": "",
-            "description": "",
-            "keywords": "",
-            "title": ""
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "live",
-        "templateData": {
-            "article": "<p>Diese Seite ist das Ziel eines internen Links.</p>",
-            "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "title": "Linkziel-Seite",
-            "url": "/linkziel-seite"
-        },
-        "templateKey": "default",
-        "title": "Linkziel-Seite",
-        "version": 0,
-        "workflowPlace": "published",
-        "workflowPublished": "2026-04-14 07:27:21"
-    },
-    {
-        "author_id": "",
-        "authored": "2026-04-14 07:27:21",
-        "availableLocales": "",
-        "changed": "2026-04-14 07:27:21",
-        "created": "2026-04-14 07:27:21",
-        "excerptData": {
-            "description": "",
-            "icon": null,
-            "image": null,
-            "more": "",
-            "title": ""
-        },
-        "excerptSegment": "",
-        "ghostLocale": "",
-        "id": 84,
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "lastModified": "2026-04-14 07:27:21",
-        "linkData": "",
-        "linkProvider": "",
-        "locale": "de",
-        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
-        "route_id": "",
-        "seoData": {
-            "canonicalUrl": "",
-            "description": "",
-            "keywords": "",
-            "title": ""
-        },
-        "seoHideInSitemap": 0,
-        "seoNoFollow": 0,
-        "seoNoIndex": 0,
-        "shadowLocale": "",
-        "shadowLocales": "",
-        "stage": "draft",
-        "templateData": {
-            "article": "<p>Diese Seite ist das Ziel eines internen Links.</p>",
-            "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.113000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "title": "Linkziel-Seite"
-        },
-        "templateKey": "default",
-        "title": "Linkziel-Seite",
-        "version": 1776151641,
-        "workflowPlace": "published",
-        "workflowPublished": "2026-04-14 07:27:21"
-    },
-    {
-        "author_id": "",
-        "authored": "",
-        "availableLocales": [
-            "de",
-            "en"
-        ],
-        "changed": "2026-04-14 07:27:21",
-        "created": "2026-04-14 07:27:21",
-        "excerptData": {
-            "description": null,
-            "icon": null,
-            "image": null,
-            "more": null,
-            "title": null
-        },
-        "excerptSegment": "",
-        "ghostLocale": "de",
         "id": 85,
         "idUsersChanger": "",
         "idUsersCreator": "",
@@ -5989,7 +5465,7 @@
         "linkData": "",
         "linkProvider": "",
         "locale": "",
-        "pageUuid": "c4440a5d-9012-4e75-8a0e-81005381fac8",
+        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
         "route_id": "",
         "seoData": {
             "canonicalUrl": null,
@@ -6029,6 +5505,147 @@
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "de",
+        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
+        "route_id": 14,
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": {
+            "article": "<p>Diese Seite ist das Ziel eines internen Links.</p>",
+            "blocks": [],
+            "title": "Linkziel-Seite",
+            "url": "/linkziel-seite"
+        },
+        "templateKey": "default",
+        "title": "Linkziel-Seite",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-04-14 07:27:21"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-04-14 07:27:21",
+        "availableLocales": "",
+        "changed": "2026-04-14 07:27:21",
+        "created": "2026-04-14 07:27:21",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 87,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-04-14 07:27:21",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "de",
+        "pageUuid": "53702843-f929-4976-8f6a-7aad5d18c115",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "article": "<p>Diese Seite ist das Ziel eines internen Links.</p>",
+            "blocks": [],
+            "title": "Linkziel-Seite"
+        },
+        "templateKey": "default",
+        "title": "Linkziel-Seite",
+        "version": 1776151641,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-04-14 07:27:21"
+    },
+    {
+        "author_id": "",
+        "authored": "",
+        "availableLocales": [
+            "de",
+            "en"
+        ],
+        "changed": "2026-04-14 07:27:21",
+        "created": "2026-04-14 07:27:21",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "de",
+        "id": 88,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "",
+        "pageUuid": "c4440a5d-9012-4e75-8a0e-81005381fac8",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "",
+        "workflowPublished": ""
+    },
+    {
+        "author_id": "",
+        "authored": "2026-04-14 07:27:21",
+        "availableLocales": "",
+        "changed": "2026-04-14 07:27:21",
+        "created": "2026-04-14 07:27:21",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 89,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-04-14 07:27:21",
         "linkData": {
             "href": "53702843-f929-4976-8f6a-7aad5d18c115",
             "locale": "de",
@@ -6052,16 +5669,6 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Interner-Link",
             "url": "/schatten-interner-link"
         },
@@ -6086,7 +5693,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 87,
+        "id": 90,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -6113,16 +5720,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.236000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Interner-Link"
         },
         "templateKey": "default",
@@ -6146,7 +5743,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 88,
+        "id": 91,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -6169,16 +5766,6 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.342000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.342000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Shadow Internal Link",
             "url": "/shadow-internal-link"
         },
@@ -6203,7 +5790,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 89,
+        "id": 92,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-04-14 07:27:21",
@@ -6226,16 +5813,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-04-14 07:27:21.342000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-04-14 07:27:21.342000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Shadow Internal Link"
         },
         "templateKey": "default",
@@ -6262,7 +5839,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 90,
+        "id": 93,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -6305,7 +5882,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 91,
+        "id": 94,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6327,16 +5904,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Unlocalized Fields Page",
             "url": "/unlocalized-fields-page"
         },
@@ -6361,7 +5928,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 92,
+        "id": 95,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6383,16 +5950,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.802000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Unlocalized Fields Page"
         },
         "templateKey": "unlocalized-fields",
@@ -6416,7 +5973,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 93,
+        "id": 96,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6438,16 +5995,6 @@
         "shadowLocales": "",
         "stage": "live",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Seite mit unlokalisierten Feldern",
             "url": "/seite-mit-unlokalisierten-feldern"
         },
@@ -6472,7 +6019,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 94,
+        "id": 97,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-08 00:11:15",
@@ -6494,16 +6041,6 @@
         "shadowLocales": "",
         "stage": "draft",
         "templateData": {
-            "changed": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-08 00:11:15.947000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Seite mit unlokalisierten Feldern"
         },
         "templateKey": "unlocalized-fields",
@@ -6529,7 +6066,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 95,
+        "id": 98,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -6572,7 +6109,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 96,
+        "id": 99,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-18 10:17:44",
@@ -6625,16 +6162,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Hyphenated Property Nested Block",
             "url": "/hyphenated-property-nested-block"
         },
@@ -6659,7 +6186,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 97,
+        "id": 100,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-18 10:17:44",
@@ -6712,16 +6239,6 @@
                     ]
                 }
             ],
-            "changed": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-18 10:17:44.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Hyphenated Property Nested Block"
         },
         "templateKey": "default",
@@ -6747,7 +6264,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "en",
-        "id": 98,
+        "id": 101,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -6790,7 +6307,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 99,
+        "id": 102,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-19 10:01:27",
@@ -6814,16 +6331,6 @@
         "templateData": {
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Orphan Creator Changer Page",
             "url": "/orphan-creator-changer-page"
         },
@@ -6848,7 +6355,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 100,
+        "id": 103,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-05-19 10:01:27",
@@ -6872,16 +6379,6 @@
         "templateData": {
             "article": "<p>Page with deleted creator and changer.</p>",
             "blocks": [],
-            "changed": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-05-19 10:01:27.318000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Orphan Creator Changer Page"
         },
         "templateKey": "default",
@@ -6889,6 +6386,242 @@
         "version": 1779184887,
         "workflowPlace": "published",
         "workflowPublished": "2026-05-19 10:01:27"
+    },
+    {
+        "author_id": "",
+        "authored": "",
+        "availableLocales": [
+            "en",
+            "de"
+        ],
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": null,
+            "icon": null,
+            "image": null,
+            "more": null,
+            "title": null
+        },
+        "excerptSegment": "",
+        "ghostLocale": "en",
+        "id": 104,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": null,
+            "description": null,
+            "keywords": null,
+            "title": null
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": [],
+        "templateKey": "",
+        "title": "",
+        "version": 0,
+        "workflowPlace": "",
+        "workflowPublished": ""
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 105,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": 22,
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": {
+            "dateField": "2024-01-15",
+            "datetimeField": "2024-01-15T13:45:30",
+            "title": "Date Fields Page",
+            "url": "/date-fields-page"
+        },
+        "templateKey": "date-fields",
+        "title": "Date Fields Page",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 106,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "en",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "dateField": "2024-01-15",
+            "datetimeField": "2024-01-15T13:45:30",
+            "title": "Date Fields Page"
+        },
+        "templateKey": "date-fields",
+        "title": "Date Fields Page",
+        "version": 1780646569,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 107,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "de",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": 23,
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "live",
+        "templateData": {
+            "dateField": "2023-12-24",
+            "datetimeField": "2023-12-24T18:00:00",
+            "title": "Datumsfelder Seite",
+            "url": "/datumsfelder-seite"
+        },
+        "templateKey": "date-fields",
+        "title": "Datumsfelder Seite",
+        "version": 0,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
+    },
+    {
+        "author_id": "",
+        "authored": "2026-06-05 08:02:49",
+        "availableLocales": "",
+        "changed": "2026-06-05 08:02:49",
+        "created": "2026-06-05 08:02:49",
+        "excerptData": {
+            "description": "",
+            "icon": null,
+            "image": null,
+            "more": "",
+            "title": ""
+        },
+        "excerptSegment": "",
+        "ghostLocale": "",
+        "id": 108,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lastModified": "2026-06-05 08:02:49",
+        "linkData": "",
+        "linkProvider": "",
+        "locale": "de",
+        "pageUuid": "c1a7eb52-9056-4997-8282-6fd9f0ea3e50",
+        "route_id": "",
+        "seoData": {
+            "canonicalUrl": "",
+            "description": "",
+            "keywords": "",
+            "title": ""
+        },
+        "seoHideInSitemap": 0,
+        "seoNoFollow": 0,
+        "seoNoIndex": 0,
+        "shadowLocale": "",
+        "shadowLocales": "",
+        "stage": "draft",
+        "templateData": {
+            "dateField": "2023-12-24",
+            "datetimeField": "2023-12-24T18:00:00",
+            "title": "Datumsfelder Seite"
+        },
+        "templateKey": "date-fields",
+        "title": "Datumsfelder Seite",
+        "version": 1780646569,
+        "workflowPlace": "published",
+        "workflowPublished": "2026-06-05 08:02:49"
     },
     {
         "author_id": "",
@@ -6908,7 +6641,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 101,
+        "id": 109,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "",
@@ -6953,7 +6686,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 102,
+        "id": 110,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -6961,7 +6694,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "401a00bf-1f8f-4a18-9528-2d421e15a276",
-        "route_id": 22,
+        "route_id": 24,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -6976,16 +6709,6 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle",
             "url": "/schatten-quelle"
         },
@@ -7010,7 +6733,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 103,
+        "id": 111,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -7033,16 +6756,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle"
         },
         "templateKey": "default",
@@ -7066,7 +6779,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 104,
+        "id": 112,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -7074,7 +6787,7 @@
         "linkProvider": "",
         "locale": "en",
         "pageUuid": "401a00bf-1f8f-4a18-9528-2d421e15a276",
-        "route_id": 23,
+        "route_id": 25,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -7089,16 +6802,6 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle",
             "url": "/schatten-quelle"
         },
@@ -7123,7 +6826,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 105,
+        "id": 113,
         "idUsersChanger": "",
         "idUsersCreator": "",
         "lastModified": "2026-06-11 20:57:49",
@@ -7146,16 +6849,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-06-11 20:57:49.448000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Schatten-Quelle"
         },
         "templateKey": "default",
@@ -7181,7 +6874,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 106,
+        "id": 114,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -7224,7 +6917,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 107,
+        "id": 115,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -7236,7 +6929,7 @@
         "linkProvider": "external",
         "locale": "de",
         "pageUuid": "7f97b10e-b5fb-46da-ab1b-b85d88d74e39",
-        "route_id": 24,
+        "route_id": 26,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -7251,16 +6944,6 @@
         "stage": "live",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:04.557000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:51.913000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -7289,7 +6972,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 108,
+        "id": 116,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:04",
@@ -7316,16 +6999,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:04.557000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:52:51.913000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -7355,7 +7028,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 109,
+        "id": 117,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -7398,7 +7071,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 110,
+        "id": 118,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -7406,7 +7079,7 @@
         "linkProvider": "",
         "locale": "de",
         "pageUuid": "c0e52c45-a6ca-4762-9464-8c4fd7e09cff",
-        "route_id": 25,
+        "route_id": 27,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -7421,16 +7094,6 @@
         "stage": "live",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Timestamp Fallback Page",
             "url": "/numeric-block-test/timestamp-fallback-page"
         },
@@ -7455,7 +7118,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 111,
+        "id": 119,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2026-03-05 13:51:03",
@@ -7478,16 +7141,6 @@
         "stage": "draft",
         "templateData": {
             "blocks": [],
-            "changed": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2026-03-05 13:51:03.860000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "title": "Timestamp Fallback Page"
         },
         "templateKey": "default",
@@ -7513,7 +7166,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "de",
-        "id": 112,
+        "id": 120,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "",
@@ -7556,7 +7209,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 113,
+        "id": 121,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",
@@ -7568,7 +7221,7 @@
         "linkProvider": "page",
         "locale": "de",
         "pageUuid": "d632fcc7-8ad8-4d59-a195-ded6c24720fc",
-        "route_id": 27,
+        "route_id": 29,
         "seoData": {
             "canonicalUrl": "",
             "description": "",
@@ -7583,16 +7236,6 @@
         "stage": "live",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:25.087000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:53:13.939000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
@@ -7621,7 +7264,7 @@
         },
         "excerptSegment": "",
         "ghostLocale": "",
-        "id": 114,
+        "id": 122,
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "lastModified": "2025-12-09 10:53:25",
@@ -7648,16 +7291,6 @@
         "stage": "draft",
         "templateData": {
             "article": "",
-            "changed": {
-                "date": "2025-12-09 10:53:25.087000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
-            "created": {
-                "date": "2025-12-09 10:53:13.939000",
-                "timezone": "+00:00",
-                "timezone_type": 1
-            },
             "headerImage": {
                 "id": null
             },
