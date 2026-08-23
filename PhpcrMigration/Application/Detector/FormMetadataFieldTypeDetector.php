@@ -95,9 +95,9 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
     }
 
     /**
-     * Sulu pages, articles and snippets store their template under `i18n:{locale}-template`.
-     * Document types that keep the template on a non-localized property are not supported here:
-     * `getType()` returns null for them and the property falls back to JSON decoding.
+     * Pages and articles store their template under `i18n:{locale}-template`, snippets keep a
+     * single unlocalized `template` property. Both are read; for any other shape `getType()`
+     * returns null and the property falls back to JSON decoding.
      */
     private function getTemplateKey(NodeInterface $node, string $locale): ?string
     {
@@ -111,15 +111,19 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             return $this->cachedTemplateKeysForNode[$locale];
         }
 
-        $templateProperty = LocaleExtractor::I18N_PREFIX . $locale . '-template';
+        foreach ([LocaleExtractor::I18N_PREFIX . $locale . '-template', 'template'] as $templateProperty) {
+            if (!$node->hasProperty($templateProperty)) {
+                continue;
+            }
 
-        if (!$node->hasProperty($templateProperty)) {
-            return $this->cachedTemplateKeysForNode[$locale] = null;
+            $value = $node->getPropertyValue($templateProperty);
+
+            if (\is_string($value) && '' !== $value) {
+                return $this->cachedTemplateKeysForNode[$locale] = $value;
+            }
         }
 
-        $value = $node->getPropertyValue($templateProperty);
-
-        return $this->cachedTemplateKeysForNode[$locale] = \is_string($value) && '' !== $value ? $value : null;
+        return $this->cachedTemplateKeysForNode[$locale] = null;
     }
 
     /**
