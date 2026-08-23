@@ -240,7 +240,6 @@ class PropertyNodeParser implements NodeParserInterface
         $isImageMap = false;
         foreach ($blocks as $index => $item) {
             if ('length' === $index) {
-                /** @var int $maxLength */
                 $maxLength = $item;
             }
 
@@ -253,7 +252,8 @@ class PropertyNodeParser implements NodeParserInterface
             }
         }
 
-        if (null !== $maxLength) {
+        // Only the PHPCR Long counter is an int; a block's own property named "length" never is.
+        if (\is_int($maxLength)) {
             // remove length property
             unset($blocks['length']);
 
