@@ -1,4 +1,4 @@
-parameters:
+deptrac:
     paths:
         - ./PhpcrMigration
 
@@ -6,19 +6,19 @@ parameters:
         - name: UserInterface
           collectors:
               - type: directory
-                regex: UserInterface/.*
+                value: UserInterface/.*
         - name: Infrastructure
           collectors:
               - type: directory
-                regex: Infrastructure/.*
+                value: Infrastructure/.*
         - name: Application
           collectors:
               - type: directory
-                regex: Application/.*
+                value: Application/.*
         - name: Domain
           collectors:
               - type: directory
-                regex: Domain/.*
+                value: Domain/.*
 
     ruleset:
         UserInterface:

@@ -60,9 +60,9 @@ jackrabbit/*
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-###> qossmic/deptrac ###
+###> deptrac/deptrac ###
 /.deptrac.cache
-###< qossmic/deptrac ###
+###< deptrac/deptrac ###
 
 # Keep fixtures but not local overrides
 !Tests/Resources/fixtures/

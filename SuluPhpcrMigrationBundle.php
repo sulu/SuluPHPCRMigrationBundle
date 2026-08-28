@@ -17,7 +17,7 @@ use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
@@ -35,13 +35,13 @@ class SuluPhpcrMigrationBundle extends AbstractBundle
             $builder->setParameter('sulu_article.default_additional_webspaces', []);
         }
 
-        $loader = new XmlFileLoader($builder, new FileLocator(__DIR__ . '/Resources/config'));
-        $loader->load('repository.xml');
-        $loader->load('session.xml');
-        $loader->load('command.xml');
-        $loader->load('parser.xml');
-        $loader->load('persister.xml');
-        $loader->load('query.xml');
+        $loader = new PhpFileLoader($builder, new FileLocator(__DIR__ . '/Resources/config'));
+        $loader->load('repository.php');
+        $loader->load('session.php');
+        $loader->load('command.php');
+        $loader->load('parser.php');
+        $loader->load('persister.php');
+        $loader->load('query.php');
     }
 
     public function configure(DefinitionConfigurator $definition): void
