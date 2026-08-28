@@ -16,14 +16,6 @@
         "tag_id": 3
     },
     {
-        "page_dimension_content_id": 64,
-        "tag_id": 3
-    },
-    {
-        "page_dimension_content_id": 65,
-        "tag_id": 3
-    },
-    {
         "page_dimension_content_id": 66,
         "tag_id": 3
     },
@@ -32,11 +24,11 @@
         "tag_id": 3
     },
     {
-        "page_dimension_content_id": 69,
+        "page_dimension_content_id": 68,
         "tag_id": 3
     },
     {
-        "page_dimension_content_id": 70,
+        "page_dimension_content_id": 69,
         "tag_id": 3
     },
     {
@@ -45,6 +37,14 @@
     },
     {
         "page_dimension_content_id": 72,
+        "tag_id": 3
+    },
+    {
+        "page_dimension_content_id": 73,
+        "tag_id": 3
+    },
+    {
+        "page_dimension_content_id": 74,
         "tag_id": 3
     }
 ]
