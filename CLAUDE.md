@@ -20,7 +20,7 @@ php bin/adminconsole sulu:phpcr-migration:migrate page         # By type: page|s
 
 - PHP 8.2+, `declare(strict_types=1)` in all files, MIT license header
 - PHPStan level max, @Symfony code style, Deptrac layer enforcement
-- Service config: **XML** (not YAML) in `Resources/config/*.xml`
+- Service config: **PHP** (`ContainerConfigurator`) in `Resources/config/*.php`, Symfony 8 removed the DI XML loader
 - Constructor injection only, service tag prefix: `sulu_phpcr_migration.*`
 
 ## Architecture

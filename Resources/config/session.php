@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Sulu.
  *
@@ -18,7 +20,6 @@ use Symfony\Component\DependencyInjection\Reference;
 return static function(ContainerConfigurator $container) {
     $services = $container->services();
 
-    // Command
     $services->set('sulu_phpcr_migration.session_manager', SessionManager::class)
         ->args([
             '%sulu_phpcr_migration.configuration%',
