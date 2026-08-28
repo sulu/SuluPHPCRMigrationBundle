@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand;
-use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\Reference;
 
 return static function(ContainerConfigurator $container) {
@@ -26,7 +25,7 @@ return static function(ContainerConfigurator $container) {
             new Reference('sulu_phpcr_migration.session_manager'),
             new Reference('sulu_phpcr_migration.chain_node_parser'),
             new Reference('sulu_phpcr_migration.persister_pool'),
-            new TaggedIteratorArgument('sulu_phpcr_migration.post_migration_query'),
+            tagged_iterator('sulu_phpcr_migration.post_migration_query'),
             new Reference('doctrine.dbal.default_connection'),
             new Reference('sulu_phpcr_migration.entity_repository'),
             new Reference('sulu_phpcr_migration.dry_run_collector'),

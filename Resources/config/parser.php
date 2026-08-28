@@ -22,7 +22,6 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\PageNodeP
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\PropertyNodeParser;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Parser\SnippetAreaNodeParser;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Resolver\PropertyValueResolver;
-use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\Reference;
 
 return static function(ContainerConfigurator $container) {
@@ -74,6 +73,6 @@ return static function(ContainerConfigurator $container) {
 
     $services->set('sulu_phpcr_migration.chain_node_parser', ChainNodeParser::class)
         ->args([
-            new TaggedIteratorArgument('sulu_phpcr_migration.node_parser'),
+            tagged_iterator('sulu_phpcr_migration.node_parser'),
         ]);
 };

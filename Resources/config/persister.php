@@ -19,7 +19,6 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PagePe
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\SnippetAreaPersister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\SnippetPersister;
-use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\Reference;
 
 return static function(ContainerConfigurator $container) {
@@ -62,6 +61,6 @@ return static function(ContainerConfigurator $container) {
 
     $services->set('sulu_phpcr_migration.persister_pool', PersisterPool::class)
         ->args([
-            new TaggedIteratorArgument('sulu_phpcr_migration.persister', 'type'),
+            tagged_iterator('sulu_phpcr_migration.persister', indexAttribute: 'type'),
         ]);
 };
