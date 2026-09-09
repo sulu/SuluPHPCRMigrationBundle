@@ -44,6 +44,7 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
         $this->persister = new PagePersister(
             PropertyAccess::createPropertyAccessor(),
             $this->repository->reveal(),
+            '3.0.9'
         );
     }
 
