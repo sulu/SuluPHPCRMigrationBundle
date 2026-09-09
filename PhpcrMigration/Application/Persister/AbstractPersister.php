@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidDocumentException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\SlugTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
@@ -311,17 +312,22 @@ abstract class AbstractPersister implements PersisterInterface
             );
 
             foreach ($tagIds as $tagId) {
-                $this->entityRepository->insertOrUpdate(
-                    [
-                        $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
-                        'tag_id' => $tagId,
-                    ],
-                    $this->getDimensionContentExcerptTagsTableName(),
-                    [
-                        $this->getDimensionContentExcerptTagsIdName() => 'integer',
-                        'tag_id' => 'integer',
-                    ],
-                );
+                try {
+                    $this->entityRepository->insertOrUpdate(
+                        [
+                            $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
+                            'tag_id' => $tagId,
+                        ],
+                        $this->getDimensionContentExcerptTagsTableName(),
+                        [
+                            $this->getDimensionContentExcerptTagsIdName() => 'integer',
+                            'tag_id' => 'integer',
+                        ],
+                    );
+                } catch (ForeignKeyConstraintViolationException) {
+                    // @ignoreException
+                    // Ignore this tag, when it was deleted
+                }
             }
         }
     }
