@@ -66,6 +66,7 @@ abstract class AbstractPersister implements PersisterInterface
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
         protected EntityRepositoryInterface $entityRepository,
+        protected string $suluVersion,
     ) {
     }
 
@@ -684,8 +685,8 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            if (\strlen($slug) > SlugTooLongException::MAX_LENGTH) {
-                throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale);
+            if (\strlen($slug) > SlugTooLongException::getMaxLength($this->suluVersion)) {
+                throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale, $this->suluVersion);
             }
 
             // main route
@@ -803,8 +804,8 @@ abstract class AbstractPersister implements PersisterInterface
 
             $historyResourceId = $resourceKey . '::' . $resourceId;
             foreach ($historyUrls as $url) {
-                if (\strlen($url) > 144) {
-                    throw new SlugTooLongException($url, $document['jcr']['uuid'], $locale);
+                if (\strlen($url) > SlugTooLongException::getMaxLength($this->suluVersion)) {
+                    throw new SlugTooLongException($url, $document['jcr']['uuid'], $locale, $this->suluVersion);
                 }
 
                 $data = [

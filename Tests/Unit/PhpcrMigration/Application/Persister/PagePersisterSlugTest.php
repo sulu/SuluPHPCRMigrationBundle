@@ -31,6 +31,7 @@ final class PagePersisterSlugTest extends TestCase
         $persister = new PagePersister(
             PropertyAccess::createPropertyAccessor(),
             $repository->reveal(),
+            '3.0.9'
         );
 
         // Malformed data: each locale is a shadow of the other. Without a visited-set guard this
