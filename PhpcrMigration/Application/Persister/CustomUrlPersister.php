@@ -20,6 +20,8 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\Entit
  */
 class CustomUrlPersister implements PersisterInterface
 {
+    use NullsDeletedUsersTrait;
+
     public function __construct(
         private readonly EntityRepositoryInterface $entityRepository,
     ) {
@@ -78,7 +80,7 @@ class CustomUrlPersister implements PersisterInterface
         ];
 
         $this->entityRepository->insertOrUpdate(
-            $customUrlData,
+            $this->nullDeletedUsers($customUrlData),
             'cu_custom_url',
             [
                 'uuid' => 'string',

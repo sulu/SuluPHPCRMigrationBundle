@@ -51,6 +51,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 abstract class AbstractPersister implements PersisterInterface
 {
+    use NullsDeletedUsersTrait;
+
     public const ROUTE_TABLE = 'ro_routes';
 
     public const URL = '_url';
@@ -1234,21 +1236,11 @@ abstract class AbstractPersister implements PersisterInterface
      */
     protected function validateData(array $data): array
     {
-        $userExists = fn (mixed $value): bool => $this->entityRepository->exists('se_users', ['id' => $value]);
-
-        $validators = [
-            'author_id' => fn (mixed $value): bool => $this->entityRepository->exists('co_contacts', ['id' => $value]),
-            'idUsersCreator' => $userExists,
-            'idUsersChanger' => $userExists,
-        ];
-
-        foreach ($validators as $key => $isValid) {
-            if (isset($data[$key]) && !$isValid($data[$key])) {
-                $data[$key] = null;
-            }
+        if (isset($data['author_id']) && !$this->entityRepository->exists('co_contacts', ['id' => $data['author_id']])) {
+            $data['author_id'] = null;
         }
 
-        return $data;
+        return $this->nullDeletedUsers($data);
     }
 
     /**
