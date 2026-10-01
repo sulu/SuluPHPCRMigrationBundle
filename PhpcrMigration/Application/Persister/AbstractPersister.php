@@ -65,6 +65,8 @@ abstract class AbstractPersister implements PersisterInterface
     protected const PAGE_TREE_ROUTE_PATH_SUFFIX = '-page-path';
     protected const PAGE_TREE_ROUTE_SUFFIX_SUFFIX = '-suffix';
 
+    private ?int $maxSlugLength = null;
+
     public function __construct(
         protected PropertyAccessorInterface $propertyAccessor,
         protected EntityRepositoryInterface $entityRepository,
@@ -690,8 +692,8 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            if (\strlen($slug) > SlugTooLongException::MAX_LENGTH) {
-                throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale);
+            if (\mb_strlen($slug) > $this->getMaxSlugLength()) {
+                throw new SlugTooLongException($slug, $document['jcr']['uuid'], $locale, $this->getMaxSlugLength());
             }
 
             // main route
@@ -809,8 +811,8 @@ abstract class AbstractPersister implements PersisterInterface
 
             $historyResourceId = $resourceKey . '::' . $resourceId;
             foreach ($historyUrls as $url) {
-                if (\strlen($url) > 144) {
-                    throw new SlugTooLongException($url, $document['jcr']['uuid'], $locale);
+                if (\mb_strlen($url) > $this->getMaxSlugLength()) {
+                    throw new SlugTooLongException($url, $document['jcr']['uuid'], $locale, $this->getMaxSlugLength());
                 }
 
                 $data = [
@@ -843,6 +845,11 @@ abstract class AbstractPersister implements PersisterInterface
         }
 
         return $routes;
+    }
+
+    private function getMaxSlugLength(): int
+    {
+        return $this->maxSlugLength ??= $this->entityRepository->getColumnLength(self::ROUTE_TABLE, 'slug');
     }
 
     /**

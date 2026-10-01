@@ -108,7 +108,7 @@ final class TestFixtureBuilder
         $output[] = '    parent_id INT DEFAULT NULL,';
         $output[] = '    webspace VARCHAR(31) DEFAULT NULL,';
         $output[] = '    locale VARCHAR(15) NOT NULL,';
-        $output[] = '    slug VARCHAR(144) NOT NULL,';
+        $output[] = '    slug VARCHAR(255) NOT NULL,';
         $output[] = '    resource_key VARCHAR(32) NOT NULL,';
         $output[] = '    resource_id VARCHAR(70) NOT NULL,';
         $output[] = '    INDEX IDX_ro_routes_parent (parent_id),';

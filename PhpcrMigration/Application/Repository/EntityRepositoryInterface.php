@@ -58,6 +58,8 @@ interface EntityRepositoryInterface
 
     public function tableExists(string $tableName): bool;
 
+    public function getColumnLength(string $tableName, string $columnName): int;
+
     /**
      * @param array<string, mixed> $data
      * @param array<string, string> $types

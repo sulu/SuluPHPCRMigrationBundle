@@ -119,6 +119,8 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
      */
     private function stubRouteCreation(): void
     {
+        $this->repository->getColumnLength(AbstractPersister::ROUTE_TABLE, 'slug')->willReturn(255);
+
         // History cleanup for the incoming slug.
         $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, Argument::that(
             static fn (array $where): bool => ($where['resource_key'] ?? null) === AbstractPersister::ROUTE_RESOURCE_KEY

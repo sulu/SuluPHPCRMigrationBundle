@@ -101,9 +101,9 @@
         "depth": 0,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 47,
+        "lft": 49,
         "parent_id": "",
-        "rgt": 48,
+        "rgt": 50,
         "uuid": "7038c3db-3c37-4ebf-bf8c-7da52fb61efa",
         "webspaceKey": "website_2"
     },
@@ -156,7 +156,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-10-01 12:01:23",
+        "changed": "2026-10-01 14:58:41",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": 1,
@@ -247,7 +247,7 @@
         "idUsersCreator": "",
         "lft": 1,
         "parent_id": "",
-        "rgt": 46,
+        "rgt": 48,
         "uuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "webspaceKey": "website"
     },
@@ -261,6 +261,18 @@
         "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "rgt": 31,
         "uuid": "eb797a7a-4ca6-4e24-93fe-fe18a7beff7c",
+        "webspaceKey": "website"
+    },
+    {
+        "changed": "2026-10-01 14:58:25",
+        "created": "2026-10-01 14:58:25",
+        "depth": 1,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lft": 46,
+        "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+        "rgt": 47,
+        "uuid": "fcee49b4-bb53-45f5-978a-3663a294e523",
         "webspaceKey": "website"
     },
     {

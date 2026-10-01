@@ -192,6 +192,14 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
         }
     }
 
+    public function getColumnLength(string $tableName, string $columnName): int
+    {
+        $column = $this->connection->createSchemaManager()->introspectTable($tableName)->getColumn($columnName);
+
+        return $column->getLength()
+            ?? throw new \UnexpectedValueException(\sprintf('Column "%s.%s" has no length.', $tableName, $columnName));
+    }
+
     /**
      * @param mixed[] $where
      *
