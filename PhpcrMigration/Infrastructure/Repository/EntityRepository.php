@@ -196,7 +196,8 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
     {
         $column = $this->connection->createSchemaManager()->introspectTable($tableName)->getColumn($columnName);
 
-        return $column->getLength() ?? \PHP_INT_MAX;
+        return $column->getLength()
+            ?? throw new \UnexpectedValueException(\sprintf('Column "%s.%s" has no length.', $tableName, $columnName));
     }
 
     /**
