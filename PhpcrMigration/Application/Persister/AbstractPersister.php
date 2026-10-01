@@ -315,6 +315,10 @@ abstract class AbstractPersister implements PersisterInterface
             );
 
             foreach ($tagIds as $tagId) {
+                if (false === $this->entityRepository->exists('ta_tags', ['id' => $tagId])) {
+                    continue;
+                }
+
                 $this->entityRepository->insertOrUpdate(
                     [
                         $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],

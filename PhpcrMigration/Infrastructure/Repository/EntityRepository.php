@@ -35,7 +35,7 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
     /**
      * @var string[]
      */
-    private const CACHEABLE_EXISTS_TABLES = ['me_media', 'co_contacts', 'ca_categories'];
+    private const CACHEABLE_EXISTS_TABLES = ['me_media', 'co_contacts', 'ca_categories', 'ta_tags'];
 
     /**
      * @var array<string, bool>
