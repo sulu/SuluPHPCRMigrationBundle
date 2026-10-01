@@ -28,11 +28,10 @@ class ArticlePersister extends AbstractPersister
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
-        string $suluVersion,
         private readonly array $defaultMainWebspaceMap = [],
         private readonly array $defaultAdditionalWebspacesMap = [],
     ) {
-        parent::__construct($propertyAccessor, $entityRepository, $suluVersion);
+        parent::__construct($propertyAccessor, $entityRepository);
     }
 
     protected function removeNonTemplateData(array $data): array

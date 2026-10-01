@@ -28,7 +28,6 @@ return static function(ContainerConfigurator $container) {
         ->args([
             new Reference('property_accessor'),
             new Reference('sulu_phpcr_migration.entity_repository'),
-            '%sulu.version%',
         ])
         ->tag('sulu_phpcr_migration.persister', ['type' => 'page']);
 
@@ -36,7 +35,6 @@ return static function(ContainerConfigurator $container) {
         ->args([
             new Reference('property_accessor'),
             new Reference('sulu_phpcr_migration.entity_repository'),
-            '%sulu.version%',
         ])
         ->tag('sulu_phpcr_migration.persister', ['type' => 'snippet']);
 
@@ -44,7 +42,6 @@ return static function(ContainerConfigurator $container) {
         ->args([
             new Reference('property_accessor'),
             new Reference('sulu_phpcr_migration.entity_repository'),
-            '%sulu.version%',
             '%sulu_article.default_main_webspace%',
             '%sulu_article.default_additional_webspaces%',
         ])
