@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidDocumentException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\SlugTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UnsupportedDocumentTypeException;
@@ -314,22 +313,21 @@ abstract class AbstractPersister implements PersisterInterface
             );
 
             foreach ($tagIds as $tagId) {
-                try {
-                    $this->entityRepository->insertOrUpdate(
-                        [
-                            $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
-                            'tag_id' => $tagId,
-                        ],
-                        $this->getDimensionContentExcerptTagsTableName(),
-                        [
-                            $this->getDimensionContentExcerptTagsIdName() => 'integer',
-                            'tag_id' => 'integer',
-                        ],
-                    );
-                } catch (ForeignKeyConstraintViolationException) {
-                    // @ignoreException
-                    // Ignore this tag, when it was deleted
+                if (false === $this->entityRepository->exists('ta_tags', ['id' => $tagId])) {
+                    continue;
                 }
+
+                $this->entityRepository->insertOrUpdate(
+                    [
+                        $this->getDimensionContentExcerptTagsIdName() => $dimensionContent['id'],
+                        'tag_id' => $tagId,
+                    ],
+                    $this->getDimensionContentExcerptTagsTableName(),
+                    [
+                        $this->getDimensionContentExcerptTagsIdName() => 'integer',
+                        'tag_id' => 'integer',
+                    ],
+                );
             }
         }
     }
