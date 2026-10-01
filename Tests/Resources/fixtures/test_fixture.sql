@@ -1,5 +1,5 @@
 -- Test Fixture for PhpcrMigrationBundle
--- Generated: 2026-10-01 12:02:32
+-- Generated: 2026-10-01 12:02:46
 -- Combines Sulu 2.6 data with Sulu 3.0 schema
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -2882,7 +2882,7 @@ CREATE TABLE ro_routes (
     parent_id INT DEFAULT NULL,
     webspace VARCHAR(31) DEFAULT NULL,
     locale VARCHAR(15) NOT NULL,
-    slug VARCHAR(144) NOT NULL,
+    slug VARCHAR(255) NOT NULL,
     resource_key VARCHAR(32) NOT NULL,
     resource_id VARCHAR(70) NOT NULL,
     INDEX IDX_ro_routes_parent (parent_id),
