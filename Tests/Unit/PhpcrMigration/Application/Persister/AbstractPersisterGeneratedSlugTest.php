@@ -142,6 +142,15 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(2, 'Foo');
     }
 
+    public function testGeneratedSlugStartsWithParentSlug(): void
+    {
+        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, ['id' => 5])->willReturn(['id' => 5, 'slug' => '/parent']);
+
+        $reflection = new \ReflectionMethod(PagePersister::class, 'generateSlug');
+
+        $this->assertSame('/parent/foo', $reflection->invoke($this->persister, 'Foo', 'de', 5));
+    }
+
     public function testTooLongGeneratedSlugSkipsRoute(): void
     {
         $this->stubRouteOwner('/foo', 'other-uuid');

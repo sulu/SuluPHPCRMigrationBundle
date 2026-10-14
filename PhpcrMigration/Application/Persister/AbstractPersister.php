@@ -1007,7 +1007,7 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Slugs are unique case-insensitively in ro_routes.
+     * MySQL compares slugs case-insensitively, so the reserved slug blocks every casing of it.
      */
     private function isReserved(string $slug, ?string $reservedSlug): bool
     {
