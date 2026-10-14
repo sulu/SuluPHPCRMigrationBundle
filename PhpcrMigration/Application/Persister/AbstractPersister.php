@@ -701,6 +701,12 @@ abstract class AbstractPersister implements PersisterInterface
             }
 
             if (null === $slug) {
+                echo \sprintf(
+                    "Skipping route for document '%s' (locale '%s'): it has no stored url and no slug could be generated.\n",
+                    $resourceId,
+                    $locale,
+                );
+
                 continue;
             }
 
@@ -757,6 +763,14 @@ abstract class AbstractPersister implements PersisterInterface
                             );
                         }
                         $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
+
+                        $losingId = $conflictingRoute['resource_id'] ?? null;
+                        echo \sprintf(
+                            "Removed route of document '%s' (locale '%s'): %s and no slug could be generated.\n",
+                            \is_string($losingId) ? $losingId : '?',
+                            $locale,
+                            $takenBy,
+                        );
                     }
                 } else {
                     $ownerKey = $conflictingRoute['resource_key'] ?? null;

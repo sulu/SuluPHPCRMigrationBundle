@@ -74,6 +74,8 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(1);
 
+        $this->expectOutputRegex("~^Removed route of document 'other-uuid' \\(locale 'de'\\)~");
+
         $routes = $this->invokeCreateOrUpdateRoutes();
 
         $this->assertSame(100, $routes['de']['id']);
@@ -107,6 +109,8 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
         $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, ['id' => self::CONFLICT_ROUTE_ID])
             ->shouldBeCalled()
             ->willReturn(1);
+
+        $this->expectOutputRegex("~^Removed route of document 'other-uuid' \\(locale 'de'\\)~");
 
         $routes = $this->invokeCreateOrUpdateRoutes();
 

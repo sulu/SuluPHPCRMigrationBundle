@@ -164,6 +164,41 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(1, \str_repeat('a', 300));
     }
 
+    public function testLocaleWithoutUrlAndUsableTitleIsReported(): void
+    {
+        $this->repository->insertOrUpdate(Argument::any(), AbstractPersister::ROUTE_TABLE, Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $this->expectOutputString("Skipping route for document 'incoming-uuid' (locale 'de'): it has no stored url and no slug could be generated.\n");
+
+        $this->invokeCreateOrUpdateRoutes(1, '???', null);
+    }
+
+    public function testRemovedRouteOfReclaimedDraftIsReported(): void
+    {
+        $this->stubRouteOwner('/foo', 'other-uuid');
+
+        $this->repository->findOneBy(self::DIMENSION_TABLE, [
+            'pageUuid' => 'other-uuid',
+            'locale' => 'de',
+            'stage' => 'draft',
+            'version' => 0,
+        ])->willReturn(['workflowPlace' => 'draft', 'title' => '???']);
+        $this->repository->exists(self::DIMENSION_TABLE, ['route_id' => self::CONFLICT_ROUTE_ID])->willReturn(false);
+        $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, ['id' => self::CONFLICT_ROUTE_ID])
+            ->willReturn(1)
+            ->shouldBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => '/foo' === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
+
+        $this->expectOutputString("Removed route of document 'other-uuid' (locale 'de'): slug '/foo' is taken by published 'pages::incoming-uuid' and no slug could be generated.\n");
+
+        $this->invokeCreateOrUpdateRoutes(2, 'Foo');
+    }
+
     public function testDryRunStubRowIsNoConflict(): void
     {
         // In a dry run every lookup returns the same stub row, which has no slug.
@@ -204,19 +239,21 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         ]);
     }
 
-    private function invokeCreateOrUpdateRoutes(int $state, string $title): void
+    private function invokeCreateOrUpdateRoutes(int $state, string $title, ?string $url = '/foo'): void
     {
+        $localization = [
+            'state' => $state,
+            'template' => 'default',
+            'title' => $title,
+        ];
+        if (null !== $url) {
+            $localization[AbstractPersister::URL] = $url;
+        }
+
         $document = [
             'jcr' => ['uuid' => 'incoming-uuid', 'mixinTypes' => ['sulu:page']],
             'sulu' => ['webspaceKey' => 'website', 'parentId' => null],
-            'localizations' => [
-                'de' => [
-                    'state' => $state,
-                    'template' => 'default',
-                    'title' => $title,
-                    AbstractPersister::URL => '/foo',
-                ],
-            ],
+            'localizations' => ['de' => $localization],
         ];
 
         $reflection = new \ReflectionMethod(PagePersister::class, 'createOrUpdateRoutes');
