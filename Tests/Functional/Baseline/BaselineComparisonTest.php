@@ -238,6 +238,27 @@ class BaselineComparisonTest extends KernelTestCase
     }
 
     /**
+     * Sulu 3.0 rejects saving a page without a route, so a routeless migrated locale can neither be
+     * saved nor restored from the trash.
+     */
+    public function testLocalizedPageDimensionContentsHaveRoute(): void
+    {
+        /** @var Connection $connection */
+        $connection = self::getContainer()->get('doctrine.dbal.default_connection');
+
+        $routeless = $connection->fetchAllAssociative(
+            "SELECT pageUuid, locale, stage
+             FROM pa_page_dimension_contents
+             WHERE locale IS NOT NULL
+               AND version = 0
+               AND route_id IS NULL
+             ORDER BY pageUuid, locale, stage"
+        );
+
+        $this->assertSame([], $routeless, 'Localized page dimension contents without a route.');
+    }
+
+    /**
      * @param array<string, mixed> $params
      */
     private function fetchCount(Connection $connection, string $sql, array $params): int
