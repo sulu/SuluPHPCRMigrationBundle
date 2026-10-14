@@ -18,7 +18,7 @@ use Sulu\Component\Content\Document\WorkflowStage;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
 
 /**
- * Two pages with the same resource segment: the published one owns the route, so the draft one
+ * Two pages with the same resource segment. The published one owns the route, so the draft one
  * collides and the migration has to give it a route of its own.
  */
 class SlugCollisionDraftPageFixture implements PhpcrFixtureInterface

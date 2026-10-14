@@ -1015,7 +1015,7 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * A dry run returns a stub row without a slug for every lookup, which is no route at all.
+     * In a dry run every lookup returns a stub row without a slug, which is not a real route.
      *
      * @param mixed[] $route
      */
@@ -1376,7 +1376,7 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Slug for a locale whose own slug is missing or taken; null leaves the locale without a route.
+     * Returns the slug for a locale whose own slug is missing or taken. Null leaves the locale without a route.
      */
     protected function generateSlug(string $title, string $locale, ?int $parentRouteId): ?string
     {

@@ -361,7 +361,7 @@ class PagePersister extends AbstractPersister
     }
 
     /**
-     * Builds the slug like the Sulu admin does for a new page: the parent's slug plus the cleaned up title.
+     * Builds the slug like the Sulu admin does for a new page.
      */
     protected function generateSlug(string $title, string $locale, ?int $parentRouteId): ?string
     {
