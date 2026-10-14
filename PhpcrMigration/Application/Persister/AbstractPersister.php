@@ -761,16 +761,16 @@ abstract class AbstractPersister implements PersisterInterface
                                 ['route_id' => 'integer'],
                                 ['route_id' => $conflictingRoute['id']],
                             );
+
+                            $losingId = $conflictingRoute['resource_id'] ?? null;
+                            echo \sprintf(
+                                "Removed route of document '%s' (locale '%s'): %s and no slug could be generated.\n",
+                                \is_string($losingId) ? $losingId : '?',
+                                $locale,
+                                $takenBy,
+                            );
                         }
                         $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
-
-                        $losingId = $conflictingRoute['resource_id'] ?? null;
-                        echo \sprintf(
-                            "Removed route of document '%s' (locale '%s'): %s and no slug could be generated.\n",
-                            \is_string($losingId) ? $losingId : '?',
-                            $locale,
-                            $takenBy,
-                        );
                     }
                 } else {
                     $ownerKey = $conflictingRoute['resource_key'] ?? null;

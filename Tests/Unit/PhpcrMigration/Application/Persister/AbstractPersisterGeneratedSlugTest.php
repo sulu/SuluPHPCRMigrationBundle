@@ -144,11 +144,23 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
 
     public function testGeneratedSlugStartsWithParentSlug(): void
     {
+        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
+            'resource_key' => 'pages',
+            'resource_id' => 'parent-uuid',
+            'locale' => 'de',
+        ])->willReturn(['id' => 5]);
         $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, ['id' => 5])->willReturn(['id' => 5, 'slug' => '/parent']);
+        $this->stubRouteOwner('/parent/foo', null);
 
-        $reflection = new \ReflectionMethod(PagePersister::class, 'generateSlug');
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => '/parent/foo' === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
 
-        $this->assertSame('/parent/foo', $reflection->invoke($this->persister, 'Foo', 'de', 5));
+        $this->expectOutputRegex("~^Generated route '/parent/foo' for document 'incoming-uuid'~");
+
+        $this->invokeCreateOrUpdateRoutes(1, 'Foo', null, 'parent-uuid');
     }
 
     public function testTooLongGeneratedSlugSkipsRoute(): void
@@ -164,7 +176,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(1, \str_repeat('a', 300));
     }
 
-    public function testLocaleWithoutUrlAndUsableTitleIsReported(): void
+    public function testLocaleWithoutUrlOrUsableTitleIsReported(): void
     {
         $this->repository->insertOrUpdate(Argument::any(), AbstractPersister::ROUTE_TABLE, Argument::cetera())
             ->shouldNotBeCalled();
@@ -184,7 +196,9 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
             'stage' => 'draft',
             'version' => 0,
         ])->willReturn(['workflowPlace' => 'draft', 'title' => '???']);
-        $this->repository->exists(self::DIMENSION_TABLE, ['route_id' => self::CONFLICT_ROUTE_ID])->willReturn(false);
+        $this->repository->exists(self::DIMENSION_TABLE, ['route_id' => self::CONFLICT_ROUTE_ID])->willReturn(true);
+        $this->repository->insertOrUpdate(['route_id' => null], self::DIMENSION_TABLE, Argument::cetera())
+            ->shouldBeCalled();
         $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, ['id' => self::CONFLICT_ROUTE_ID])
             ->willReturn(1)
             ->shouldBeCalled();
@@ -239,7 +253,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         ]);
     }
 
-    private function invokeCreateOrUpdateRoutes(int $state, string $title, ?string $url = '/foo'): void
+    private function invokeCreateOrUpdateRoutes(int $state, string $title, ?string $url = '/foo', ?string $parentId = null): void
     {
         $localization = [
             'state' => $state,
@@ -252,7 +266,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
 
         $document = [
             'jcr' => ['uuid' => 'incoming-uuid', 'mixinTypes' => ['sulu:page']],
-            'sulu' => ['webspaceKey' => 'website', 'parentId' => null],
+            'sulu' => ['webspaceKey' => 'website', 'parentId' => $parentId],
             'localizations' => ['de' => $localization],
         ];
 

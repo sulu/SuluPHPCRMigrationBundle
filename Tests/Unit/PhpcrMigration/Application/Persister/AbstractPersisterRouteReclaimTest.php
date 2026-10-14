@@ -74,7 +74,7 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(1);
 
-        $this->expectOutputRegex("~^Removed route of document 'other-uuid' \\(locale 'de'\\)~");
+        $this->expectOutputString('');
 
         $routes = $this->invokeCreateOrUpdateRoutes();
 
