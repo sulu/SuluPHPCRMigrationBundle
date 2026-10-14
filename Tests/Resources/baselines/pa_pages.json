@@ -60,6 +60,18 @@
         "webspaceKey": "website"
     },
     {
+        "changed": "2026-10-14 07:21:29",
+        "created": "2026-10-14 07:21:29",
+        "depth": 1,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lft": 48,
+        "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+        "rgt": 49,
+        "uuid": "3f5f3ad4-7fb9-4b8f-b2d5-fe2dec8072a1",
+        "webspaceKey": "website"
+    },
+    {
         "changed": "2026-06-11 20:57:49",
         "created": "2026-06-11 20:57:49",
         "depth": 1,
@@ -84,6 +96,18 @@
         "webspaceKey": "website"
     },
     {
+        "changed": "2026-10-14 07:21:29",
+        "created": "2026-10-14 07:21:29",
+        "depth": 1,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lft": 50,
+        "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+        "rgt": 51,
+        "uuid": "5f9684d7-ca01-4f0b-918d-8e95e4b6acdd",
+        "webspaceKey": "website"
+    },
+    {
         "changed": "2025-12-09 10:50:39",
         "created": "2025-12-09 10:44:29",
         "depth": 1,
@@ -101,9 +125,9 @@
         "depth": 0,
         "idUsersChanger": "",
         "idUsersCreator": "",
-        "lft": 49,
+        "lft": 55,
         "parent_id": "",
-        "rgt": 50,
+        "rgt": 56,
         "uuid": "7038c3db-3c37-4ebf-bf8c-7da52fb61efa",
         "webspaceKey": "website_2"
     },
@@ -132,6 +156,18 @@
         "webspaceKey": "website"
     },
     {
+        "changed": "2026-10-14 07:21:29",
+        "created": "2026-10-14 07:21:29",
+        "depth": 1,
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "lft": 52,
+        "parent_id": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
+        "rgt": 53,
+        "uuid": "8df2a2dd-11d4-44e9-845c-2709f2aa61b6",
+        "webspaceKey": "website"
+    },
+    {
         "changed": "2025-12-09 10:52:15",
         "created": "2025-12-09 10:52:15",
         "depth": 1,
@@ -156,7 +192,7 @@
         "webspaceKey": "website"
     },
     {
-        "changed": "2026-10-01 14:58:41",
+        "changed": "2026-10-14 07:26:47",
         "created": "2025-12-11 22:03:04",
         "depth": 1,
         "idUsersChanger": 1,
@@ -247,7 +283,7 @@
         "idUsersCreator": "",
         "lft": 1,
         "parent_id": "",
-        "rgt": 48,
+        "rgt": 54,
         "uuid": "db367f2b-7e1d-42e0-8ea2-b39b3d7511bf",
         "webspaceKey": "website"
     },

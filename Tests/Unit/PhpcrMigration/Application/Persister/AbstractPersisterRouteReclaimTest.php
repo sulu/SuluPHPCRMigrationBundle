@@ -133,6 +133,7 @@ final class AbstractPersisterRouteReclaimTest extends TestCase
             'slug' => '/foo',
         ])->willReturn([
             'id' => self::CONFLICT_ROUTE_ID,
+            'slug' => '/foo',
             'resource_id' => 'other-uuid',
             'resource_key' => 'pages',
             'locale' => 'de',

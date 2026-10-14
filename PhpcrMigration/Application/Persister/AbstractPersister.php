@@ -28,6 +28,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  *         routePathName?: string,
  *         template: string,
  *         state: int,
+ *         title?: string,
  *         url?: string,
  *         'shadow-on'?: bool,
  *         'shadow-base'?: string,
@@ -689,6 +690,17 @@ abstract class AbstractPersister implements PersisterInterface
 
             $slug = $this->getSlug($document, $locale);
             if (null === $slug) {
+                $slug = $this->generateUniqueSlug(
+                    $localizedData['title'] ?? null,
+                    $locale,
+                    $webspace,
+                    $parentRouteId,
+                    $resourceId,
+                    'it has no stored url',
+                );
+            }
+
+            if (null === $slug) {
                 continue;
             }
 
@@ -724,44 +736,59 @@ abstract class AbstractPersister implements PersisterInterface
                 'locale' => $locale,
                 'slug' => $slug,
             ]);
-            if (
-                null !== $conflictingRoute
-                && (
-                    ($conflictingRoute['resource_id'] ?? null) !== $resourceId
-                    || ($conflictingRoute['resource_key'] ?? null) !== $resourceKey
-                )
-            ) {
+            if (null !== $conflictingRoute && $this->isRouteOfOtherResource($conflictingRoute, $resourceId)) {
                 $incomingIsPublished = 2 === $localizedData['state'];
 
                 if ($incomingIsPublished && !$this->isExistingRoutePublished($conflictingRoute)) {
-                    // route_id on the dimension content table is ON DELETE CASCADE, so detach the
-                    // losing draft's dimension contents before dropping its route — otherwise the
-                    // cascade would delete the migrated draft content instead of just freeing the slug.
-                    // Guard with exists(): insertOrUpdate would INSERT a bogus row (with NULL stage
-                    // and version) when the conflicting route is orphaned and nothing references it.
-                    $dimensionContentTable = $this->getDimensionContentTableName();
-                    if ($this->entityRepository->exists($dimensionContentTable, ['route_id' => $conflictingRoute['id']])) {
-                        $this->entityRepository->insertOrUpdate(
-                            ['route_id' => null],
-                            $dimensionContentTable,
-                            ['route_id' => 'integer'],
-                            ['route_id' => $conflictingRoute['id']],
-                        );
+                    $takenBy = \sprintf("slug '%s' is taken by published '%s::%s'", $slug, $resourceKey, $resourceId);
+                    if (!$this->moveRouteToGeneratedSlug($conflictingRoute, $webspace, $locale, $slug, $takenBy)) {
+                        // route_id on the dimension content table is ON DELETE CASCADE, so detach the
+                        // losing draft's dimension contents before dropping its route — otherwise the
+                        // cascade would delete the migrated draft content instead of just freeing the slug.
+                        // Guard with exists(): insertOrUpdate would INSERT a bogus row (with NULL stage
+                        // and version) when the conflicting route is orphaned and nothing references it.
+                        $dimensionContentTable = $this->getDimensionContentTableName();
+                        if ($this->entityRepository->exists($dimensionContentTable, ['route_id' => $conflictingRoute['id']])) {
+                            $this->entityRepository->insertOrUpdate(
+                                ['route_id' => null],
+                                $dimensionContentTable,
+                                ['route_id' => 'integer'],
+                                ['route_id' => $conflictingRoute['id']],
+                            );
+                        }
+                        $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
                     }
-                    $this->entityRepository->removeBy(self::ROUTE_TABLE, ['id' => $conflictingRoute['id']]);
                 } else {
                     $ownerKey = $conflictingRoute['resource_key'] ?? null;
                     $ownerId = $conflictingRoute['resource_id'] ?? null;
-                    echo \sprintf(
-                        "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s::%s'.\n",
-                        $resourceId,
-                        $locale,
-                        $slug,
+                    $owner = \sprintf(
+                        '%s::%s',
                         \is_string($ownerKey) ? $ownerKey : '?',
                         \is_string($ownerId) ? $ownerId : '?',
                     );
 
-                    continue;
+                    $generatedSlug = $this->generateUniqueSlug(
+                        $localizedData['title'] ?? null,
+                        $locale,
+                        $webspace,
+                        $parentRouteId,
+                        $resourceId,
+                        \sprintf("slug '%s' is already used by '%s'", $slug, $owner),
+                    );
+
+                    if (null === $generatedSlug) {
+                        echo \sprintf(
+                            "Skipping route for document '%s' (locale '%s'): slug '%s' is already used by '%s'.\n",
+                            $resourceId,
+                            $locale,
+                            $slug,
+                            $owner,
+                        );
+
+                        continue;
+                    }
+
+                    $data['slug'] = $generatedSlug;
                 }
             }
 
@@ -873,6 +900,132 @@ abstract class AbstractPersister implements PersisterInterface
         ]);
 
         return 'published' === ($owner['workflowPlace'] ?? null);
+    }
+
+    /**
+     * Gives the draft owning a reclaimed slug a generated slug, so its content keeps a route.
+     *
+     * @param mixed[] $route
+     */
+    private function moveRouteToGeneratedSlug(
+        array $route,
+        ?string $webspace,
+        string $locale,
+        string $reclaimedSlug,
+        string $reason,
+    ): bool {
+        $resourceId = $route['resource_id'] ?? null;
+        if (!\is_string($resourceId)) {
+            return false;
+        }
+
+        $owner = $this->entityRepository->findOneBy($this->getDimensionContentTableName(), [
+            $this->getDimensionContentEntityIdMappingName() => $resourceId,
+            'locale' => $locale,
+            'stage' => 'draft',
+            'version' => 0,
+        ]);
+
+        $parentRouteId = $route['parent_id'] ?? null;
+        $slug = $this->generateUniqueSlug(
+            $owner['title'] ?? null,
+            $locale,
+            $webspace,
+            \is_numeric($parentRouteId) ? (int) $parentRouteId : null,
+            $resourceId,
+            $reason,
+            $reclaimedSlug,
+        );
+
+        if (null === $slug) {
+            return false;
+        }
+
+        $this->entityRepository->insertOrUpdate(
+            ['slug' => $slug],
+            self::ROUTE_TABLE,
+            ['slug' => 'string'],
+            ['id' => $route['id']],
+        );
+
+        return true;
+    }
+
+    /**
+     * Sulu 3.0 rejects saving content without a route, so a locale whose slug is missing or taken
+     * gets one generated from its title.
+     *
+     * @param string|null $reservedSlug a slug the resource still owns but has to give up
+     */
+    private function generateUniqueSlug(
+        mixed $title,
+        string $locale,
+        ?string $webspace,
+        ?int $parentRouteId,
+        string $resourceId,
+        string $reason,
+        ?string $reservedSlug = null,
+    ): ?string {
+        if (!\is_string($title) || '' === $title) {
+            return null;
+        }
+
+        $slug = $this->generateSlug($title, $locale, $parentRouteId);
+        if (null === $slug) {
+            return null;
+        }
+
+        $uniqueSlug = $slug;
+        for ($i = 1; $this->isReserved($uniqueSlug, $reservedSlug) || $this->isSlugTaken($webspace, $locale, $uniqueSlug, $resourceId); ++$i) {
+            $uniqueSlug = $slug . '-' . $i;
+        }
+
+        if (\mb_strlen($uniqueSlug) > $this->getMaxSlugLength()) {
+            return null;
+        }
+
+        echo \sprintf(
+            "Generated route '%s' for document '%s' (locale '%s') because %s. Check the url in the admin.\n",
+            $uniqueSlug,
+            $resourceId,
+            $locale,
+            $reason,
+        );
+
+        return $uniqueSlug;
+    }
+
+    private function isSlugTaken(?string $webspace, string $locale, string $slug, string $resourceId): bool
+    {
+        $route = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
+            'webspace' => $webspace,
+            'locale' => $locale,
+            'slug' => $slug,
+        ]);
+
+        return null !== $route && $this->isRouteOfOtherResource($route, $resourceId);
+    }
+
+    /**
+     * Slugs are unique case-insensitively in ro_routes.
+     */
+    private function isReserved(string $slug, ?string $reservedSlug): bool
+    {
+        return null !== $reservedSlug && \mb_strtolower($slug) === \mb_strtolower($reservedSlug);
+    }
+
+    /**
+     * A dry run returns a stub row without a slug for every lookup, which is no route at all.
+     *
+     * @param mixed[] $route
+     */
+    private function isRouteOfOtherResource(array $route, string $resourceId): bool
+    {
+        return isset($route['slug'])
+            && (
+                ($route['resource_id'] ?? null) !== $resourceId
+                || ($route['resource_key'] ?? null) !== $this->getEntityResourceKey()
+            );
     }
 
     protected function getParentRouteId(?string $parentId, ?string $locale): ?int
@@ -1218,6 +1371,14 @@ abstract class AbstractPersister implements PersisterInterface
      * @param Document $document
      */
     protected function getSlug(array $document, string $locale): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Slug for a locale whose own slug is missing or taken; null leaves the locale without a route.
+     */
+    protected function generateSlug(string $title, string $locale, ?int $parentRouteId): ?string
     {
         return null;
     }

@@ -81,15 +81,18 @@ class BaselineComparisonTest extends KernelTestCase
         $command = self::getContainer()->get(MigratePhpcrCommand::class);
         \assert($command instanceof MigratePhpcrCommand);
 
-        $input = new ArrayInput([
-            'documentTypes' => 'page,article,snippet,custom_url,snippet_area',
-        ]);
-        $output = new BufferedOutput();
+        // The second run checks that re-running the migration leaves the result unchanged.
+        for ($run = 0; $run < 2; ++$run) {
+            $input = new ArrayInput([
+                'documentTypes' => 'page,article,snippet,custom_url,snippet_area',
+            ]);
+            $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+            $exitCode = $command->run($input, $output);
 
-        if (0 !== $exitCode) {
-            throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+            if (0 !== $exitCode) {
+                throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+            }
         }
 
         self::$tempDir = \sys_get_temp_dir() . '/baseline_test_' . \uniqid();
@@ -247,12 +250,12 @@ class BaselineComparisonTest extends KernelTestCase
         $connection = self::getContainer()->get('doctrine.dbal.default_connection');
 
         $routeless = $connection->fetchAllAssociative(
-            "SELECT pageUuid, locale, stage
+            'SELECT pageUuid, locale, stage
              FROM pa_page_dimension_contents
              WHERE locale IS NOT NULL
                AND version = 0
                AND route_id IS NULL
-             ORDER BY pageUuid, locale, stage"
+             ORDER BY pageUuid, locale, stage'
         );
 
         $this->assertSame([], $routeless, 'Localized page dimension contents without a route.');
