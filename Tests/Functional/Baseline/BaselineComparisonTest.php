@@ -112,7 +112,7 @@ class BaselineComparisonTest extends KernelTestCase
         $reportPath = \sys_get_temp_dir() . '/dry_run_report_' . \uniqid() . '.json';
 
         (new JsonBaselineExporter($connection, $beforeDir))->export();
-        $output = self::runCommand(['--dry-run' => true, '--report' => $reportPath]);
+        $output = self::runMigrateCommand(['--dry-run' => true, '--report' => $reportPath]);
         (new JsonBaselineExporter($connection, $afterDir))->export();
 
         $report = \json_decode((string) \file_get_contents($reportPath), true);
@@ -145,7 +145,7 @@ class BaselineComparisonTest extends KernelTestCase
     {
         // A re-run starts from migrated data, so it must not fail or leave a locale without a route.
         for ($run = 0; $run < 2; ++$run) {
-            $output = self::runCommand([]);
+            $output = self::runMigrateCommand([]);
             if (0 === $run) {
                 self::$migrationOutput = $output;
             }
@@ -180,7 +180,7 @@ class BaselineComparisonTest extends KernelTestCase
      *
      * @return string what the persisters print while the command runs
      */
-    private static function runCommand(array $options): string
+    private static function runMigrateCommand(array $options): string
     {
         $command = self::getContainer()->get(MigratePhpcrCommand::class);
         \assert($command instanceof MigratePhpcrCommand);
