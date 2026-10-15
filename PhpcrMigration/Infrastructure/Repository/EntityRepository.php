@@ -42,9 +42,9 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     private array $existsCache = [];
 
-    private const DRY_RUN_STUB_ROW = ['id' => 0, 'depth' => 0];
-
     private bool $dryRun = false;
+
+    private ?DryRunOverlay $overlay = null;
 
     public function __construct(
         protected Connection $connection,
@@ -54,6 +54,7 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
     public function setDryRun(bool $dryRun): void
     {
         $this->dryRun = $dryRun;
+        $this->overlay = $dryRun ? new DryRunOverlay($this->connection, $this->selectRows(...)) : null;
     }
 
     public function beginTransaction(): void
@@ -76,7 +77,9 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function insertOrUpdate(array $data, string $tableName, array $types, array $where = []): void
     {
-        if ($this->dryRun) {
+        if ($this->overlay instanceof DryRunOverlay) {
+            $this->overlay->insertOrUpdate($tableName, $data, $where);
+
             return;
         }
 
@@ -114,10 +117,8 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function findOneBy(string $tableName, array $where): ?array
     {
-        if ($this->dryRun) {
-            // Stubbed row so downstream persister logic (excerpt relations, nested-set
-            // depth lookups, parent-route resolution) has something to work with.
-            return self::DRY_RUN_STUB_ROW;
+        if ($this->overlay instanceof DryRunOverlay) {
+            return $this->overlay->find($tableName, $where)[0] ?? null;
         }
 
         [$conditions, $params] = $this->parseWhereParts($where);
@@ -130,16 +131,19 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function findBy(string $tableName, array $where): array
     {
-        [$conditions, $params] = $this->parseWhereParts($where);
+        if ($this->overlay instanceof DryRunOverlay && $this->overlay->isTouched($tableName)) {
+            return $this->overlay->find($tableName, $where);
+        }
 
-        $query = 'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
-        $result = $this->connection->fetchAllAssociative($query, $params);
-
-        return $result;
+        return $this->selectRows($tableName, $where);
     }
 
     public function exists(string $tableName, array $where): bool
     {
+        if ($this->overlay instanceof DryRunOverlay && $this->overlay->isTouched($tableName)) {
+            return [] !== $this->overlay->find($tableName, $where);
+        }
+
         if (\in_array($tableName, self::CACHEABLE_EXISTS_TABLES, true)) {
             $cacheKey = $tableName . ':' . \http_build_query($where);
             if (\array_key_exists($cacheKey, $this->existsCache)) {
@@ -163,8 +167,8 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
 
     public function removeBy(string $tableName, array $where): int|string
     {
-        if ($this->dryRun) {
-            return 0;
+        if ($this->overlay instanceof DryRunOverlay) {
+            return $this->overlay->remove($tableName, $where);
         }
 
         [$conditions, $params] = $this->parseWhereParts($where);
@@ -203,6 +207,20 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
     /**
      * @param mixed[] $where
      *
+     * @return array<array<string, mixed>>
+     */
+    private function selectRows(string $tableName, array $where): array
+    {
+        [$conditions, $params] = $this->parseWhereParts($where);
+
+        $query = 'SELECT * FROM ' . $tableName . ' WHERE ' . \implode(' AND ', $conditions);
+
+        return $this->connection->fetchAllAssociative($query, $params);
+    }
+
+    /**
+     * @param mixed[] $where
+     *
      * @return mixed[][]
      */
     private function parseWhereParts(array $where): array
@@ -226,7 +244,9 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     public function createOrUpdateRootNode(array $data, string $tableName, array $types, array $where = []): void
     {
-        if ($this->dryRun) {
+        if ($this->overlay instanceof DryRunOverlay) {
+            $this->overlay->insertOrUpdate($tableName, $data, $where, ['depth' => 0]);
+
             return;
         }
 
@@ -259,7 +279,17 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
      */
     public function addOrUpdateChildNode(array $data, string $tableName, array $types, string $parentId, array $where = []): void
     {
-        if ($this->dryRun) {
+        if ($this->overlay instanceof DryRunOverlay) {
+            $insertOnly = [];
+            if ([] === $where || [] === $this->overlay->find($tableName, $where)) {
+                $parent = $this->overlay->find($tableName, ['uuid' => $parentId])[0]
+                    ?? throw new \RuntimeException("Parent node $parentId not found");
+                $parentDepth = $parent['depth'] ?? 0;
+                $insertOnly = ['depth' => (\is_numeric($parentDepth) ? (int) $parentDepth : 0) + 1];
+            }
+
+            $this->overlay->insertOrUpdate($tableName, $data, $where, $insertOnly);
+
             return;
         }
 
@@ -363,5 +393,6 @@ class EntityRepository implements EntityRepositoryInterface, ResetInterface
         $this->tableExistsCache = [];
         $this->existsCache = [];
         $this->dryRun = false;
+        $this->overlay = null;
     }
 }

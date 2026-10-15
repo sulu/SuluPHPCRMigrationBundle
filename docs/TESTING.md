@@ -334,6 +334,10 @@ The test suite is organized into groups:
 4. **Custom URL Tables** - Custom URLs and routes
 5. **Remaining Tables** - All other tables (categories, media, users, etc.)
 
+### Dry-Run Checks
+
+Before the real migration, `BaselineComparisonTest` runs the command with `--dry-run` on the same fixture. It asserts that no table changed, that the report has no errors, and that the dry run prints the same lines as the real run. Collisions between routes are covered by `PagePersisterDryRunTest` and `EntityRepositoryDryRunTest`, which run on SQLite.
+
 ### Baseline File Format
 
 Baselines are JSON files with pretty-printing:

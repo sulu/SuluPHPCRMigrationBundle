@@ -15,6 +15,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Functional\Baseline;
 
 use Doctrine\DBAL\Connection;
 use SebastianBergmann\Comparator\ComparisonFailure;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\UserInterface\Command\MigratePhpcrCommand;
 use Sulu\Bundle\PhpcrMigrationBundle\Tests\Application\Kernel;
 use Sulu\Bundle\PhpcrMigrationBundle\Tests\Functional\Helper\JsonBaselineExporter;
@@ -29,6 +30,12 @@ class BaselineComparisonTest extends KernelTestCase
 
     private static ?string $tempDir = null;
     private static bool $baselinesGenerated = false;
+    private static string $migrationOutput = '';
+
+    /**
+     * @var array<string, array{output: string, errors: list<array<string, mixed>>, changedTables: list<string>}>
+     */
+    private static array $dryRuns = [];
 
     /**
      * @var list<list<array<string, mixed>>>
@@ -61,7 +68,9 @@ class BaselineComparisonTest extends KernelTestCase
 
         TestConnectionFactory::loadFixture($connection);
 
+        self::runDryRun($connection, 'before migration');
         self::runMigrationAndExport($connection);
+        self::runDryRun($connection, 'after migration');
 
         $baselineFiles = \glob(self::BASELINE_DIR . '/*.json');
         if (false === $baselineFiles || [] === $baselineFiles) {
@@ -86,28 +95,59 @@ class BaselineComparisonTest extends KernelTestCase
         }
 
         self::$tempDir = null;
+        self::$dryRuns = [];
         self::$baselinesGenerated = false;
         self::$routelessPageLocalesPerRun = [];
 
         parent::tearDownAfterClass();
     }
 
+    /**
+     * The dry run after the migration works on the rows of the real run and has to find them in sync.
+     */
+    private static function runDryRun(Connection $connection, string $name): void
+    {
+        $beforeDir = \sys_get_temp_dir() . '/dry_run_before_' . \uniqid();
+        $afterDir = \sys_get_temp_dir() . '/dry_run_after_' . \uniqid();
+        $reportPath = \sys_get_temp_dir() . '/dry_run_report_' . \uniqid() . '.json';
+
+        (new JsonBaselineExporter($connection, $beforeDir))->export();
+        $output = self::runCommand(['--dry-run' => true, '--report' => $reportPath]);
+        (new JsonBaselineExporter($connection, $afterDir))->export();
+
+        $report = \json_decode((string) \file_get_contents($reportPath), true);
+        \unlink($reportPath);
+        \assert(\is_array($report) && \is_array($report['errors'] ?? null));
+        /** @var list<array<string, mixed>> $errors */
+        $errors = $report['errors'];
+
+        $changedTables = [];
+        foreach (\glob($beforeDir . '/*.json') ?: [] as $beforeFile) {
+            $afterFile = $afterDir . '/' . \basename($beforeFile);
+            if (\file_get_contents($beforeFile) !== \file_get_contents($afterFile)) {
+                $changedTables[] = \pathinfo($beforeFile, \PATHINFO_FILENAME);
+            }
+            \unlink($beforeFile);
+            \unlink($afterFile);
+        }
+        \rmdir($beforeDir);
+        \rmdir($afterDir);
+
+        self::$dryRuns[$name] = ['output' => $output, 'errors' => $errors, 'changedTables' => $changedTables];
+
+        // the dry run is over, the next run must not stay in dry-run mode
+        $repository = self::getContainer()->get('sulu_phpcr_migration.entity_repository');
+        \assert($repository instanceof EntityRepository);
+        $repository->reset();
+    }
+
     private static function runMigrationAndExport(Connection $connection): void
     {
-        $command = self::getContainer()->get(MigratePhpcrCommand::class);
-        \assert($command instanceof MigratePhpcrCommand);
-
         // A re-run starts from migrated data, so it must not fail or leave a locale without a route.
         for ($run = 0; $run < 2; ++$run) {
-            $input = new ArrayInput([
-                'documentTypes' => 'page,article,snippet,custom_url,snippet_area',
-            ]);
-            $output = new BufferedOutput();
-
-            $exitCode = $command->run($input, $output);
-
-            if (0 !== $exitCode) {
-                throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+            $output = self::runCommand([]);
+            if (0 === $run) {
+                self::$migrationOutput = $output;
             }
 
             self::$routelessPageLocalesPerRun[] = $connection->fetchAllAssociative(
@@ -133,6 +173,33 @@ class BaselineComparisonTest extends KernelTestCase
         \mkdir(self::$tempDir, 0755, true);
         $exporter = new JsonBaselineExporter($connection, self::$tempDir);
         $exporter->export();
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return string what the persisters print while the command runs
+     */
+    private static function runCommand(array $options): string
+    {
+        $command = self::getContainer()->get(MigratePhpcrCommand::class);
+        \assert($command instanceof MigratePhpcrCommand);
+
+        $input = new ArrayInput(['documentTypes' => 'page,article,snippet,custom_url,snippet_area'] + $options);
+        $output = new BufferedOutput();
+
+        \ob_start();
+        try {
+            $exitCode = $command->run($input, $output);
+        } finally {
+            $printed = (string) \ob_get_clean();
+        }
+
+        if (0 !== $exitCode) {
+            throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+        }
+
+        return $printed;
     }
 
     private static function generateBaselines(Connection $connection): void
@@ -201,6 +268,36 @@ class BaselineComparisonTest extends KernelTestCase
         }
 
         $this->assertTableMatchesBaseline($table);
+    }
+
+    /**
+     * @return \Generator<string, array{string}>
+     */
+    public static function dryRunProvider(): \Generator
+    {
+        yield 'before migration' => ['before migration'];
+        yield 'after migration' => ['after migration'];
+    }
+
+    /**
+     * @dataProvider dryRunProvider
+     */
+    public function testDryRunWritesNothing(string $name): void
+    {
+        $this->assertSame([], self::$dryRuns[$name]['changedTables']);
+    }
+
+    /**
+     * @dataProvider dryRunProvider
+     */
+    public function testDryRunFindsNoErrors(string $name): void
+    {
+        $this->assertSame([], self::$dryRuns[$name]['errors']);
+    }
+
+    public function testDryRunPrintsLikeMigration(): void
+    {
+        $this->assertSame(self::$migrationOutput, self::$dryRuns['before migration']['output']);
     }
 
     /**
