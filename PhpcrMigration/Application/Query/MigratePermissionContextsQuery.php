@@ -22,6 +22,7 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\Entit
  * Updates old permission contexts to new naming:
  * - sulu.modules.articles* → sulu.article.articles*
  * - sulu.global.snippets → sulu.snippet.snippets + sulu.snippet.snippet_areas
+ * - sulu.webspaces.{webspace}.default-snippets → sulu.webspaces.{webspace}.snippet-areas
  */
 class MigratePermissionContextsQuery implements PostMigrationQueryInterface
 {
@@ -34,6 +35,10 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
     private const SNIPPET_NEW_CONTEXT = 'sulu.snippet.snippets';
     private const SNIPPET_AREA_CONTEXT = 'sulu.snippet.snippet_areas';
 
+    private const WEBSPACE_DEFAULT_SNIPPETS_PREFIX = 'sulu.webspaces.';
+    private const WEBSPACE_DEFAULT_SNIPPETS_SUFFIX = '.default-snippets';
+    private const WEBSPACE_SNIPPET_AREAS_SUFFIX = '.snippet-areas';
+
     public function __construct(
         private readonly EntityRepositoryInterface $entityRepository,
     ) {
@@ -43,6 +48,7 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
     {
         $this->migrateArticlePermissions($connection);
         $this->migrateSnippetPermissions($connection);
+        $this->migrateWebspaceSnippetAreaPermissions($connection);
     }
 
     private function migrateArticlePermissions(Connection $connection): void
@@ -112,6 +118,42 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
                     ]
                 );
             }
+        }
+    }
+
+    private function migrateWebspaceSnippetAreaPermissions(Connection $connection): void
+    {
+        $oldPermissions = $connection->fetchAllAssociative(
+            'SELECT id, context, idRoles AS role_id FROM se_permissions WHERE context LIKE :pattern',
+            ['pattern' => self::WEBSPACE_DEFAULT_SNIPPETS_PREFIX . '%' . self::WEBSPACE_DEFAULT_SNIPPETS_SUFFIX]
+        );
+
+        foreach ($oldPermissions as $oldPermission) {
+            $oldContext = $oldPermission['context'];
+
+            if (!\is_string($oldContext)) {
+                continue;
+            }
+
+            $newContext = \substr($oldContext, 0, -\strlen(self::WEBSPACE_DEFAULT_SNIPPETS_SUFFIX))
+                . self::WEBSPACE_SNIPPET_AREAS_SUFFIX;
+
+            $exists = $this->entityRepository->exists('se_permissions', [
+                'context' => $newContext,
+                'idRoles' => $oldPermission['role_id'],
+            ]);
+
+            if ($exists) {
+                continue;
+            }
+
+            $connection->executeStatement(
+                'UPDATE se_permissions SET context = :newContext WHERE id = :id',
+                [
+                    'newContext' => $newContext,
+                    'id' => $oldPermission['id'],
+                ]
+            );
         }
     }
 }
