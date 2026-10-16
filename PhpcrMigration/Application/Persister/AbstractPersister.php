@@ -841,6 +841,11 @@ abstract class AbstractPersister implements PersisterInterface
                     'locale' => $locale,
                     'slug' => $url,
                 ]);
+                if (null !== $conflictingRoute && !$this->isRouteOfOtherResource($conflictingRoute, $resourceId, $resourceKey)) {
+                    // The url is the slug of the page itself, its main route already serves it.
+                    continue;
+                }
+
                 if (null !== $conflictingRoute && $this->isRouteOfOtherResource($conflictingRoute, $historyResourceId, self::ROUTE_RESOURCE_KEY)) {
                     // A history route is only a redirect, so it takes the slug from an unpublished owner
                     // and gives it a generated one, but never from a published one.

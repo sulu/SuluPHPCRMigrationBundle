@@ -35,6 +35,16 @@ class BaselineComparisonTest extends KernelTestCase
      */
     private static array $routelessPageLocalesPerRun = [];
 
+    /**
+     * @var array<array<string, mixed>>
+     */
+    private static array $routesAfterFirstRun = [];
+
+    /**
+     * @var array<array<string, mixed>>
+     */
+    private static array $routesAfterSecondRun = [];
+
     protected static function getKernelClass(): string
     {
         return Kernel::class;
@@ -108,6 +118,15 @@ class BaselineComparisonTest extends KernelTestCase
                    AND route_id IS NULL
                  ORDER BY pageUuid, locale, stage'
             );
+            // A history route is deleted and inserted again on a rerun, so the ids are not compared.
+            $routes = $connection->fetchAllAssociative(
+                'SELECT parent_id, webspace, locale, slug, resource_key, resource_id FROM ro_routes ORDER BY resource_key, resource_id, locale, slug',
+            );
+            if (0 === $run) {
+                self::$routesAfterFirstRun = $routes;
+            } else {
+                self::$routesAfterSecondRun = $routes;
+            }
         }
 
         self::$tempDir = \sys_get_temp_dir() . '/baseline_test_' . \uniqid();
@@ -150,6 +169,12 @@ class BaselineComparisonTest extends KernelTestCase
         foreach ($tables as $table) {
             yield $table => [$table];
         }
+    }
+
+    public function testRerunLeavesRoutesUnchanged(): void
+    {
+        $this->assertNotSame([], self::$routesAfterFirstRun);
+        $this->assertSame(self::$routesAfterFirstRun, self::$routesAfterSecondRun);
     }
 
     /**

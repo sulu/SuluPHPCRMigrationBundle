@@ -73,37 +73,6 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
         );
     }
 
-    public function testHistorySlugOfUnpublishedPageMovesItsRouteToGeneratedSlug(): void
-    {
-        $this->stubHistorySlugOwner('pages', 'draft-uuid');
-        $this->stubDraftOwner('draft-uuid', ['workflowPlace' => 'draft', 'title' => 'Success']);
-        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
-            'webspace' => 'website',
-            'locale' => 'de',
-            'slug' => '/success',
-        ])->willReturn(null);
-
-        $this->repository->insertOrUpdate(
-            ['slug' => '/success'],
-            AbstractPersister::ROUTE_TABLE,
-            ['slug' => 'string'],
-            ['id' => self::OWNER_ROUTE_ID],
-        )->shouldBeCalled();
-        $this->repository->insertOrUpdate(['route_id' => null], self::DIMENSION_TABLE, Argument::cetera())
-            ->shouldNotBeCalled();
-        $this->repository->insertOrUpdate(
-            Argument::that(static fn (array $data): bool => self::HISTORY_SLUG === ($data['slug'] ?? null)
-                && AbstractPersister::ROUTE_RESOURCE_KEY === ($data['resource_key'] ?? null)
-                && 'pages::incoming-uuid' === ($data['resource_id'] ?? null)),
-            AbstractPersister::ROUTE_TABLE,
-            Argument::cetera(),
-        )->shouldBeCalled();
-
-        $this->expectOutputRegex("~Generated route '/success' for document 'draft-uuid' \\(locale 'de'\\) because slug '/news/success' is taken by the history route of published 'pages::incoming-uuid'~");
-
-        $this->invokeCreateOrUpdateRoutes();
-    }
-
     public function testHistorySlugOfUnpublishedPageWithoutUsableTitleDetachesItsRoute(): void
     {
         $this->stubHistorySlugOwner('pages', 'draft-uuid');
@@ -160,6 +129,30 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
         $this->invokeCreateOrUpdateRoutes();
     }
 
+    public function testHistoryUrlEqualToOwnSlugIsSkipped(): void
+    {
+        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
+            'webspace' => 'website',
+            'locale' => 'de',
+            'slug' => '/news/success-page',
+        ])->willReturn([
+            'id' => 100,
+            'slug' => '/news/success-page',
+            'resource_id' => 'incoming-uuid',
+            'resource_key' => 'pages',
+            'locale' => 'de',
+            'parent_id' => null,
+        ]);
+        $this->repository->exists(Argument::cetera())->shouldNotBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => AbstractPersister::ROUTE_RESOURCE_KEY === ($data['resource_key'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldNotBeCalled();
+
+        $this->invokeCreateOrUpdateRoutes(['/news/success-page']);
+    }
+
     public function testExistingHistoryRouteOfSamePageIsUpdated(): void
     {
         // A second run finds the history route it wrote the first time.
@@ -207,7 +200,10 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
         ])->willReturn($dimensionContent);
     }
 
-    private function invokeCreateOrUpdateRoutes(): void
+    /**
+     * @param list<string> $historyUrls
+     */
+    private function invokeCreateOrUpdateRoutes(array $historyUrls = [self::HISTORY_SLUG]): void
     {
         $document = [
             'jcr' => ['uuid' => 'incoming-uuid', 'mixinTypes' => ['sulu:page']],
@@ -218,7 +214,7 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
                     'template' => 'default',
                     'title' => 'Success Page',
                     AbstractPersister::URL => '/news/success-page',
-                    AbstractPersister::HISTORY_URLS => [self::HISTORY_SLUG],
+                    AbstractPersister::HISTORY_URLS => $historyUrls,
                 ],
             ],
         ];
