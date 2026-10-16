@@ -51,6 +51,16 @@ final class MigratePermissionContextsQueryTest extends TestCase
         $this->query = new MigratePermissionContextsQuery($this->repository->reveal());
     }
 
+    public function testGlobalSnippetsContextIsRenamedWithoutInsertingSnippetAreas(): void
+    {
+        $this->query->execute($this->connection->reveal());
+
+        $this->connection
+            ->executeStatement(Argument::any(), ['newContext' => 'sulu.snippet.snippets', 'oldContext' => 'sulu.global.snippets'])
+            ->shouldHaveBeenCalledOnce();
+        $this->repository->insert(Argument::cetera())->shouldNotBeCalled();
+    }
+
     public function testDefaultSnippetsContextOfAWebspaceIsRenamedToSnippetAreas(): void
     {
         $this->connection

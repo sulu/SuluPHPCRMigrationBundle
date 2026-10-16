@@ -21,19 +21,16 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\Entit
  *
  * Updates old permission contexts to new naming:
  * - sulu.modules.articles* → sulu.article.articles*
- * - sulu.global.snippets → sulu.snippet.snippets + sulu.snippet.snippet_areas
+ * - sulu.global.snippets → sulu.snippet.snippets
  * - sulu.webspaces.{webspace}.default-snippets → sulu.webspaces.{webspace}.snippet-areas
  */
 class MigratePermissionContextsQuery implements PostMigrationQueryInterface
 {
-    private const ARCHIVE_PERMISSION = 16;
-
     private const ARTICLE_OLD_PREFIX = 'sulu.modules.articles';
     private const ARTICLE_NEW_PREFIX = 'sulu.article.articles';
 
     private const SNIPPET_OLD_CONTEXT = 'sulu.global.snippets';
     private const SNIPPET_NEW_CONTEXT = 'sulu.snippet.snippets';
-    private const SNIPPET_AREA_CONTEXT = 'sulu.snippet.snippet_areas';
 
     private const WEBSPACE_DEFAULT_SNIPPETS_PREFIX = 'sulu.webspaces.';
     private const WEBSPACE_DEFAULT_SNIPPETS_SUFFIX = '.default-snippets';
@@ -81,12 +78,6 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
 
     private function migrateSnippetPermissions(Connection $connection): void
     {
-        // Use lowercase alias to ensure consistent array key regardless of PDO/MySQL case handling
-        $existingPermissions = $connection->fetchAllAssociative(
-            'SELECT permissions, idRoles AS role_id FROM se_permissions WHERE context = :oldContext',
-            ['oldContext' => self::SNIPPET_OLD_CONTEXT]
-        );
-
         $connection->executeStatement(
             'UPDATE se_permissions SET context = :newContext WHERE context = :oldContext',
             [
@@ -94,31 +85,6 @@ class MigratePermissionContextsQuery implements PostMigrationQueryInterface
                 'oldContext' => self::SNIPPET_OLD_CONTEXT,
             ]
         );
-
-        foreach ($existingPermissions as $permission) {
-            $roleId = $permission['role_id'];
-
-            $exists = $this->entityRepository->exists('se_permissions', [
-                'context' => self::SNIPPET_AREA_CONTEXT,
-                'idRoles' => $roleId,
-            ]);
-
-            if (!$exists) {
-                $this->entityRepository->insert(
-                    data: [
-                        'context' => self::SNIPPET_AREA_CONTEXT,
-                        'permissions' => self::ARCHIVE_PERMISSION,
-                        'idRoles' => $roleId,
-                    ],
-                    tableName: 'se_permissions',
-                    types: [
-                        'context' => 'string',
-                        'permissions' => 'integer',
-                        'idRoles' => 'integer',
-                    ]
-                );
-            }
-        }
     }
 
     private function migrateWebspaceSnippetAreaPermissions(Connection $connection): void

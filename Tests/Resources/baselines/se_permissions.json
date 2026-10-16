@@ -145,12 +145,5 @@
         "idRoles": 2,
         "module": "",
         "permissions": 127
-    },
-    {
-        "context": "sulu.snippet.snippet_areas",
-        "id": 22,
-        "idRoles": 1,
-        "module": "",
-        "permissions": 16
     }
 ]
