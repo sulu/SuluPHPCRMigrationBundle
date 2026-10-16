@@ -16,15 +16,22 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Reposit
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 use Doctrine\DBAL\Schema\Exception\TableDoesNotExist;
+use Doctrine\DBAL\Types\BlobType;
+use Doctrine\DBAL\Types\JsonType;
+use Doctrine\DBAL\Types\TextType;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UniqueKeyViolationException;
 
 /**
  * Keeps the writes of a dry run in memory and merges them with the rows of the database, so a lookup
  * finds what the real run would find at the same point.
  *
- * A database row that is updated or removed moves into the overlay, the database itself stays untouched.
+ * A database row that is updated or removed moves into the write layer, the database itself stays untouched.
+ *
+ * A row keeps neither text, JSON nor blob columns that no index covers, because the content of a
+ * whole migration would otherwise stay in memory until the command ends. Nothing reads these
+ * columns back, and a lookup by one of them throws.
  */
-class DryRunOverlay
+class DryRunWriteLayer
 {
     /**
      * @var array<string, array<string, array<string, mixed>>> rows by table and row key
@@ -32,7 +39,7 @@ class DryRunOverlay
     private array $rows = [];
 
     /**
-     * @var array<string, array<string, true>> keys of the database rows an overlay row replaces or that were removed
+     * @var array<string, array<string, true>> keys of the database rows a write layer row replaces or that were removed
      */
     private array $replaced = [];
 
@@ -51,7 +58,7 @@ class DryRunOverlay
     private int $lastNewRowKey = 0;
 
     /**
-     * @var array<string, array{hasId: bool, primary: list<string>, unique: list<array{name: string, columns: list<string>}>}>
+     * @var array<string, array{hasId: bool, primary: list<string>, unique: list<array{name: string, columns: list<string>}>, unstored: list<string>}>
      */
     private array $schemas = [];
 
@@ -132,6 +139,13 @@ class DryRunOverlay
      */
     private function match(string $table, array $where): array
     {
+        $unstoredColumns = $this->getSchema($table)['unstored'];
+        foreach (\array_keys($where) as $column) {
+            if (\in_array(\strtolower($column), $unstoredColumns, true)) {
+                throw new \LogicException(\sprintf('The write layer does not keep the column "%s.%s", so it cannot look up by it.', $table, $column));
+            }
+        }
+
         $matches = [];
 
         foreach (($this->selectRows)($table, $where) as $row) {
@@ -196,6 +210,13 @@ class DryRunOverlay
     private function setRow(string $table, string $key, array $row): void
     {
         $this->unsetRow($table, $key);
+
+        $unstoredColumns = $this->getSchema($table)['unstored'];
+        foreach (\array_keys($row) as $column) {
+            if (\in_array(\strtolower((string) $column), $unstoredColumns, true)) {
+                unset($row[$column]);
+            }
+        }
 
         $this->rows[$table][$key] = $row;
         foreach (\array_keys($this->indexes[$table] ?? []) as $column) {
@@ -393,7 +414,7 @@ class DryRunOverlay
     }
 
     /**
-     * @return array{hasId: bool, primary: list<string>, unique: list<array{name: string, columns: list<string>}>}
+     * @return array{hasId: bool, primary: list<string>, unique: list<array{name: string, columns: list<string>}>, unstored: list<string>}
      */
     private function getSchema(string $table): array
     {
@@ -404,12 +425,17 @@ class DryRunOverlay
         try {
             $definition = $this->connection->createSchemaManager()->introspectTable($table);
         } catch (TableDoesNotExist) {
-            return $this->schemas[$table] = ['hasId' => false, 'primary' => [], 'unique' => []];
+            return $this->schemas[$table] = ['hasId' => false, 'primary' => [], 'unique' => [], 'unstored' => []];
         }
 
         $primary = [];
         $unique = [];
+        $indexed = [];
         foreach ($definition->getIndexes() as $index) {
+            foreach ($index->getColumns() as $column) {
+                $indexed[\strtolower($column)] = true;
+            }
+
             if ($index->isPrimary()) {
                 $primary = $index->getColumns();
             }
@@ -419,10 +445,20 @@ class DryRunOverlay
             }
         }
 
+        $unstored = [];
+        foreach ($definition->getColumns() as $column) {
+            $type = $column->getType();
+            $name = \strtolower($column->getName());
+            if (!isset($indexed[$name]) && ($type instanceof TextType || $type instanceof JsonType || $type instanceof BlobType)) {
+                $unstored[] = $name;
+            }
+        }
+
         return $this->schemas[$table] = [
             'hasId' => $definition->hasColumn('id'),
             'primary' => $primary,
             'unique' => $unique,
+            'unstored' => $unstored,
         ];
     }
 }

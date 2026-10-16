@@ -99,6 +99,14 @@ columns populated only by database defaults. A failed document keeps the
 writes it made before the failure. Post-migration queries (permission
 contexts, access controls, automation tasks) are skipped in dry-run mode.
 
+A page whose routes fail never gets its row, so every child of it reports
+`Parent node … not found` as well. Fix the first error of such a branch and
+rerun before reading the errors below it.
+
+On MySQL the dry run compares unique keys case-insensitively only, while
+`utf8mb4_unicode_ci` also ignores accents and trailing spaces. Values like
+`Café` and `Cafe` in one run pass the dry run and fail in the real run.
+
 ## 🛠️&nbsp; Development
 
 ### Quick Start

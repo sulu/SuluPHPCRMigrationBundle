@@ -18,11 +18,11 @@ use Doctrine\DBAL\DriverManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UniqueKeyViolationException;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\DryRunOverlay;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\DryRunWriteLayer;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
 
 #[CoversClass(EntityRepository::class)]
-#[CoversClass(DryRunOverlay::class)]
+#[CoversClass(DryRunWriteLayer::class)]
 final class EntityRepositoryDryRunTest extends TestCase
 {
     private const ROUTE_TYPES = ['slug' => 'string'];
@@ -54,6 +54,15 @@ final class EntityRepositoryDryRunTest extends TestCase
             )'
         );
         $this->connection->executeStatement('CREATE UNIQUE INDEX pa_pages_uuid ON pa_pages (uuid)');
+        $this->connection->executeStatement(
+            'CREATE TABLE pa_page_contents (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                uuid VARCHAR(36) NOT NULL,
+                workflow_place VARCHAR(20) DEFAULT NULL,
+                template_data TEXT DEFAULT NULL
+            )'
+        );
+        $this->connection->executeStatement('CREATE UNIQUE INDEX pa_page_contents_uuid ON pa_page_contents (uuid)');
         $this->connection->executeStatement(
             'CREATE TABLE pa_page_categories (
                 page_dimension_content_id INTEGER NOT NULL,
@@ -334,6 +343,42 @@ final class EntityRepositoryDryRunTest extends TestCase
         $this->repository->reset();
 
         $this->assertNull($this->repository->findOneBy('ro_routes', ['slug' => '/foo']));
+    }
+
+    public function testDoesNotKeepTextColumnsOfWrittenRows(): void
+    {
+        $this->repository->insertOrUpdate(
+            ['uuid' => 'uuid-1', 'workflow_place' => 'published', 'template_data' => \str_repeat('a', 1000)],
+            'pa_page_contents',
+            [],
+        );
+
+        $row = $this->repository->findOneBy('pa_page_contents', ['uuid' => 'uuid-1']);
+
+        $this->assertNotNull($row);
+        $this->assertSame('published', $row['workflow_place']);
+        $this->assertArrayNotHasKey('template_data', $row);
+    }
+
+    public function testDoesNotKeepTextColumnsOfUpdatedRowsOfTheDatabase(): void
+    {
+        $this->connection->insert('pa_page_contents', ['uuid' => 'uuid-1', 'template_data' => '{}']);
+
+        $this->repository->insertOrUpdate(['template_data' => '{"a":1}'], 'pa_page_contents', [], ['uuid' => 'uuid-1']);
+
+        $row = $this->repository->findOneBy('pa_page_contents', ['uuid' => 'uuid-1']);
+        $this->assertNotNull($row);
+        $this->assertArrayNotHasKey('template_data', $row);
+        $this->assertSame('{}', $this->connection->fetchOne('SELECT template_data FROM pa_page_contents'));
+    }
+
+    public function testRejectsLookupByColumnThatIsNotKept(): void
+    {
+        $this->repository->insertOrUpdate(['uuid' => 'uuid-1', 'template_data' => '{}'], 'pa_page_contents', []);
+
+        $this->expectException(\LogicException::class);
+
+        $this->repository->findOneBy('pa_page_contents', ['template_data' => '{}']);
     }
 
     public function testWritesWithoutDryRun(): void
