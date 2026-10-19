@@ -16,6 +16,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\InvalidPathException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\TitleTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
+use Sulu\Route\Application\ResourceLocator\PathCleanup\PathCleanupInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -27,8 +28,20 @@ class PagePersister extends AbstractPersister
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
+        private readonly ?PathCleanupInterface $pathCleanup = null,
     ) {
         parent::__construct($propertyAccessor, $entityRepository);
+
+        if (!$pathCleanup instanceof PathCleanupInterface) {
+            @\trigger_error(
+                \sprintf(
+                    'Not passing a "%s" to "%s" is deprecated, page locales without a usable slug are then left without a route.',
+                    PathCleanupInterface::class,
+                    self::class,
+                ),
+                \E_USER_DEPRECATED,
+            );
+        }
     }
 
     protected function removeNonTemplateData(array $data): array
@@ -345,6 +358,28 @@ class PagePersister extends AbstractPersister
     protected function getSlug(array $document, string $locale): ?string
     {
         return $this->resolveSlug($document, $locale, []);
+    }
+
+    /**
+     * Builds the slug like the Sulu admin does for a new page.
+     */
+    protected function generateSlug(string $title, string $locale, ?int $parentRouteId): ?string
+    {
+        if (!$this->pathCleanup instanceof PathCleanupInterface) {
+            return null;
+        }
+
+        $segment = $this->pathCleanup->cleanup($title, $locale);
+        if ('' === $segment) {
+            return null;
+        }
+
+        $parentRoute = null !== $parentRouteId
+            ? $this->entityRepository->findOneBy(self::ROUTE_TABLE, ['id' => $parentRouteId])
+            : null;
+        $parentSlug = $parentRoute['slug'] ?? '';
+
+        return \rtrim(\is_string($parentSlug) ? $parentSlug : '', '/') . '/' . $segment;
     }
 
     /**

@@ -30,6 +30,11 @@ class BaselineComparisonTest extends KernelTestCase
     private static ?string $tempDir = null;
     private static bool $baselinesGenerated = false;
 
+    /**
+     * @var list<list<array<string, mixed>>>
+     */
+    private static array $routelessPageLocalesPerRun = [];
+
     protected static function getKernelClass(): string
     {
         return Kernel::class;
@@ -72,6 +77,7 @@ class BaselineComparisonTest extends KernelTestCase
 
         self::$tempDir = null;
         self::$baselinesGenerated = false;
+        self::$routelessPageLocalesPerRun = [];
 
         parent::tearDownAfterClass();
     }
@@ -81,15 +87,27 @@ class BaselineComparisonTest extends KernelTestCase
         $command = self::getContainer()->get(MigratePhpcrCommand::class);
         \assert($command instanceof MigratePhpcrCommand);
 
-        $input = new ArrayInput([
-            'documentTypes' => 'page,article,snippet,custom_url,snippet_area',
-        ]);
-        $output = new BufferedOutput();
+        // A re-run starts from migrated data, so it must not fail or leave a locale without a route.
+        for ($run = 0; $run < 2; ++$run) {
+            $input = new ArrayInput([
+                'documentTypes' => 'page,article,snippet,custom_url,snippet_area',
+            ]);
+            $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+            $exitCode = $command->run($input, $output);
 
-        if (0 !== $exitCode) {
-            throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+            if (0 !== $exitCode) {
+                throw new \RuntimeException('Migration command failed: ' . $output->fetch());
+            }
+
+            self::$routelessPageLocalesPerRun[] = $connection->fetchAllAssociative(
+                'SELECT pageUuid, locale, stage
+                 FROM pa_page_dimension_contents
+                 WHERE locale IS NOT NULL
+                   AND version = 0
+                   AND route_id IS NULL
+                 ORDER BY pageUuid, locale, stage'
+            );
         }
 
         self::$tempDir = \sys_get_temp_dir() . '/baseline_test_' . \uniqid();
@@ -235,6 +253,20 @@ class BaselineComparisonTest extends KernelTestCase
             $unlinkedShadows,
             $resourceKey
         ));
+    }
+
+    /**
+     * Sulu 3.0 rejects saving a page without a route, so a routeless migrated locale can neither be
+     * saved nor restored from the trash. Checked after each run, because a second run would repair
+     * a route the first one dropped and the end state would hide it.
+     */
+    public function testLocalizedPageDimensionContentsHaveRoute(): void
+    {
+        $this->assertSame(
+            [[], []],
+            self::$routelessPageLocalesPerRun,
+            'Localized page dimension contents without a route after the first and the second run.',
+        );
     }
 
     /**

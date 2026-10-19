@@ -28,6 +28,7 @@ return static function(ContainerConfigurator $container) {
         ->args([
             new Reference('property_accessor'),
             new Reference('sulu_phpcr_migration.entity_repository'),
+            new Reference('sulu_route.path_cleanup'),
         ])
         ->tag('sulu_phpcr_migration.persister', ['type' => 'page']);
 
