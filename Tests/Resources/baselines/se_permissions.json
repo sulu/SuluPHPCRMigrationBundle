@@ -56,7 +56,7 @@
         "permissions": 127
     },
     {
-        "context": "sulu.webspaces.website.default-snippets",
+        "context": "sulu.webspaces.website.snippet-areas",
         "id": 9,
         "idRoles": 1,
         "module": "",
@@ -145,12 +145,5 @@
         "idRoles": 2,
         "module": "",
         "permissions": 127
-    },
-    {
-        "context": "sulu.snippet.snippet_areas",
-        "id": 22,
-        "idRoles": 1,
-        "module": "",
-        "permissions": 16
     }
 ]
