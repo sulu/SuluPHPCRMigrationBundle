@@ -16,7 +16,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Unit\PhpcrMigration\Application
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\MainWebspaceNotConfiguredException;
+use Sulu\Article\Application\Webspace\WebspaceSettingsConfigurationResolver;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\ArticlePersister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Sulu\Component\Webspace\Manager\WebspaceCollection;
@@ -36,14 +36,14 @@ final class ArticlePersisterMainWebspaceTest extends TestCase
 
     public function testMultipleWebspacesWithoutConfiguredDefaultThrow(): void
     {
-        $this->expectException(MainWebspaceNotConfiguredException::class);
+        $this->expectException(\RuntimeException::class);
 
         $this->mapMainWebspace(['website', 'website_2']);
     }
 
     public function testMultipleWebspacesWithoutDefaultForLocaleThrow(): void
     {
-        $this->expectException(MainWebspaceNotConfiguredException::class);
+        $this->expectException(\RuntimeException::class);
 
         $this->mapMainWebspace(['website', 'website_2'], ['en' => 'website']);
     }
@@ -82,9 +82,7 @@ final class ArticlePersisterMainWebspaceTest extends TestCase
         $persister = new ArticlePersister(
             PropertyAccess::createPropertyAccessor(),
             $this->prophesize(EntityRepositoryInterface::class)->reveal(),
-            $defaultMainWebspaceMap,
-            [],
-            $webspaceManager->reveal(),
+            new WebspaceSettingsConfigurationResolver($defaultMainWebspaceMap, [], $webspaceManager->reveal()),
         );
 
         $document = [

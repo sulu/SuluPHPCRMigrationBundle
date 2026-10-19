@@ -11,10 +11,9 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\MainWebspaceNotConfiguredException;
+use Sulu\Article\Application\Webspace\WebspaceSettingsConfigurationResolver;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\TitleTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
-use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -23,16 +22,10 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class ArticlePersister extends AbstractPersister
 {
-    /**
-     * @param array<string, string> $defaultMainWebspaceMap
-     * @param array<string, list<string>> $defaultAdditionalWebspacesMap
-     */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
-        private readonly array $defaultMainWebspaceMap = [],
-        private readonly array $defaultAdditionalWebspacesMap = [],
-        private readonly ?WebspaceManagerInterface $webspaceManager = null,
+        private readonly WebspaceSettingsConfigurationResolver $webspaceSettingsConfigurationResolver,
     ) {
         parent::__construct($propertyAccessor, $entityRepository);
     }
@@ -105,34 +98,10 @@ class ArticlePersister extends AbstractPersister
         // Apply configured defaults when PHPCR has no explicit webspace settings,
         // or when customizeWebspaceSettings is true but mainWebspace ended up null (invalid in Sulu 3).
         if (null !== $locale && !isset($data['mainWebspace'])) {
-            $defaultMainWebspace = $this->defaultMainWebspaceMap[$locale]
-                ?? $this->defaultMainWebspaceMap['default']
-                ?? $this->resolveUnconfiguredMainWebspace($document['jcr']['uuid'], $locale);
-            if (null !== $defaultMainWebspace) {
-                $data['mainWebspace'] = $defaultMainWebspace;
-            }
+            $data['mainWebspace'] = $this->webspaceSettingsConfigurationResolver->getDefaultMainWebspaceForLocale($locale);
         }
 
         return $data;
-    }
-
-    /**
-     * Sulu 2.6 and 3.0 both use the only webspace as main webspace when no default is configured,
-     * and cannot resolve one when there are several.
-     */
-    private function resolveUnconfiguredMainWebspace(string $uuid, string $locale): ?string
-    {
-        if (!$this->webspaceManager instanceof WebspaceManagerInterface) {
-            return null;
-        }
-
-        $webspaces = $this->webspaceManager->getWebspaceCollection()->getWebspaces();
-
-        if (\count($webspaces) > 1) {
-            throw new MainWebspaceNotConfiguredException($uuid, $locale);
-        }
-
-        return 1 === \count($webspaces) ? \reset($webspaces)->getKey() : null;
     }
 
     public function supports(array $document): bool
@@ -352,15 +321,7 @@ class ArticlePersister extends AbstractPersister
 
         $additionalWebspaces = $document['localizations'][$locale]['additionalWebspaces'] ?? null;
 
-        if (null === $additionalWebspaces && [] !== $this->defaultAdditionalWebspacesMap) {
-            $additionalWebspaces = $this->defaultAdditionalWebspacesMap[$locale]
-                ?? $this->defaultAdditionalWebspacesMap['default']
-                ?? null;
-        }
-
-        if (null === $additionalWebspaces) {
-            return;
-        }
+        $additionalWebspaces ??= $this->webspaceSettingsConfigurationResolver->getDefaultAdditionalWebspacesForLocale($locale);
 
         $tableName = 'ar_article_dimension_content_additional_webspaces';
 

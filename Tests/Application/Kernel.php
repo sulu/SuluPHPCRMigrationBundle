@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Application;
 
+use Sulu\Article\Application\Webspace\WebspaceSettingsConfigurationResolver;
 use Sulu\Bundle\PhpcrMigrationBundle\SuluPhpcrMigrationBundle;
 use Sulu\Bundle\TestBundle\Kernel\SuluTestKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class Kernel extends SuluTestKernel
 {
@@ -43,6 +45,16 @@ class Kernel extends SuluTestKernel
             // fallback path for articles without an explicit webspace in PHPCR.
             $container->setParameter('sulu_article.default_main_webspace', ['default' => 'website']);
             $container->setParameter('sulu_article.default_additional_webspaces', ['default' => ['website_2']]);
+
+            // The test kernel does not register SuluArticleBundle, which owns this service.
+            $container->register(
+                'sulu_article.webspace_settings_configuration_resolver',
+                WebspaceSettingsConfigurationResolver::class,
+            )->setArguments([
+                '%sulu_article.default_main_webspace%',
+                '%sulu_article.default_additional_webspaces%',
+                new Reference('sulu_core.webspace.webspace_manager'),
+            ]);
 
             // sulu/sulu auto-prepends '%kernel.project_dir%/config/templates/...' but our
             // templates live under sulu30. Point the detector at them explicitly.
