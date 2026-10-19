@@ -45,6 +45,7 @@ return static function(ContainerConfigurator $container) {
             new Reference('sulu_phpcr_migration.entity_repository'),
             '%sulu_article.default_main_webspace%',
             '%sulu_article.default_additional_webspaces%',
+            new Reference('sulu_core.webspace.webspace_manager'),
         ])
         ->tag('sulu_phpcr_migration.persister', ['type' => 'article']);
 
