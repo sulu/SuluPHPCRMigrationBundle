@@ -49,4 +49,55 @@ final class PagePersisterSlugTest extends TestCase
         // The cycle is broken and the starting locale falls back to its own resource locator.
         $this->assertSame('/de', $slug);
     }
+
+    public function testShadowKeepsItsOwnRouteNode(): void
+    {
+        $document = $this->shadowDocument([
+            'en' => ['_url' => '/company/patents'],
+            'de' => ['shadow-on' => true, 'shadow-base' => 'en', '_url' => '/unternehmen/patents'],
+        ]);
+
+        $this->assertSame('/unternehmen/patents', $this->getSlug($document, 'de'));
+        $this->assertSame('/company/patents', $this->getSlug($document, 'en'));
+    }
+
+    public function testShadowWithoutRouteNodeUsesTheSourceSlug(): void
+    {
+        $document = $this->shadowDocument([
+            'en' => ['_url' => '/company/patents'],
+            'de' => ['shadow-on' => true, 'shadow-base' => 'en', 'url' => '/unternehmen/patents'],
+        ]);
+
+        $this->assertSame('/company/patents', $this->getSlug($document, 'de'));
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $localizations
+     *
+     * @return array<string, mixed>
+     */
+    private function shadowDocument(array $localizations): array
+    {
+        return [
+            'jcr' => ['uuid' => 'uuid', 'mixinTypes' => ['sulu:page']],
+            'sulu' => ['webspaceKey' => 'website', 'parentId' => null],
+            'localizations' => $localizations,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $document
+     */
+    private function getSlug(array $document, string $locale): ?string
+    {
+        $persister = new PagePersister(
+            PropertyAccess::createPropertyAccessor(),
+            $this->prophesize(EntityRepositoryInterface::class)->reveal(),
+        );
+
+        $slug = (new \ReflectionMethod(PagePersister::class, 'getSlug'))->invoke($persister, $document, $locale);
+        $this->assertTrue(null === $slug || \is_string($slug));
+
+        return $slug;
+    }
 }
