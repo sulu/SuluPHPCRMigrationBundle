@@ -17,7 +17,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\UniqueKeyViolationException;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\HistoryRouteSlugTakenException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\AbstractPersister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PagePersister;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Infrastructure\Repository\EntityRepository;
@@ -108,12 +108,18 @@ final class PagePersisterDryRunTest extends TestCase
         $this->assertSame('uuid-2', $routes['de']['resource_id']);
     }
 
-    public function testHistoryRouteOfOtherPageIsAUniqueKeyViolation(): void
+    public function testHistoryRouteOfPublishedPageIsReported(): void
     {
-        $this->createRoutes('uuid-1', 1, '/foo');
+        $this->createRoutes('uuid-1', 2, '/foo');
+        $this->connection->insert('pa_page_dimension_contents', [
+            'pageUuid' => 'uuid-1',
+            'locale' => 'de',
+            'stage' => 'draft',
+            'version' => 0,
+            'workflowPlace' => 'published',
+        ]);
 
-        $this->expectException(UniqueKeyViolationException::class);
-        $this->expectExceptionMessage("Duplicate entry 'website-de-/foo' for key 'ro_routes.ro_routes_unique'");
+        $this->expectException(HistoryRouteSlugTakenException::class);
 
         $this->createRoutes('uuid-2', 2, '/bar', true, ['/foo']);
     }

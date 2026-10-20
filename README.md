@@ -103,6 +103,10 @@ A page whose routes fail never gets its row, so every child of it reports
 `Parent node … not found` as well. Fix the first error of such a branch and
 rerun before reading the errors below it.
 
+The dry run keeps every written row in memory until the command ends, roughly
+1.6 KB per row. A site with many documents may need a higher `memory_limit`
+(`php -d memory_limit=2G bin/adminconsole …`).
+
 On MySQL the dry run compares unique keys case-insensitively only, while
 `utf8mb4_unicode_ci` also ignores accents and trailing spaces. Values like
 `Café` and `Cafe` in one run pass the dry run and fail in the real run.

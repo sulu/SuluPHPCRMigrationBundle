@@ -1026,17 +1026,12 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * In a dry run every lookup returns a stub row without a slug, which is not a real route.
-     *
      * @param mixed[] $route
      */
     private function isRouteOfOtherResource(array $route, string $resourceId, string $resourceKey): bool
     {
-        return isset($route['slug'])
-            && (
-                ($route['resource_id'] ?? null) !== $resourceId
-                || ($route['resource_key'] ?? null) !== $resourceKey
-            );
+        return ($route['resource_id'] ?? null) !== $resourceId
+            || ($route['resource_key'] ?? null) !== $resourceKey;
     }
 
     /**

@@ -107,8 +107,27 @@ class DryRunWriteLayer
             return;
         }
 
-        foreach ($matches as $key => $row) {
-            $this->update($table, $key, $row, $data);
+        // an UPDATE statement fails as a whole, so a violation must not keep the rows changed before it
+        $previousStates = [];
+        try {
+            foreach ($matches as $key => $row) {
+                $previousStates[$key] = [$this->rows[$table][$key] ?? null, isset($this->replaced[$table][$key])];
+                $this->update($table, $key, $row, $data);
+            }
+        } catch (UniqueKeyViolationException $exception) {
+            foreach (\array_reverse($previousStates, true) as $key => [$previousRow, $wasReplaced]) {
+                null === $previousRow ? $this->unsetRow($table, $key) : $this->setRow($table, $key, $previousRow);
+
+                if (!$wasReplaced) {
+                    unset($this->replaced[$table][$key]);
+                }
+            }
+
+            if ([] === ($this->replaced[$table] ?? null)) {
+                unset($this->replaced[$table]);
+            }
+
+            throw $exception;
         }
     }
 
@@ -147,9 +166,16 @@ class DryRunWriteLayer
         }
 
         $matches = [];
+        $hasPrimaryKey = [] !== $this->getSchema($table)['primary'];
+        $occurrences = [];
 
         foreach (($this->selectRows)($table, $where) as $row) {
             $key = $this->getDatabaseRowKey($table, $row);
+            if (!$hasPrimaryKey) {
+                // identical rows have no key of their own, and they match a lookup all together or not at all
+                $key .= '#' . ($occurrences[$key] = ($occurrences[$key] ?? -1) + 1);
+            }
+
             if (!isset($this->replaced[$table][$key])) {
                 $matches[$key] = $row;
             }

@@ -238,6 +238,29 @@ final class EntityRepositoryDryRunTest extends TestCase
         $this->repository->insertOrUpdate(['slug' => '/foo'], 'ro_routes', self::ROUTE_TYPES, ['id' => $id]);
     }
 
+    public function testFailedUpdateOfSeveralRowsChangesNone(): void
+    {
+        $this->insertRoute('pages', 'uuid-1', '/foo', 7);
+        $this->insertRoute('pages', 'uuid-2', '/bar', 7);
+        $this->repository->insertOrUpdate($this->routeData('uuid-3', '/baz'), 'ro_routes', self::ROUTE_TYPES, ['resource_id' => 'uuid-3']);
+
+        $exception = null;
+        try {
+            $this->repository->insertOrUpdate(['slug' => '/new'], 'ro_routes', self::ROUTE_TYPES, ['parent_id' => 7]);
+        } catch (UniqueKeyViolationException $caught) {
+            $exception = $caught;
+        }
+        $this->assertInstanceOf(UniqueKeyViolationException::class, $exception);
+
+        $this->assertNotNull($this->repository->findOneBy('ro_routes', ['slug' => '/foo']));
+        $this->assertNotNull($this->repository->findOneBy('ro_routes', ['slug' => '/bar']));
+        $this->assertNotNull($this->repository->findOneBy('ro_routes', ['slug' => '/baz']));
+        $this->assertNull($this->repository->findOneBy('ro_routes', ['slug' => '/new']));
+
+        $this->repository->insertOrUpdate($this->routeData('uuid-4', '/new'), 'ro_routes', self::ROUTE_TYPES, ['resource_id' => 'uuid-4']);
+        $this->assertNotNull($this->repository->findOneBy('ro_routes', ['slug' => '/new']));
+    }
+
     public function testAllowsUpdateKeepingOwnUniqueKey(): void
     {
         $id = $this->insertRoute('pages', 'uuid-1', '/foo');
@@ -272,6 +295,28 @@ final class EntityRepositoryDryRunTest extends TestCase
         $this->repository->insertOrUpdate(['code' => null], 'nullable_unique', []);
 
         $this->assertCount(2, $this->repository->findBy('nullable_unique', ['code' => null]));
+    }
+
+    public function testKeepsIdenticalRowsOfDatabaseWithoutPrimaryKey(): void
+    {
+        $this->connection->executeStatement('CREATE TABLE nullable_unique (code VARCHAR(10) DEFAULT NULL)');
+        $this->connection->executeStatement('CREATE UNIQUE INDEX nullable_unique_code ON nullable_unique (code)');
+        $this->connection->executeStatement('INSERT INTO nullable_unique (code) VALUES (NULL), (NULL)');
+
+        $this->assertCount(2, $this->repository->findBy('nullable_unique', ['code' => null]));
+        $this->assertSame(2, $this->repository->removeBy('nullable_unique', ['code' => null]));
+        $this->assertSame([], $this->repository->findBy('nullable_unique', ['code' => null]));
+    }
+
+    public function testRejectsUpdateOfIdenticalRowsToSameUniqueKey(): void
+    {
+        $this->connection->executeStatement('CREATE TABLE nullable_unique (code VARCHAR(10) DEFAULT NULL)');
+        $this->connection->executeStatement('CREATE UNIQUE INDEX nullable_unique_code ON nullable_unique (code)');
+        $this->connection->executeStatement('INSERT INTO nullable_unique (code) VALUES (NULL), (NULL)');
+
+        $this->expectException(UniqueKeyViolationException::class);
+
+        $this->repository->insertOrUpdate(['code' => 'a'], 'nullable_unique', [], ['code' => null]);
     }
 
     public function testFindsRowsByLooselyTypedValues(): void
