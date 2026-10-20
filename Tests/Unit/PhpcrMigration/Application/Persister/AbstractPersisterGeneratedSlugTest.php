@@ -196,30 +196,6 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(2, 'Foo');
     }
 
-    public function testDryRunStubRowIsNoConflict(): void
-    {
-        // In a dry run every lookup returns the same stub row, which has no slug.
-        $repository = $this->prophesize(EntityRepositoryInterface::class);
-        $repository->getColumnLength(Argument::cetera())->willReturn(255);
-        $repository->removeBy(Argument::cetera())->willReturn(0);
-        $repository->findOneBy(Argument::cetera())->willReturn(['id' => 0, 'depth' => 0]);
-        $repository->insertOrUpdate(
-            Argument::that(static fn (array $data): bool => '/foo' === ($data['slug'] ?? null)),
-            AbstractPersister::ROUTE_TABLE,
-            Argument::cetera(),
-        )->shouldBeCalled();
-
-        $this->persister = new PagePersister(
-            PropertyAccess::createPropertyAccessor(),
-            $repository->reveal(),
-            new PathCleanup(new AsciiSlugger()),
-        );
-
-        $this->expectOutputString('');
-
-        $this->invokeCreateOrUpdateRoutes(1, 'Foo');
-    }
-
     private function stubRouteOwner(string $slug, ?string $resourceId): void
     {
         $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [

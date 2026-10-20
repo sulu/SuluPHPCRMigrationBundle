@@ -81,21 +81,35 @@ php bin/adminconsole sulu:phpcr-migration:migrate --dry-run
 ```
 
 This executes the full parse and persist pipeline against your real PHPCR
-content, but every database write is intercepted in-memory. The command
-collects every exception (one per document or document/locale pair),
-continues past failures, and at the end prints a grouped summary plus a
-JSON report you can hand off for data cleanup.
+content and the rows already in the target database. Every database write is
+kept in memory instead, and later lookups see it, so the dry run reports what
+the real run would do: skipped routes with the page that owns the slug, and
+unique-key violations. The command collects every exception (one per document or
+document/locale pair), continues past failures, and at the end prints a
+grouped summary plus a JSON report you can hand off for data cleanup.
 
 Default report path: `var/phpcr-migration/dry-run-YYYYMMDD-HHMMSS.json`.
 Override it with `--report=/path/to/report.json`.
 
 **Limitations.** Dry-run catches PHP-level validation errors (title/slug
-length, missing webspace or parent, missing shadow template, etc.) but
-does **not** catch database-level issues such as foreign-key violations,
-unique-key collisions between two rows that would be written in the same
-run, column truncation, or NOT NULL violations on columns populated only
-by database defaults. Post-migration queries (permission contexts, access
-controls, automation tasks) are skipped in dry-run mode.
+length, missing webspace or parent, missing shadow template, etc.) and
+unique-key collisions, but does **not** catch other database-level issues
+such as foreign-key violations, column truncation, or NOT NULL violations on
+columns populated only by database defaults. A failed document keeps the
+writes it made before the failure. Post-migration queries (permission
+contexts, access controls, automation tasks) are skipped in dry-run mode.
+
+A page whose routes fail never gets its row, so every child of it reports
+`Parent node … not found` as well. Fix the first error of such a branch and
+rerun before reading the errors below it.
+
+The dry run keeps every written row in memory until the command ends, roughly
+1.6 KB per row. A site with many documents may need a higher `memory_limit`
+(`php -d memory_limit=2G bin/adminconsole …`).
+
+On MySQL the dry run compares unique keys case-insensitively only, while
+`utf8mb4_unicode_ci` also ignores accents and trailing spaces. Values like
+`Café` and `Cafe` in one run pass the dry run and fail in the real run.
 
 ## 🛠️&nbsp; Development
 
