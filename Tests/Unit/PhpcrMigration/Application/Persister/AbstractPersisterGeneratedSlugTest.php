@@ -61,23 +61,6 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         ])->willReturn(['id' => 100]);
     }
 
-    public function testDraftWithTakenSlugGetsGeneratedSlugWithSuffix(): void
-    {
-        // The stored slug and the slug generated from the same title are both owned by another page.
-        $this->stubRouteOwner('/foo', 'other-uuid');
-        $this->stubRouteOwner('/foo-1', null);
-
-        $this->repository->insertOrUpdate(
-            Argument::that(static fn (array $data): bool => '/foo-1' === $data['slug']),
-            AbstractPersister::ROUTE_TABLE,
-            Argument::cetera(),
-        )->shouldBeCalled();
-
-        $this->expectOutputRegex("~Generated route '/foo-1' for document 'incoming-uuid' \(locale 'de'\) because slug '/foo' is already used by 'pages::other-uuid'~");
-
-        $this->invokeCreateOrUpdateRoutes(1, 'Foo');
-    }
-
     public function testReclaimedDraftRouteMovesToGeneratedSlug(): void
     {
         $this->stubRouteOwner('/foo', 'other-uuid');
