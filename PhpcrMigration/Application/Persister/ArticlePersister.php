@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister;
 
+use Sulu\Article\Application\Webspace\WebspaceSettingsConfigurationResolver;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Exception\TitleTooLongException;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -21,15 +22,10 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class ArticlePersister extends AbstractPersister
 {
-    /**
-     * @param array<string, string> $defaultMainWebspaceMap
-     * @param array<string, list<string>> $defaultAdditionalWebspacesMap
-     */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         EntityRepositoryInterface $entityRepository,
-        private readonly array $defaultMainWebspaceMap = [],
-        private readonly array $defaultAdditionalWebspacesMap = [],
+        private readonly WebspaceSettingsConfigurationResolver $webspaceSettingsConfigurationResolver,
     ) {
         parent::__construct($propertyAccessor, $entityRepository);
     }
@@ -101,13 +97,8 @@ class ArticlePersister extends AbstractPersister
 
         // Apply configured defaults when PHPCR has no explicit webspace settings,
         // or when customizeWebspaceSettings is true but mainWebspace ended up null (invalid in Sulu 3).
-        if ([] !== $this->defaultMainWebspaceMap && null !== $locale && !isset($data['mainWebspace'])) {
-            $defaultMainWebspace = $this->defaultMainWebspaceMap[$locale]
-                ?? $this->defaultMainWebspaceMap['default']
-                ?? null;
-            if (null !== $defaultMainWebspace) {
-                $data['mainWebspace'] = $defaultMainWebspace;
-            }
+        if (null !== $locale && !isset($data['mainWebspace'])) {
+            $data['mainWebspace'] = $this->webspaceSettingsConfigurationResolver->getDefaultMainWebspaceForLocale($locale);
         }
 
         return $data;
@@ -330,15 +321,7 @@ class ArticlePersister extends AbstractPersister
 
         $additionalWebspaces = $document['localizations'][$locale]['additionalWebspaces'] ?? null;
 
-        if (null === $additionalWebspaces && [] !== $this->defaultAdditionalWebspacesMap) {
-            $additionalWebspaces = $this->defaultAdditionalWebspacesMap[$locale]
-                ?? $this->defaultAdditionalWebspacesMap['default']
-                ?? null;
-        }
-
-        if (null === $additionalWebspaces) {
-            return;
-        }
+        $additionalWebspaces ??= $this->webspaceSettingsConfigurationResolver->getDefaultAdditionalWebspacesForLocale($locale);
 
         $tableName = 'ar_article_dimension_content_additional_webspaces';
 
