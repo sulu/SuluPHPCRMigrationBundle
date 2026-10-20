@@ -32,6 +32,18 @@ final class PropertyValueResolver
         'datetime' => 'Y-m-d\TH:i:s',
     ];
 
+    /**
+     * The media smart content of Sulu 2 stores the ids of the removed media types, Sulu 3 filters by the type name.
+     *
+     * @var array<int, string>
+     */
+    private const MEDIA_TYPE_NAMES = [
+        1 => 'document',
+        2 => 'image',
+        3 => 'video',
+        4 => 'audio',
+    ];
+
     public function __construct(
         private readonly FieldTypeDetectorInterface $fieldTypeDetector,
     ) {
@@ -59,7 +71,34 @@ final class PropertyValueResolver
 
         $decoded = \json_decode($value, true);
 
-        return \JSON_ERROR_NONE === \json_last_error() ? $decoded : $value;
+        if (\JSON_ERROR_NONE !== \json_last_error()) {
+            return $value;
+        }
+
+        if ('smart_content' === $fieldType && \is_array($decoded)) {
+            return $this->migrateSmartContentTypes($decoded);
+        }
+
+        return $decoded;
+    }
+
+    /**
+     * @param array<mixed> $smartContent
+     *
+     * @return array<mixed>
+     */
+    private function migrateSmartContentTypes(array $smartContent): array
+    {
+        if (!\is_array($smartContent['types'] ?? null)) {
+            return $smartContent;
+        }
+
+        $smartContent['types'] = \array_map(
+            static fn (mixed $type): mixed => \is_int($type) ? (self::MEDIA_TYPE_NAMES[$type] ?? $type) : $type,
+            $smartContent['types'],
+        );
+
+        return $smartContent;
     }
 
     private function formatDate(mixed $value, string $format): mixed
