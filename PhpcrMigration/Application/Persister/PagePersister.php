@@ -390,11 +390,13 @@ class PagePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
-        // Shadows have no reliable resource locator of their own — use the source locale's slug.
+        // A shadow keeps the route it was served under, that is the migrated route node of its own locale. Only a
+        // shadow without one uses the source locale's slug.
         // Track visited locales so a cyclic shadow reference (a -> b -> a) cannot recurse forever.
         $shadowBase = $localizedData['shadow-base'] ?? null;
         if (
             ($localizedData['shadow-on'] ?? false)
+            && !isset($localizedData[AbstractPersister::URL])
             && \is_string($shadowBase)
             && !isset($visited[$locale])
             && isset($document['localizations'][$shadowBase])

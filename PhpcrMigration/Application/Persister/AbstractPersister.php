@@ -810,8 +810,8 @@ abstract class AbstractPersister implements PersisterInterface
                 continue;
             }
 
-            // Shadows have no own url history; a history route would collide with their
-            // source-slug main route on the (webspace, locale, slug) unique key.
+            // A shadow without a route of its own takes the source slug, so its history urls would collide with
+            // that main route on the (webspace, locale, slug) unique key. Shadow history routes are not migrated yet.
             if ($localizedData['shadow-on'] ?? false) {
                 continue;
             }
