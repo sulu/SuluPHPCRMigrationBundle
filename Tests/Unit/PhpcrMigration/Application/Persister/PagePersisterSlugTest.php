@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Unit\PhpcrMigration\Application\Persister;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PagePersister;
@@ -69,6 +70,101 @@ final class PagePersisterSlugTest extends TestCase
         ]);
 
         $this->assertSame('/company/patents', $this->getSlug($document, 'de'));
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $localizations
+     */
+    #[DataProvider('provideSlugResolution')]
+    public function testSlugResolution(array $localizations, string $locale, ?string $expected): void
+    {
+        $this->assertSame($expected, $this->getSlug($this->shadowDocument($localizations), $locale));
+    }
+
+    /**
+     * @return \Generator<string, array{array<string, array<string, mixed>>, string, string|null}>
+     */
+    public static function provideSlugResolution(): \Generator
+    {
+        $shadowOfEn = ['shadow-on' => true, 'shadow-base' => 'en'];
+
+        yield 'page with a route node' => [['en' => ['_url' => '/a', 'url' => '/b']], 'en', '/a'];
+        yield 'page without a route node uses its resource locator' => [['en' => ['url' => '/b']], 'en', '/b'];
+        yield 'page without any url' => [['en' => []], 'en', null];
+        yield 'null route node counts as no route' => [
+            ['en' => ['_url' => '/en'], 'de' => $shadowOfEn + ['_url' => null]],
+            'de',
+            '/en',
+        ];
+        yield 'shadow without a route node uses the resource locator of its source' => [
+            ['en' => ['url' => '/en-draft'], 'de' => $shadowOfEn],
+            'de',
+            '/en-draft',
+        ];
+        yield 'shadow without a route node and a source without url has no slug' => [
+            ['en' => [], 'de' => $shadowOfEn + ['url' => '/de-draft']],
+            'de',
+            null,
+        ];
+        yield 'shadow switched off keeps its route node' => [
+            ['en' => ['_url' => '/en'], 'de' => ['shadow-on' => false, 'shadow-base' => 'en', '_url' => '/de']],
+            'de',
+            '/de',
+        ];
+        yield 'shadow without a base keeps its route node' => [
+            ['en' => ['_url' => '/en'], 'de' => ['shadow-on' => true, '_url' => '/de']],
+            'de',
+            '/de',
+        ];
+        yield 'shadow of an unknown locale keeps its route node' => [
+            ['de' => ['shadow-on' => true, 'shadow-base' => 'fr', '_url' => '/de', 'url' => '/de-draft']],
+            'de',
+            '/de',
+        ];
+        yield 'shadow of an unknown locale without route node uses its resource locator' => [
+            ['de' => ['shadow-on' => true, 'shadow-base' => 'fr', 'url' => '/de-draft']],
+            'de',
+            '/de-draft',
+        ];
+        yield 'shadow of an unknown locale without any url' => [
+            ['de' => ['shadow-on' => true, 'shadow-base' => 'fr']],
+            'de',
+            null,
+        ];
+        yield 'shadow of a shadow without route nodes ends at the final source' => [
+            [
+                'en' => ['_url' => '/en'],
+                'de' => $shadowOfEn,
+                'fr' => ['shadow-on' => true, 'shadow-base' => 'de'],
+            ],
+            'fr',
+            '/en',
+        ];
+        yield 'shadow of a shadow stops at the route node of the middle one' => [
+            [
+                'en' => ['_url' => '/en'],
+                'de' => $shadowOfEn + ['_url' => '/de'],
+                'fr' => ['shadow-on' => true, 'shadow-base' => 'de'],
+            ],
+            'fr',
+            '/de',
+        ];
+        yield 'cycle ends at the first route node' => [
+            [
+                'de' => ['shadow-on' => true, 'shadow-base' => 'en'],
+                'en' => ['shadow-on' => true, 'shadow-base' => 'de', '_url' => '/en'],
+            ],
+            'de',
+            '/en',
+        ];
+        yield 'cycle with route nodes keeps each own' => [
+            [
+                'de' => ['shadow-on' => true, 'shadow-base' => 'en', '_url' => '/de'],
+                'en' => ['shadow-on' => true, 'shadow-base' => 'de', '_url' => '/en'],
+            ],
+            'de',
+            '/de',
+        ];
     }
 
     /**
