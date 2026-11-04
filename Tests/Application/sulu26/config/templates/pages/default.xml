@@ -55,6 +55,17 @@
             </meta>
         </property>
 
+        <property name="mediaSmartContent" type="smart_content">
+            <meta>
+                <title lang="en">Media Smart Content</title>
+                <title lang="de">Medien Smart Content</title>
+            </meta>
+            <params>
+                <param name="provider" value="media"/>
+                <param name="max_per_page" value="10"/>
+            </params>
+        </property>
+
         <block name="blocks" default-type="text" minOccurs="0">
             <meta>
                 <title lang="en">Content Blocks</title>
@@ -230,6 +241,31 @@
                         </property>
                     </properties>
                 </type>
+                <type name="smart_content_media">
+                    <meta>
+                        <title lang="en">Smart Content (Media)</title>
+                        <title lang="de">Smart Content (Medien)</title>
+                    </meta>
+                    <properties>
+                        <property name="title" type="text_line">
+                            <meta>
+                                <title lang="en">Title</title>
+                                <title lang="de">Titel</title>
+                            </meta>
+                        </property>
+                        <property name="smartContentMedia" type="smart_content">
+                            <meta>
+                                <title lang="en">Smart Content</title>
+                                <title lang="de">Smart Content</title>
+                            </meta>
+                            <params>
+                                <param name="provider" value="media"/>
+                                <param name="max_per_page" value="10"/>
+                            </params>
+                        </property>
+                    </properties>
+                </type>
+                <type ref="global_media"/>
                 <type name="nested">
                     <meta>
                         <title lang="en">Nested Block</title>
@@ -290,6 +326,24 @@
                                             </meta>
                                             <params>
                                                 <param name="types" value="image"/>
+                                            </params>
+                                        </property>
+                                    </properties>
+                                </type>
+                                <type name="inner_media">
+                                    <meta>
+                                        <title lang="en">Inner Media</title>
+                                        <title lang="de">Innere Medien</title>
+                                    </meta>
+                                    <properties>
+                                        <property name="innerSmartContentMedia" type="smart_content">
+                                            <meta>
+                                                <title lang="en">Smart Content</title>
+                                                <title lang="de">Smart Content</title>
+                                            </meta>
+                                            <params>
+                                                <param name="provider" value="media"/>
+                                                <param name="max_per_page" value="10"/>
                                             </params>
                                         </property>
                                     </properties>

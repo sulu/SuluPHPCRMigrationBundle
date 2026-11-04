@@ -15,6 +15,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Detector;
 
 use PHPCR\NodeInterface;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\FieldMetadata;
+use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\FormMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\ItemMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\SectionMetadata;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\TypedFormMetadata;
@@ -27,6 +28,20 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      * @var array<string, string> Map of "type.templateKey.field[.blockType.field...]" => fieldType
      */
     private array $map = [];
+
+    /**
+     * Options (params) of the fields in the same keys as the map. Only scalar params are stored,
+     * collection params are skipped. E.g. for `<param name="provider" value="media"/>` of a block field:
+     * `["page.default.blocks.download.downloads" => ["provider" => "media"]]`.
+     *
+     * @var array<string, array<string, bool|int|string>> Map of "type.templateKey.field[.blockType.field...]" => [paramName => value]
+     */
+    private array $options = [];
+
+    /**
+     * @var array<string, FormMetadata>|null Global blocks (`<type ref="…"/>`) of the "block" form by name
+     */
+    private ?array $globalBlocks = null;
 
     private ?string $cachedTemplateNodeIdentifier = null;
 
@@ -54,6 +69,20 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      */
     public function getType(string $documentType, string $propertyName, NodeInterface $node): ?string
     {
+        $mappingKey = $this->resolveMappingKey($documentType, $propertyName, $node);
+
+        return null !== $mappingKey ? ($this->map[$mappingKey] ?? null) : null;
+    }
+
+    public function getOption(string $documentType, string $propertyName, NodeInterface $node, string $name): bool|int|string|null
+    {
+        $mappingKey = $this->resolveMappingKey($documentType, $propertyName, $node);
+
+        return null !== $mappingKey ? ($this->options[$mappingKey][$name] ?? null) : null;
+    }
+
+    private function resolveMappingKey(string $documentType, string $propertyName, NodeInterface $node): ?string
+    {
         $locale = $this->resolveLocale($propertyName, $node);
         if (null === $locale) {
             return null;
@@ -71,15 +100,14 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
         }
 
         $plainPropertyName = $this->localeExtractor->stripPrefix($propertyName, $locale);
-        $mappingKey = $this->transformPropertyNameToMappingKey(
+
+        return $this->transformPropertyNameToMappingKey(
             $documentType,
             $templateKey,
             $plainPropertyName,
             $node,
             $locale,
         );
-
-        return $this->map[$mappingKey] ?? null;
     }
 
     private function resolveLocale(string $propertyName, NodeInterface $node): ?string
@@ -220,6 +248,9 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      * Format: "type.templateKey.fieldName" for simple fields
      *         "type.templateKey.blockField.blockType.subField" for block fields
      *         "type.templateKey.blockField.blockType.nestedBlock.nestedType.subField" for nested blocks
+     *
+     * The block type of a global block is keyed by its own name, like an inline block type, and its fields
+     * are taken from the "block" form (see processFieldMetadata).
      */
     private function buildTemplateFormIndex(string $locale): void
     {
@@ -232,7 +263,7 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
             if ($metadata instanceof TypedFormMetadata) {
                 foreach ($metadata->getForms() as $formKey => $formMetadata) {
                     $prefix = $typeKey . '.' . $formKey;
-                    $this->processItems($formMetadata->getItems(), $prefix);
+                    $this->processItems($formMetadata->getItems(), $prefix, $locale);
                 }
             }
         }
@@ -242,28 +273,63 @@ class FormMetadataFieldTypeDetector implements FieldTypeDetectorInterface
      * @param ItemMetadata[] $items
      * @param string $prefix Current path prefix (e.g. "page.default" or "page.default.blocks.text")
      */
-    private function processItems(array $items, string $prefix): void
+    private function processItems(array $items, string $prefix, string $locale): void
     {
         foreach ($items as $item) {
             if ($item instanceof SectionMetadata) {
-                $this->processItems($item->getItems(), $prefix);
+                $this->processItems($item->getItems(), $prefix, $locale);
             } elseif ($item instanceof FieldMetadata) {
-                $this->processFieldMetadata($item, $prefix);
+                $this->processFieldMetadata($item, $prefix, $locale);
             }
         }
     }
 
-    private function processFieldMetadata(FieldMetadata $field, string $prefix): void
+    private function processFieldMetadata(FieldMetadata $field, string $prefix, string $locale): void
     {
         $fieldPath = $prefix . '.' . $field->getName();
 
         if ('block' === $field->getType()) {
             foreach ($field->getTypes() as $blockTypeKey => $blockTypeForm) {
                 $blockPrefix = $fieldPath . '.' . $blockTypeKey;
-                $this->processItems($blockTypeForm->getItems(), $blockPrefix);
+                $items = $blockTypeForm->getItems();
+
+                // A global block type (`<type ref="…"/>`) has no items itself, only the tag
+                // "sulu.global_block", its fields are declared in the "block" form
+                $globalBlockTag = $blockTypeForm->getTagsByName('sulu.global_block')[0] ?? null;
+                if (null !== $globalBlockTag) {
+                    $globalBlockKey = $globalBlockTag->getAttribute('global_block');
+                    $items = \is_string($globalBlockKey)
+                        ? ($this->getGlobalBlocks($locale)[$globalBlockKey] ?? null)?->getItems() ?? []
+                        : [];
+                }
+
+                $this->processItems($items, $blockPrefix, $locale);
             }
         } else {
             $this->map[$fieldPath] = $field->getType();
+
+            foreach ($field->getOptions() as $option) {
+                $name = $option->getName();
+                $value = $option->getValue();
+
+                if (\is_string($name) && (\is_bool($value) || \is_int($value) || \is_string($value))) {
+                    $this->options[$fieldPath][$name] = $value;
+                }
+            }
         }
+    }
+
+    /**
+     * @return array<string, FormMetadata>
+     */
+    private function getGlobalBlocks(string $locale): array
+    {
+        if (null === $this->globalBlocks) {
+            $metadata = $this->formMetadataProvider->getMetadata('block', $locale, ['ignore_global_blocks' => true]);
+
+            $this->globalBlocks = $metadata instanceof TypedFormMetadata ? $metadata->getForms() : [];
+        }
+
+        return $this->globalBlocks;
     }
 }

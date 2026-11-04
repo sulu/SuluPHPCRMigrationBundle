@@ -42,5 +42,137 @@
                 <title lang="de">Artikel</title>
             </meta>
         </property>
+
+        <property name="mediaSmartContent" type="smart_content">
+            <meta>
+                <title lang="en">Media Smart Content</title>
+                <title lang="de">Medien Smart Content</title>
+            </meta>
+            <params>
+                <param name="provider" value="media"/>
+                <param name="max_per_page" value="10"/>
+            </params>
+        </property>
+
+        <block name="blocks" default-type="smart_content_pages" minOccurs="0">
+            <meta>
+                <title lang="en">Content Blocks</title>
+                <title lang="de">Inhaltsblöcke</title>
+            </meta>
+            <types>
+                <type name="smart_content_pages">
+                    <meta>
+                        <title lang="en">Smart Content (Pages)</title>
+                        <title lang="de">Smart Content (Seiten)</title>
+                    </meta>
+                    <properties>
+                        <property name="title" type="text_line">
+                            <meta>
+                                <title lang="en">Title</title>
+                                <title lang="de">Titel</title>
+                            </meta>
+                        </property>
+                        <property name="smartContent" type="smart_content">
+                            <meta>
+                                <title lang="en">Smart Content</title>
+                                <title lang="de">Smart Content</title>
+                            </meta>
+                            <params>
+                                <param name="provider" value="pages"/>
+                                <param name="max_per_page" value="10"/>
+                            </params>
+                        </property>
+                    </properties>
+                </type>
+                <type name="smart_content_media">
+                    <meta>
+                        <title lang="en">Smart Content (Media)</title>
+                        <title lang="de">Smart Content (Medien)</title>
+                    </meta>
+                    <properties>
+                        <property name="title" type="text_line">
+                            <meta>
+                                <title lang="en">Title</title>
+                                <title lang="de">Titel</title>
+                            </meta>
+                        </property>
+                        <property name="smartContentMedia" type="smart_content">
+                            <meta>
+                                <title lang="en">Smart Content</title>
+                                <title lang="de">Smart Content</title>
+                            </meta>
+                            <params>
+                                <param name="provider" value="media"/>
+                                <param name="max_per_page" value="10"/>
+                            </params>
+                        </property>
+                    </properties>
+                </type>
+                <type name="nested">
+                    <meta>
+                        <title lang="en">Nested Block</title>
+                        <title lang="de">Verschachtelter Block</title>
+                    </meta>
+                    <properties>
+                        <property name="title" type="text_line">
+                            <meta>
+                                <title lang="en">Title</title>
+                                <title lang="de">Titel</title>
+                            </meta>
+                        </property>
+                        <block name="innerBlocks" default-type="inner_media" minOccurs="0">
+                            <meta>
+                                <title lang="en">Inner Blocks</title>
+                                <title lang="de">Innere Blöcke</title>
+                            </meta>
+                            <types>
+                                <type name="inner_media">
+                                    <meta>
+                                        <title lang="en">Inner Media</title>
+                                        <title lang="de">Innere Medien</title>
+                                    </meta>
+                                    <properties>
+                                        <property name="innerSmartContentMedia" type="smart_content">
+                                            <meta>
+                                                <title lang="en">Smart Content</title>
+                                                <title lang="de">Smart Content</title>
+                                            </meta>
+                                            <params>
+                                                <param name="provider" value="media"/>
+                                                <param name="max_per_page" value="10"/>
+                                            </params>
+                                        </property>
+                                    </properties>
+                                </type>
+                            </types>
+                        </block>
+                    </properties>
+                </type>
+                <type name="global_media">
+                    <meta>
+                        <title lang="en">Global Media</title>
+                        <title lang="de">Globale Medien</title>
+                    </meta>
+                    <properties>
+                        <property name="title" type="text_line">
+                            <meta>
+                                <title lang="en">Title</title>
+                                <title lang="de">Titel</title>
+                            </meta>
+                        </property>
+                        <property name="globalSmartContentMedia" type="smart_content">
+                            <meta>
+                                <title lang="en">Smart Content</title>
+                                <title lang="de">Smart Content</title>
+                            </meta>
+                            <params>
+                                <param name="provider" value="media"/>
+                                <param name="max_per_page" value="10"/>
+                            </params>
+                        </property>
+                    </properties>
+                </type>
+            </types>
+        </block>
     </properties>
 </template>
