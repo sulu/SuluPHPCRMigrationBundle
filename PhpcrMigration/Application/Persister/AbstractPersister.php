@@ -65,6 +65,11 @@ abstract class AbstractPersister implements PersisterInterface
     protected const PAGE_TREE_ROUTE_PATH_SUFFIX = '-page-path';
     protected const PAGE_TREE_ROUTE_SUFFIX_SUFFIX = '-suffix';
 
+    private const SMART_CONTENT_SORT_FIELDS = [
+        'title.raw' => 'title',
+        'last_modified_or_authored' => 'authored',
+    ];
+
     private ?int $maxSlugLength = null;
 
     public function __construct(
@@ -537,6 +542,7 @@ abstract class AbstractPersister implements PersisterInterface
                     $data['templateData']['lastModified'],
                 );
                 $data['templateData'] = $this->addBlockIds($data['templateData']);
+                $data['templateData'] = $this->mapSmartContentSortFields($data['templateData']);
 
                 // SULU 3.0 MIGRATION FIX: Ensure ALL data is UTF-8 encoded (not just templateData)
                 // This fixes title, seoTitle, excerptTitle, excerptDescription, and all other string fields
@@ -1095,6 +1101,26 @@ abstract class AbstractPersister implements PersisterInterface
     protected function getDefaultData(): array
     {
         return [];
+    }
+
+    /**
+     * Recursively replace the Elasticsearch sort fields of Sulu 2.6 with the fields the smart content of Sulu 3.0 sorts by.
+     *
+     * @param mixed[] $data
+     *
+     * @return mixed[]
+     */
+    private function mapSmartContentSortFields(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (\is_array($value)) {
+                $data[$key] = $this->mapSmartContentSortFields($value);
+            } elseif ('sortBy' === $key && \is_string($value)) {
+                $data[$key] = self::SMART_CONTENT_SORT_FIELDS[$value] ?? $value;
+            }
+        }
+
+        return $data;
     }
 
     /**
