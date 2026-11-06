@@ -22,6 +22,7 @@ use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\Persis
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Persister\PersisterPool;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Query\PostMigrationQueryInterface;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Repository\EntityRepositoryInterface;
+use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\CollationChecker;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Service\DryRunCollector;
 use Sulu\Bundle\PhpcrMigrationBundle\PhpcrMigration\Application\Session\SessionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -63,6 +64,7 @@ class MigratePhpcrCommand extends Command
         private readonly EntityRepositoryInterface $entityRepository,
         private readonly DryRunCollector $dryRunCollector,
         private readonly string $projectDir,
+        private readonly ?CollationChecker $collationChecker = null,
     ) {
         parent::__construct();
     }
@@ -101,6 +103,12 @@ class MigratePhpcrCommand extends Command
         if ($this->isDryRun) {
             $this->entityRepository->setDryRun(true);
             $io->note('Running in dry-run mode. No data will be written to the target database.');
+        }
+
+        if (!$this->confirmCollations($io)) {
+            $io->error('Migration aborted.');
+
+            return Command::FAILURE;
         }
 
         $session = $this->sessionManager->getDefaultSession();
@@ -209,6 +217,31 @@ class MigratePhpcrCommand extends Command
         $io->success('Migration completed');
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * Warns about tables using different collations, which can break the joins of Sulu,
+     * and lets the user decide whether to continue. Continues in non-interactive mode.
+     */
+    private function confirmCollations(SymfonyStyle $io): bool
+    {
+        $tablesByCollation = $this->collationChecker?->findMixedCollations() ?? [];
+        if ([] === $tablesByCollation) {
+            return true;
+        }
+
+        $lines = [
+            'A mismatch of collations was found in the tables of the target database. Joins between columns using different collations can fail with "Illegal mix of collations".',
+        ];
+        $mainCollation = \array_key_first($tablesByCollation);
+        foreach ($tablesByCollation as $collation => $tables) {
+            $lines[] = $collation === $mainCollation
+                ? \sprintf('%s: %d tables', $collation, \count($tables))
+                : \sprintf('%s: %s', $collation, \implode(', ', $tables));
+        }
+        $io->warning($lines);
+
+        return $io->confirm('Do you want to continue?', true);
     }
 
     private function processNode(
