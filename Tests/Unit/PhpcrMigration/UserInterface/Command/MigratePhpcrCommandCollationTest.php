@@ -16,6 +16,7 @@ namespace Sulu\Bundle\PhpcrMigrationBundle\Tests\Unit\PhpcrMigration\UserInterfa
 use Doctrine\DBAL\Connection;
 use PHPCR\SessionInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -120,6 +121,21 @@ final class MigratePhpcrCommandCollationTest extends TestCase
 
         $this->assertSame(Command::SUCCESS, $this->tester->getStatusCode());
         $this->assertStringContainsString('mismatch of collations', $this->tester->getDisplay());
+        $this->assertStringNotContainsString('utf8mb3', $this->tester->getDisplay());
         $this->sessionManager->getDefaultSession()->shouldHaveBeenCalled();
+    }
+
+    #[TestWith(['utf8mb3_unicode_ci'])]
+    #[TestWith(['utf8_unicode_ci'])]
+    public function testWarningNamesTheLimitOfUtf8mb3(string $collation): void
+    {
+        $this->collationChecker->findMixedCollations()->willReturn([
+            'utf8mb4_unicode_ci' => ['pa_pages'],
+            $collation => ['doctrine_migration_versions'],
+        ]);
+
+        $this->tester->execute([], ['interactive' => false]);
+
+        $this->assertStringContainsString('cannot store 4-byte characters', $this->tester->getDisplay());
     }
 }

@@ -239,6 +239,9 @@ class MigratePhpcrCommand extends Command
                 ? \sprintf('%s: %d tables', $collation, \count($tables))
                 : \sprintf('%s: %s', $collation, \implode(', ', $tables));
         }
+        if ([] !== \preg_grep('/^utf8(mb3)?_/', \array_keys($tablesByCollation))) {
+            $lines[] = 'utf8mb3 joins utf8mb4 but cannot store 4-byte characters such as emoji.';
+        }
         $io->warning($lines);
 
         return $io->confirm('Do you want to continue?', true);

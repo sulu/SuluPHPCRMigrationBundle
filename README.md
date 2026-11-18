@@ -77,8 +77,8 @@ Allowed types are: `snippet`, `page`, `article`
 On MySQL and MariaDB, the command first checks that all tables and text columns of the target database use the same
 collation. Joins between columns using different collations can fail with "Illegal mix of collations", so the command
 lists the affected tables and asks whether to continue. With `--no-interaction` it only prints the warning and continues.
-The utf8mb3 and utf8mb4 variants of a collation count as one, and utf8 binary collations (MariaDB stores JSON columns
-with `utf8mb4_bin`) are ignored, because both join without that error.
+`utf8mb4_bin`, which MariaDB uses for JSON columns, is ignored because it joins any non-binary utf8mb4 collation.
+utf8mb3 counts as a collation of its own, because it cannot store 4-byte characters such as emoji.
 
 ### Dry-run mode
 

@@ -56,11 +56,20 @@ class CollationCheckerTest extends KernelTestCase
         $this->assertSame([], (new CollationChecker($this->connection))->findMixedCollations());
     }
 
-    public function testUtf8mb3AndBinaryColumnsAreNotReported(): void
+    public function testBinaryColumnIsNotReported(): void
     {
-        $this->connection->executeStatement('CREATE TABLE collation_check_table (legacy VARCHAR(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci, data VARCHAR(10) COLLATE utf8mb4_bin) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
+        $this->connection->executeStatement('CREATE TABLE collation_check_table (data VARCHAR(10) COLLATE utf8mb4_bin) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
         $this->assertSame([], (new CollationChecker($this->connection))->findMixedCollations());
+    }
+
+    public function testUtf8mb3ColumnIsReported(): void
+    {
+        $this->connection->executeStatement('CREATE TABLE collation_check_table (legacy VARCHAR(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
+
+        $result = (new CollationChecker($this->connection))->findMixedCollations();
+
+        $this->assertSame(['collation_check_table'], $result['utf8mb3_unicode_ci'] ?? null);
     }
 
     public function testColumnWithOtherCollationIsReported(): void

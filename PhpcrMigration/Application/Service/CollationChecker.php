@@ -53,10 +53,9 @@ class CollationChecker
                 continue;
             }
 
-            // utf8mb3 joins utf8mb4 of the same collation, and utf8 _bin (MariaDB's JSON columns) joins any utf8 collation
-            $collation = \str_replace('utf8mb3_', 'utf8mb4_', $row['collation_name']);
-            if ('utf8mb4_bin' !== $collation) {
-                $tablesByCollation[$collation][$row['table_name']] = true;
+            // MariaDB stores JSON columns with utf8mb4_bin, which joins any non-binary utf8mb4 collation
+            if ('utf8mb4_bin' !== $row['collation_name']) {
+                $tablesByCollation[$row['collation_name']][$row['table_name']] = true;
             }
         }
 

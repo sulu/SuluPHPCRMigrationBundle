@@ -66,16 +66,28 @@ final class CollationCheckerTest extends TestCase
         ], $checker->findMixedCollations());
     }
 
-    public function testUtf8mb3AndBinaryCollationsAreNotReported(): void
+    public function testBinaryCollationIsNotReported(): void
     {
         $checker = $this->createChecker(new MariaDBPlatform(), [
             ['table_name' => 'pa_pages', 'collation_name' => 'utf8mb4_unicode_ci'],
             ['table_name' => 'pa_pages', 'collation_name' => 'utf8mb4_bin'],
-            ['table_name' => 'doctrine_migration_versions', 'collation_name' => 'utf8mb3_unicode_ci'],
-            ['table_name' => 'phpcr_binarydata', 'collation_name' => 'utf8mb3_bin'],
         ]);
 
         $this->assertSame([], $checker->findMixedCollations());
+    }
+
+    public function testUtf8mb3IsReported(): void
+    {
+        $checker = $this->createChecker(new MySQLPlatform(), [
+            ['table_name' => 'pa_pages', 'collation_name' => 'utf8mb4_unicode_ci'],
+            ['table_name' => 'ro_routes', 'collation_name' => 'utf8mb4_unicode_ci'],
+            ['table_name' => 'phpcr_binarydata', 'collation_name' => 'utf8mb3_bin'],
+        ]);
+
+        $this->assertSame([
+            'utf8mb4_unicode_ci' => ['pa_pages', 'ro_routes'],
+            'utf8mb3_bin' => ['phpcr_binarydata'],
+        ], $checker->findMixedCollations());
     }
 
     public function testOtherPlatformsAreSkipped(): void
