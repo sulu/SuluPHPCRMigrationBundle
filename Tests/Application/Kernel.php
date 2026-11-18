@@ -61,6 +61,7 @@ class Kernel extends SuluTestKernel
             $container->loadFromExtension('sulu_admin', [
                 'templates' => [
                     'article' => ['directories' => ['articles' => __DIR__ . '/sulu30/config/templates/articles']],
+                    'block' => ['directories' => ['blocks' => __DIR__ . '/sulu30/config/templates/blocks']],
                     'page' => ['directories' => ['pages' => __DIR__ . '/sulu30/config/templates/pages']],
                     'snippet' => ['directories' => ['snippets' => __DIR__ . '/sulu30/config/templates/snippets']],
                 ],

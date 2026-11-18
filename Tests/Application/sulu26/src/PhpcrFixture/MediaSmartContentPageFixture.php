@@ -20,7 +20,7 @@ use Sulu\Component\DocumentManager\DocumentManagerInterface;
 /**
  * Covers the migration of the media type ids (1 = document, 2 = image, 3 = video, 4 = audio) of
  * smart contents with the "media" provider, both as top-level property and inside a block. The
- * "pages" smart content in the same block list keeps its page type names untouched.
+ * "pages" smart content in the same block list keeps its type ids untouched.
  */
 class MediaSmartContentPageFixture implements PhpcrFixtureInterface
 {
