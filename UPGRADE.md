@@ -2,6 +2,12 @@
 
 ## 1.0.3
 
+### Added `getOption()` to `FieldTypeDetectorInterface`
+
+`FieldTypeDetectorInterface` has a new method `getOption()`, which returns a scalar param of a
+field, e.g. the `provider` of a smart content. Custom implementations of the interface have to
+add it.
+
 ### Snippet area permissions of already migrated installs
 
 Installs migrated with 1.0.0 to 1.0.2 keep the `sulu.webspaces.{webspace}.default-snippets`
