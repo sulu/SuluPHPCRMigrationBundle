@@ -69,6 +69,7 @@ abstract class AbstractPersister implements PersisterInterface
 
     private const SMART_CONTENT_SORT_FIELDS = [
         'title.raw' => 'title',
+        // Sulu 3 cannot sort by lastModified, so articles with a lastModified are ordered by authored instead.
         'last_modified_or_authored' => 'authored',
     ];
 
