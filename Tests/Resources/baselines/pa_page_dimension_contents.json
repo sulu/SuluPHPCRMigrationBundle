@@ -791,7 +791,7 @@
             "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
             "subtitle": "Example subtitle",
             "title": "Example Page with shadow",
-            "url": "/example-page-1-1-1"
+            "url": "/example-page-1-1"
         },
         "templateKey": "default",
         "title": "Example Page with shadow",
@@ -1756,7 +1756,7 @@
         "templateData": {
             "blocks": [],
             "title": "Schatten-Interner-Link",
-            "url": "/schatten-interner-link"
+            "url": "/shadow-internal-link"
         },
         "templateKey": "default",
         "title": "Schatten-Interner-Link",
@@ -5891,7 +5891,7 @@
             "sidebarSnippet": "0f628bb6-b4c7-4dc5-9c57-df2d6f4cca03",
             "subtitle": "Example subtitle",
             "title": "Example Page with shadow",
-            "url": "/example-page-1-1-1"
+            "url": "/example-page-1-1"
         },
         "templateKey": "default",
         "title": "Example Page with shadow",

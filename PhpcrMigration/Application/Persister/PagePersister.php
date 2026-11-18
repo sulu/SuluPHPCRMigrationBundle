@@ -92,7 +92,16 @@ class PagePersister extends AbstractPersister
         }
 
         if (isset($document['localizations'][$locale])) {
-            $url = $this->resolveTemplateUrl($document['localizations'][$locale]);
+            $localizedData = $document['localizations'][$locale];
+            $url = $this->resolveTemplateUrl($localizedData);
+
+            // The url property of a 2.6 shadow often differs from the route it was served under, and publishing
+            // replaces the route with the template url, so a shadow takes the slug of its migrated route.
+            $routeSlug = ($localizedData['shadow-on'] ?? false) ? ($localizedData['_route']['slug'] ?? null) : null;
+            if (\is_string($routeSlug)) {
+                $url = $routeSlug;
+            }
+
             if (null !== $url) {
                 $templateData['url'] = $url;
             }
@@ -390,11 +399,13 @@ class PagePersister extends AbstractPersister
     {
         $localizedData = $document['localizations'][$locale];
 
-        // Shadows have no reliable resource locator of their own — use the source locale's slug.
+        // A shadow keeps the route it was served under, that is the migrated route node of its own locale. Only a
+        // shadow without one uses the source locale's slug.
         // Track visited locales so a cyclic shadow reference (a -> b -> a) cannot recurse forever.
         $shadowBase = $localizedData['shadow-base'] ?? null;
         if (
             ($localizedData['shadow-on'] ?? false)
+            && !isset($localizedData[AbstractPersister::URL])
             && \is_string($shadowBase)
             && !isset($visited[$locale])
             && isset($document['localizations'][$shadowBase])
