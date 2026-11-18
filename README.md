@@ -72,6 +72,14 @@ php bin/adminconsole sulu:phpcr-migration:migrate snippet
 
 Allowed types are: `snippet`, `page`, `article`
 
+### Collation check
+
+On MySQL and MariaDB, the command first checks that all tables and text columns of the target database use the same
+collation. Joins between columns using different collations can fail with "Illegal mix of collations", so the command
+lists the affected tables and asks whether to continue. With `--no-interaction` it only prints the warning and continues.
+`utf8mb4_bin`, which MariaDB uses for JSON columns, is ignored because it joins any non-binary utf8mb4 collation.
+utf8mb3 counts as a collation of its own, because it cannot store 4-byte characters such as emoji.
+
 ### Dry-run mode
 
 Preview a migration without writing anything to the target database:

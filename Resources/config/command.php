@@ -30,6 +30,7 @@ return static function(ContainerConfigurator $container) {
             new Reference('sulu_phpcr_migration.entity_repository'),
             new Reference('sulu_phpcr_migration.dry_run_collector'),
             '%kernel.project_dir%',
+            new Reference('sulu_phpcr_migration.collation_checker'),
         ])
         ->tag('console.command');
 };
