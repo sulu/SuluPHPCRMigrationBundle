@@ -177,6 +177,53 @@ final class PagePersisterShadowRouteTest extends TestCase
         $this->assertSame(['en' => '/company/old-patents'], $historySlugs);
     }
 
+    public function testShadowTemplateUrlIsTheSlugOfItsRoute(): void
+    {
+        $de = $this->shadowLocalization('Patente', '/unternehmen/patents');
+        $de['url'] = '/company/patents';
+        $de['_route'] = ['id' => 101, 'slug' => '/patente'];
+
+        foreach ([false, true] as $isLive) {
+            $this->assertSame('/patente', $this->templateUrl(['en' => $this->localization('Patents', null), 'de' => $de], 'de', $isLive));
+        }
+    }
+
+    public function testShadowWithoutRouteKeepsItsTemplateUrl(): void
+    {
+        $de = $this->shadowLocalization('Patente', null);
+        $de['url'] = '/company/patents';
+
+        $this->assertSame('/company/patents', $this->templateUrl(['en' => $this->localization('Patents', null), 'de' => $de], 'de'));
+    }
+
+    public function testPageTemplateUrlIsNotTakenFromItsRoute(): void
+    {
+        $en = $this->localization('Patents', '/company/patents');
+        $en['url'] = '/company/patents';
+        $en['_route'] = ['id' => 100, 'slug' => '/patents-1'];
+
+        $this->assertSame('/company/patents', $this->templateUrl(['en' => $en], 'en'));
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $localizations
+     */
+    private function templateUrl(array $localizations, string $locale, bool $isLive = false): mixed
+    {
+        $localizations[$locale]['routePathName'] = 'i18n:' . $locale . '-url';
+        $document = [
+            'jcr' => ['uuid' => 'incoming-uuid', 'mixinTypes' => ['sulu:page']],
+            'sulu' => ['webspaceKey' => 'website', 'parentId' => null],
+            'localizations' => $localizations,
+        ];
+
+        /** @var array{templateData: array<string, mixed>} $data */
+        $data = (new \ReflectionMethod(PagePersister::class, 'mapDimensionContentData'))
+            ->invoke($this->persister, $document, $locale, [], $isLive);
+
+        return $data['templateData']['url'] ?? null;
+    }
+
     /**
      * @return array<string, mixed>
      */

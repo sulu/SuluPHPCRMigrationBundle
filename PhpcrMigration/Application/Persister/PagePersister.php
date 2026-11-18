@@ -92,7 +92,16 @@ class PagePersister extends AbstractPersister
         }
 
         if (isset($document['localizations'][$locale])) {
-            $url = $this->resolveTemplateUrl($document['localizations'][$locale]);
+            $localizedData = $document['localizations'][$locale];
+            $url = $this->resolveTemplateUrl($localizedData);
+
+            // The url property of a 2.6 shadow often differs from the route it was served under, and publishing
+            // replaces the route with the template url, so a shadow takes the slug of its migrated route.
+            $routeSlug = ($localizedData['shadow-on'] ?? false) ? ($localizedData['_route']['slug'] ?? null) : null;
+            if (\is_string($routeSlug)) {
+                $url = $routeSlug;
+            }
+
             if (null !== $url) {
                 $templateData['url'] = $url;
             }
