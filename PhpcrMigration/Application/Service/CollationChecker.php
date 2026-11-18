@@ -17,11 +17,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 /**
- * Detects tables and text columns of the target database that do not share the same collation.
- *
- * Sulu joins tables on text columns, which can fail with "Illegal mix of collations" when their
- * collations differ. A collation belongs to a single charset, so this also covers charsets.
- * Only MySQL and MariaDB are checked.
+ * Sulu joins tables on text columns, which can fail with "Illegal mix of collations" when their collations differ.
  */
 class CollationChecker
 {
@@ -53,8 +49,14 @@ class CollationChecker
 
         $tablesByCollation = [];
         foreach ($rows as $row) {
-            if (\is_string($row['collation_name']) && \is_string($row['table_name'])) {
-                $tablesByCollation[$row['collation_name']][$row['table_name']] = true;
+            if (!\is_string($row['collation_name']) || !\is_string($row['table_name'])) {
+                continue;
+            }
+
+            // utf8mb3 joins utf8mb4 of the same collation, and utf8 _bin (MariaDB's JSON columns) joins any utf8 collation
+            $collation = \str_replace('utf8mb3_', 'utf8mb4_', $row['collation_name']);
+            if ('utf8mb4_bin' !== $collation) {
+                $tablesByCollation[$collation][$row['table_name']] = true;
             }
         }
 
