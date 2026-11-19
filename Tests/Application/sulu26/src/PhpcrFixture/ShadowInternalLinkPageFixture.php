@@ -72,7 +72,7 @@ class ShadowInternalLinkPageFixture implements PhpcrFixtureInterface
         $linkPage = $this->documentManager->find($linkPageUuid, 'en', ['load_ghost_content' => false]);
         $linkPage->setTitle('Shadow Internal Link');
         $linkPage->setStructureType('default');
-        $linkPage->setResourceSegment('/shadow-internal-link-old');
+        $linkPage->setResourceSegment('/shadow-internal-link');
         $linkPage->setWorkflowStage(WorkflowStage::PUBLISHED);
         $linkPage->getStructure()->bind([
             'title' => 'Shadow Internal Link',
@@ -83,21 +83,10 @@ class ShadowInternalLinkPageFixture implements PhpcrFixtureInterface
         $this->documentManager->publish($linkPage, 'en');
         $this->documentManager->flush();
 
-        // Republishing under a new url leaves the old one as history route of the later shadow.
-        $linkPage->setResourceSegment('/shadow-internal-link');
-        $this->documentManager->persist($linkPage, 'en', ['parent_path' => '/cmf/website/contents']);
-        $this->documentManager->flush();
-        $this->documentManager->publish($linkPage, 'en');
-        $this->documentManager->flush();
-
         $linkPage->setShadowLocaleEnabled(true);
         $linkPage->setShadowLocale('de');
 
         $this->documentManager->persist($linkPage, 'en', ['parent_path' => '/cmf/website/contents']);
-        $this->documentManager->flush();
-        // Persisting a shadow loads the content of its source locale, publishing needs the shadow locale again.
-        $linkPage->setLocale('en');
-        $this->documentManager->publish($linkPage, 'en');
         $this->documentManager->flush();
         $this->documentManager->clear();
     }

@@ -173,8 +173,11 @@ final class PagePersisterShadowRouteTest extends TestCase
             }
         }
 
-        // Sulu 2.6 redirects the old url of the shadow to its own route, so the history belongs to the shadow.
-        $this->assertSame(['en' => '/company/old-patents', 'de' => '/unternehmen/alte-patents'], $historySlugs);
+        $this->assertSame(
+            ['en' => '/company/old-patents', 'de' => '/unternehmen/alte-patents'],
+            $historySlugs,
+            'Sulu 2.6 redirects the old url of the shadow to its own route, so the history belongs to the shadow.',
+        );
     }
 
     public function testShadowTemplateUrlIsTheSlugOfItsRoute(): void
