@@ -157,7 +157,7 @@ final class PagePersisterShadowRouteTest extends TestCase
         $this->assertSame(['en' => '/company/patents'], $this->insertedSlugs());
     }
 
-    public function testShadowHistoryRoutesAreSkippedEvenWithItsOwnRoute(): void
+    public function testShadowWithItsOwnRouteKeepsItsHistoryRoutes(): void
     {
         $en = $this->localization('Patents', '/company/patents');
         $en[AbstractPersister::HISTORY_URLS] = ['/company/old-patents'];
@@ -173,8 +173,8 @@ final class PagePersisterShadowRouteTest extends TestCase
             }
         }
 
-        // The page of the source locale keeps its history, so a missing shadow history is not a skipped run.
-        $this->assertSame(['en' => '/company/old-patents'], $historySlugs);
+        // Sulu 2.6 redirects the old url of the shadow to its own route, so the history belongs to the shadow.
+        $this->assertSame(['en' => '/company/old-patents', 'de' => '/unternehmen/alte-patents'], $historySlugs);
     }
 
     public function testShadowTemplateUrlIsTheSlugOfItsRoute(): void
