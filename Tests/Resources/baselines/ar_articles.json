@@ -21,6 +21,13 @@
         "uuid": "805c4498-81e7-44f0-8e1e-fbf3038a4b8d"
     },
     {
+        "changed": "2026-11-19 08:43:10",
+        "created": "2026-11-19 08:43:10",
+        "idUsersChanger": "",
+        "idUsersCreator": "",
+        "uuid": "86d5bfb7-c781-420e-843b-3bce255286ae"
+    },
+    {
         "changed": "2026-05-12 07:45:27",
         "created": "2026-05-12 07:45:27",
         "idUsersChanger": "",
@@ -33,13 +40,6 @@
         "idUsersChanger": 1,
         "idUsersCreator": 1,
         "uuid": "b5224d7b-b780-419b-9faf-7ff991bf6b3f"
-    },
-    {
-        "changed": "2026-04-14 07:27:21",
-        "created": "2026-04-14 07:27:20",
-        "idUsersChanger": "",
-        "idUsersCreator": "",
-        "uuid": "beca5871-758e-4999-8821-6a0a09ab6d80"
     },
     {
         "changed": "2026-05-08 00:11:15",

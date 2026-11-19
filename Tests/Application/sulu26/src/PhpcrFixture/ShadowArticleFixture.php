@@ -55,8 +55,19 @@ class ShadowArticleFixture implements PhpcrFixtureInterface
         $article->setAuthor(1);
         $article->getStructure()->bind([
             'title' => 'Shadow Article',
+            'routePath' => '/blog/shadow-article-old',
         ]);
 
+        $this->documentManager->persist($article, 'en');
+        $this->documentManager->flush();
+        $this->documentManager->publish($article, 'en');
+        $this->documentManager->flush();
+
+        // Republishing under a new url leaves the old one as history route of the later shadow.
+        $article->getStructure()->bind([
+            'title' => 'Shadow Article',
+            'routePath' => '/blog/shadow-article',
+        ]);
         $this->documentManager->persist($article, 'en');
         $this->documentManager->flush();
         $this->documentManager->publish($article, 'en');
@@ -66,6 +77,10 @@ class ShadowArticleFixture implements PhpcrFixtureInterface
         $article->setShadowLocale('de');
 
         $this->documentManager->persist($article, 'en');
+        $this->documentManager->flush();
+        // Persisting a shadow loads the content of its source locale, publishing needs the shadow locale again.
+        $article->setLocale('en');
+        $this->documentManager->publish($article, 'en');
         $this->documentManager->flush();
         $this->documentManager->clear();
     }
