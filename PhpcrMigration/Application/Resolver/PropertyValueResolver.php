@@ -71,7 +71,8 @@ final class PropertyValueResolver
 
         $decoded = \json_decode($value, true);
 
-        if (\JSON_ERROR_NONE !== \json_last_error()) {
+        // Sulu 2 never JSON-encodes a plain string, so a decoded string is text that starts and ends with a quote
+        if (\JSON_ERROR_NONE !== \json_last_error() || \is_string($decoded)) {
             return $value;
         }
 
