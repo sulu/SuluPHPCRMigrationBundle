@@ -919,7 +919,8 @@ abstract class AbstractPersister implements PersisterInterface
             'version' => 0,
         ]);
 
-        return 'published' === ($owner['workflowPlace'] ?? null);
+        // PostgreSQL returns the unquoted camelCase column in lowercase.
+        return 'published' === (\array_change_key_case($owner ?? [])['workflowplace'] ?? null);
     }
 
     /**
