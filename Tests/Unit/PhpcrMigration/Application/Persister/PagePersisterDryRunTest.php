@@ -36,6 +36,7 @@ final class PagePersisterDryRunTest extends TestCase
     protected function setUp(): void
     {
         $this->connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
+        // Slugs of two route nodes collide only when they differ in case, which MySQL compares as equal.
         $this->connection->executeStatement(
             'CREATE TABLE ro_routes (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +44,7 @@ final class PagePersisterDryRunTest extends TestCase
                 resource_id VARCHAR(100) NOT NULL,
                 webspace VARCHAR(100) NOT NULL,
                 locale VARCHAR(10) NOT NULL,
-                slug VARCHAR(255) NOT NULL,
+                slug VARCHAR(255) NOT NULL COLLATE NOCASE,
                 parent_id INTEGER DEFAULT NULL
             )'
         );
@@ -71,7 +72,7 @@ final class PagePersisterDryRunTest extends TestCase
         $this->expectOutputString("Skipping route for document 'uuid-2' (locale 'de'): slug '/foo' is already used by 'pages::uuid-1'.\n");
 
         $this->createRoutes('uuid-1', 1, '/foo');
-        $this->createRoutes('uuid-2', 1, '/foo');
+        $this->createRoutes('uuid-2', 1, '/foo', isRouteNode: false);
     }
 
     public function testFreeRouteIsNotReported(): void
@@ -93,9 +94,9 @@ final class PagePersisterDryRunTest extends TestCase
             'slug' => '/foo',
         ]);
 
-        $this->expectOutputString("Skipping route for document 'uuid-2' (locale 'de'): slug '/foo' is already used by 'pages::uuid-1'.\n");
+        $this->expectOutputString("Skipping route for document 'uuid-2' (locale 'de'): slug '/Foo' is already used by 'pages::uuid-1'.\n");
 
-        $this->createRoutes('uuid-2', 1, '/foo');
+        $this->createRoutes('uuid-2', 1, '/Foo');
     }
 
     public function testPublishedPageTakesRouteOfDraft(): void
@@ -110,7 +111,13 @@ final class PagePersisterDryRunTest extends TestCase
 
     public function testHistoryRouteOfPublishedPageIsReported(): void
     {
-        $this->createRoutes('uuid-1', 2, '/foo');
+        $this->connection->insert('ro_routes', [
+            'resource_key' => 'pages',
+            'resource_id' => 'uuid-1',
+            'webspace' => 'website',
+            'locale' => 'de',
+            'slug' => '/Foo',
+        ]);
         $this->connection->insert('pa_page_dimension_contents', [
             'pageUuid' => 'uuid-1',
             'locale' => 'de',
@@ -136,7 +143,7 @@ final class PagePersisterDryRunTest extends TestCase
      *
      * @return array<string, array<string, mixed>>
      */
-    private function createRoutes(string $uuid, int $state, string $url, bool $isLive = false, array $historyUrls = []): array
+    private function createRoutes(string $uuid, int $state, string $url, bool $isLive = false, array $historyUrls = [], bool $isRouteNode = true): array
     {
         $document = [
             'jcr' => ['uuid' => $uuid, 'mixinTypes' => ['sulu:page']],
@@ -145,11 +152,11 @@ final class PagePersisterDryRunTest extends TestCase
                 'de' => [
                     'state' => $state,
                     'template' => 'default',
-                    AbstractPersister::URL => $url,
                     AbstractPersister::HISTORY_URLS => $historyUrls,
                 ],
             ],
         ];
+        $document['localizations']['de'][$isRouteNode ? AbstractPersister::URL : 'url'] = $url;
 
         $reflection = new \ReflectionMethod(PagePersister::class, 'createOrUpdateRoutes');
 

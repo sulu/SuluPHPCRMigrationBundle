@@ -99,9 +99,38 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
         $this->invokeCreateOrUpdateRoutes();
     }
 
+    public function testHistorySlugOfPublishedPageWithoutRouteNodeMovesToGeneratedSlug(): void
+    {
+        // The owner, e.g. a link page with a stale url, holds the exact slug of the history route node.
+        $this->stubHistorySlugOwner('pages', 'link-uuid');
+        $this->stubDraftOwner('link-uuid', ['workflowPlace' => 'published', 'title' => 'Success']);
+        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
+            'webspace' => 'website',
+            'locale' => 'de',
+            'slug' => '/success',
+        ])->willReturn(null);
+
+        $this->repository->insertOrUpdate(
+            ['slug' => '/success'],
+            AbstractPersister::ROUTE_TABLE,
+            ['slug' => 'string'],
+            ['id' => self::OWNER_ROUTE_ID],
+        )->shouldBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => self::HISTORY_SLUG === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
+
+        $this->expectOutputString("Generated route '/success' for document 'link-uuid' (locale 'de') because slug '/news/success' is a history route of 'pages::incoming-uuid' in Sulu 2.6. Check the url in the admin.\n");
+
+        $this->invokeCreateOrUpdateRoutes();
+    }
+
     public function testHistorySlugOfPublishedPageAborts(): void
     {
-        $this->stubHistorySlugOwner('pages', 'published-uuid');
+        // MySQL compares slugs case-insensitively, so the owner can hold a route node of its own.
+        $this->stubHistorySlugOwner('pages', 'published-uuid', '/News/Success');
         $this->stubDraftOwner('published-uuid', ['workflowPlace' => 'published', 'title' => 'Success']);
 
         $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, ['id' => self::OWNER_ROUTE_ID])
@@ -171,7 +200,7 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
         $this->invokeCreateOrUpdateRoutes();
     }
 
-    private function stubHistorySlugOwner(string $resourceKey, string $resourceId): void
+    private function stubHistorySlugOwner(string $resourceKey, string $resourceId, string $storedSlug = self::HISTORY_SLUG): void
     {
         $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
             'webspace' => 'website',
@@ -179,7 +208,7 @@ final class AbstractPersisterHistoryRouteTest extends TestCase
             'slug' => self::HISTORY_SLUG,
         ])->willReturn([
             'id' => self::OWNER_ROUTE_ID,
-            'slug' => self::HISTORY_SLUG,
+            'slug' => $storedSlug,
             'resource_id' => $resourceId,
             'resource_key' => $resourceKey,
             'locale' => 'de',

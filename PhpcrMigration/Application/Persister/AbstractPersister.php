@@ -697,6 +697,8 @@ abstract class AbstractPersister implements PersisterInterface
             $resourceKey = $this->getEntityResourceKey();
 
             $slug = $this->getSlug($document, $locale);
+            // A 2.6 route of the locale gives a slug no other document can own.
+            $isLegacyRouteSlug = null !== $slug && ($localizedData[self::URL] ?? null) === $slug;
             if (null === $slug) {
                 $slug = $this->generateUniqueSlug(
                     $localizedData['title'] ?? null,
@@ -732,19 +734,23 @@ abstract class AbstractPersister implements PersisterInterface
                 'parent_id' => $parentRouteId,
             ];
 
-            $this->entityRepository->removeBy(
-                self::ROUTE_TABLE,
-                [
-                    'resource_key' => self::ROUTE_RESOURCE_KEY,
-                    'webspace' => $webspace,
-                    'locale' => $locale,
-                    'slug' => $slug,
-                ],
-            );
+            // A slug without a 2.6 route, e.g. the stale url of a link page, must not drop the
+            // history route of another document.
+            if ($isLegacyRouteSlug) {
+                $this->entityRepository->removeBy(
+                    self::ROUTE_TABLE,
+                    [
+                        'resource_key' => self::ROUTE_RESOURCE_KEY,
+                        'webspace' => $webspace,
+                        'locale' => $locale,
+                        'slug' => $slug,
+                    ],
+                );
+            }
 
-            // Unique (webspace, locale, slug): on a collision the published document wins by
-            // reclaiming the slug while a draft yields. After the history cleanup so reclaiming
-            // a history slug still works.
+            // Unique (webspace, locale, slug): on a collision the published document and then the
+            // owner of the 2.6 route win by reclaiming the slug while the other yields. After the
+            // history cleanup so reclaiming a history slug still works.
             $conflictingRoute = $this->entityRepository->findOneBy(self::ROUTE_TABLE, [
                 'webspace' => $webspace,
                 'locale' => $locale,
@@ -755,7 +761,10 @@ abstract class AbstractPersister implements PersisterInterface
 
                 if ($incomingIsPublished && !$this->isExistingRoutePublished($conflictingRoute)) {
                     $takenBy = \sprintf("slug '%s' is taken by published '%s::%s'", $slug, $resourceKey, $resourceId);
-                    $this->releaseSlugOfDraft($conflictingRoute, $webspace, $locale, $slug, $takenBy);
+                    $this->releaseSlug($conflictingRoute, $webspace, $locale, $slug, $takenBy);
+                } elseif ($isLegacyRouteSlug && $this->isSlugWithoutLegacyRoute($conflictingRoute, $slug)) {
+                    $takenBy = \sprintf("slug '%s' is the route of '%s::%s' in Sulu 2.6", $slug, $resourceKey, $resourceId);
+                    $this->releaseSlug($conflictingRoute, $webspace, $locale, $slug, $takenBy);
                 } else {
                     $owner = $this->describeRouteOwner($conflictingRoute);
 
@@ -849,18 +858,17 @@ abstract class AbstractPersister implements PersisterInterface
 
                 if (null !== $conflictingRoute && $this->isRouteOfOtherResource($conflictingRoute, $historyResourceId, self::ROUTE_RESOURCE_KEY)) {
                     // A history route is only a redirect, so it takes the slug from an unpublished owner
-                    // and gives it a generated one, but never from a published one.
-                    if ($this->isExistingRoutePublished($conflictingRoute)) {
+                    // and gives it a generated one, but from a published one only when that owner
+                    // has no 2.6 route for it.
+                    if (!$this->isExistingRoutePublished($conflictingRoute)) {
+                        $takenBy = \sprintf("slug '%s' is taken by the history route of published '%s'", $url, $historyResourceId);
+                    } elseif ($this->isSlugWithoutLegacyRoute($conflictingRoute, $url)) {
+                        $takenBy = \sprintf("slug '%s' is a history route of '%s' in Sulu 2.6", $url, $historyResourceId);
+                    } else {
                         throw new HistoryRouteSlugTakenException($url, $resourceId, $locale, $this->describeRouteOwner($conflictingRoute));
                     }
 
-                    $this->releaseSlugOfDraft(
-                        $conflictingRoute,
-                        $webspace,
-                        $locale,
-                        $url,
-                        \sprintf("slug '%s' is taken by the history route of published '%s'", $url, $historyResourceId),
-                    );
+                    $this->releaseSlug($conflictingRoute, $webspace, $locale, $url, $takenBy);
                 }
 
                 $this->entityRepository->insertOrUpdate(
@@ -915,7 +923,21 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Gives the draft owning a reclaimed slug a generated slug, so its content keeps a route.
+     * A 2.6 route (a PHPCR route node, or a row of the article route table) belongs to one document per
+     * path, so a route of the same type holding the exact slug of another document's 2.6 route got it from
+     * a stale url or a generated slug. A slug differing only in case can be a 2.6 route of its own, which
+     * MySQL compares as equal.
+     *
+     * @param mixed[] $route
+     */
+    private function isSlugWithoutLegacyRoute(array $route, string $legacyRouteSlug): bool
+    {
+        return ($route['resource_key'] ?? null) === $this->getEntityResourceKey()
+            && ($route['slug'] ?? null) === $legacyRouteSlug;
+    }
+
+    /**
+     * Gives the document owning a reclaimed slug a generated slug, so its content keeps a route.
      *
      * @param mixed[] $route
      */
@@ -1051,20 +1073,20 @@ abstract class AbstractPersister implements PersisterInterface
     }
 
     /**
-     * Frees the slug of an unpublished owner: its route moves to a generated slug, or is dropped
+     * Frees the slug of a yielding owner: its route moves to a generated slug, or is dropped
      * when none can be generated.
      *
      * @param mixed[] $route
      */
-    private function releaseSlugOfDraft(array $route, ?string $webspace, string $locale, string $slug, string $takenBy): void
+    private function releaseSlug(array $route, ?string $webspace, string $locale, string $slug, string $takenBy): void
     {
         if ($this->moveRouteToGeneratedSlug($route, $webspace, $locale, $slug, $takenBy)) {
             return;
         }
 
         // route_id on the dimension content table is ON DELETE CASCADE, so detach the
-        // losing draft's dimension contents before dropping its route — otherwise the
-        // cascade would delete the migrated draft content instead of just freeing the slug.
+        // losing owner's dimension contents before dropping its route, otherwise the
+        // cascade would delete the migrated content instead of just freeing the slug.
         // Guard with exists(): insertOrUpdate would INSERT a bogus row (with NULL stage
         // and version) when the conflicting route is orphaned and nothing references it.
         $dimensionContentTable = $this->getDimensionContentTableName();

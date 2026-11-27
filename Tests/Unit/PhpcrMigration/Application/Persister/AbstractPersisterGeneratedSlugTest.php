@@ -125,6 +125,90 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(2, 'Foo');
     }
 
+    public function testPublishedOwnerWithoutRouteNodeYieldsToRouteNode(): void
+    {
+        // The owner, e.g. a link page with a stale url, holds the exact slug of the route node of the incoming page.
+        $this->stubRouteOwner('/foo', 'other-uuid');
+        $this->stubRouteOwner('/link', null);
+
+        $this->repository->findOneBy(self::DIMENSION_TABLE, [
+            'pageUuid' => 'other-uuid',
+            'locale' => 'de',
+            'stage' => 'draft',
+            'version' => 0,
+        ])->willReturn(['workflowPlace' => 'published', 'title' => 'Link']);
+
+        $this->repository->insertOrUpdate(
+            ['slug' => '/link'],
+            AbstractPersister::ROUTE_TABLE,
+            ['slug' => 'string'],
+            ['id' => self::CONFLICT_ROUTE_ID],
+        )->shouldBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => '/foo' === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
+
+        $this->expectOutputString("Generated route '/link' for document 'other-uuid' (locale 'de') because slug '/foo' is the route of 'pages::incoming-uuid' in Sulu 2.6. Check the url in the admin.\n");
+
+        $this->invokeCreateOrUpdateRoutes(1, 'Foo');
+    }
+
+    public function testPublishedOwnerOfRouteNodeDifferingInCaseKeepsSlug(): void
+    {
+        // MySQL compares slugs case-insensitively, so the owner can hold a route node of its own.
+        $this->stubRouteOwner('/foo', 'other-uuid', '/Foo');
+        $this->stubRouteOwner('/foo-1', null);
+
+        $this->repository->findOneBy(self::DIMENSION_TABLE, [
+            'pageUuid' => 'other-uuid',
+            'locale' => 'de',
+            'stage' => 'draft',
+            'version' => 0,
+        ])->willReturn(['workflowPlace' => 'published', 'title' => 'Foo']);
+
+        $this->repository->insertOrUpdate(Argument::any(), AbstractPersister::ROUTE_TABLE, ['slug' => 'string'], Argument::any())
+            ->shouldNotBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => '/foo-1' === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
+
+        $this->expectOutputRegex("~^Generated route '/foo-1' for document 'incoming-uuid' \\(locale 'de'\\) because slug '/foo' is already used by 'pages::other-uuid'~");
+
+        $this->invokeCreateOrUpdateRoutes(2, 'Foo');
+    }
+
+    public function testSlugWithoutRouteNodeKeepsHistoryRouteOfOtherPage(): void
+    {
+        $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
+            'webspace' => 'website',
+            'locale' => 'de',
+            'slug' => '/foo',
+        ])->willReturn([
+            'id' => self::CONFLICT_ROUTE_ID,
+            'slug' => '/foo',
+            'resource_id' => 'pages::other-uuid',
+            'resource_key' => AbstractPersister::ROUTE_RESOURCE_KEY,
+            'locale' => 'de',
+            'parent_id' => null,
+        ]);
+        $this->stubRouteOwner('/link', null);
+
+        $this->repository->removeBy(AbstractPersister::ROUTE_TABLE, Argument::any())->shouldNotBeCalled();
+        $this->repository->insertOrUpdate(
+            Argument::that(static fn (array $data): bool => '/link' === ($data['slug'] ?? null)),
+            AbstractPersister::ROUTE_TABLE,
+            Argument::cetera(),
+        )->shouldBeCalled();
+
+        $this->expectOutputRegex("~^Generated route '/link' for document 'incoming-uuid' \\(locale 'de'\\) because slug '/foo' is already used by 'route_histories::pages::other-uuid'~");
+
+        $this->invokeCreateOrUpdateRoutes(2, 'Link', null, null, '/foo');
+    }
+
     public function testGeneratedSlugStartsWithParentSlug(): void
     {
         $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
@@ -148,7 +232,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
 
     public function testTooLongGeneratedSlugSkipsRoute(): void
     {
-        $this->stubRouteOwner('/foo', 'other-uuid');
+        $this->stubRouteOwner('/foo', 'other-uuid', '/Foo');
         $this->stubRouteOwner('/' . \str_repeat('a', 300), null);
 
         $this->repository->insertOrUpdate(Argument::any(), AbstractPersister::ROUTE_TABLE, Argument::cetera())
@@ -196,7 +280,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         $this->invokeCreateOrUpdateRoutes(2, 'Foo');
     }
 
-    private function stubRouteOwner(string $slug, ?string $resourceId): void
+    private function stubRouteOwner(string $slug, ?string $resourceId, ?string $storedSlug = null): void
     {
         $this->repository->findOneBy(AbstractPersister::ROUTE_TABLE, [
             'webspace' => 'website',
@@ -204,7 +288,7 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
             'slug' => $slug,
         ])->willReturn(null === $resourceId ? null : [
             'id' => self::CONFLICT_ROUTE_ID,
-            'slug' => $slug,
+            'slug' => $storedSlug ?? $slug,
             'resource_id' => $resourceId,
             'resource_key' => 'pages',
             'locale' => 'de',
@@ -212,7 +296,10 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         ]);
     }
 
-    private function invokeCreateOrUpdateRoutes(int $state, string $title, ?string $url = '/foo', ?string $parentId = null): void
+    /**
+     * @param string|null $storedUrl the url property of a locale without a route node
+     */
+    private function invokeCreateOrUpdateRoutes(int $state, string $title, ?string $url = '/foo', ?string $parentId = null, ?string $storedUrl = null): void
     {
         $localization = [
             'state' => $state,
@@ -221,6 +308,9 @@ final class AbstractPersisterGeneratedSlugTest extends TestCase
         ];
         if (null !== $url) {
             $localization[AbstractPersister::URL] = $url;
+        }
+        if (null !== $storedUrl) {
+            $localization['url'] = $storedUrl;
         }
 
         $document = [
