@@ -106,7 +106,7 @@ final class PagePersisterShadowRouteTest extends TestCase
             'slug' => '/unternehmen/patents',
         ])->willReturn([
             'id' => 99,
-            'slug' => '/unternehmen/patents',
+            'slug' => '/Unternehmen/Patents',
             'resource_id' => 'other-uuid',
             'resource_key' => 'pages',
             'locale' => 'de',
@@ -137,7 +137,7 @@ final class PagePersisterShadowRouteTest extends TestCase
             'slug' => '/unternehmen/patents',
         ])->willReturn([
             'id' => 99,
-            'slug' => '/unternehmen/patents',
+            'slug' => '/Unternehmen/Patents',
             'resource_id' => 'other-uuid',
             'resource_key' => 'pages',
             'locale' => 'de',
